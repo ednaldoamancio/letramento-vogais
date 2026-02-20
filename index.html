@@ -465,7 +465,7 @@
 
 <div class="stage" id="stage"></div>
 
-<audio id="audioAplausos" src="https://actions.google.com/sounds/v1/crowds/light_applause.ogg" preload="auto"></audio>
+<audio id="audioAplausos" src="https://www.soundjay.com/misc/sounds/applause-01.mp3"></audio>
 
 <script>
     // DADOS DAS PALAVRAS
@@ -534,6 +534,7 @@
         synth.speak(msg);
     }
 
+    // Efeito de aplausos e chuva de palmas
     function somAplausos() {
         if (!audioAtivado) return;
         
@@ -580,9 +581,6 @@
     }
 
     function irParaPalavra(index) {
-        // Bloqueia a navegação se estiver no meio da comemoração para não bugar o jogo
-        if (acertou) return; 
-        
         indexAtual = index;
         letrasColocadas = [];
         acertou = false;
@@ -641,6 +639,7 @@
             slotsHTML += `<div class="${classes}" id="slot-${i}">${colocada || '?'}</div>`;
         });
 
+        // Usando as classes de cor específicas (.bloco-A, .bloco-E...) para colorir
         let blocosHTML = '';
         VOGAIS.forEach(v => {
             const desab = acertou ? ' desabilitado' : '';
@@ -696,14 +695,12 @@
         const palavra = PALAVRAS[indexAtual];
         const esperada = palavra.letters[letrasColocadas.length];
 
-        // Flash visual da letra
+        // Flash da letra
         mostrarFlash(vogal);
+        falar(vogal);
 
         if (vogal === esperada) {
             letrasColocadas.push(vogal);
-            
-            // Toca IMEDIATAMENTE a letra que acabou de acertar
-            falar(vogal); 
 
             const slot = document.getElementById('slot-' + (letrasColocadas.length - 1));
             if (slot) {
@@ -717,7 +714,7 @@
                 proxSlot.classList.add('proximo');
             }
 
-            // Se completou a palavra inteira
+            // Se completou a palavra
             if (letrasColocadas.length === palavra.letters.length) {
                 acertou = true;
                 estrelas += 10;
@@ -730,13 +727,10 @@
 
                 document.querySelectorAll('.bloco-vogal').forEach(b => b.classList.add('desabilitado'));
 
-                // O grande segredo: espera 1 segundo para a voz da letra terminar antes de comemorar
-                setTimeout(() => {
-                    somAplausos();
-                    falar("Parabéns! Você formou " + palavra.word + "!");
-                }, 1000);
+                // Aciona aplausos e voz
+                somAplausos();
+                falar("Parabéns! Você formou " + palavra.word + "!");
 
-                // Dá tempo dos aplausos e da fala acontecerem antes de pular de tela (agora 3.5s totais)
                 setTimeout(() => {
                     acertou = false;
                     if (indexAtual + 1 < PALAVRAS.length) {
@@ -747,7 +741,7 @@
                     } else {
                         mostrarParabens();
                     }
-                }, 3500);
+                }, 2500);
             }
         } else {
             falar("Tente de novo!");
@@ -777,8 +771,9 @@
                 </button>
             </div>
         `;
+        // Aciona os aplausos na tela final também!
         somAplausos();
-        falar("Parabéns! Você completou todas as atividades!");
+        falar("Parabéns! Você formou todas as palavrinhas!");
     }
 
     // INICIALIZAÇÃO
