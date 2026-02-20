@@ -453,20 +453,20 @@ body::after {
 
 <script>
 // DADOS DAS PALAVRAS
-// Adicionada a propriedade 'pronuncia' para forçar o TTS a falar corretamente
+// Pronúncias em minúsculas para evitar que o navegador leia como siglas
 const PALAVRAS = [
-  { word: "AI", letters: ["A","I"], hint: "Expressão de dor — Ai!", pronuncia: "Ái" },
-  { word: "OU", letters: ["O","U"], hint: "Palavra de escolha — Ou", pronuncia: "Ôu" },
-  { word: "EU", letters: ["E","U"], hint: "Eu mesmo — Eu", pronuncia: "ÊU" },
-  { word: "IA", letters: ["I","A"], hint: "Ia embora — Ia", pronuncia: "Ía" },
-  { word: "UAI", letters: ["U","A","I"], hint: "Expressão mineira — Uai!", pronuncia: "Úai" },
-  { word: "UAU", letters: ["U","A","U"], hint: "Expressão de surpresa — Uau!", pronuncia: "UÁU" },
-  { word: "OI", letters: ["O","I"], hint: "Cumprimento — Oi!", pronuncia: "Ôi" },
-  { word: "AÍ", letters: ["A","I"], hint: "Lugar — Aí", pronuncia: "Aí" },
-  { word: "EI", letters: ["E","I"], hint: "Chamando alguém — Ei!", pronuncia: "Êi" },
-  { word: "AUAU", letters: ["A","U","A","U"], hint: "Som do cachorro — Au au!", pronuncia: "Áu-Áu" },
-  { word: "IAIÁ", letters: ["I","A","I","A"], hint: "Iaiá — tratamento carinhoso", pronuncia: "Iaiá" },
-  { word: "IOIÔ", letters: ["I","O","I","O"], hint: "Brinquedo — Ioiô", pronuncia: "Ioiô" },
+  { word: "AI", letters: ["A","I"], hint: "Expressão de dor — Ai!", pronuncia: "ái" },
+  { word: "OU", letters: ["O","U"], hint: "Palavra de escolha — Ou", pronuncia: "ôu" },
+  { word: "EU", letters: ["E","U"], hint: "Eu mesmo — Eu", pronuncia: "êu" },
+  { word: "IA", letters: ["I","A"], hint: "Ia embora — Ia", pronuncia: "ía" },
+  { word: "UAI", letters: ["U","A","I"], hint: "Expressão mineira — Uai!", pronuncia: "úai" },
+  { word: "UAU", letters: ["U","A","U"], hint: "Expressão de surpresa — Uau!", pronuncia: "uáu" },
+  { word: "OI", letters: ["O","I"], hint: "Cumprimento — Oi!", pronuncia: "ôi" },
+  { word: "AÍ", letters: ["A","I"], hint: "Lugar — Aí", pronuncia: "aí" },
+  { word: "EI", letters: ["E","I"], hint: "Chamando alguém — Ei!", pronuncia: "êi" },
+  { word: "AUAU", letters: ["A","U","A","U"], hint: "Som do cachorro — Au au!", pronuncia: "áu áu" },
+  { word: "IAIÁ", letters: ["I","A","I","A"], hint: "Iaiá — tratamento carinhoso", pronuncia: "iaiá" },
+  { word: "IOIÔ", letters: ["I","O","I","O"], hint: "Brinquedo — Ioiô", pronuncia: "ioiô" },
 ];
 
 const VOGAIS = ["A", "E", "I", "O", "U"];
@@ -478,13 +478,13 @@ const CORES = {
   U: { flash: "#ffab91" },
 };
 
-// Dicionário de pronúncia para as vogais individuais
+// Dicionário de pronúncia em minúsculas
 const PRONUNCIA_VOGAIS = {
-  "A": "Á",
-  "E": "Ê",
-  "I": "I",
-  "O": "Ô",
-  "U": "Ú"
+  "A": "á",
+  "E": "ê",
+  "I": "i",
+  "O": "ô",
+  "U": "u"
 };
 
 let audioAtivado = false;
