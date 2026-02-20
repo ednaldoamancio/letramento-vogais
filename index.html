@@ -1,0 +1,788 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Jornada das Letras: Formando Palavrinhas com Vogais</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════
+           DESIGN: "Folha de Caderno Viva" — Paper Craft Escolar
+           ═══════════════════════════════════════════════════════ */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --coral: #f4845f;
+            --coral-dark: #e05a3a;
+            --turquoise: #4dd0e1;
+            --turquoise-dark: #26a8b8;
+            --lavender: #b39ddb;
+            --lavender-dark: #8e79c0;
+            --lime: #aed581;
+            --lime-dark: #8bc34a;
+            --peach: #ffab91;
+            --peach-dark: #e08060;
+            --paper: #fefcf3;
+            --brown: #5d4037;
+            --brown-light: #795548;
+            --brown-lighter: #8d6e63;
+            --ruled-line: rgba(173, 200, 230, 0.25);
+            --margin-line: rgba(200, 100, 100, 0.2);
+        }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--paper);
+            color: #333;
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
+
+        /* ─── Fundo de caderno pautado ─── */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 31px,
+                    var(--ruled-line) 31px,
+                    var(--ruled-line) 32px
+                );
+            background-size: 100% 32px;
+            background-position: 0 16px;
+        }
+
+        /* Margem vermelha à esquerda */
+        body::after {
+            content: '';
+            position: fixed;
+            top: 0;
+            bottom: 0;
+            left: clamp(40px, 8vw, 80px);
+            width: 2px;
+            background: var(--margin-line);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* ─── Header fixo ─── */
+        .header {
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            background: rgba(254, 252, 243, 0.92);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(180, 200, 220, 0.3);
+        }
+
+        .header-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 10px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+
+        .btn-som {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 8px 16px;
+            border-radius: 50px;
+            border: none;
+            font-size: 13px;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            background: var(--lime);
+            color: #2e5016;
+            box-shadow: 0 3px 0 var(--lime-dark);
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+
+        .btn-som:hover { transform: scale(1.05); }
+        .btn-som:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--lime-dark); }
+        .btn-som.ativo {
+            background: #e8f5e9;
+            color: #2e7d32;
+            box-shadow: none;
+            cursor: default;
+        }
+
+        .titulo-header {
+            font-family: 'Patrick Hand', cursive;
+            font-size: clamp(16px, 4vw, 22px);
+            color: var(--brown);
+            letter-spacing: -0.5px;
+        }
+
+        .estrelas-badge {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            padding: 6px 16px;
+            border-radius: 50px;
+            background: linear-gradient(135deg, #fff8e1, #ffecb3);
+            border: 2px solid #f9a825;
+            font-family: 'Fredoka One', cursive;
+            font-size: 16px;
+            color: #e65100;
+        }
+
+        /* ─── Navegação de palavras ─── */
+        .nav-palavras {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 12px 16px 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 6px;
+            justify-content: center;
+            position: relative;
+            z-index: 10;
+        }
+
+        .nav-pill {
+            padding: 4px 12px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 700;
+            font-family: 'Nunito', sans-serif;
+            border: 2px solid rgba(121, 85, 72, 0.2);
+            background: rgba(255, 255, 255, 0.7);
+            color: var(--brown-light);
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .nav-pill:hover { transform: scale(1.05); }
+        .nav-pill.ativo { background: var(--brown); color: #fff; border-color: #3e2723; box-shadow: 0 2px 8px rgba(93,64,55,0.3); }
+        .nav-pill.completo { background: #c8e6c9; color: #2e7d32; border-color: #81c784; }
+
+        /* ─── Área principal ─── */
+        .stage {
+            max-width: 700px;
+            margin: 24px auto;
+            padding: 0 16px;
+            position: relative;
+            z-index: 10;
+        }
+
+        /* ─── Barra de progresso ─── */
+        .progresso-bar {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+        }
+
+        .progresso-label {
+            font-size: 13px;
+            font-weight: 700;
+            font-family: 'Nunito', sans-serif;
+            padding: 4px 12px;
+            border-radius: 50px;
+            background: rgba(93, 64, 55, 0.08);
+            color: var(--brown-light);
+            white-space: nowrap;
+        }
+
+        .progresso-track {
+            flex: 1;
+            height: 8px;
+            border-radius: 50px;
+            background: rgba(93, 64, 55, 0.08);
+            overflow: hidden;
+        }
+
+        .progresso-fill {
+            height: 100%;
+            border-radius: 50px;
+            background: linear-gradient(90deg, var(--lime), #81c784);
+            transition: width 0.5s ease;
+        }
+
+        /* ─── Card do exercício (folha de caderno) ─── */
+        .card-exercicio {
+            background: rgba(255, 255, 255, 0.85);
+            border: 2px solid rgba(180, 200, 220, 0.3);
+            border-radius: 16px;
+            padding: 24px;
+            box-shadow: 0 4px 20px rgba(93, 64, 55, 0.08), 0 1px 3px rgba(0,0,0,0.05);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-exercicio::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            background:
+                repeating-linear-gradient(
+                    0deg,
+                    transparent,
+                    transparent 31px,
+                    rgba(173, 200, 230, 0.12) 31px,
+                    rgba(173, 200, 230, 0.12) 32px
+                );
+            background-size: 100% 32px;
+            background-position: 0 8px;
+        }
+
+        .card-conteudo { position: relative; z-index: 1; }
+
+        .dica-texto {
+            text-align: center;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--brown-lighter);
+            margin-bottom: 16px;
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .img-placeholder {
+            width: 160px;
+            height: 160px;
+            margin: 0 auto 20px;
+            border: 3px dashed rgba(121, 85, 72, 0.25);
+            border-radius: 12px;
+            background: rgba(255, 248, 225, 0.5);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+        }
+
+        .img-placeholder .icone { font-size: 36px; opacity: 0.3; }
+        .img-placeholder .texto-placeholder {
+            font-size: 11px;
+            text-align: center;
+            padding: 0 8px;
+            opacity: 0.4;
+            color: var(--brown-light);
+            font-family: 'Nunito', sans-serif;
+        }
+
+        .img-placeholder::before {
+            content: '';
+            position: absolute;
+            top: -8px;
+            left: -8px;
+            width: 40px;
+            height: 16px;
+            border-radius: 3px;
+            background: rgba(255, 235, 59, 0.4);
+            transform: rotate(-15deg);
+        }
+
+        @media (min-width: 640px) {
+            .img-placeholder { width: 180px; height: 180px; }
+        }
+
+        .btn-ouvir {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin: 0 auto 24px;
+            padding: 10px 20px;
+            border-radius: 50px;
+            border: 2px solid rgba(21, 101, 192, 0.2);
+            background: linear-gradient(135deg, #e3f2fd, #bbdefb);
+            color: #1565c0;
+            font-size: 14px;
+            font-weight: 700;
+            font-family: 'Nunito', sans-serif;
+            cursor: pointer;
+            box-shadow: 0 2px 8px rgba(21, 101, 192, 0.1);
+            transition: transform 0.15s;
+        }
+
+        .btn-ouvir:hover { transform: scale(1.05); }
+        .btn-ouvir:active { transform: scale(0.95); }
+
+        .slots-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 28px;
+            flex-wrap: wrap;
+        }
+
+        .slot {
+            width: 56px;
+            height: 64px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        @media (min-width: 640px) { .slot { width: 64px; height: 76px; font-size: 2rem; } }
+
+        .slot.vazio { background: rgba(245, 240, 230, 0.6); color: rgba(121, 85, 72, 0.2); border: 3px dashed rgba(121, 85, 72, 0.15); }
+        .slot.proximo { background: rgba(255, 255, 255, 0.9); color: rgba(121, 85, 72, 0.25); border: 3px dashed rgba(121, 85, 72, 0.4); box-shadow: 0 2px 8px rgba(93, 64, 55, 0.1); animation: pulseSlot 1.5s ease-in-out infinite; }
+        .slot.preenchido { color: #fff; border-style: solid; border-width: 3px; animation: popIn 0.3s ease; }
+
+        @keyframes pulseSlot { 0%, 100% { border-color: rgba(121, 85, 72, 0.4); } 50% { border-color: rgba(121, 85, 72, 0.15); } }
+        @keyframes popIn { 0% { transform: scale(1.3); } 100% { transform: scale(1); } }
+
+        .slot::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 4px;
+            right: 4px;
+            height: 2px;
+            border-radius: 2px;
+            background: rgba(173, 200, 230, 0.4);
+        }
+
+        .slot.cor-A { background: var(--coral); border-color: var(--coral-dark); box-shadow: 0 4px 0 var(--coral-dark), 0 6px 15px rgba(244,132,95,0.4); }
+        .slot.cor-E { background: var(--turquoise); border-color: var(--turquoise-dark); box-shadow: 0 4px 0 var(--turquoise-dark), 0 6px 15px rgba(77,208,225,0.4); }
+        .slot.cor-I { background: var(--lavender); border-color: var(--lavender-dark); box-shadow: 0 4px 0 var(--lavender-dark), 0 6px 15px rgba(179,157,219,0.4); }
+        .slot.cor-O { background: var(--lime); border-color: var(--lime-dark); box-shadow: 0 4px 0 var(--lime-dark), 0 6px 15px rgba(174,213,129,0.4); }
+        .slot.cor-U { background: var(--peach); border-color: var(--peach-dark); box-shadow: 0 4px 0 var(--peach-dark), 0 6px 15px rgba(255,171,145,0.4); }
+
+        .msg-acerto { text-align: center; margin-bottom: 12px; opacity: 0; transform: scale(0.8); transition: all 0.3s ease; }
+        .msg-acerto.visivel { opacity: 1; transform: scale(1); }
+        .msg-acerto span { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 50px; font-size: 16px; font-weight: 700; font-family: 'Fredoka One', cursive; background: linear-gradient(135deg, #c8e6c9, #a5d6a7); color: #2e7d32; box-shadow: 0 3px 10px rgba(46, 125, 50, 0.2); }
+
+        .blocos-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+        @media (min-width: 640px) { .blocos-container { gap: 16px; } }
+
+        /* Blocos de Vogais Coloridos */
+        .bloco-vogal {
+            width: 56px;
+            height: 56px;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.5rem;
+            color: #fff;
+            border: 3px solid;
+            cursor: pointer;
+            transition: transform 0.15s, box-shadow 0.15s;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        @media (min-width: 640px) { .bloco-vogal { width: 64px; height: 64px; font-size: 1.6rem; } }
+
+        .bloco-vogal:hover { transform: scale(1.12) rotate(3deg); }
+        .bloco-vogal:active { transform: scale(0.9); }
+        .bloco-vogal.desabilitado { opacity: 0.4; pointer-events: none; }
+
+        .bloco-A { background: var(--coral); border-color: var(--coral-dark); box-shadow: 0 5px 0 var(--coral-dark), 0 7px 15px rgba(244,132,95,0.3); }
+        .bloco-E { background: var(--turquoise); border-color: var(--turquoise-dark); box-shadow: 0 5px 0 var(--turquoise-dark), 0 7px 15px rgba(77,208,225,0.3); }
+        .bloco-I { background: var(--lavender); border-color: var(--lavender-dark); box-shadow: 0 5px 0 var(--lavender-dark), 0 7px 15px rgba(179,157,219,0.3); }
+        .bloco-O { background: var(--lime); border-color: var(--lime-dark); box-shadow: 0 5px 0 var(--lime-dark), 0 7px 15px rgba(174,213,129,0.3); }
+        .bloco-U { background: var(--peach); border-color: var(--peach-dark); box-shadow: 0 5px 0 var(--peach-dark), 0 7px 15px rgba(255,171,145,0.3); }
+
+        .instrucao { text-align: center; font-size: 12px; margin-top: 16px; opacity: 0.5; color: var(--brown-light); font-family: 'Nunito', sans-serif; }
+
+        .welcome { text-align: center; animation: fadeInUp 0.6s ease; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+
+        .welcome-banner { border-radius: 16px; overflow: hidden; margin-bottom: 28px; box-shadow: 0 4px 20px rgba(93, 64, 55, 0.12); border: 3px solid rgba(180, 200, 220, 0.3); }
+        .welcome-banner img { width: 100%; height: auto; max-height: 300px; object-fit: cover; display: block; }
+
+        .welcome h2 { font-family: 'Patrick Hand', cursive; font-size: clamp(26px, 6vw, 38px); color: var(--brown); margin-bottom: 12px; }
+        .welcome p { font-size: clamp(14px, 3vw, 17px); color: var(--brown-light); max-width: 480px; margin: 0 auto 24px; line-height: 1.6; }
+        .welcome-blocos { width: clamp(220px, 50vw, 320px); height: auto; margin: 0 auto 28px; display: block; }
+
+        .btn-comecar { display: inline-block; padding: 16px 36px; border-radius: 16px; border: none; font-family: 'Fredoka One', cursive; font-size: 20px; color: #fff; background: linear-gradient(135deg, var(--coral), var(--coral-dark)); box-shadow: 0 6px 0 #c0392b, 0 8px 20px rgba(224, 90, 58, 0.3); cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
+        .btn-comecar:hover { transform: scale(1.05); }
+        .btn-comecar:active { transform: translateY(4px); box-shadow: 0 2px 0 #c0392b; }
+
+        .parabens { text-align: center; animation: fadeInUp 0.5s ease; padding: 32px 0; }
+        .parabens .trofeu { font-size: 80px; margin-bottom: 12px; display: block; animation: wiggle 0.8s ease 0.3s; }
+        @keyframes wiggle { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-8deg); } 40% { transform: rotate(8deg); } 60% { transform: rotate(-4deg); } 80% { transform: rotate(4deg); } }
+
+        .parabens h2 { font-family: 'Patrick Hand', cursive; font-size: 36px; color: var(--brown); margin-bottom: 8px; }
+        .parabens p { font-size: 18px; color: var(--brown-light); margin-bottom: 8px; }
+        .parabens .estrelas-final { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 50px; background: linear-gradient(135deg, #fff8e1, #ffecb3); border: 3px solid #f9a825; font-family: 'Fredoka One', cursive; font-size: 1.4rem; color: #e65100; margin-bottom: 28px; }
+
+        .btn-replay { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border-radius: 16px; border: none; font-family: 'Fredoka One', cursive; font-size: 16px; color: #fff; background: linear-gradient(135deg, var(--turquoise), var(--turquoise-dark)); box-shadow: 0 5px 0 #1a8a99, 0 7px 15px rgba(38, 168, 184, 0.3); cursor: pointer; transition: transform 0.15s; }
+        .btn-replay:hover { transform: scale(1.05); }
+        .btn-replay:active { transform: translateY(3px); box-shadow: 0 2px 0 #1a8a99; }
+
+        .flash-letra { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); font-size: min(200px, 40vw); font-family: 'Fredoka One', cursive; pointer-events: none; z-index: 200; opacity: 0; transition: transform 0.35s ease, opacity 0.35s ease; }
+        .flash-letra.visivel { transform: translate(-50%, -50%) scale(1); opacity: 1; }
+        .flash-letra.saindo { transform: translate(-50%, -50%) scale(2); opacity: 0; }
+
+        @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
+        .shake { animation: shake 0.4s ease; }
+        @keyframes slideIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
+        .slide-in { animation: slideIn 0.4s ease; }
+        .escondido { display: none !important; }
+
+        /* Animação das palmas */
+        .chuva-palmas { position: fixed; pointer-events: none; z-index: 9999; animation: cair 2s linear forwards; }
+        @keyframes cair {
+            0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<header class="header">
+    <div class="header-inner">
+        <button class="btn-som" id="btnSom" onclick="ativarSons()">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+            ATIVAR SONS
+        </button>
+        <span class="titulo-header">Formando Palavrinhas</span>
+        <div class="estrelas-badge">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="#f9a825" stroke="#f57f17" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+            <span id="estrelasCount">0</span>
+        </div>
+    </div>
+</header>
+
+<div class="nav-palavras escondido" id="navPalavras"></div>
+
+<div class="flash-letra" id="flashLetra"></div>
+
+<div class="stage" id="stage"></div>
+
+<audio id="audioAplausos" src="https://actions.google.com/sounds/v1/crowds/light_applause.ogg" preload="auto"></audio>
+
+<script>
+    // DADOS DAS PALAVRAS
+    const PALAVRAS = [
+        { word: "AI",    letters: ["A","I"],         hint: "Expressão de dor — Ai!" },
+        { word: "OU",    letters: ["O","U"],         hint: "Palavra de escolha — Ou" },
+        { word: "EU",    letters: ["E","U"],         hint: "Eu mesmo — Eu" },
+        { word: "IA",    letters: ["I","A"],         hint: "Ia embora — Ia" },
+        { word: "UAI",   letters: ["U","A","I"],     hint: "Expressão mineira — Uai!" },
+        { word: "UAU",   letters: ["U","A","U"],     hint: "Expressão de surpresa — Uau!" },
+        { word: "OI",    letters: ["O","I"],         hint: "Cumprimento — Oi!" },
+        { word: "AÍ",    letters: ["A","I"],         hint: "Lugar — Aí" },
+        { word: "EI",    letters: ["E","I"],         hint: "Chamando alguém — Ei!" },
+        { word: "AUAU",  letters: ["A","U","A","U"], hint: "Som do cachorro — Au au!" },
+        { word: "IAIÁ",  letters: ["I","A","I","A"], hint: "Iaiá — tratamento carinhoso" },
+        { word: "IOIÔ",  letters: ["I","O","I","O"], hint: "Brinquedo — Ioiô" },
+    ];
+
+    const VOGAIS = ["A", "E", "I", "O", "U"];
+
+    const CORES = {
+        A: { flash: "#f4845f" },
+        E: { flash: "#4dd0e1" },
+        I: { flash: "#b39ddb" },
+        O: { flash: "#aed581" },
+        U: { flash: "#ffab91" },
+    };
+
+    let audioAtivado = false;
+    let estrelas = 0;
+    let indexAtual = 0;
+    let letrasColocadas = [];
+    let acertou = false;
+    let completados = new Set();
+    const synth = window.speechSynthesis;
+
+    function ativarSons() {
+        audioAtivado = true;
+        const btn = document.getElementById('btnSom');
+        btn.classList.add('ativo');
+        btn.innerHTML = `
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>
+            Sons ativos
+        `;
+        btn.onclick = null;
+        falar("Sons ativados!");
+    }
+
+    function falar(texto) {
+        if (!audioAtivado) return;
+        synth.cancel();
+        const msg = new SpeechSynthesisUtterance(texto);
+        msg.lang = 'pt-BR';
+        msg.rate = 0.85;
+        msg.pitch = 1.2;
+        synth.speak(msg);
+    }
+
+    function ouvirSom() {
+        synth.cancel();
+        const palavra = PALAVRAS[indexAtual];
+        const msg = new SpeechSynthesisUtterance(palavra.word);
+        msg.lang = 'pt-BR';
+        msg.rate = 0.7;
+        msg.pitch = 1.1;
+        synth.speak(msg);
+    }
+
+    function somAplausos() {
+        if (!audioAtivado) return;
+        
+        const audio = document.getElementById('audioAplausos');
+        audio.currentTime = 0;
+        audio.volume = 0.5;
+        audio.play().catch(e => console.log("Áudio bloqueado pelo navegador."));
+
+        for(let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                const palma = document.createElement('div');
+                palma.innerText = '👏';
+                palma.className = 'chuva-palmas';
+                palma.style.left = Math.random() * 90 + 'vw';
+                palma.style.fontSize = (Math.random() * 30 + 30) + 'px';
+                document.body.appendChild(palma);
+                setTimeout(() => palma.remove(), 2000);
+            }, i * 80);
+        }
+    }
+
+    function mostrarFlash(letra) {
+        const el = document.getElementById('flashLetra');
+        el.textContent = letra;
+        el.style.color = CORES[letra]?.flash || "#f4845f";
+        el.style.textShadow = `0 4px 20px ${CORES[letra]?.flash || "rgba(0,0,0,0.2)"}40`;
+        el.className = 'flash-letra visivel';
+        setTimeout(() => { el.className = 'flash-letra saindo'; }, 250);
+        setTimeout(() => { el.className = 'flash-letra'; }, 500);
+    }
+
+    function renderizarNav() {
+        const nav = document.getElementById('navPalavras');
+        nav.innerHTML = '';
+        PALAVRAS.forEach((p, i) => {
+            const btn = document.createElement('button');
+            btn.className = 'nav-pill';
+            if (i === indexAtual) btn.classList.add('ativo');
+            if (completados.has(i)) btn.classList.add('completo');
+            btn.textContent = (completados.has(i) ? '✓ ' : '') + p.word;
+            btn.onclick = () => irParaPalavra(i);
+            nav.appendChild(btn);
+        });
+    }
+
+    function irParaPalavra(index) {
+        // Bloqueia a navegação se estiver no meio da comemoração para não bugar o jogo
+        if (acertou) return; 
+        
+        indexAtual = index;
+        letrasColocadas = [];
+        acertou = false;
+        renderizarExercicio();
+        renderizarNav();
+    }
+
+    function mostrarBoasVindas() {
+        document.getElementById('navPalavras').classList.add('escondido');
+        const stage = document.getElementById('stage');
+        stage.innerHTML = `
+            <div class="welcome">
+                <div class="welcome-banner">
+                    <img src="https://private-us-east-1.manuscdn.com/sessionFile/HbRSXGNma5CpLm4cm5TFHF/sandbox/cu8P9aZoTzTbXCWvvMPxGP-img-1_1771543678000_na1fn_aGVyby1iYW5uZXItZXNjb2xh.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvSGJSU1hHTm1hNUNwTG00Y201VEZIRi9zYW5kYm94L2N1OFA5YVpvVHpUYlhDV3Z2TVB4R1AtaW1nLTFfMTc3MTU0MzY3ODAwMF9uYTFmbl9hR1Z5YnkxaVlXNXVaWEl0WlhOamIyeGgucG5nP3gtb3NzLXByb2Nlc3M9aW1hZ2UvcmVzaXplLHdfMTkyMCxoXzE5MjAvZm9ybWF0LHdlYnAvcXVhbGl0eSxxXzgwIiwiQ29uZGl0aW9uIjp7IkRhdGVMZXNzVGhhbiI6eyJBV1M6RXBvY2hUaW1lIjoxNzk4NzYxNjAwfX19XX0_&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=CpQMsl1iux9jBx6GPArNVH6lXsCLAeCZI3tKRz85rsDjVtaQ-TfmrXdqekN8UFCzFwH5Jlma~Y7P3LZ1Yi9HyOlTGUv0mRUo3fJQWRb-kbtArj69oIlrY-Sf~ewCOrR5Xo5Tp3mcRRJtxJTEd4rEY5dQUPEWV0nSG-g7BO2peSGcPmavvoLzrx7jIqj7B8JVF1qBotQIyJ8bNp1VyceJbSbLtRfu4ACrp7YkvOyOxY2R0X1HLT8UR6LzFSaf9yNE~TO2xUv7YDwYFrewcsckng2B~bVkG1j9qiitAzXBAyHVo4mXmcI9clIawIKPbCn8TOdaTOrpOdWJzG7U3mbSUA__" 
+                         alt="Caderno escolar com blocos de vogais">
+                </div>
+                <h2>Formando Palavrinhas com Vogais</h2>
+                <p>Veja a imagem, ouça o som e monte a palavrinha usando os blocos de vogais! 
+                   Cada palavrinha é formada apenas por vogais: <strong>A, E, I, O, U</strong>.</p>
+                <img class="welcome-blocos" 
+                     src="https://private-us-east-1.manuscdn.com/sessionFile/HbRSXGNma5CpLm4cm5TFHF/sandbox/cu8P9aZoTzTbXCWvvMPxGP-img-2_1771543674000_na1fn_YmxvY29zLXZvZ2Fpcy1kZWNvcmF0aXZv.png?x-oss-process=image/resize,w_1920,h_1920/format,webp/quality,q_80&Expires=1798761600&Policy=eyJTdGF0ZW1lbnQiOlt7IlJlc291cmNlIjoiaHR0cHM6Ly9wcml2YXRlLXVzLWVhc3QtMS5tYW51c2Nkbi5jb20vc2Vzc2lvbkZpbGUvSGJSU1hHTm1hNUNwTG00Y201VEZIRi9zYW5kYm94L2N1OFA5YVpvVHpUYlhDV3Z2TVB4R1AtaW1nLTJfMTc3MTU0MzY3NDAwMF9uYTFmbl9ZbXh2WTI5ekxYWnZaMkZwY3kxa1pXTnZjbUYwYVhadi5wbmc~eC1vc3MtcHJvY2Vzcz1pbWFnZS9yZXNpemUsd18xOTIwLGhfMTkyMC9mb3JtYXQsd2VicC9xdWFsaXR5LHFfODAiLCJDb25kaXRpb24iOnsiRGF0ZUxlc3NUaGFuIjp7IkFXUzpFcG9jaFRpbWUiOjE3OTg3NjE2MDB9fX1dfQ__&Key-Pair-Id=K2HSFNDJXOU9YS&Signature=tNfgI5W3mOcHqGb~IANLMkRU-aUFAKVCuXjgk3vPQYni~~aMf8laWtUiYzn8NlUZYAe7Dp9v9qH7Er~MyiBnL4rcBD7hgHTr79CrNFAEc-JLr9ldKz0Y55U09IBEG9SGKC2WLc6dFMrK7qxGtPZsRMkvfNfUnemNKkn1fvIO-MaxWmiQdc8HgLclspFQWMOGB~pFw4Lc~wfymcrY7mAGAUhth~acw-5wK4MfRqoDtk498UrZ4FejNDBkW8qov6pLjYTk7pdfV3TK4MBRLNliMwulCmXLagLg-udHuOzSuBWyu7rMS6rYclXd5aUxInY4qv3HBb79ln6NjwCDFrqK3g__" 
+                     alt="Blocos A E I O U">
+                <button class="btn-comecar" onclick="iniciarJogo()">Começar a Aventura!</button>
+            </div>
+        `;
+    }
+
+    function iniciarJogo() {
+        indexAtual = 0;
+        letrasColocadas = [];
+        estrelas = 0;
+        acertou = false;
+        completados = new Set();
+        document.getElementById('estrelasCount').textContent = '0';
+        document.getElementById('navPalavras').classList.remove('escondido');
+        renderizarNav();
+        renderizarExercicio();
+        falar("Vamos formar palavrinhas com as vogais!");
+    }
+
+    function renderizarExercicio() {
+        const palavra = PALAVRAS[indexAtual];
+        const progresso = ((completados.size) / PALAVRAS.length) * 100;
+
+        let slotsHTML = '';
+        palavra.letters.forEach((letra, i) => {
+            const colocada = letrasColocadas[i];
+            let classes = 'slot';
+            if (colocada) {
+                classes += ' preenchido cor-' + colocada;
+            } else if (i === letrasColocadas.length) {
+                classes += ' proximo';
+            } else {
+                classes += ' vazio';
+            }
+            slotsHTML += `<div class="${classes}" id="slot-${i}">${colocada || '?'}</div>`;
+        });
+
+        let blocosHTML = '';
+        VOGAIS.forEach(v => {
+            const desab = acertou ? ' desabilitado' : '';
+            blocosHTML += `<button class="bloco-vogal bloco-${v}${desab}" onclick="clicarVogal('${v}')">${v}</button>`;
+        });
+
+        const stage = document.getElementById('stage');
+        stage.innerHTML = `
+            <div class="slide-in">
+                <div class="progresso-bar">
+                    <span class="progresso-label">Palavra ${indexAtual + 1} de ${PALAVRAS.length}</span>
+                    <div class="progresso-track">
+                        <div class="progresso-fill" style="width: ${progresso}%"></div>
+                    </div>
+                </div>
+
+                <div class="card-exercicio">
+                    <div class="card-conteudo">
+                        <p class="dica-texto">${palavra.hint}</p>
+
+                        <div class="img-placeholder">
+                            <span class="icone">🖼️</span>
+                            <span class="texto-placeholder">Espaço para imagem do som</span>
+                        </div>
+
+                        <button class="btn-ouvir" onclick="ouvirSom()">
+                            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+                            Ouvir o som
+                        </button>
+
+                        <div class="slots-container" id="slotsContainer">
+                            ${slotsHTML}
+                        </div>
+
+                        <div class="msg-acerto" id="msgAcerto">
+                            <span>✨ Muito bem!</span>
+                        </div>
+
+                        <div class="blocos-container" id="blocosContainer">
+                            ${blocosHTML}
+                        </div>
+
+                        <p class="instrucao">Toque nos blocos de vogais para formar a palavra!</p>
+                    </div>
+                </div>
+            </div>
+        `;
+    }
+
+    function clicarVogal(vogal) {
+        if (acertou) return;
+
+        const palavra = PALAVRAS[indexAtual];
+        const esperada = palavra.letters[letrasColocadas.length];
+
+        // Flash visual da letra
+        mostrarFlash(vogal);
+
+        if (vogal === esperada) {
+            letrasColocadas.push(vogal);
+            
+            // Toca IMEDIATAMENTE a letra que acabou de acertar
+            falar(vogal); 
+
+            const slot = document.getElementById('slot-' + (letrasColocadas.length - 1));
+            if (slot) {
+                slot.className = 'slot preenchido cor-' + vogal;
+                slot.textContent = vogal;
+            }
+
+            const proxSlot = document.getElementById('slot-' + letrasColocadas.length);
+            if (proxSlot && proxSlot.classList.contains('vazio')) {
+                proxSlot.classList.remove('vazio');
+                proxSlot.classList.add('proximo');
+            }
+
+            // Se completou a palavra inteira
+            if (letrasColocadas.length === palavra.letters.length) {
+                acertou = true;
+                estrelas += 10;
+                document.getElementById('estrelasCount').textContent = estrelas;
+                completados.add(indexAtual);
+                renderizarNav();
+
+                const msg = document.getElementById('msgAcerto');
+                if (msg) msg.classList.add('visivel');
+
+                document.querySelectorAll('.bloco-vogal').forEach(b => b.classList.add('desabilitado'));
+
+                // O grande segredo: espera 1 segundo para a voz da letra terminar antes de comemorar
+                setTimeout(() => {
+                    somAplausos();
+                    falar("Parabéns! Você formou " + palavra.word + "!");
+                }, 1000);
+
+                // Dá tempo dos aplausos e da fala acontecerem antes de pular de tela (agora 3.5s totais)
+                setTimeout(() => {
+                    acertou = false;
+                    if (indexAtual + 1 < PALAVRAS.length) {
+                        indexAtual++;
+                        letrasColocadas = [];
+                        renderizarNav();
+                        renderizarExercicio();
+                    } else {
+                        mostrarParabens();
+                    }
+                }, 3500);
+            }
+        } else {
+            falar("Tente de novo!");
+            const slotAtual = document.getElementById('slot-' + letrasColocadas.length);
+            if (slotAtual) {
+                slotAtual.classList.add('shake');
+                setTimeout(() => slotAtual.classList.remove('shake'), 500);
+            }
+        }
+    }
+
+    function mostrarParabens() {
+        document.getElementById('navPalavras').classList.add('escondido');
+        const stage = document.getElementById('stage');
+        stage.innerHTML = `
+            <div class="parabens">
+                <span class="trofeu">🏆</span>
+                <h2>Parabéns!</h2>
+                <p>Você formou todas as palavrinhas!</p>
+                <div class="estrelas-final">
+                    <svg width="24" height="24" viewBox="0 0 24 24" fill="#f9a825" stroke="#f57f17" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+                    ${estrelas} estrelas
+                </div>
+                <br><br>
+                <button class="btn-replay" onclick="iniciarJogo()">
+                    🔄 Jogar de novo
+                </button>
+            </div>
+        `;
+        somAplausos();
+        falar("Parabéns! Você completou todas as atividades!");
+    }
+
+    // INICIALIZAÇÃO
+    mostrarBoasVindas();
+</script>
+</body>
+</html>
