@@ -1,15 +1,15 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, viewport-fit=cover"/>
-<title>Ilha das Vogais — Formando Palavrinhas</title>
-<link rel="preconnect" href="https://fonts.googleapis.com" />
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet"/>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Jornada das Letras: Formando Palavrinhas com Vogais</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
 <style>
 /* ═══════════════════════════════════════════════════════
-   DESIGN: "Folha de Caderno Viva" + Tema Ilha/Fantasia Infantil
+   DESIGN: "Folha de Caderno Viva" — Paper Craft Escolar
 ═══════════════════════════════════════════════════════ */
 * { margin: 0; padding: 0; box-sizing: border-box; }
 :root {
@@ -29,28 +29,23 @@
   --brown-lighter: #8d6e63;
   --ruled-line: rgba(173, 200, 230, 0.25);
   --margin-line: rgba(200, 100, 100, 0.2);
-  --header-h: 64px;
-  --nav-h: 0px;
 }
-
-html, body { height: 100%; }
 body {
   font-family: 'Nunito', sans-serif;
   background: var(--paper);
   color: #333;
-  min-height: 100dvh;
+  min-height: 100vh;
   position: relative;
   overflow-x: hidden;
-  overscroll-behavior: contain;
 }
 
-/* MODO BOAS-VINDAS sem scroll */
+/* ─── MODO BOAS-VINDAS: 100% viewport sem scroll ─── */
 body.boas-vindas {
-  height: 100dvh;
+  height: 100vh;
   overflow: hidden;
 }
 
-/* Fundo de caderno pautado */
+/* ─── Fundo de caderno pautado ─── */
 body::before {
   content: '';
   position: fixed;
@@ -58,8 +53,7 @@ body::before {
   z-index: 0;
   pointer-events: none;
   background:
-    repeating-linear-gradient(
-      0deg,
+    repeating-linear-gradient(0deg,
       transparent,
       transparent 31px,
       var(--ruled-line) 31px,
@@ -74,34 +68,13 @@ body::after {
   position: fixed;
   top: 0;
   bottom: 0;
-  left: clamp(36px, 7vw, 72px);
+  left: clamp(40px, 8vw, 80px);
   width: 2px;
   background: var(--margin-line);
   z-index: 0;
   pointer-events: none;
 }
-
-/* Ilustrações infantis (tema ilha/fantasia) */
-.decor {
-  position: fixed;
-  inset: 0;
-  pointer-events: none;
-  z-index: 1;
-}
-.decor .d {
-  position: absolute;
-  opacity: 0.18;
-  filter: drop-shadow(0 2px 3px rgba(0,0,0,0.12));
-  font-size: clamp(24px, 6vw, 40px);
-  user-select: none;
-}
-.decor .ilha     { top: 6%;  left: 6%;  }
-.decor .dragao   { top: 10%; right: 8%; }
-.decor .fada     { bottom: 12%; left: 8%; }
-.decor .gnomo    { bottom: 8%;  right: 10%; }
-.decor .elfo     { top: 50%; left: 50%; transform: translate(-50%, -50%) rotate(-8deg); }
-
-/* Header fixo */
+/* ─── Header fixo ─── */
 .header {
   position: sticky;
   top: 0;
@@ -163,20 +136,17 @@ body::after {
   font-size: 16px;
   color: #e65100;
 }
-
-/* Navegação de palavras (chips + dropdown mobile) */
+/* ─── Navegação de palavras ─── */
 .nav-palavras {
   max-width: 800px;
   margin: 0 auto;
-  padding: 8px 16px 0;
-  position: relative;
-  z-index: 10;
-}
-.nav-chips {
+  padding: 12px 16px 0;
   display: flex;
   flex-wrap: wrap;
   gap: 6px;
   justify-content: center;
+  position: relative;
+  z-index: 10;
 }
 .nav-pill {
   padding: 4px 12px;
@@ -193,100 +163,62 @@ body::after {
 .nav-pill:hover { transform: scale(1.05); }
 .nav-pill.ativo { background: var(--brown); color: #fff; border-color: #3e2723; box-shadow: 0 2px 8px rgba(93,64,55,0.3); }
 .nav-pill.completo { background: #c8e6c9; color: #2e7d32; border-color: #81c784; }
-
-#navSelect {
-  display: none;
-  width: 100%;
-  margin-top: 6px;
-  padding: 10px 12px;
-  border-radius: 12px;
-  border: 2px solid rgba(121,85,72,0.2);
-  background: #fff;
-  font-weight: 700;
-  color: var(--brown-light);
-}
-@media (max-width: 520px) {
-  .nav-chips { display: none; }
-  #navSelect { display: block; }
-}
-
-/* Área principal ocupa o viewport remanescente sem scroll */
+/* ─── Área principal ─── */
 .stage {
   max-width: 700px;
-  margin: 0 auto;
-  padding: 8px 16px;
+  margin: 24px auto;
+  padding: 0 16px;
   position: relative;
   z-index: 10;
-  min-height: calc(100dvh - var(--header-h) - var(--nav-h));
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-
-/* BOAS-VINDAS: 100% viewport real */
+/* ─── BOAS-VINDAS RESPONSIVA 100% VIEWPORT ─── */
 .welcome {
-  min-height: calc(100dvh - var(--header-h));
-  width: 100%;
-  display: grid;
-  grid-template-rows: auto auto auto auto;
-  align-content: center;
-  justify-items: center;
-  gap: 16px;
-  padding: 12px 16px 18px;
+  height: calc(100vh - 140px); /* Altura disponível após header */
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px 16px;
   text-align: center;
   animation: fadeInUp 0.6s ease;
+  gap: 20px;
 }
-.welcome-banner {
-  border-radius: 16px;
-  overflow: hidden;
-  box-shadow: 0 4px 20px rgba(93, 64, 55, 0.12);
+.welcome-banner { 
+  border-radius: 16px; 
+  overflow: hidden; 
+  box-shadow: 0 4px 20px rgba(93, 64, 55, 0.12); 
   border: 3px solid rgba(180, 200, 220, 0.3);
   width: 100%;
   max-width: 320px;
-  height: clamp(150px, 34dvh, 220px);
+  height: clamp(160px, 35vh, 240px); /* Altura controlada */
 }
 .welcome-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.welcome h2 {
-  font-family: 'Patrick Hand', cursive;
-  font-size: clamp(22px, 5.2vw, 30px);
-  color: var(--brown);
-  line-height: 1.2;
-}
-.welcome p {
-  font-size: clamp(13px, 3.9vw, 15px);
-  color: var(--brown-light);
-  max-width: 90%;
-  line-height: 1.45;
-}
-.welcome-blocos {
-  width: clamp(180px, 45vw, 270px);
-  height: auto;
-  max-height: 72px;
-  object-fit: contain;
-}
-.btn-comecar {
-  display: inline-block;
-  padding: clamp(12px, 3vw, 14px) clamp(22px, 7vw, 30px);
-  border-radius: 16px;
-  border: none;
-  font-family: 'Fredoka One', cursive;
-  font-size: clamp(16px, 4vw, 20px);
-  color: #fff;
-  background: linear-gradient(135deg, var(--coral), var(--coral-dark));
-  box-shadow: 0 6px 0 #c0392b, 0 8px 20px rgba(224, 90, 58, 0.3);
-  cursor: pointer;
+.welcome h2 { font-family: 'Patrick Hand', cursive; font-size: clamp(22px, 5.5vw, 32px); color: var(--brown); margin: 0; line-height: 1.2; }
+.welcome p { font-size: clamp(13px, 3vw, 15px); color: var(--brown-light); max-width: 90%; line-height: 1.5; margin: 0; }
+.welcome-blocos { width: clamp(180px, 40vw, 280px); height: auto; display: block; max-height: 80px; object-fit: contain; }
+.btn-comecar { 
+  display: inline-block; 
+  padding: clamp(12px, 3vw, 16px) clamp(24px, 8vw, 36px); 
+  border-radius: 16px; 
+  border: none; 
+  font-family: 'Fredoka One', cursive; 
+  font-size: clamp(16px, 4vw, 20px); 
+  color: #fff; 
+  background: linear-gradient(135deg, var(--coral), var(--coral-dark)); 
+  box-shadow: 0 6px 0 #c0392b, 0 8px 20px rgba(224, 90, 58, 0.3); 
+  cursor: pointer; 
   transition: transform 0.15s, box-shadow 0.15s;
-  min-height: 48px;
+  min-height: 52px;
 }
 .btn-comecar:hover { transform: scale(1.05); }
 .btn-comecar:active { transform: translateY(4px); box-shadow: 0 2px 0 #c0392b; }
 
-/* Barra de progresso */
+/* ─── Barra de progresso ─── */
 .progresso-bar {
   display: flex;
   align-items: center;
   gap: 12px;
-  margin-bottom: 12px;
+  margin-bottom: 20px;
 }
 .progresso-label {
   font-size: 13px;
@@ -311,20 +243,15 @@ body::after {
   background: linear-gradient(90deg, var(--lime), #81c784);
   transition: width 0.5s ease;
 }
-
-/* Card do exercício */
+/* ─── Card do exercício (folha de caderno) ─── */
 .card-exercicio {
-  width: 100%;
   background: rgba(255, 255, 255, 0.85);
   border: 2px solid rgba(180, 200, 220, 0.3);
   border-radius: 16px;
-  padding: clamp(16px, 3.5vw, 24px);
+  padding: 24px;
   box-shadow: 0 4px 20px rgba(93, 64, 55, 0.08), 0 1px 3px rgba(0,0,0,0.05);
   position: relative;
   overflow: hidden;
-  display: grid;
-  grid-auto-rows: auto;
-  gap: 10px;
 }
 .card-exercicio::before {
   content: '';
@@ -332,8 +259,7 @@ body::after {
   inset: 0;
   pointer-events: none;
   background:
-    repeating-linear-gradient(
-      0deg,
+    repeating-linear-gradient(0deg,
       transparent,
       transparent 31px,
       rgba(173, 200, 230, 0.12) 31px,
@@ -343,20 +269,18 @@ body::after {
   background-position: 0 8px;
 }
 .card-conteudo { position: relative; z-index: 1; }
-
 .dica-texto {
   text-align: center;
   font-size: 14px;
   font-weight: 600;
   color: var(--brown-lighter);
-  margin-bottom: 6px;
+  margin-bottom: 16px;
   font-family: 'Nunito', sans-serif;
 }
-
 .img-placeholder {
-  width: 148px;
-  height: 148px;
-  margin: 0 auto 8px;
+  width: 160px;
+  height: 160px;
+  margin: 0 auto 20px;
   border: 3px dashed rgba(121, 85, 72, 0.25);
   border-radius: 12px;
   background: rgba(255, 248, 225, 0.5);
@@ -364,36 +288,37 @@ body::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 6px;
+  gap: 8px;
   position: relative;
 }
-.img-placeholder .icone { font-size: 32px; opacity: 0.35; }
+.img-placeholder .icone { font-size: 36px; opacity: 0.3; }
 .img-placeholder .texto-placeholder {
   font-size: 11px;
   text-align: center;
   padding: 0 8px;
-  opacity: 0.5;
+  opacity: 0.4;
   color: var(--brown-light);
   font-family: 'Nunito', sans-serif;
 }
 .img-placeholder::before {
   content: '';
   position: absolute;
-  top: -8px; left: -8px;
-  width: 40px; height: 16px;
+  top: -8px;
+  left: -8px;
+  width: 40px;
+  height: 16px;
   border-radius: 3px;
   background: rgba(255, 235, 59, 0.4);
   transform: rotate(-15deg);
 }
 @media (min-width: 640px) {
-  .img-placeholder { width: 168px; height: 168px; }
+  .img-placeholder { width: 180px; height: 180px; }
 }
-
 .btn-ouvir {
   display: flex;
   align-items: center;
   gap: 8px;
-  margin: 0 auto 14px;
+  margin: 0 auto 24px;
   padding: 10px 20px;
   border-radius: 50px;
   border: 2px solid rgba(21, 101, 192, 0.2);
@@ -408,36 +333,39 @@ body::after {
 }
 .btn-ouvir:hover { transform: scale(1.05); }
 .btn-ouvir:active { transform: scale(0.95); }
-
 .slots-container {
   display: flex;
   justify-content: center;
-  gap: 10px;
-  margin-bottom: 16px;
+  gap: 12px;
+  margin-bottom: 28px;
   flex-wrap: wrap;
 }
 .slot {
-  width: 52px; height: 60px;
+  width: 56px;
+  height: 64px;
   border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: 'Fredoka One', cursive;
-  font-size: 1.45rem;
+  font-size: 1.5rem;
   position: relative;
   transition: all 0.3s ease;
 }
-@media (min-width: 640px) {
-  .slot { width: 60px; height: 70px; font-size: 1.9rem; }
-}
-.slot.vazio { background: rgba(245, 240, 230, 0.6); color: rgba(121, 85, 72, 0.25); border: 3px dashed rgba(121, 85, 72, 0.15); }
+@media (min-width: 640px) { .slot { width: 64px; height: 76px; font-size: 2rem; } }
+.slot.vazio { background: rgba(245, 240, 230, 0.6); color: rgba(121, 85, 72, 0.2); border: 3px dashed rgba(121, 85, 72, 0.15); }
 .slot.proximo { background: rgba(255, 255, 255, 0.9); color: rgba(121, 85, 72, 0.25); border: 3px dashed rgba(121, 85, 72, 0.4); box-shadow: 0 2px 8px rgba(93, 64, 55, 0.1); animation: pulseSlot 1.5s ease-in-out infinite; }
-.slot.preenchido { color: #fff; border-style: solid; border-width: 3px; animation: popIn 0.25s ease; }
+.slot.preenchido { color: #fff; border-style: solid; border-width: 3px; animation: popIn 0.3s ease; }
 @keyframes pulseSlot { 0%, 100% { border-color: rgba(121, 85, 72, 0.4); } 50% { border-color: rgba(121, 85, 72, 0.15); } }
-@keyframes popIn { 0% { transform: scale(1.25); } 100% { transform: scale(1); } }
+@keyframes popIn { 0% { transform: scale(1.3); } 100% { transform: scale(1); } }
 .slot::after {
   content: '';
   position: absolute;
-  bottom: -8px; left: 4px; right: 4px;
-  height: 2px; border-radius: 2px;
+  bottom: -8px;
+  left: 4px;
+  right: 4px;
+  height: 2px;
+  border-radius: 2px;
   background: rgba(173, 200, 230, 0.4);
 }
 .slot.cor-A { background: var(--coral); border-color: var(--coral-dark); box-shadow: 0 4px 0 var(--coral-dark), 0 6px 15px rgba(244,132,95,0.4); }
@@ -445,141 +373,103 @@ body::after {
 .slot.cor-I { background: var(--lavender); border-color: var(--lavender-dark); box-shadow: 0 4px 0 var(--lavender-dark), 0 6px 15px rgba(179,157,219,0.4); }
 .slot.cor-O { background: var(--lime); border-color: var(--lime-dark); box-shadow: 0 4px 0 var(--lime-dark), 0 6px 15px rgba(174,213,129,0.4); }
 .slot.cor-U { background: var(--peach); border-color: var(--peach-dark); box-shadow: 0 4px 0 var(--peach-dark), 0 6px 15px rgba(255,171,145,0.4); }
-
-.msg-acerto { text-align: center; margin-bottom: 8px; opacity: 0; transform: scale(0.8); transition: all 0.3s ease; }
+.msg-acerto { text-align: center; margin-bottom: 12px; opacity: 0; transform: scale(0.8); transition: all 0.3s ease; }
 .msg-acerto.visivel { opacity: 1; transform: scale(1); }
 .msg-acerto span { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 50px; font-size: 16px; font-weight: 700; font-family: 'Fredoka One', cursive; background: linear-gradient(135deg, #c8e6c9, #a5d6a7); color: #2e7d32; box-shadow: 0 3px 10px rgba(46, 125, 50, 0.2); }
-
-.blocos-container { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; }
-
+.blocos-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
+@media (min-width: 640px) { .blocos-container { gap: 16px; } }
+/* Blocos de Vogais Coloridos */
 .bloco-vogal {
-  width: 54px; height: 54px;
+  width: 56px;
+  height: 56px;
   border-radius: 12px;
-  display: flex; align-items: center; justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   font-family: 'Fredoka One', cursive;
-  font-size: 1.5rem; color: #fff;
-  border: 3px solid; cursor: pointer;
+  font-size: 1.5rem;
+  color: #fff;
+  border: 3px solid;
+  cursor: pointer;
   transition: transform 0.15s, box-shadow 0.15s;
   -webkit-tap-highlight-color: transparent;
 }
-@media (min-width: 640px) { .bloco-vogal { width: 62px; height: 62px; font-size: 1.6rem; } }
+@media (min-width: 640px) { .bloco-vogal { width: 64px; height: 64px; font-size: 1.6rem; } }
 .bloco-vogal:hover { transform: scale(1.12) rotate(3deg); }
 .bloco-vogal:active { transform: scale(0.9); }
 .bloco-vogal.desabilitado { opacity: 0.4; pointer-events: none; }
-
 .bloco-A { background: var(--coral); border-color: var(--coral-dark); box-shadow: 0 5px 0 var(--coral-dark), 0 7px 15px rgba(244,132,95,0.3); }
 .bloco-E { background: var(--turquoise); border-color: var(--turquoise-dark); box-shadow: 0 5px 0 var(--turquoise-dark), 0 7px 15px rgba(77,208,225,0.3); }
 .bloco-I { background: var(--lavender); border-color: var(--lavender-dark); box-shadow: 0 5px 0 var(--lavender-dark), 0 7px 15px rgba(179,157,219,0.3); }
 .bloco-O { background: var(--lime); border-color: var(--lime-dark); box-shadow: 0 5px 0 var(--lime-dark), 0 7px 15px rgba(174,213,129,0.3); }
 .bloco-U { background: var(--peach); border-color: var(--peach-dark); box-shadow: 0 5px 0 var(--peach-dark), 0 7px 15px rgba(255,171,145,0.3); }
-
-.instrucao { text-align: center; font-size: 12px; margin-top: 8px; opacity: 0.6; color: var(--brown-light); font-family: 'Nunito', sans-serif; }
-
+.instrucao { text-align: center; font-size: 12px; margin-top: 16px; opacity: 0.5; color: var(--brown-light); font-family: 'Nunito', sans-serif; }
 @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-.parabens { text-align: center; animation: fadeInUp 0.5s ease; padding: 18px 0; min-height: calc(100dvh - var(--header-h)); display: grid; place-items: center; gap: 8px; }
-.parabens .trofeu { font-size: min(80px, 18vw); margin-bottom: 6px; display: block; animation: wiggle 0.8s ease 0.3s; }
+.parabens { text-align: center; animation: fadeInUp 0.5s ease; padding: 32px 0; }
+.parabens .trofeu { font-size: 80px; margin-bottom: 12px; display: block; animation: wiggle 0.8s ease 0.3s; }
 @keyframes wiggle { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-8deg); } 40% { transform: rotate(8deg); } 60% { transform: rotate(-4deg); } 80% { transform: rotate(4deg); } }
-.parabens h2 { font-family: 'Patrick Hand', cursive; font-size: clamp(26px, 6vw, 36px); color: var(--brown); margin-bottom: 4px; }
-.parabens p { font-size: clamp(15px, 4vw, 18px); color: var(--brown-light); margin-bottom: 6px; }
-.parabens .estrelas-final { display: inline-flex; align-items: center; gap: 8px; padding: 10px 20px; border-radius: 50px; background: linear-gradient(135deg, #fff8e1, #ffecb3); border: 3px solid #f9a825; font-family: 'Fredoka One', cursive; font-size: 1.2rem; color: #e65100; margin-bottom: 18px; }
+.parabens h2 { font-family: 'Patrick Hand', cursive; font-size: 36px; color: var(--brown); margin-bottom: 8px; }
+.parabens p { font-size: 18px; color: var(--brown-light); margin-bottom: 8px; }
+.parabens .estrelas-final { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 50px; background: linear-gradient(135deg, #fff8e1, #ffecb3); border: 3px solid #f9a825; font-family: 'Fredoka One', cursive; font-size: 1.4rem; color: #e65100; margin-bottom: 28px; }
 .btn-replay { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border-radius: 16px; border: none; font-family: 'Fredoka One', cursive; font-size: 16px; color: #fff; background: linear-gradient(135deg, var(--turquoise), var(--turquoise-dark)); box-shadow: 0 5px 0 #1a8a99, 0 7px 15px rgba(38, 168, 184, 0.3); cursor: pointer; transition: transform 0.15s; }
 .btn-replay:hover { transform: scale(1.05); }
 .btn-replay:active { transform: translateY(3px); box-shadow: 0 2px 0 #1a8a99; }
-
 .flash-letra { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); font-size: min(200px, 40vw); font-family: 'Fredoka One', cursive; pointer-events: none; z-index: 200; opacity: 0; transition: transform 0.35s ease, opacity 0.35s ease; }
 .flash-letra.visivel { transform: translate(-50%, -50%) scale(1); opacity: 1; }
 .flash-letra.saindo { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-
 @keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
 .shake { animation: shake 0.4s ease; }
-
 @keyframes slideIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
 .slide-in { animation: slideIn 0.4s ease; }
-
 .escondido { display: none !important; }
-
 /* Animação das palmas */
 .chuva-palmas { position: fixed; pointer-events: none; z-index: 9999; animation: cair 2s linear forwards; }
 @keyframes cair {
   0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
   100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
 }
-
-/* Ajustes para telas muito baixas (reduz ainda mais tudo) */
-@media (max-height: 640px) {
-  .welcome-banner { height: clamp(130px, 30dvh, 180px); }
-  .img-placeholder { width: 130px; height: 130px; }
-  .slots-container { margin-bottom: 10px; }
-}
 </style>
 </head>
 <body class="boas-vindas">
-  <div class="decor" aria-hidden="true">
-    <span class="d ilha">🏝️</span>
-    <span class="d dragao">🐉</span>
-    <span class="d fada">🧚</span>
-    <span class="d gnomo">🧙‍♂️</span>
-    <span class="d elfo">🧝</span>
-  </div>
-
-  <header class="header">
-    <div class="header-inner">
-      <button class="btn-som" id="btnSom" onclick="ativarSons()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
-        ATIVAR SONS
-      </button>
-      <span class="titulo-header">Ilha das Vogais</span>
-      <div class="estrelas-badge">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="#f9a825" stroke="#f57f17" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
-        <span id="estrelasCount">0</span>
-      </div>
+<header class="header">
+  <div class="header-inner">
+    <button class="btn-som" id="btnSom" onclick="ativarSons()">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+      ATIVAR SONS
+    </button>
+    <span class="titulo-header">Formando Palavrinhas</span>
+    <div class="estrelas-badge">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="#f9a825" stroke="#f57f17" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      <span id="estrelasCount">0</span>
     </div>
-  </header>
-
-  <div class="nav-palavras escondido" id="navPalavras">
-    <div class="nav-chips" id="navChips"></div>
-    <select id="navSelect" aria-label="Selecionar palavrinha"></select>
   </div>
+</header>
 
-  <div class="flash-letra" id="flashLetra"></div>
-  <div class="stage" id="stage"></div>
+<div class="nav-palavras escondido" id="navPalavras"></div>
+<div class="flash-letra" id="flashLetra"></div>
+<div class="stage" id="stage"></div>
 
-  <audio id="audioAplausos" preload="auto" playsinline>
-    <source src="aplausos.mp3" type="audio/mpeg" />
-    <source src="https://actions.google.com/sounds/v1/crowds/light_applause.ogg" type="audio/ogg" />
-  </audio>
+<audio id="audioAplausos" src="https://actions.google.com/sounds/v1/crowds/light_applause.ogg" preload="auto"></audio>
 
 <script>
-// =====================
-//   DADOS DAS PALAVRAS
-// =====================
+// DADOS DAS PALAVRAS
+// Adicionada a propriedade 'pronuncia' para forçar o TTS a falar corretamente
 const PALAVRAS = [
-  { word: "AI",   letters: ["A","I"],             hint: "Expressão de dor — Ai!" },
-  { word: "OU",   letters: ["O","U"],             hint: "Palavra de escolha — Ou" },
-  { word: "EU",   letters: ["E","U"],             hint: "Eu mesmo — Eu" },
-  { word: "IA",   letters: ["I","A"],             hint: "Ia embora — Ia" },
-  { word: "UAI",  letters: ["U","A","I"],         hint: "Expressão mineira — Uai!" },
-  { word: "UAU",  letters: ["U","A","U"],         hint: "Expressão de surpresa — Uau!" },
-  { word: "OI",   letters: ["O","I"],             hint: "Cumprimento — Oi!" },
-  { word: "AÍ",   letters: ["A","I"],             hint: "Lugar — Aí" },
-  { word: "EI",   letters: ["E","I"],             hint: "Chamando alguém — Ei!" },
-  { word: "AUAU", letters: ["A","U","A","U"],     hint: "Som do cachorro — Au au!" },
-  { word: "IAIÁ", letters: ["I","A","I","A"],     hint: "Iaiá — tratamento carinhoso" },
-  { word: "IOIÔ", letters: ["I","O","I","O"],     hint: "Brinquedo — Ioiô" },
+  { word: "AI", letters: ["A","I"], hint: "Expressão de dor — Ai!", pronuncia: "Ái" },
+  { word: "OU", letters: ["O","U"], hint: "Palavra de escolha — Ou", pronuncia: "Ôu" },
+  { word: "EU", letters: ["E","U"], hint: "Eu mesmo — Eu", pronuncia: "ÊU" },
+  { word: "IA", letters: ["I","A"], hint: "Ia embora — Ia", pronuncia: "Ía" },
+  { word: "UAI", letters: ["U","A","I"], hint: "Expressão mineira — Uai!", pronuncia: "Úai" },
+  { word: "UAU", letters: ["U","A","U"], hint: "Expressão de surpresa — Uau!", pronuncia: "UÁU" },
+  { word: "OI", letters: ["O","I"], hint: "Cumprimento — Oi!", pronuncia: "Ôi" },
+  { word: "AÍ", letters: ["A","I"], hint: "Lugar — Aí", pronuncia: "Aí" },
+  { word: "EI", letters: ["E","I"], hint: "Chamando alguém — Ei!", pronuncia: "Êi" },
+  { word: "AUAU", letters: ["A","U","A","U"], hint: "Som do cachorro — Au au!", pronuncia: "Áu-Áu" },
+  { word: "IAIÁ", letters: ["I","A","I","A"], hint: "Iaiá — tratamento carinhoso", pronuncia: "Iaiá" },
+  { word: "IOIÔ", letters: ["I","O","I","O"], hint: "Brinquedo — Ioiô", pronuncia: "Ioiô" },
 ];
 
 const VOGAIS = ["A", "E", "I", "O", "U"];
-
-// Dicionário para forçar a pronúncia desejada no sintetizador de voz
-const PRONUNCIA_VOGAIS = {
-  "A": "Á",
-  "E": "Ê",
-  "I": "I",
-  "O": "Ô",
-  "U": "Ú"
-};
-
 const CORES = {
   A: { flash: "#f4845f" },
   E: { flash: "#4dd0e1" },
@@ -588,125 +478,61 @@ const CORES = {
   U: { flash: "#ffab91" },
 };
 
-// =====================
-//   ESTADO / CONTEXTO
-// =====================
+// Dicionário de pronúncia para as vogais individuais
+const PRONUNCIA_VOGAIS = {
+  "A": "Á",
+  "E": "Ê",
+  "I": "I",
+  "O": "Ô",
+  "U": "Ú"
+};
+
 let audioAtivado = false;
 let estrelas = 0;
 let indexAtual = 0;
 let letrasColocadas = [];
 let acertou = false;
 let completados = new Set();
-
 const synth = window.speechSynthesis;
-let vozPT = null;
 
-// Carrega voz pt-BR/pt quando disponível
-function carregarVozes() {
-  const voices = synth.getVoices() || [];
-  vozPT =
-    voices.find(v => (v.lang || '').toLowerCase().includes('pt-br')) ||
-    voices.find(v => (v.lang || '').toLowerCase().startsWith('pt')) ||
-    null;
-}
-carregarVozes();
-if (typeof speechSynthesis !== 'undefined') {
-  speechSynthesis.onvoiceschanged = carregarVozes;
-}
-
-// Ajuste dinâmico de alturas (sem scroll)
-function ajustarAlturas() {
-  const header = document.querySelector('.header');
-  const nav = document.getElementById('navPalavras');
-  const headerH = header ? header.offsetHeight : 0;
-  const navH = (nav && !nav.classList.contains('escondido')) ? nav.offsetHeight : 0;
-  document.documentElement.style.setProperty('--header-h', headerH + 'px');
-  document.documentElement.style.setProperty('--nav-h', navH + 'px');
-}
-window.addEventListener('resize', ajustarAlturas);
-window.addEventListener('orientationchange', ajustarAlturas);
-document.addEventListener('DOMContentLoaded', ajustarAlturas);
-
-// =====================
-//     ÁUDIO / TTS
-// =====================
 function ativarSons() {
   audioAtivado = true;
-
-  // Tenta "desbloquear" áudio em iOS/Android (em gesto do usuário)
-  const apl = document.getElementById('audioAplausos');
-  if (apl) {
-    apl.muted = true;
-    apl.play().then(() => {
-      apl.pause();
-      apl.muted = false;
-    }).catch(() => {/* ignora */});
-  }
-  if (synth && synth.paused) {
-    try { synth.resume(); } catch(e) {}
-  }
-  carregarVozes();
-
   const btn = document.getElementById('btnSom');
   btn.classList.add('ativo');
-  btn.innerHTML = `
-    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
-      <polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon>
-      <path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path>
-    </svg>
-    Sons ativos
-  `;
+  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Sons ativos`;
   btn.onclick = null;
-
   falar("Sons ativados!");
 }
 
 function falar(texto) {
-  if (!audioAtivado || !texto) return;
-  if (!synth) return;
-
-  try { synth.cancel(); } catch(e) {}
-
+  if (!audioAtivado) return;
+  synth.cancel();
   const msg = new SpeechSynthesisUtterance(texto);
   msg.lang = 'pt-BR';
-  msg.rate = 0.9;
-  msg.pitch = 1.1;
-  if (vozPT) msg.voice = vozPT;
-
-  try { synth.speak(msg); } catch(e) {
-    // Silenciosamente ignora se falhar
-  }
+  msg.rate = 0.85;
+  msg.pitch = 1.2;
+  synth.speak(msg);
 }
 
 function ouvirSom() {
-  // Garante que o TTS não esteja pausado
-  try { if (synth && synth.paused) synth.resume(); } catch(e) {}
+  synth.cancel();
   const palavra = PALAVRAS[indexAtual];
-  const msg = new SpeechSynthesisUtterance(palavra.word);
+  // Usa a propriedade pronuncia se existir, senão usa a palavra original
+  const msg = new SpeechSynthesisUtterance(palavra.pronuncia || palavra.word);
   msg.lang = 'pt-BR';
   msg.rate = 0.7;
   msg.pitch = 1.1;
-  if (vozPT) msg.voice = vozPT;
-
-  try { synth.speak(msg); } catch(e) {}
+  synth.speak(msg);
 }
 
 function somAplausos() {
   if (!audioAtivado) return;
-
   const audio = document.getElementById('audioAplausos');
-  if (audio) {
-    try {
-      audio.currentTime = 0;
-      audio.volume = 0.6;
-      audio.play().catch(() => {
-        // Se falhar, pelo menos fala algo
-        falar("Muito bem!");
-      });
-    } catch(e) {}
-  }
-  // Efeito visual de palmas
-  for (let i = 0; i < 20; i++) {
+  audio.currentTime = 0;
+  audio.volume = 0.5;
+  audio.play().catch(e => console.log("Áudio bloqueado pelo navegador."));
+  
+  for(let i = 0; i < 20; i++) {
     setTimeout(() => {
       const palma = document.createElement('div');
       palma.innerText = '👏';
@@ -719,14 +545,11 @@ function somAplausos() {
   }
 }
 
-// =====================
-//       UI / NAV
-// =====================
 function mostrarFlash(letra) {
   const el = document.getElementById('flashLetra');
   el.textContent = letra;
   el.style.color = CORES[letra]?.flash || "#f4845f";
-  el.style.textShadow = `0 4px 20px ${(CORES[letra]?.flash || "#000")}40`;
+  el.style.textShadow = `0 4px 20px ${CORES[letra]?.flash || "rgba(0,0,0,0.2)"}40`;
   el.className = 'flash-letra visivel';
   setTimeout(() => { el.className = 'flash-letra saindo'; }, 250);
   setTimeout(() => { el.className = 'flash-letra'; }, 500);
@@ -734,37 +557,16 @@ function mostrarFlash(letra) {
 
 function renderizarNav() {
   const nav = document.getElementById('navPalavras');
-  const chips = document.getElementById('navChips');
-  const select = document.getElementById('navSelect');
-  if (!nav || !chips || !select) return;
-
-  chips.innerHTML = '';
-  select.innerHTML = '';
-
+  nav.innerHTML = '';
   PALAVRAS.forEach((p, i) => {
-    // Chips (desktop/tablet)
     const btn = document.createElement('button');
     btn.className = 'nav-pill';
     if (i === indexAtual) btn.classList.add('ativo');
     if (completados.has(i)) btn.classList.add('completo');
     btn.textContent = (completados.has(i) ? '✓ ' : '') + p.word;
     btn.onclick = () => irParaPalavra(i);
-    chips.appendChild(btn);
-
-    // Select (mobile)
-    const opt = document.createElement('option');
-    opt.value = i;
-    opt.textContent = `${completados.has(i) ? '✓ ' : ''}${p.word}`;
-    if (i === indexAtual) opt.selected = true;
-    select.appendChild(opt);
+    nav.appendChild(btn);
   });
-
-  select.onchange = (e) => {
-    const idx = parseInt(e.target.value, 10);
-    irParaPalavra(idx);
-  };
-
-  ajustarAlturas();
 }
 
 function irParaPalavra(index) {
@@ -774,31 +576,25 @@ function irParaPalavra(index) {
   acertou = false;
   renderizarExercicio();
   renderizarNav();
-  document.body.classList.remove('boas-vindas');
+  document.body.classList.remove('boas-vindas'); 
 }
 
-// =====================
-//   TELAS / FLUXO
-// =====================
 function mostrarBoasVindas() {
-  const nav = document.getElementById('navPalavras');
-  nav.classList.add('escondido');
+  document.getElementById('navPalavras').classList.add('escondido');
   document.body.classList.add('boas-vindas');
-
   const stage = document.getElementById('stage');
+  
   stage.innerHTML = `
     <div class="welcome">
       <div class="welcome-banner">
-        <img src="https://images.unsplash.com/photo-1500375592092-40eb2168fd21?q=80&w=1200&auto=format&fit=crop" alt="Ilha mágica infantil" />
+        <img src="ilha.jpg" alt="Ilha">
       </div>
-      <h2>Bem-vindo à <strong>Ilha das Vogais</strong>!</h2>
-      <p>Veja a dica, <strong>ouça o som</strong> e monte a palavrinha usando os blocos de <strong>A, E, I, O, U</strong>.</p>
-      <img class="welcome-blocos" src="https://images.unsplash.com/photo-1615870216515-4f7b9c6850d1?q=80&w=800&auto=format&fit=crop" alt="Blocos A E I O U" />
-      <button class="btn-comecar" onclick="iniciarJogo()">Entrar na Ilha</button>
+      <h2>Formando Palavrinhas com Vogais</h2>
+      <p>Veja a imagem, ouça o som e monte a palavrinha usando os blocos de vogais! Cada palavrinha é formada apenas por vogais: <strong>A, E, I, O, U</strong>.</p>
+      <img class="welcome-blocos" src="blocosaeiou.png" alt="Blocos A E I O U">
+      <button class="btn-comecar" onclick="iniciarJogo()">Começar a Aventura!</button>
     </div>
   `;
-
-  ajustarAlturas();
 }
 
 function iniciarJogo() {
@@ -812,13 +608,13 @@ function iniciarJogo() {
   document.getElementById('navPalavras').classList.remove('escondido');
   renderizarNav();
   renderizarExercicio();
-  falar("Vamos explorar a Ilha das Vogais!");
+  falar("Vamos formar palavrinhas com as vogais!");
 }
 
 function renderizarExercicio() {
   const palavra = PALAVRAS[indexAtual];
   const progresso = ((completados.size) / PALAVRAS.length) * 100;
-
+  
   let slotsHTML = '';
   palavra.letters.forEach((letra, i) => {
     const colocada = letrasColocadas[i];
@@ -841,94 +637,81 @@ function renderizarExercicio() {
 
   const stage = document.getElementById('stage');
   stage.innerHTML = `
-    <div class="slide-in" style="width:100%;">
+    <div class="slide-in">
       <div class="progresso-bar">
         <span class="progresso-label">Palavra ${indexAtual + 1} de ${PALAVRAS.length}</span>
         <div class="progresso-track">
           <div class="progresso-fill" style="width: ${progresso}%"></div>
         </div>
       </div>
-
       <div class="card-exercicio">
         <div class="card-conteudo">
           <p class="dica-texto">${palavra.hint}</p>
-
           <div class="img-placeholder">
-            <span class="icone">🌊</span>
+            <span class="icone">🖼️</span>
             <span class="texto-placeholder">Espaço para imagem do som</span>
           </div>
-
           <button class="btn-ouvir" onclick="ouvirSom()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M15.54 8.46a5 5 0 0 1 0 7.07"></path><path d="M19.07 4.93a10 10 0 0 1 0 14.14"></path></svg>
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
             Ouvir o som
           </button>
-
-          <div class="slots-container" id="slotsContainer">
-            ${slotsHTML}
-          </div>
-
+          
+          <div class="slots-container" id="slotsContainer">${slotsHTML}</div>
+          
           <div class="msg-acerto" id="msgAcerto">
             <span>✨ Muito bem!</span>
           </div>
 
-          <div class="blocos-container" id="blocosContainer">
-            ${blocosHTML}
-          </div>
-
+          <div class="blocos-container" id="blocosContainer">${blocosHTML}</div>
           <p class="instrucao">Toque nos blocos de vogais para formar a palavra!</p>
         </div>
       </div>
     </div>
   `;
-
-  ajustarAlturas();
 }
 
 function clicarVogal(vogal) {
   if (acertou) return;
-
   const palavra = PALAVRAS[indexAtual];
   const esperada = palavra.letters[letrasColocadas.length];
-
+  
   mostrarFlash(vogal);
-
+  
   if (vogal === esperada) {
     letrasColocadas.push(vogal);
-    
-    // ===== ALTERAÇÃO AQUI =====
-    // Usa o dicionário para falar a letra com o sotaque/acentuação corrigida
+    // Usa o dicionário para falar a letra isolada corretamente
     falar(PRONUNCIA_VOGAIS[vogal] || vogal);
-    // ==========================
-
+    
     const slot = document.getElementById('slot-' + (letrasColocadas.length - 1));
     if (slot) {
       slot.className = 'slot preenchido cor-' + vogal;
       slot.textContent = vogal;
     }
-
+    
     const proxSlot = document.getElementById('slot-' + letrasColocadas.length);
     if (proxSlot && proxSlot.classList.contains('vazio')) {
       proxSlot.classList.remove('vazio');
       proxSlot.classList.add('proximo');
     }
-
+    
     if (letrasColocadas.length === palavra.letters.length) {
       acertou = true;
       estrelas += 10;
-      document.getElementById('estrelasCount').textContent = String(estrelas);
+      document.getElementById('estrelasCount').textContent = estrelas;
       completados.add(indexAtual);
       renderizarNav();
-
+      
       const msg = document.getElementById('msgAcerto');
       if (msg) msg.classList.add('visivel');
-
+      
       document.querySelectorAll('.bloco-vogal').forEach(b => b.classList.add('desabilitado'));
-
+      
       setTimeout(() => {
         somAplausos();
-        falar("Parabéns! Você formou " + palavra.word + "!");
-      }, 800);
-
+        // Usa a pronuncia mapeada na mensagem de sucesso também
+        falar("Parabéns! Você formou " + (palavra.pronuncia || palavra.word) + "!");
+      }, 1000);
+      
       setTimeout(() => {
         acertou = false;
         if (indexAtual + 1 < PALAVRAS.length) {
@@ -939,7 +722,7 @@ function clicarVogal(vogal) {
         } else {
           mostrarParabens();
         }
-      }, 3000);
+      }, 3500);
     }
   } else {
     falar("Tente de novo!");
@@ -954,27 +737,27 @@ function clicarVogal(vogal) {
 function mostrarParabens() {
   document.getElementById('navPalavras').classList.add('escondido');
   const stage = document.getElementById('stage');
+  
   stage.innerHTML = `
     <div class="parabens">
       <span class="trofeu">🏆</span>
       <h2>Parabéns!</h2>
       <p>Você formou todas as palavrinhas!</p>
       <div class="estrelas-final">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="#f9a825" stroke="#f57f17" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon></svg>
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="#f9a825" stroke="#f57f17" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
         ${estrelas} estrelas
       </div>
+      <br><br>
       <button class="btn-replay" onclick="iniciarJogo()">🔄 Jogar de novo</button>
     </div>
   `;
   somAplausos();
   falar("Parabéns! Você completou todas as atividades!");
-  ajustarAlturas();
 }
 
 // INICIALIZAÇÃO
-document.addEventListener('DOMContentLoaded', () => {
-  mostrarBoasVindas();
-});
+mostrarBoasVindas();
+
 </script>
 </body>
 </html>
