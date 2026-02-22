@@ -62,7 +62,6 @@ body::before {
   background-size: 100% 32px;
   background-position: 0 16px;
 }
-/* Margem vermelha à esquerda */
 body::after {
   content: '';
   position: fixed;
@@ -94,6 +93,11 @@ body::after {
   gap: 10px;
   flex-wrap: wrap;
 }
+/* Grupo de botões no header */
+.header-botoes {
+  display: flex;
+  gap: 8px;
+}
 .btn-som {
   display: flex;
   align-items: center;
@@ -118,6 +122,30 @@ body::after {
   box-shadow: none;
   cursor: default;
 }
+.btn-musica {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 16px;
+  border-radius: 50px;
+  border: none;
+  font-size: 13px;
+  font-weight: 800;
+  font-family: 'Nunito', sans-serif;
+  background: var(--turquoise);
+  color: #004d40;
+  box-shadow: 0 3px 0 var(--turquoise-dark);
+  cursor: pointer;
+  transition: transform 0.15s, box-shadow 0.15s;
+}
+.btn-musica:hover { transform: scale(1.05); }
+.btn-musica:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--turquoise-dark); }
+.btn-musica.ativo {
+  background: #e0f7fa;
+  color: #006064;
+  box-shadow: none;
+}
+
 .titulo-header {
   font-family: 'Patrick Hand', cursive;
   font-size: clamp(16px, 4vw, 22px);
@@ -173,7 +201,7 @@ body::after {
 }
 /* ─── BOAS-VINDAS RESPONSIVA 100% VIEWPORT ─── */
 .welcome {
-  height: calc(100vh - 140px); /* Altura disponível após header */
+  height: calc(100vh - 140px);
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -190,7 +218,7 @@ body::after {
   border: 3px solid rgba(180, 200, 220, 0.3);
   width: 100%;
   max-width: 320px;
-  height: clamp(160px, 35vh, 240px); /* Altura controlada */
+  height: clamp(160px, 35vh, 240px);
 }
 .welcome-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
 .welcome h2 { font-family: 'Patrick Hand', cursive; font-size: clamp(22px, 5.5vw, 32px); color: var(--brown); margin: 0; line-height: 1.2; }
@@ -243,7 +271,7 @@ body::after {
   background: linear-gradient(90deg, var(--lime), #81c784);
   transition: width 0.5s ease;
 }
-/* ─── Card do exercício (folha de caderno) ─── */
+/* ─── Card do exercício ─── */
 .card-exercicio {
   background: rgba(255, 255, 255, 0.85);
   border: 2px solid rgba(180, 200, 220, 0.3);
@@ -277,9 +305,10 @@ body::after {
   margin-bottom: 16px;
   font-family: 'Nunito', sans-serif;
 }
+
 .img-placeholder {
-  width: 160px;
-  height: 160px;
+  width: 240px;  
+  height: 240px; 
   margin: 0 auto 20px;
   border: 3px dashed rgba(121, 85, 72, 0.25);
   border-radius: 12px;
@@ -288,17 +317,14 @@ body::after {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
   position: relative;
+  padding: 0;
 }
-.img-placeholder .icone { font-size: 36px; opacity: 0.3; }
-.img-placeholder .texto-placeholder {
-  font-size: 11px;
-  text-align: center;
-  padding: 0 8px;
-  opacity: 0.4;
-  color: var(--brown-light);
-  font-family: 'Nunito', sans-serif;
+.img-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 9px;
 }
 .img-placeholder::before {
   content: '';
@@ -310,10 +336,12 @@ body::after {
   border-radius: 3px;
   background: rgba(255, 235, 59, 0.4);
   transform: rotate(-15deg);
+  z-index: 2;
 }
 @media (min-width: 640px) {
-  .img-placeholder { width: 180px; height: 180px; }
+  .img-placeholder { width: 300px; height: 300px; }
 }
+
 .btn-ouvir {
   display: flex;
   align-items: center;
@@ -433,10 +461,15 @@ body::after {
 <body class="boas-vindas">
 <header class="header">
   <div class="header-inner">
-    <button class="btn-som" id="btnSom" onclick="ativarSons()">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-      ATIVAR SONS
-    </button>
+    <div class="header-botoes">
+      <button class="btn-som" id="btnSom" onclick="ativarSonsVoz()">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
+        VOZ DA PROFª
+      </button>
+      <button class="btn-musica" id="btnMusica" onclick="alternarMusica()">
+        🎵 MÚSICA OFF
+      </button>
+    </div>
     <span class="titulo-header">Formando Palavrinhas</span>
     <div class="estrelas-badge">
       <svg width="18" height="18" viewBox="0 0 24 24" fill="#f9a825" stroke="#f57f17" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
@@ -449,25 +482,50 @@ body::after {
 <div class="flash-letra" id="flashLetra"></div>
 <div class="stage" id="stage"></div>
 
-<audio id="audioAplausos" src="https://actions.google.com/sounds/v1/crowds/light_applause.ogg" preload="auto"></audio>
-
 <script>
+// GERENCIADOR DE ÁUDIOS LOCAIS (OGG)
+const audios = {
+  // Feedbacks
+  sons_ativados: new Audio('sons_ativados.ogg'),
+  inicio: new Audio('inicio.ogg'),
+  erro: new Audio('erro.ogg'),
+  acerto: new Audio('acerto.ogg'),
+  fim_jogo: new Audio('fim_jogo.ogg'),
+  aplausos: new Audio('aplausos.ogg'),
+  
+  // Vogais isoladas
+  vogal_A: new Audio('vogal_a.ogg'),
+  vogal_E: new Audio('vogal_e.ogg'),
+  vogal_I: new Audio('vogal_i.ogg'),
+  vogal_O: new Audio('vogal_o.ogg'),
+  vogal_U: new Audio('vogal_u.ogg')
+};
+
+// Música de Fundo (com loop)
+const musicaFundo = new Audio('musica_fundo.ogg');
+musicaFundo.loop = true;
+musicaFundo.volume = 0.3; // 30% de volume para não tampar a voz
+
 // DADOS DAS PALAVRAS
-// Pronúncias em minúsculas para evitar que o navegador leia como siglas
 const PALAVRAS = [
-  { word: "AI", letters: ["A","I"], hint: "Expressão de dor — Ai!", pronuncia: "ái" },
-  { word: "OU", letters: ["O","U"], hint: "Palavra de escolha — Ou", pronuncia: "ôu" },
-  { word: "EU", letters: ["E","U"], hint: "Eu mesmo — Eu", pronuncia: "êu" },
-  { word: "IA", letters: ["I","A"], hint: "Ia embora — Ia", pronuncia: "ía" },
-  { word: "UAI", letters: ["U","A","I"], hint: "Expressão mineira — Uai!", pronuncia: "úai" },
-  { word: "UAU", letters: ["U","A","U"], hint: "Expressão de surpresa — Uau!", pronuncia: "uáu" },
-  { word: "OI", letters: ["O","I"], hint: "Cumprimento — Oi!", pronuncia: "ôi" },
-  { word: "AÍ", letters: ["A","I"], hint: "Lugar — Aí", pronuncia: "aí" },
-  { word: "EI", letters: ["E","I"], hint: "Chamando alguém — Ei!", pronuncia: "êi" },
-  { word: "AUAU", letters: ["A","U","A","U"], hint: "Som do cachorro — Au au!", pronuncia: "áu áu" },
-  { word: "IAIÁ", letters: ["I","A","I","A"], hint: "Iaiá — tratamento carinhoso", pronuncia: "iaiá" },
-  { word: "IOIÔ", letters: ["I","O","I","O"], hint: "Brinquedo — Ioiô", pronuncia: "ioiô" },
+  { word: "AI", letters: ["A","I"], hint: "Expressão de dor — Ai!", audioUrl: "palavra_ai.ogg", imagem: "imagem_ai.jpg" },
+  { word: "OU", letters: ["O","U"], hint: "Palavra de escolha — Ou", audioUrl: "palavra_ou.ogg", imagem: "imagem_ou.jpg" },
+  { word: "EU", letters: ["E","U"], hint: "Eu mesmo — Eu", audioUrl: "palavra_eu.ogg", imagem: "imagem_eu.jpg" },
+  { word: "IA", letters: ["I","A"], hint: "Ia embora — Ia", audioUrl: "palavra_ia.ogg", imagem: "imagem_ia.jpg" },
+  { word: "UAI", letters: ["U","A","I"], hint: "Expressão mineira — Uai!", audioUrl: "palavra_uai.ogg", imagem: "imagem_uai.jpg" },
+  { word: "UAU", letters: ["U","A","U"], hint: "Expressão de surpresa — Uau!", audioUrl: "palavra_uau.ogg", imagem: "imagem_uau.jpg" },
+  { word: "OI", letters: ["O","I"], hint: "Cumprimento — Oi!", audioUrl: "palavra_oi.ogg", imagem: "imagem_oi.jpg" },
+  { word: "AÍ", letters: ["A","I"], hint: "Lugar — Aí", audioUrl: "palavra_ai_acento.ogg", imagem: "imagem_ai_acento.jpg" }, 
+  { word: "EI", letters: ["E","I"], hint: "Chamando alguém — Ei!", audioUrl: "palavra_ei.ogg", imagem: "imagem_ei.jpg" },
+  { word: "AUAU", letters: ["A","U","A","U"], hint: "Som do cachorro — Au au!", audioUrl: "palavra_auau.ogg", imagem: "imagem_auau.jpg" },
+  { word: "IAIÁ", letters: ["I","A","I","A"], hint: "Iaiá — tratamento carinhoso", audioUrl: "palavra_iaia.ogg", imagem: "imagem_iaia.jpg" },
+  { word: "IOIÔ", letters: ["I","O","I","O"], hint: "Brinquedo — Ioiô", audioUrl: "palavra_ioio.ogg", imagem: "imagem_ioio.jpg" },
 ];
+
+// Pré-carregando os áudios das palavras no objeto 'audios'
+PALAVRAS.forEach(palavra => {
+  audios[palavra.word] = new Audio(palavra.audioUrl);
+});
 
 const VOGAIS = ["A", "E", "I", "O", "U"];
 const CORES = {
@@ -478,59 +536,68 @@ const CORES = {
   U: { flash: "#ffab91" },
 };
 
-// Dicionário de pronúncia em minúsculas
-const PRONUNCIA_VOGAIS = {
-  "A": "á",
-  "E": "ê",
-  "I": "i",
-  "O": "ô",
-  "U": "u"
-};
-
-let audioAtivado = false;
+let vozAtivada = false;
 let estrelas = 0;
 let indexAtual = 0;
 let letrasColocadas = [];
 let acertou = false;
 let completados = new Set();
-const synth = window.speechSynthesis;
+let currentAudio = null; 
+let autoPlayTimeout = null; // Variável para controlar o áudio automático
 
-function ativarSons() {
-  audioAtivado = true;
+function pararVozAtual() {
+  if (currentAudio) {
+    currentAudio.pause();
+    currentAudio.currentTime = 0;
+  }
+}
+
+function tocar(audioKey) {
+  if (!vozAtivada) return;
+  pararVozAtual();
+  
+  const som = audios[audioKey];
+  if (som) {
+    currentAudio = som;
+    som.currentTime = 0;
+    som.play().catch(e => console.log("Áudio bloqueado pelo navegador.", e));
+  }
+}
+
+function ativarSonsVoz() {
+  vozAtivada = true;
   const btn = document.getElementById('btnSom');
   btn.classList.add('ativo');
-  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>Sons ativos`;
-  btn.onclick = null;
-  falar("Sons ativados!");
+  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>VOZ ATIVA`;
+  btn.onclick = null; 
+  
+  tocar('sons_ativados');
 }
 
-function falar(texto) {
-  if (!audioAtivado) return;
-  synth.cancel();
-  const msg = new SpeechSynthesisUtterance(texto);
-  msg.lang = 'pt-BR';
-  msg.rate = 0.85;
-  msg.pitch = 1.2;
-  synth.speak(msg);
+function alternarMusica() {
+  const btn = document.getElementById('btnMusica');
+  if (musicaFundo.paused) {
+    musicaFundo.play().catch(e => console.log("Música bloqueada", e));
+    btn.classList.add('ativo');
+    btn.innerHTML = `🎵 MÚSICA ON`;
+  } else {
+    musicaFundo.pause();
+    btn.classList.remove('ativo');
+    btn.innerHTML = `🎵 MÚSICA OFF`;
+  }
 }
 
-function ouvirSom() {
-  synth.cancel();
+function ouvirSomPalavra() {
   const palavra = PALAVRAS[indexAtual];
-  // Usa a propriedade pronuncia se existir, senão usa a palavra original
-  const msg = new SpeechSynthesisUtterance(palavra.pronuncia || palavra.word);
-  msg.lang = 'pt-BR';
-  msg.rate = 0.7;
-  msg.pitch = 1.1;
-  synth.speak(msg);
+  tocar(palavra.word);
 }
 
-function somAplausos() {
-  if (!audioAtivado) return;
-  const audio = document.getElementById('audioAplausos');
-  audio.currentTime = 0;
-  audio.volume = 0.5;
-  audio.play().catch(e => console.log("Áudio bloqueado pelo navegador."));
+function tocarAplausos() {
+  if (!vozAtivada) return;
+  const som = audios['aplausos'];
+  som.currentTime = 0;
+  som.volume = 0.5;
+  som.play().catch(e => console.log("Áudio bloqueado."));
   
   for(let i = 0; i < 20; i++) {
     setTimeout(() => {
@@ -591,7 +658,7 @@ function mostrarBoasVindas() {
       </div>
       <h2>Formando Palavrinhas com Vogais</h2>
       <p>Veja a imagem, ouça o som e monte a palavrinha usando os blocos de vogais! Cada palavrinha é formada apenas por vogais: <strong>A, E, I, O, U</strong>.</p>
-      <img class="welcome-blocos" src="blocosaeiou.png" alt="Blocos A E I O U">
+      <img class="welcome-blocos" src="imagem_blocosaeiou.png" alt="Blocos A E I O U">
       <button class="btn-comecar" onclick="iniciarJogo()">Começar a Aventura!</button>
     </div>
   `;
@@ -608,7 +675,8 @@ function iniciarJogo() {
   document.getElementById('navPalavras').classList.remove('escondido');
   renderizarNav();
   renderizarExercicio();
-  falar("Vamos formar palavrinhas com as vogais!");
+  
+  setTimeout(() => tocar('inicio'), 500);
 }
 
 function renderizarExercicio() {
@@ -647,11 +715,12 @@ function renderizarExercicio() {
       <div class="card-exercicio">
         <div class="card-conteudo">
           <p class="dica-texto">${palavra.hint}</p>
+          
           <div class="img-placeholder">
-            <span class="icone">🖼️</span>
-            <span class="texto-placeholder">Espaço para imagem do som</span>
+            <img src="${palavra.imagem}" alt="Imagem para o som ${palavra.word}">
           </div>
-          <button class="btn-ouvir" onclick="ouvirSom()">
+          
+          <button class="btn-ouvir" onclick="ouvirSomPalavra()">
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
             Ouvir o som
           </button>
@@ -668,6 +737,18 @@ function renderizarExercicio() {
       </div>
     </div>
   `;
+
+  // --- LÓGICA DO ÁUDIO AUTOMÁTICO ---
+  // Cancela qualquer áudio automático pendente da tela anterior
+  if (autoPlayTimeout) clearTimeout(autoPlayTimeout);
+  
+  if (indexAtual === 0 && completados.size === 0) {
+    // Se for a primeira palavra do jogo, espera 4.5s para a frase de início terminar
+    autoPlayTimeout = setTimeout(() => ouvirSomPalavra(), 4500);
+  } else {
+    // Para as próximas palavras, toca automaticamente após 1 segundo na tela
+    autoPlayTimeout = setTimeout(() => ouvirSomPalavra(), 1000);
+  }
 }
 
 function clicarVogal(vogal) {
@@ -679,8 +760,8 @@ function clicarVogal(vogal) {
   
   if (vogal === esperada) {
     letrasColocadas.push(vogal);
-    // Usa o dicionário para falar a letra isolada corretamente
-    falar(PRONUNCIA_VOGAIS[vogal] || vogal);
+    // Toca o áudio da vogal
+    tocar('vogal_' + vogal);
     
     const slot = document.getElementById('slot-' + (letrasColocadas.length - 1));
     if (slot) {
@@ -706,26 +787,32 @@ function clicarVogal(vogal) {
       
       document.querySelectorAll('.bloco-vogal').forEach(b => b.classList.add('desabilitado'));
       
+      // 1. Toca a palavra completa após terminar a última vogal (espera 800ms)
       setTimeout(() => {
-        somAplausos();
-        // Usa a pronuncia mapeada na mensagem de sucesso também
-        falar("Parabéns! Você formou " + (palavra.pronuncia || palavra.word) + "!");
-      }, 1000);
+        ouvirSomPalavra();
+      }, 800);
       
+      // 2. Toca os aplausos e a mensagem de parabéns ("acerto.ogg")
+      setTimeout(() => {
+        tocarAplausos();
+        tocar('acerto');
+      }, 2200);
+      
+      // 3. Muda para a próxima palavra após toda a comemoração
       setTimeout(() => {
         acertou = false;
         if (indexAtual + 1 < PALAVRAS.length) {
           indexAtual++;
           letrasColocadas = [];
           renderizarNav();
-          renderizarExercicio();
+          renderizarExercicio(); // O áudio automático será chamado aqui dentro
         } else {
           mostrarParabens();
         }
-      }, 3500);
+      }, 5000); // 5 segundos no total de celebração
     }
   } else {
-    falar("Tente de novo!");
+    tocar('erro'); // Toca o áudio de erro
     const slotAtual = document.getElementById('slot-' + letrasColocadas.length);
     if (slotAtual) {
       slotAtual.classList.add('shake');
@@ -751,8 +838,8 @@ function mostrarParabens() {
       <button class="btn-replay" onclick="iniciarJogo()">🔄 Jogar de novo</button>
     </div>
   `;
-  somAplausos();
-  falar("Parabéns! Você completou todas as atividades!");
+  tocarAplausos();
+  setTimeout(() => tocar('fim_jogo'), 500);
 }
 
 // INICIALIZAÇÃO
