@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+<title>Jornada das Letras: Números e Quantidades</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════════════════
+   DESIGN: "Folha de Caderno Viva" — Base
+═══════════════════════════════════════════════════════ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --coral: #f4845f; --turquoise: #4dd0e1; --lavender: #b39ddb; --lime: #aed581; --peach: #ffab91;
+  --paper: #fefcf3; --brown: #5d4037; --brown-light: #795548;
+  --ruled-line: rgba(173, 200, 230, 0.25); --margin-line: rgba(200, 100, 100, 0.2);
+}
+body {
+  font-family: 'Nunito', sans-serif; background: var(--paper); color: #333;
+  min-height: 100vh; position: relative; overflow-x: hidden;
+}
+body::before {
+  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+  background: repeating-linear-gradient(0deg, transparent, transparent 31px, var(--ruled-line) 31px, var(--ruled-line) 32px);
+  background-size: 100% 32px; background-position: 0 16px;
+}
+body::after {
+  content: ''; position: fixed; top: 0; bottom: 0; left: clamp(40px, 8vw, 80px); width: 2px;
+  background: var(--margin-line); z-index: 0; pointer-events: none;
+}
+
+/* ─── Header fixo ─── */
+.header {
+  position: sticky; top: 0; z-index: 50; background: rgba(254, 252, 243, 0.92);
+  backdrop-filter: blur(12px); border-bottom: 1px solid rgba(180, 200, 220, 0.3);
+}
+.header-inner { max-width: 900px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+.btn-voltar {
+  display: flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 50px; border: none;
+  font-size: 13px; font-weight: 800; font-family: 'Nunito', sans-serif; background: #e0e0e0; color: #424242;
+  box-shadow: 0 3px 0 #bdbdbd; cursor: pointer; text-decoration: none; transition: transform 0.15s;
+}
+.btn-voltar:hover { transform: scale(1.05); }
+.btn-voltar:active { transform: translateY(2px); box-shadow: 0 1px 0 #bdbdbd; }
+.titulo-header { font-family: 'Patrick Hand', cursive; font-size: clamp(16px, 4vw, 22px); color: var(--brown); }
+
+/* ─── Área principal ─── */
+.stage { max-width: 800px; margin: 24px auto; padding: 0 16px; position: relative; z-index: 10; text-align: center; }
+.instrucoes { font-family: 'Patrick Hand', cursive; font-size: 24px; color: var(--brown); margin-bottom: 16px; }
+
+/* ─── Navegação Numérica ─── */
+.nav-numeros {
+  display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 32px;
+}
+.btn-num {
+  width: 48px; height: 48px; border-radius: 12px; border: none;
+  font-family: 'Fredoka One', cursive; font-size: 24px; color: var(--brown);
+  background: #fff; border: 2px solid var(--brown-light); box-shadow: 0 4px 0 rgba(93, 64, 55, 0.2);
+  cursor: pointer; transition: all 0.15s;
+}
+@media (min-width: 640px) { .btn-num { width: 60px; height: 60px; font-size: 32px; } }
+.btn-num:hover { transform: translateY(-2px); }
+.btn-num:active, .btn-num.ativo { transform: translateY(2px); box-shadow: none; background: var(--turquoise); color: #fff; border-color: var(--turquoise-dark); }
+
+/* ─── Área de Exibição (Display + Quantidade) ─── */
+.display-container {
+  display: flex; flex-direction: column; gap: 24px; align-items: center;
+}
+@media (min-width: 768px) {
+  .display-container { flex-direction: row; align-items: flex-start; justify-content: center; gap: 40px; }
+}
+
+/* O número grande */
+.numero-grande-card {
+  background: #fff; border: 3px solid var(--brown-light); border-radius: 24px;
+  width: 140px; height: 180px; display: flex; align-items: center; justify-content: center;
+  font-family: 'Fredoka One', cursive; font-size: 100px; color: var(--coral);
+  box-shadow: 6px 6px 0 rgba(93, 64, 55, 0.15); transform: rotate(-2deg);
+}
+
+/* O container dos itens (adesivos) */
+.quantidade-box {
+  flex: 1; min-height: 180px; background: rgba(255,255,255,0.6);
+  border: 3px dashed var(--ruled-line); border-radius: 24px; padding: 24px;
+  display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 16px;
+  position: relative; max-width: 500px;
+}
+
+/* O item individual (adesivo) */
+.item-adesivo {
+  font-size: 48px;
+  filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+  /* Animação de entrada */
+  opacity: 0; transform: scale(0.5);
+  animation: popInItem 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+}
+
+@keyframes popInItem {
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* Estado zero */
+.msg-zero {
+  font-family: 'Patrick Hand', cursive; font-size: 24px; color: var(--brown-light); opacity: 0.7;
+  display: flex; flex-direction: column; align-items: center;
+}
+.icone-zero { font-size: 40px; margin-bottom: 8px; opacity: 0.5; }
+
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="header-inner">
+    <a href="index.html" class="btn-voltar">⬅️ MENU</a>
+    <span class="titulo-header">Contando Quantidades</span>
+    <div style="width: 80px;"></div>
+  </div>
+</header>
+
+<div class="stage">
+  <h2 class="instrucoes">Toque em um número para ver a quantidade!</h2>
+
+  <div class="nav-numeros">
+    </div>
+
+  <div class="display-container">
+    <div class="numero-grande-card" id="numDisplay">?</div>
+
+    <div class="quantidade-box" id="qtdBox">
+      <p class="msg-zero">Comece clicando em um número acima!</p>
+    </div>
+  </div>
+</div>
+
+<script>
+// Configuração dos temas para cada número (emoji e cor de destaque)
+const temasNumeros = {
+  0: { emoji: "📭", cor: "#9e9e9e", nome: "Zero" },
+  1: { emoji: "🍎", cor: "var(--coral)", nome: "Um" },
+  2: { emoji: "🦆", cor: "var(--turquoise)", nome: "Dois" },
+  3: { emoji: "⭐", cor: "var(--lime)", nome: "Três" },
+  4: { emoji: "🐸", cor: "#4caf50", nome: "Quatro" },
+  5: { emoji: "🖐️", cor: "var(--peach)", nome: "Cinco" },
+  6: { emoji: "🐞", cor: "#f44336", nome: "Seis" },
+  7: { emoji: "✏️", cor: "#ff9800", nome: "Sete" },
+  8: { emoji: "🦋", cor: "var(--lavender)", nome: "Oito" },
+  9: { emoji: "🎈", cor: "#e91e63", nome: "Nove" }
+};
+
+// 1. Gerar os botões de navegação (0 a 9)
+const navContainer = document.querySelector('.nav-numeros');
+for (let i = 0; i <= 9; i++) {
+  const btn = document.createElement('button');
+  btn.className = 'btn-num';
+  btn.innerText = i;
+  btn.onclick = () => selecionarNumero(i, btn);
+  navContainer.appendChild(btn);
+}
+
+const numDisplay = id('numDisplay');
+const qtdBox = id('qtdBox');
+let audioAtual = null;
+
+function id(el) { return document.getElementById(el); }
+
+function selecionarNumero(numero, btnClicado) {
+  // Atualiza visual dos botões
+  document.querySelectorAll('.btn-num').forEach(b => b.classList.remove('ativo'));
+  btnClicado.classList.add('ativo');
+
+  // 1. Atualiza o número grande
+  numDisplay.innerText = numero;
+  numDisplay.style.color = temasNumeros[numero].cor;
+
+  // Animaçãozinha no número grande
+  numDisplay.animate([
+    { transform: 'rotate(-2deg) scale(0.8)', opacity: 0.5 },
+    { transform: 'rotate(-2deg) scale(1)', opacity: 1 }
+  ], { duration: 300, easing: 'ease-out' });
+
+
+  // 2. Tocar áudio (se houver arquivos)
+  tocarAudioNumero(numero);
+
+  // 3. Gerar a quantidade na caixa
+  qtdBox.innerHTML = ''; // Limpa a caixa anterior
+
+  if (numero === 0) {
+    // Caso especial do Zero
+    qtdBox.innerHTML = `
+      <div class="msg-zero" style="color: ${temasNumeros[0].cor}">
+        <span class="icone-zero">${temasNumeros[0].emoji}</span>
+        Nenhum item aqui! É zero.
+      </div>
+    `;
+  } else {
+    // Loop para criar os itens (de 1 até o número escolhido)
+    const tema = temasNumeros[numero];
+    for (let i = 0; i < numero; i++) {
+      const item = document.createElement('div');
+      item.classList.add('item-adesivo');
+      item.innerText = tema.emoji;
+      // Adiciona um atraso na animação para eles aparecerem um por um (efeito de contagem)
+      item.style.animationDelay = `${i * 0.15}s`;
+      qtdBox.appendChild(item);
+    }
+  }
+}
+
+function tocarAudioNumero(num) {
+  if (audioAtual) { audioAtual.pause(); audioAtual.currentTime = 0; }
+
+  // ---> SE VOCÊ TIVER OS ARQUIVOS DE ÁUDIO (ex: num_1.ogg), DESCOMENTE ABAIXO:
+  /*
+  const audioPath = `num_${num}.ogg`; // Exemplo de nome de arquivo
+  audioAtual = new Audio(audioPath);
+  audioAtual.play().catch(e => console.log("Áudio não encontrado ou bloqueado"));
+  */
+
+  // Por enquanto, só para teste, vamos usar um console.log
+  console.log(`Tocando som do número: ${num}`);
+}
+
+// Inicia com o zero selecionado (opcional)
+// document.querySelectorAll('.btn-num')[0].click();
+</script>
+</body>
+</html>
