@@ -8,9 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
-        /* ═══════════════════════════════════════════════════════
-           DESIGN: "Folha de Caderno Viva"
-        ═══════════════════════════════════════════════════════ */
+        /* DESIGN: "Folha de Caderno Viva" */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --coral: #f4845f; --turquoise: #4dd0e1; --lavender: #b39ddb; --lime: #aed581; --peach: #ffab91;
@@ -130,9 +128,8 @@
     const navContainer = document.getElementById('navNumeros');
     const numDisplay = document.getElementById('numDisplay');
     const qtdBox = document.getElementById('qtdBox');
-    let timeoutsAtivos = []; // Para gerenciar as falas em andamento
+    let timeoutsAtivos = []; 
 
-    // 1. Gerar Botões
     for (let i = 0; i <= 9; i++) {
         const btn = document.createElement('button');
         btn.className = 'btn-num';
@@ -142,16 +139,14 @@
     }
 
     function selecionarNumero(numero, btnClicado) {
-        // Limpar timeouts e falas anteriores
+        // Para tudo o que estiver acontecendo
         timeoutsAtivos.forEach(t => clearTimeout(t));
         timeoutsAtivos = [];
         window.speechSynthesis.cancel();
 
-        // Estilo dos botões
         document.querySelectorAll('.btn-num').forEach(b => b.classList.remove('ativo'));
         btnClicado.classList.add('ativo');
 
-        // Atualizar display principal
         numDisplay.innerText = numero;
         numDisplay.style.color = temasNumeros[numero].cor;
         numDisplay.animate([
@@ -161,33 +156,40 @@
 
         qtdBox.innerHTML = '';
 
-        if (numero === 0) {
-            falar("Zero");
-            qtdBox.innerHTML = `<div class="msg-zero" style="color:${temasNumeros[0].cor}">
-                <span class="icone-zero">📭</span>Vazio! É zero.</div>`;
-        } else {
-            const delayEntreItens = 700; // Tempo entre cada emoji e fala
-            
-            for (let i = 0; i < numero; i++) {
-                const item = document.createElement('div');
-                item.classList.add('item-adesivo');
-                item.innerText = temasNumeros[numero].emoji;
-                item.style.animationDelay = `${i * delayEntreItens}ms`;
-                qtdBox.appendChild(item);
+        // PRIMEIRO: Fala o nome do número clicado
+        falar(numero.toString());
 
-                // Agenda a fala para cada item que aparece
+        if (numero === 0) {
+            const t0 = setTimeout(() => {
+                qtdBox.innerHTML = `<div class="msg-zero" style="color:${temasNumeros[0].cor}">
+                    <span class="icone-zero">📭</span>Vazio! É zero.</div>`;
+            }, 800);
+            timeoutsAtivos.push(t0);
+        } else {
+            const delayEntreContagem = 800; // Tempo entre cada número da contagem
+            const esperaInicial = 1000;    // Tempo de espera após falar o número principal
+
+            for (let i = 0; i < numero; i++) {
+                // Agenda a aparição visual e a sonorização da contagem
                 const t = setTimeout(() => {
-                    falar(i + 1);
-                }, i * delayEntreItens);
+                    const item = document.createElement('div');
+                    item.classList.add('item-adesivo');
+                    item.innerText = temasNumeros[numero].emoji;
+                    qtdBox.appendChild(item);
+                    
+                    // Fala o número da contagem (1, 2, 3...)
+                    falar((i + 1).toString());
+                }, esperaInicial + (i * delayEntreContagem));
+                
                 timeoutsAtivos.push(t);
             }
         }
     }
 
     function falar(texto) {
-        const msg = new SpeechSynthesisUtterance(texto.toString());
+        const msg = new SpeechSynthesisUtterance(texto);
         msg.lang = 'pt-BR';
-        msg.rate = 1.1;
+        msg.rate = 1.0; 
         msg.pitch = 1.2;
         window.speechSynthesis.speak(msg);
     }
