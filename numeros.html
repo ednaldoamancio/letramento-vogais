@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
-        /* DESIGN: "Folha de Caderno Viva" */
         * { margin: 0; padding: 0; box-sizing: border-box; }
         :root {
             --coral: #f4845f; --turquoise: #4dd0e1; --lavender: #b39ddb; --lime: #aed581; --peach: #ffab91;
@@ -28,74 +27,60 @@
             content: ''; position: fixed; top: 0; bottom: 0; left: clamp(40px, 8vw, 80px); width: 2px;
             background: var(--margin-line); z-index: 0; pointer-events: none;
         }
-
-        .header {
-            position: sticky; top: 0; z-index: 50; background: rgba(254, 252, 243, 0.92);
-            backdrop-filter: blur(12px); border-bottom: 1px solid rgba(180, 200, 220, 0.3);
-        }
+        .header { position: sticky; top: 0; z-index: 50; background: rgba(254, 252, 243, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(180, 200, 220, 0.3); }
         .header-inner { max-width: 900px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
-        .btn-voltar {
-            display: flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 50px; border: none;
-            font-size: 13px; font-weight: 800; font-family: 'Nunito', sans-serif; background: #e0e0e0; color: #424242;
-            box-shadow: 0 3px 0 #bdbdbd; cursor: pointer; text-decoration: none; transition: transform 0.15s;
-        }
-        .btn-voltar:hover { transform: scale(1.05); }
-        .btn-voltar:active { transform: translateY(2px); box-shadow: 0 1px 0 #bdbdbd; }
-        .titulo-header { font-family: 'Patrick Hand', cursive; font-size: clamp(16px, 4vw, 22px); color: var(--brown); }
-
+        .titulo-header { font-family: 'Patrick Hand', cursive; font-size: 20px; color: var(--brown); }
+        
         .stage { max-width: 800px; margin: 24px auto; padding: 0 16px; position: relative; z-index: 10; text-align: center; }
         .instrucoes { font-family: 'Patrick Hand', cursive; font-size: 24px; color: var(--brown); margin-bottom: 16px; }
-
+        
         .nav-numeros { display: flex; justify-content: center; gap: 8px; flex-wrap: wrap; margin-bottom: 32px; }
         .btn-num {
-            width: 48px; height: 48px; border-radius: 12px; border: none;
+            width: 50px; height: 50px; border-radius: 12px; border: 2px solid var(--brown-light);
             font-family: 'Fredoka One', cursive; font-size: 24px; color: var(--brown);
-            background: #fff; border: 2px solid var(--brown-light); box-shadow: 0 4px 0 rgba(93, 64, 55, 0.2);
-            cursor: pointer; transition: all 0.15s;
+            background: #fff; cursor: pointer; transition: all 0.15s;
+            box-shadow: 0 4px 0 rgba(93, 64, 55, 0.2);
         }
-        @media (min-width: 640px) { .btn-num { width: 60px; height: 60px; font-size: 32px; } }
-        .btn-num:hover { transform: translateY(-2px); }
-        .btn-num:active, .btn-num.ativo { transform: translateY(2px); box-shadow: none; background: var(--turquoise); color: #fff; border-color: #00acc1; }
-
-        .display-container { display: flex; flex-direction: column; gap: 24px; align-items: center; }
-        @media (min-width: 768px) { .display-container { flex-direction: row; align-items: flex-start; justify-content: center; gap: 40px; } }
-
+        .btn-num.ativo { background: var(--turquoise); color: #fff; transform: translateY(2px); box-shadow: none; }
+        
+        .display-container { display: flex; flex-direction: column; gap: 24px; align-items: center; justify-content: center; }
+        @media (min-width: 768px) { .display-container { flex-direction: row; align-items: flex-start; } }
+        
         .numero-grande-card {
             background: #fff; border: 3px solid var(--brown-light); border-radius: 24px;
             width: 140px; height: 180px; display: flex; align-items: center; justify-content: center;
-            font-family: 'Fredoka One', cursive; font-size: 100px; color: var(--coral);
+            font-family: 'Fredoka One', cursive; font-size: 80px; color: var(--coral);
             box-shadow: 6px 6px 0 rgba(93, 64, 55, 0.15); transform: rotate(-2deg);
         }
-
+        
         .quantidade-box {
             flex: 1; min-height: 180px; background: rgba(255,255,255,0.6);
             border: 3px dashed var(--ruled-line); border-radius: 24px; padding: 24px;
-            display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 16px;
-            position: relative; max-width: 500px;
+            display: flex; flex-wrap: wrap; justify-content: center; align-content: center; gap: 12px; max-width: 500px;
         }
+        
+        .item-adesivo { font-size: 45px; opacity: 0; transform: scale(0.5); }
+        .aparecer { animation: popIn 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards; }
+        @keyframes popIn { to { opacity: 1; transform: scale(1); } }
 
-        .item-adesivo {
-            font-size: 48px; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
-            opacity: 0; transform: scale(0.5);
-            animation: popInItem 0.5s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+        /* --- CORREÇÃO DA ANIMAÇÃO DO GRAN FINALE --- */
+        .confete {
+            position: fixed; top: -20px;
+            width: 12px; height: 12px;
+            z-index: 999;
+            pointer-events: none;
+            animation: queda linear forwards;
         }
-
-        @keyframes popInItem { to { opacity: 1; transform: scale(1); } }
-
-        .msg-zero {
-            font-family: 'Patrick Hand', cursive; font-size: 24px; color: var(--brown-light); opacity: 0.7;
-            display: flex; flex-direction: column; align-items: center;
+        @keyframes queda {
+            to { transform: translateY(110vh) rotate(720deg); }
         }
-        .icone-zero { font-size: 40px; margin-bottom: 8px; opacity: 0.5; }
     </style>
 </head>
 <body>
 
 <header class="header">
     <div class="header-inner">
-        <a href="#" class="btn-voltar">⬅️ MENU</a>
-        <span class="titulo-header">Contando Quantidades</span>
-        <div style="width: 80px;"></div>
+        <span class="titulo-header">🔢 Jornada dos Números (Vozes: Pietro & Giovanna)</span>
     </div>
 </header>
 
@@ -122,15 +107,18 @@
         6: { emoji: "🐞", cor: "#f44336" },
         7: { emoji: "✏️", cor: "#ff9800" },
         8: { emoji: "🦋", cor: "var(--lavender)" },
-        9: { emoji: "🎈", cor: "#e91e63" }
+        9: { emoji: "🎈", cor: "#e91e63" },
+        10: { emoji: "⚽", cor: "#3f51b5" }
     };
 
     const navContainer = document.getElementById('navNumeros');
     const numDisplay = document.getElementById('numDisplay');
     const qtdBox = document.getElementById('qtdBox');
-    let timeoutsAtivos = []; 
+    
+    let contagemEmAndamento = false;
+    let proximoNumeroEsperado = 0; 
 
-    for (let i = 0; i <= 9; i++) {
+    for (let i = 0; i <= 10; i++) {
         const btn = document.createElement('button');
         btn.className = 'btn-num';
         btn.innerText = i;
@@ -138,62 +126,99 @@
         navContainer.appendChild(btn);
     }
 
-    function selecionarNumero(numero, btnClicado) {
-        // Para tudo o que estiver acontecendo
-        timeoutsAtivos.forEach(t => clearTimeout(t));
-        timeoutsAtivos = [];
-        window.speechSynthesis.cancel();
+    async function selecionarNumero(numero, btnClicado) {
+        if (contagemEmAndamento) return;
+        contagemEmAndamento = true;
+
+        // Lógica da Sequência (0 -> 1 -> 2...)
+        if (numero === proximoNumeroEsperado) {
+            proximoNumeroEsperado++;
+        } else {
+            // Se errar a ordem, reseta. Se clicar no zero, recomeça a trilha do zero.
+            proximoNumeroEsperado = (numero === 0) ? 1 : 0;
+        }
 
         document.querySelectorAll('.btn-num').forEach(b => b.classList.remove('ativo'));
         btnClicado.classList.add('ativo');
-
         numDisplay.innerText = numero;
         numDisplay.style.color = temasNumeros[numero].cor;
-        numDisplay.animate([
-            { transform: 'rotate(-2deg) scale(0.8)', opacity: 0.5 },
-            { transform: 'rotate(-2deg) scale(1)', opacity: 1 }
-        ], { duration: 300 });
-
         qtdBox.innerHTML = '';
 
-        // PRIMEIRO: Fala o nome do número clicado
-        falar(numero.toString());
+        // 1. Ouvir o número do botão (Voz da Giovanna)
+        await tocarAudio(`numero_${numero}.mp3`);
+        await new Promise(r => setTimeout(r, 600));
 
+        // 2. Contagem quantitativa
         if (numero === 0) {
-            const t0 = setTimeout(() => {
-                qtdBox.innerHTML = `<div class="msg-zero" style="color:${temasNumeros[0].cor}">
-                    <span class="icone-zero">📭</span>Vazio! É zero.</div>`;
-            }, 800);
-            timeoutsAtivos.push(t0);
+            qtdBox.innerHTML = `<div class="msg-zero" style="color:#795548; font-family:'Patrick Hand'">Vazio! É zero.</div>`;
         } else {
-            const delayEntreContagem = 800; // Tempo entre cada número da contagem
-            const esperaInicial = 1000;    // Tempo de espera após falar o número principal
-
-            for (let i = 0; i < numero; i++) {
-                // Agenda a aparição visual e a sonorização da contagem
-                const t = setTimeout(() => {
-                    const item = document.createElement('div');
-                    item.classList.add('item-adesivo');
-                    item.innerText = temasNumeros[numero].emoji;
-                    qtdBox.appendChild(item);
-                    
-                    // Fala o número da contagem (1, 2, 3...)
-                    falar((i + 1).toString());
-                }, esperaInicial + (i * delayEntreContagem));
-                
-                timeoutsAtivos.push(t);
+            for (let i = 1; i <= numero; i++) {
+                const item = document.createElement('div');
+                item.classList.add('item-adesivo');
+                item.innerText = temasNumeros[numero].emoji;
+                qtdBox.appendChild(item);
+                await tocarAudioComEfeito(`numero_${i}.mp3`, item);
             }
         }
+
+        // --- DISPARO DA FESTA ---
+        if (numero === 10 && proximoNumeroEsperado === 11) {
+            // Espera meio segundo após a Giovanna terminar de falar "Dez"
+            setTimeout(festejar, 500); 
+            proximoNumeroEsperado = 0; 
+        }
+        
+        contagemEmAndamento = false;
     }
 
-    function falar(texto) {
-        const msg = new SpeechSynthesisUtterance(texto);
-        msg.lang = 'pt-BR';
-        msg.rate = 1.0; 
-        msg.pitch = 1.2;
-        window.speechSynthesis.speak(msg);
+    function tocarAudio(arquivo) {
+        return new Promise((resolve) => {
+            const audio = new Audio(arquivo);
+            audio.onended = resolve;
+            audio.onerror = resolve;
+            audio.play().catch(resolve);
+        });
+    }
+
+    function tocarAudioComEfeito(arquivo, elemento) {
+        return new Promise((resolve) => {
+            const audio = new Audio(arquivo);
+            audio.onplay = () => elemento.classList.add('aparecer');
+            audio.onended = () => setTimeout(resolve, 200);
+            audio.onerror = () => { elemento.classList.add('aparecer'); resolve(); };
+            audio.play().catch(resolve);
+        });
+    }
+
+    function festejar() {
+        // Toca som de vitória (festa.mp3)
+        const festaAudio = new Audio('festa.mp3'); 
+        festaAudio.play().catch(() => console.log("Faltou o arquivo festa.mp3 para os aplausos!"));
+
+        // Chuva de confetes
+        for (let i = 0; i < 120; i++) {
+            const confete = document.createElement('div');
+            confete.className = 'confete';
+            
+            // Posição e cores aleatórias
+            confete.style.left = Math.random() * 100 + 'vw';
+            confete.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+            
+            // Formatos variados (quadrado ou círculo)
+            if(Math.random() > 0.5) confete.style.borderRadius = '50%';
+            
+            // Velocidade e atraso aleatórios
+            const duracao = Math.random() * 2 + 3;
+            const atraso = Math.random() * 2;
+            confete.style.animationDuration = duracao + 's';
+            confete.style.animationDelay = atraso + 's';
+            
+            document.body.appendChild(confete);
+
+            // Limpeza
+            setTimeout(() => confete.remove(), (duracao + atraso) * 1000);
+        }
     }
 </script>
-
 </body>
 </html>
