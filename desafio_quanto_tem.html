@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Quanto tem aqui? - Desafio das Quantidades</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root { 
+            --primary: #4dd0e1; --secondary: #f4845f; --bg: #fefcf3; 
+            --card-bg: #ffffff; --text: #5d4037; --transition: 0.4s;
+        }
+        body.dark-mode {
+            --bg: #1a1a2e; --card-bg: #16213e; --text: #ffffff; --primary: #00acc1;
+        }
+
+        body { 
+            font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text);
+            text-align: center; margin: 0; padding: 20px; transition: var(--transition);
+            min-height: 100vh;
+        }
+
+        .header-tools { position: absolute; top: 10px; right: 10px; }
+        .btn-theme { background: none; border: none; font-size: 28px; cursor: pointer; }
+
+        .painel-progresso { margin-bottom: 10px; font-size: 30px; }
+        .medalha { opacity: 0.2; filter: grayscale(1); transition: 0.5s; display: inline-block; }
+        .medalha.ganha { opacity: 1; filter: grayscale(0); transform: scale(1.3); }
+
+        /* Área onde os emojis aparecem sorteados */
+        #display-quantidades {
+            width: 95%; max-width: 600px; min-height: 250px; 
+            background: rgba(255,255,255,0.3); border: 4px dashed var(--primary);
+            border-radius: 30px; margin: 20px auto; 
+            display: flex; flex-wrap: wrap; align-items: center; justify-content: center; 
+            padding: 30px; gap: 15px; box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+        }
+
+        .emoji-item { font-size: clamp(40px, 10vw, 65px); animation: popIn 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) forwards; }
+        @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
+
+        /* Cartão de Interrogação que vira o número */
+        .cartao-resposta {
+            width: 120px; height: 160px; background: var(--card-bg); 
+            border: 5px solid var(--secondary); border-radius: 20px;
+            margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
+            font-family: 'Fredoka One', cursive; font-size: 80px; color: var(--secondary);
+            box-shadow: 0 8px 0 rgba(0,0,0,0.1); transition: 0.3s;
+        }
+
+        /* Grade de números para clicar */
+        .grade-numeros {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
+            gap: 10px; max-width: 500px; margin: 0 auto;
+        }
+        .btn-num {
+            height: 60px; border-radius: 15px; border: 2px solid var(--text);
+            background: var(--card-bg); color: var(--text); font-family: 'Fredoka One';
+            font-size: 24px; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 0 var(--text);
+        }
+        .btn-num:hover { transform: translateY(-3px); }
+        .btn-num:active, .btn-num.selecionado { transform: translateY(3px); box-shadow: none; background: var(--primary); color: white; }
+
+        .btn-conferir {
+            margin-top: 30px; padding: 15px 50px; border-radius: 50px; border: none;
+            background: var(--secondary); color: white; font-family: 'Fredoka One'; 
+            font-size: 26px; cursor: pointer; box-shadow: 0 6px 0 #d35400;
+        }
+
+        #modal-presente {
+            display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95);
+            z-index: 2000; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .video-box { width: 90%; max-width: 750px; aspect-ratio: 16/9; border: 6px solid gold; border-radius: 15px; }
+        .confete { position: fixed; width: 10px; height: 10px; z-index: 1000; animation: cair linear forwards; }
+        @keyframes cair { to { transform: translateY(100vh) rotate(720deg); } }
+    </style>
+</head>
+<body>
+
+<div class="header-tools">
+    <button class="btn-theme" onclick="toggleTheme()" id="themeIcon">🌙</button>
+</div>
+
+<div class="container">
+    <div class="painel-progresso">
+        <span class="medalha">⭐</span> <span class="medalha">⭐</span> <span class="medalha">⭐</span>
+    </div>
+
+    <h2 style="font-family: 'Fredoka One'; opacity: 0.9;">Conte e escolha o número!</h2>
+
+    <div id="display-quantidades"></div>
+
+    <div class="cartao-resposta" id="cartaoNumero">?</div>
+
+    <div class="grade-numeros" id="gradeBotoes"></div>
+
+    <button class="btn-conferir" onclick="verificarResposta()">CONFERIR (Enter)</button>
+    <p><a href="numeros.html" style="color:var(--primary); text-decoration:none; font-weight:bold;">⬅ VOLTAR</a></p>
+</div>
+
+<div id="modal-presente">
+    <h1 style="color:gold; font-family:'Fredoka One';">🎁 MUITO BEM! 🎁</h1>
+    <div class="video-box" id="areaVideo"></div>
+    <button onclick="fecharPresente()" style="margin-top:20px; padding:15px 40px; font-family:'Fredoka One'; cursor:pointer; border-radius:15px; border:none;">✖ VOLTAR</button>
+</div>
+
+<script>
+    let numeroSorteado = 0;
+    let palpiteAtual = null;
+    let acertosSeguidos = 0;
+    const IDs_YOUTUBE = ["DhEpqf2tDJw", "mJYQ1zRzqo0", "YlBdVa8QA00"];
+    const emojis = ["🍎", "🦆", "⭐", "🐸", "🐞", "🦋", "🎈", "⚽", "🚗", "🍦"];
+
+    // Tema
+    function toggleTheme() {
+        const isDark = document.body.classList.toggle('dark-mode');
+        localStorage.setItem('tema', isDark ? 'dark' : 'light');
+        document.getElementById('themeIcon').innerText = isDark ? '☀️' : '🌙';
+    }
+    if(localStorage.getItem('tema') === 'dark') toggleTheme();
+
+    // Criar botões de 0 a 10
+    const grade = document.getElementById('gradeBotoes');
+    for(let i=0; i<=10; i++) {
+        const btn = document.createElement('button');
+        btn.className = 'btn-num';
+        btn.innerText = i;
+        btn.onclick = () => selecionar(i, btn);
+        grade.appendChild(btn);
+    }
+
+    function novoJogo() {
+        palpiteAtual = null;
+        numeroSorteado = Math.floor(Math.random() * 11); // 0 a 10
+        document.getElementById('cartaoNumero').innerText = '?';
+        document.getElementById('cartaoNumero').style.color = 'var(--secondary)';
+        document.querySelectorAll('.btn-num').forEach(b => b.classList.remove('selecionado'));
+        
+        const display = document.getElementById('display-quantidades');
+        display.innerHTML = '';
+
+        if(numeroSorteado === 0) {
+            display.innerHTML = '<p style="font-size:24px; opacity:0.6;">A caixa está vazia!</p>';
+        } else {
+            const emojiDaRodada = emojis[Math.floor(Math.random() * emojis.length)];
+            for(let i=0; i < numeroSorteado; i++) {
+                const item = document.createElement('span');
+                item.className = 'emoji-item';
+                item.innerText = emojiDaRodada;
+                // Efeito sonoro de contagem progressiva ao aparecer (opcional, mas pedagógico)
+                display.appendChild(item);
+            }
+        }
+        // Opcional: Tocar um som de "contagem iniciada"
+    }
+
+    function selecionar(n, btn) {
+        palpiteAtual = n;
+        document.querySelectorAll('.btn-num').forEach(b => b.classList.remove('selecionado'));
+        btn.classList.add('selecionado');
+        tocarSom(`numero_${n}.mp3`); // Sonoriza o número clicado imediatamente
+    }
+
+    function verificarResposta() {
+        if(palpiteAtual === null) return;
+
+        const cartao = document.getElementById('cartaoNumero');
+        
+        if(palpiteAtual === numeroSorteado) {
+            // ACERTOU!
+            cartao.innerText = numeroSorteado;
+            cartao.style.color = '#2ecc71';
+            soltarConfetes();
+            tocarSom('aplausos.ogg');
+            acertosSeguidos++;
+            atualizarMedalhas();
+
+            if(acertosSeguidos >= 3) {
+                setTimeout(ganharPresente, 1000);
+            } else {
+                setTimeout(novoJogo, 2500);
+            }
+        } else {
+            // ERROU
+            tocarSom('erro.ogg');
+            cartao.animate([
+                { transform: 'translateX(-10px)' },
+                { transform: 'translateX(10px)' }
+            ], { duration: 100, iterations: 3 });
+        }
+    }
+
+    window.addEventListener('keydown', (e) => { if(e.key === "Enter") verificarResposta(); });
+
+    function atualizarMedalhas() {
+        const medalhas = document.querySelectorAll('.medalha');
+        medalhas.forEach((m, idx) => { if(idx < acertosSeguidos) m.classList.add('ganha'); });
+    }
+
+    function ganharPresente() {
+        const idSorteado = IDs_YOUTUBE[Math.floor(Math.random() * IDs_YOUTUBE.length)];
+        const areaVideo = document.getElementById('areaVideo');
+        areaVideo.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${idSorteado}?autoplay=1" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
+        document.getElementById('modal-presente').style.display = 'flex';
+        tocarSom('fim_jogo.ogg');
+    }
+
+    function fecharPresente() {
+        document.getElementById('modal-presente').style.display = 'none';
+        document.getElementById('areaVideo').innerHTML = '';
+        acertosSeguidos = 0;
+        document.querySelectorAll('.medalha').forEach(m => m.classList.remove('ganha'));
+        novoJogo();
+    }
+
+    function soltarConfetes() {
+        for (let i = 0; i < 40; i++) {
+            const c = document.createElement('div');
+            c.className = 'confete';
+            c.style.left = Math.random() * 100 + 'vw';
+            c.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 50%)`;
+            c.style.animationDuration = (Math.random()*2 + 1) + 's';
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 3000);
+        }
+    }
+
+    function tocarSom(arq) { new Audio(arq).play().catch(() => {}); }
+
+    window.onload = novoJogo;
+</script>
+</body>
+</html>

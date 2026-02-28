@@ -3,24 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fábrica de Quantidades - Modo Automático</title>
+    <title>Fábrica de Quantidades - Aprender Brincando</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700&display=swap" rel="stylesheet">
     <style>
         :root { 
             --primary: #0097a7; --secondary: #ff5722; --bg: #e0f7fa; 
-            --card-bg: #ffffff; --text: #333333;
+            --card-bg: #ffffff; --text: #333333; --transition: 0.4s;
         }
         body.dark-mode {
             --bg: #1a1a2e; --card-bg: #16213e; --text: #ffffff; --primary: #4dd0e1;
         }
 
         body { 
-            font-family: 'Nunito', sans-serif; background: var(--bg); 
-            color: var(--text); text-align: center; margin: 0; padding: 20px; 
-            transition: 0.5s; overflow: hidden;
+            font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text);
+            text-align: center; margin: 0; padding: 20px; transition: var(--transition);
         }
 
-        /* Botão Tema */
         .header-tools { position: absolute; top: 10px; right: 10px; }
         .btn-theme { background: none; border: none; font-size: 28px; cursor: pointer; }
 
@@ -30,39 +28,37 @@
 
         .painel-alvo {
             background: var(--card-bg); border: 5px solid var(--primary); border-radius: 25px;
-            display: inline-block; padding: 10px 50px; margin-bottom: 15px;
+            display: inline-block; padding: 15px 50px; margin-bottom: 15px;
             box-shadow: 0 8px 0 rgba(0,0,0,0.1);
         }
-        .numero-pedida { font-family: 'Fredoka One'; font-size: 100px; color: var(--primary); margin: 0; }
+        .numero-pedida { font-family: 'Fredoka One'; font-size: 110px; color: var(--primary); margin: 0; line-height: 1; }
 
-        /* A CAIXA QUADRADA */
         #caixa-deposito {
-            width: 90%; max-width: 500px; min-height: 250px; 
-            background: rgba(255,255,255,0.2);
-            border: 6px dashed var(--primary); border-radius: 30px; 
-            margin: 0 auto; display: flex; flex-wrap: wrap; 
-            align-items: center; justify-content: center; padding: 20px; gap: 10px;
+            width: 90%; max-width: 550px; min-height: 260px; 
+            background: rgba(255,255,255,0.2); border: 6px dashed var(--primary);
+            border-radius: 35px; margin: 0 auto; display: flex; flex-wrap: wrap; 
+            align-items: center; justify-content: center; padding: 20px; gap: 15px;
         }
-        
-        /* Animação quando acerta */
-        .caixa-sucesso { 
-            border-style: solid !important; 
-            background: rgba(76, 175, 80, 0.3) !important;
-            animation: pulse 0.5s infinite alternate;
-        }
-        @keyframes pulse { from { transform: scale(1); } to { transform: scale(1.05); } }
 
         .dispensador {
-            margin-top: 25px; background: var(--card-bg); padding: 15px; 
-            border-radius: 50px; display: inline-flex; gap: 20px; border: 3px solid var(--primary);
+            margin-top: 20px; background: var(--card-bg); padding: 15px; 
+            border-radius: 50px; display: inline-flex; gap: 25px; border: 3px solid var(--primary);
         }
-        .item-arrastavel { font-size: 70px; cursor: grab; user-select: none; }
+        .item-arrastavel { font-size: 75px; cursor: grab; user-select: none; transition: 0.2s; }
+        .item-arrastavel:hover { transform: scale(1.2); }
+
+        .btn-conferir {
+            margin-top: 25px; padding: 20px 60px; border-radius: 50px; border: none;
+            background: var(--secondary); color: white; font-family: 'Fredoka One'; 
+            font-size: 30px; cursor: pointer; box-shadow: 0 8px 0 #bf360c;
+        }
+        .btn-conferir:active { transform: translateY(4px); box-shadow: 0 4px 0 #bf360c; }
 
         #modal-presente {
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95);
             z-index: 2000; flex-direction: column; align-items: center; justify-content: center;
         }
-        .video-box { width: 90%; max-width: 700px; aspect-ratio: 16/9; border: 5px solid gold; }
+        .video-box { width: 90%; max-width: 750px; aspect-ratio: 16/9; border: 6px solid gold; border-radius: 15px; }
 
         .confete { position: fixed; width: 10px; height: 10px; z-index: 1000; animation: cair linear forwards; }
         @keyframes cair { to { transform: translateY(100vh) rotate(720deg); } }
@@ -80,7 +76,7 @@
     </div>
 
     <div class="painel-alvo">
-        <p style="margin:0">Pietro, coloque aqui:</p>
+        <p style="margin:0; font-size: 1.2rem;">Coloque esta quantidade:</p>
         <h1 class="numero-pedida" id="numAlvo">?</h1>
     </div>
 
@@ -88,24 +84,26 @@
 
     <div class="dispensador">
         <div class="item-arrastavel" draggable="true" ondragstart="drag(event)">🍎</div>
-        <div class="item-arrastavel" draggable="true" ondragstart="drag(event)">⭐</div>
         <div class="item-arrastavel" draggable="true" ondragstart="drag(event)">⚽</div>
+        <div class="item-arrastavel" draggable="true" ondragstart="drag(event)">🎁</div>
     </div>
+
+    <br>
+    <button class="btn-conferir" onclick="verificarAcerto()">CONFERIR</button>
 </div>
 
 <div id="modal-presente">
-    <h1 style="color:gold; font-family:'Fredoka One';">🎁 PARABÉNS! 🎁</h1>
+    <h1 style="color:gold; font-family:'Fredoka One';">🎁 MUITO BEM! 🎁</h1>
     <div class="video-box" id="areaVideo"></div>
-    <button onclick="fecharPresente()" style="margin-top:20px; padding:15px 30px; font-family:'Fredoka One'; cursor:pointer;">✖ VOLTAR</button>
+    <button onclick="fecharPresente()" style="margin-top:20px; padding:15px 40px; font-family:'Fredoka One'; cursor:pointer; border-radius:15px; border:none; background:white;">✖ VOLTAR</button>
 </div>
 
 <script>
     let numeroAlvo = 0;
     let acertosSeguidos = 0;
-    let travado = false; // Impede cliques durante animações
+    // Utilize os IDs dos vídeos que você disponibilizou (aleatórios)
     const IDs_YOUTUBE = ["DhEpqf2tDJw", "mJYQ1zRzqo0", "YlBdVa8QA00"];
 
-    // Tema
     function toggleTheme() {
         const isDark = document.body.classList.toggle('dark-mode');
         localStorage.setItem('tema', isDark ? 'dark' : 'light');
@@ -114,11 +112,9 @@
     if(localStorage.getItem('tema') === 'dark') toggleTheme();
 
     function novoDesafio() {
-        travado = false;
-        numeroAlvo = Math.floor(Math.random() * 5) + 1; // Começa fácil (1 a 5)
+        numeroAlvo = Math.floor(Math.random() * 10) + 1;
         document.getElementById('numAlvo').innerText = numeroAlvo;
         document.getElementById('caixa-deposito').innerHTML = '';
-        document.getElementById('caixa-deposito').classList.remove('caixa-sucesso');
         tocarSom(`numero_${numeroAlvo}.mp3`);
     }
 
@@ -127,44 +123,51 @@
 
     function drop(ev) {
         ev.preventDefault();
-        if(travado) return;
-
         const emoji = ev.dataTransfer.getData("emoji");
         const novoItem = document.createElement('div');
         novoItem.innerText = emoji;
-        novoItem.style.fontSize = '60px';
-        novoItem.onclick = function() { 
-            if(!travado) { this.remove(); tocarSom('erro.ogg'); verificarAutomatico(); }
-        };
+        novoItem.style.fontSize = '65px';
+        novoItem.style.cursor = 'pointer';
+        novoItem.title = "Clique para remover";
+        novoItem.onclick = function() { this.remove(); tocarSom('erro.ogg'); };
         
         document.getElementById('caixa-deposito').appendChild(novoItem);
         
-        // Som da contagem atual
-        const total = document.getElementById('caixa-deposito').children.length;
-        tocarSom(`numero_${total}.mp3`);
-
-        verificarAutomatico();
-    }
-
-    function verificarAutomatico() {
-        const total = document.getElementById('caixa-deposito').children.length;
-        const caixa = document.getElementById('caixa-deposito');
-
-        if (total === numeroAlvo) {
-            travado = true;
-            caixa.classList.add('caixa-sucesso');
-            acertosSeguidos++;
-            atualizarMedalhas();
-            soltarConfetes();
-            tocarSom('aplausos.ogg');
-
-            if (acertosSeguidos >= 3) {
-                setTimeout(ganharPresente, 1500);
-            } else {
-                setTimeout(novoDesafio, 3000);
-            }
+        // SONORIZAÇÃO PROGRESSIVA
+        const totalAtual = document.getElementById('caixa-deposito').children.length;
+        if(totalAtual <= 10) {
+            tocarSom(`numero_${totalAtual}.mp3`);
         }
     }
+
+    function verificarAcerto() {
+        const totalNaCaixa = document.getElementById('caixa-deposito').children.length;
+        
+        if (totalNaCaixa === numeroAlvo) {
+            // REFORÇO SONORO DO NÚMERO FINAL
+            tocarSom(`numero_${numeroAlvo}.mp3`);
+            
+            setTimeout(() => {
+                acertosSeguidos++;
+                atualizarMedalhas();
+                soltarConfetes();
+                tocarSom('aplausos.ogg');
+
+                if (acertosSeguidos >= 3) {
+                    setTimeout(ganharPresente, 1000);
+                } else {
+                    setTimeout(novoDesafio, 3000);
+                }
+            }, 800);
+        } else {
+            tocarSom('erro.ogg');
+            alert(`Ainda não está certo. Você colocou ${totalNaCaixa}, mas precisamos de ${numeroAlvo}.`);
+        }
+    }
+
+    window.addEventListener('keydown', function(e) {
+        if(e.key === "Enter") verificarAcerto();
+    });
 
     function atualizarMedalhas() {
         const medalhas = document.querySelectorAll('.medalha');
@@ -202,7 +205,7 @@
     }
 
     function tocarSom(arq) { 
-        new Audio(arq).play().catch(() => console.log("Som bloqueado")); 
+        new Audio(arq).play().catch(e => console.log("Áudio bloqueado ou não encontrado")); 
     }
 
     window.onload = novoDesafio;
