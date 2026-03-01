@@ -23,7 +23,7 @@
             --ruled-line: #34495e; --margin-line: #e74c3c;
             --header-bg: rgba(44, 62, 80, 0.92);
         }
-        body { font-family: 'Nunito', sans-serif; background: var(--paper); color: var(--brown); min-height: 100vh; overflow-x: hidden; }
+        body { font-family: 'Nunito', sans-serif; background: var(--paper); color: var(--brown); min-height: 100vh; overflow-x: hidden; margin:0; }
         body::before { content: ''; position: fixed; inset: 0; z-index: 0; background: repeating-linear-gradient(0deg, transparent, transparent 30px, var(--ruled-line) 30px, var(--ruled-line) 31px); background-size: 100% 31px; }
         body::after { content: ''; position: fixed; top: 0; bottom: 0; left: clamp(40px, 8vw, 80px); width: 2px; background: var(--margin-line); opacity: 0.6; }
 
@@ -32,50 +32,86 @@
         
         .stage { max-width: 700px; margin: 24px auto; padding: 0 16px; position: relative; z-index: 10; text-align: center; }
         
-        /* Video Card */
-        .video-card { background: rgba(255,255,255,0.2); border: 2px solid var(--ruled-line); border-radius: 20px; padding: 10px; max-width: 320px; margin: 0 auto 20px; }
-        .video-player { width: 100%; border-radius: 12px; display: none; }
+        /* Video Card e Letra Grande */
+        .video-card { 
+            background: rgba(255,255,255,0.4); 
+            border: 3px solid var(--ruled-line); 
+            border-radius: 25px; 
+            padding: 15px; 
+            max-width: 320px; 
+            margin: 0 auto 20px; 
+            min-height: 280px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+        }
+        .video-player { width: 100%; border-radius: 15px; display: none; }
         .video-player.ativo { display: block; }
 
+        .letra-grande { 
+            font-family: 'Fredoka One', cursive; 
+            font-size: 140px; 
+            display: block; 
+            line-height: 1;
+            text-shadow: 4px 4px 0px rgba(0,0,0,0.1);
+        }
+        .brilho-inicial { font-size: 100px; }
+
         /* Botões Vogais */
-        .blocos-container { display: flex; justify-content: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
-        .bloco-vogal { width: 55px; height: 55px; border-radius: 12px; border: none; font-family: 'Fredoka One', cursive; font-size: 1.5rem; color: #fff; cursor: pointer; transition: 0.2s; }
-        .bloco-vogal:hover { transform: scale(1.1); }
-        .bloco-A { background: var(--coral); box-shadow: 0 4px var(--coral-dark); }
-        .bloco-E { background: var(--turquoise); box-shadow: 0 4px var(--turquoise-dark); }
-        .bloco-I { background: var(--lavender); box-shadow: 0 4px var(--lavender-dark); }
-        .bloco-O { background: var(--lime); box-shadow: 0 4px var(--lime-dark); }
-        .bloco-U { background: var(--peach); box-shadow: 0 4px var(--peach-dark); }
+        .blocos-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 25px; }
+        .bloco-vogal { 
+            width: 60px; height: 60px; border-radius: 15px; border: none; 
+            font-family: 'Fredoka One', cursive; font-size: 1.8rem; color: #fff; 
+            cursor: pointer; transition: 0.2s; 
+        }
+        .bloco-vogal:hover { transform: scale(1.15) rotate(3deg); }
+        .bloco-A { background: var(--coral); box-shadow: 0 5px var(--coral-dark); }
+        .bloco-E { background: var(--turquoise); box-shadow: 0 5px var(--turquoise-dark); }
+        .bloco-I { background: var(--lavender); box-shadow: 0 5px var(--lavender-dark); }
+        .bloco-O { background: var(--lime); box-shadow: 0 5px var(--lime-dark); }
+        .bloco-U { background: var(--peach); box-shadow: 0 5px var(--peach-dark); }
 
         /* Jogo de Ligação */
-        .jogo-ligacao { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 400px; margin: 40px auto; display: none; }
+        .jogo-ligacao { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 450px; margin: 40px auto; display: none; }
         .coluna { display: flex; flex-direction: column; gap: 15px; }
-        .item-jogo { padding: 15px; background: white; border: 3px solid var(--ruled-line); border-radius: 15px; cursor: pointer; font-family: 'Fredoka One', cursive; font-size: 20px; transition: 0.2s; }
-        .item-jogo img { width: 60px; height: 60px; object-fit: contain; }
-        .selecionado { border-color: var(--coral); background: #fff5f0; transform: scale(1.05); }
-        .correto { background: #d4edda !important; border-color: #28a745 !important; opacity: 0.6; pointer-events: none; }
+        .item-jogo { 
+            padding: 15px; background: white; border: 3px solid var(--ruled-line); 
+            border-radius: 20px; cursor: pointer; font-family: 'Fredoka One', cursive; 
+            font-size: 24px; transition: 0.2s; display: flex; align-items: center; justify-content: center;
+            min-height: 80px;
+        }
+        .item-jogo img { width: 70px; height: 70px; object-fit: contain; }
+        .selecionado { border-color: #ffcc00; background: #fffdeb; transform: scale(1.05); }
+        .correto { background: #d4edda !important; border-color: #28a745 !important; pointer-events: none; transform: scale(0.95); opacity: 0.8; }
 
-        .btn-acao { padding: 15px 30px; border-radius: 50px; border: none; font-family: 'Nunito', sans-serif; font-weight: 800; cursor: pointer; margin-top: 20px; box-shadow: 0 4px 0 #bbb; }
-        .btn-proxima { background: #ffcc00; color: #5d4037; display: none; }
-        
-        #placeholder-img { font-size: 60px; padding: 40px; }
+        .btn-acao { 
+            padding: 16px 32px; border-radius: 50px; border: none; 
+            font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 18px;
+            cursor: pointer; margin-top: 20px; transition: 0.2s;
+        }
+        .btn-iniciar { background: var(--turquoise); color: white; box-shadow: 0 5px var(--turquoise-dark); }
+        .btn-proxima { background: #ffcc00; color: #5d4037; display: none; box-shadow: 0 5px #e6b800; }
+        .btn-proxima:hover { transform: scale(1.05); }
+
     </style>
 </head>
 <body>
 
 <header class="header">
     <div class="header-inner">
-        <a href="vogais.html" style="text-decoration:none; color:inherit; font-weight:800;">⬅ VOLTAR</a>
-        <button onclick="toggleTheme()" style="background:none; border:none; font-size:20px; cursor:pointer;" id="btnTema">☀️</button>
+        <a href="vogais.html" style="text-decoration:none; color:inherit; font-weight:800; font-size:14px;">⬅ VOLTAR</a>
+        <span style="font-family: 'Patrick Hand'; font-size: 20px;">Vogais Maiúsculas</span>
+        <button onclick="toggleTheme()" style="background:none; border:none; font-size:22px; cursor:pointer;" id="btnTema">☀️</button>
     </div>
 </header>
 
 <div class="stage">
-    <h2 id="feedback" style="font-family: 'Patrick Hand'; font-size: 30px;">Vamos aprender as Vogais!</h2>
+    <h2 id="feedback" style="font-family: 'Patrick Hand'; font-size: 32px; margin-bottom: 15px;">A mágica das letrinhas!</h2>
     
     <div id="area-apresentacao">
-        <div class="video-card">
-            <div id="placeholder-img">🎬</div>
+        <div class="video-card" id="cardPrincipal">
+            <span id="display-letra" class="letra-grande brilho-inicial">✨</span>
             <video id="meuVideo" class="video-player" playsinline></video>
         </div>
 
@@ -87,18 +123,18 @@
             <button class="bloco-vogal bloco-U" onmouseenter="ouvirLetra('U.mp3')" onclick="tocarVogal('U')">U</button>
         </div>
         
-        <button class="btn-acao" id="btnIniciar" onclick="iniciarApresentacao()">▶ Começar Apresentação</button>
+        <button class="btn-acao btn-iniciar" id="btnIniciar" onclick="iniciarApresentacao()">▶ Começar Apresentação</button>
     </div>
 
     <div id="area-jogo" class="jogo-ligacao">
-        <div class="coluna" id="colunaLetras">
-            <div class="item-jogo" onclick="selecionarItem(this, 'letra', 'A')">A</div>
-            <div class="item-jogo" onclick="selecionarItem(this, 'letra', 'I')">I</div>
-            <div class="item-jogo" onclick="selecionarItem(this, 'letra', 'E')">E</div>
-            <div class="item-jogo" onclick="selecionarItem(this, 'letra', 'U')">U</div>
-            <div class="item-jogo" onclick="selecionarItem(this, 'letra', 'O')">O</div>
+        <div class="coluna">
+            <div class="item-jogo" style="color:var(--coral)" onclick="selecionarItem(this, 'letra', 'A')">A</div>
+            <div class="item-jogo" style="color:var(--lavender)" onclick="selecionarItem(this, 'letra', 'I')">I</div>
+            <div class="item-jogo" style="color:var(--turquoise)" onclick="selecionarItem(this, 'letra', 'E')">E</div>
+            <div class="item-jogo" style="color:var(--peach)" onclick="selecionarItem(this, 'letra', 'U')">U</div>
+            <div class="item-jogo" style="color:var(--lime)" onclick="selecionarItem(this, 'letra', 'O')">O</div>
         </div>
-        <div class="coluna" id="colunaFiguras">
+        <div class="coluna">
             <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'E')"><img src="elefante.png" alt="Elefante"></div>
             <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'A')"><img src="aviao.png" alt="Avião"></div>
             <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'O')"><img src="ovo.png" alt="Ovo"></div>
@@ -112,7 +148,10 @@
 
 <script>
     const videos = { A: 'a_de_aviao.mp4', E: 'e_de_elefante.mp4', I: 'i_de_iguana.mp4', O: 'o_de_de_ovo.mp4', U: 'u_de_unicornio.mp4' };
+    const coresLetras = { A: '#f4845f', E: '#4dd0e1', I: '#b39ddb', O: '#aed581', U: '#ffab91' };
+    
     const player = document.getElementById('meuVideo');
+    const displayLetra = document.getElementById('display-letra');
     const feedback = document.getElementById('feedback');
     let somLetra;
 
@@ -123,17 +162,25 @@
     }
 
     function mostrarAnimacao(letra) {
-        document.getElementById('placeholder-img').style.display = 'none';
+        // Esconde a letra e mostra o vídeo
+        displayLetra.style.display = 'none';
         player.src = videos[letra];
         player.classList.add('ativo');
-        player.loop = false; // Sem loop
         player.play();
+
+        player.onended = () => {
+            // Ao acabar o vídeo, mostra a letra grande na cor certa
+            player.classList.remove('ativo');
+            displayLetra.innerText = letra;
+            displayLetra.style.color = coresLetras[letra];
+            displayLetra.classList.remove('brilho-inicial');
+            displayLetra.style.display = 'block';
+        };
     }
 
     function tocarVogal(letra) {
         mostrarAnimacao(letra);
-        feedback.innerText = "Letra " + letra;
-        player.onended = () => { /* Fica parado no último frame */ };
+        feedback.innerText = "Você escolheu a letra " + letra;
         document.getElementById('btnProxima').style.display = 'inline-block';
     }
 
@@ -145,9 +192,15 @@
         function proximo() {
             if(i < sequencia.length) {
                 tocarVogal(sequencia[i]);
-                player.onended = () => { i++; setTimeout(proximo, 500); };
+                // Sobrescreve o onended para a sequência automática
+                let originalOnEnded = player.onended;
+                player.onended = () => {
+                    originalOnEnded();
+                    i++;
+                    setTimeout(proximo, 1500); // Espera 1.5s vendo a letra antes da próxima
+                };
             } else {
-                feedback.innerText = "Muito bem! Agora tente ligar as letras!";
+                feedback.innerText = "Incrível! Vamos para o desafio?";
                 document.getElementById('btnProxima').style.display = 'inline-block';
             }
         }
@@ -181,10 +234,10 @@
             if(escolhaLetra.valor === escolhaFigura.valor) {
                 escolhaLetra.el.classList.add('correto');
                 escolhaFigura.el.classList.add('correto');
-                feedback.innerText = "Isso mesmo! " + valor + " de " + valor;
-                ouvirLetra('acerto.mp3'); // Opcional
+                feedback.innerText = "Muito bem! Acertou!";
+                ouvirLetra('acerto.mp3'); 
             } else {
-                feedback.innerText = "Ops! Tente de novo!";
+                feedback.innerText = "Tente novamente!";
                 const l = escolhaLetra.el; const f = escolhaFigura.el;
                 setTimeout(() => { l.classList.remove('selecionado'); f.classList.remove('selecionado'); }, 500);
             }
