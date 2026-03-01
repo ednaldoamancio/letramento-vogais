@@ -1,182 +1,145 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Jornada das Letras: Menu de Vogais</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
-<style>
-/* ═══════════════════════════════════════════════════════
-   DESIGN: "Folha de Caderno Viva" — Paper Craft Escolar
-═══════════════════════════════════════════════════════ */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --coral: #f4845f; --coral-dark: #e05a3a;
-  --turquoise: #4dd0e1; --turquoise-dark: #26a8b8;
-  --lavender: #b39ddb; --lavender-dark: #8e79c0;
-  --lime: #aed581; --lime-dark: #8bc34a;
-  --peach: #ffab91; --peach-dark: #e08060;
-  --paper: #fefcf3; --brown: #5d4037; --brown-light: #795548;
-  --ruled-line: rgba(173, 200, 230, 0.25);
-  --margin-line: rgba(200, 100, 100, 0.2);
-}
-body {
-  font-family: 'Nunito', sans-serif;
-  background: var(--paper);
-  color: #333;
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Jornada das Letras: Vogais</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --coral: #f4845f; --coral-dark: #e05a3a;
+            --turquoise: #4dd0e1; --turquoise-dark: #26a8b8;
+            --lavender: #b39ddb; --lavender-dark: #8e79c0;
+            --paper: #fefcf3; --brown: #5d4037;
+            --ruled-line: #add8e6; --margin-line: #ff9999;
+            --header-bg: rgba(254, 252, 243, 0.95);
+        }
 
-/* ─── Fundo de caderno pautado ─── */
-body::before {
-  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background: repeating-linear-gradient(0deg, transparent, transparent 31px, var(--ruled-line) 31px, var(--ruled-line) 32px);
-  background-size: 100% 32px; background-position: 0 16px;
-}
-body::after {
-  content: ''; position: fixed; top: 0; bottom: 0; left: clamp(40px, 8vw, 80px); width: 2px;
-  background: var(--margin-line); z-index: 0; pointer-events: none;
-}
+        [data-theme="dark"] {
+            --paper: #2c3e50; --brown: #ecf0f1;
+            --ruled-line: #34495e; --margin-line: #e74c3c;
+            --header-bg: rgba(44, 62, 80, 0.95);
+        }
 
-/* ─── Header fixo ─── */
-.header {
-  position: sticky; top: 0; z-index: 50; background: rgba(254, 252, 243, 0.92);
-  backdrop-filter: blur(12px); border-bottom: 1px solid rgba(180, 200, 220, 0.3);
-}
-.header-inner {
-  max-width: 800px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between;
-}
-.btn-voltar {
-  display: flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 50px; border: none;
-  font-size: 13px; font-weight: 800; font-family: 'Nunito', sans-serif; background: #e0e0e0; color: #424242;
-  box-shadow: 0 3px 0 #bdbdbd; cursor: pointer; text-decoration: none; transition: transform 0.15s;
-}
-.btn-voltar:hover { transform: scale(1.05); }
-.btn-voltar:active { transform: translateY(2px); box-shadow: 0 1px 0 #bdbdbd; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
 
-.btn-musica {
-  display: flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 50px; border: none;
-  font-size: 13px; font-weight: 800; font-family: 'Nunito', sans-serif; background: var(--turquoise); color: #004d40;
-  box-shadow: 0 3px 0 var(--turquoise-dark); cursor: pointer; transition: transform 0.15s;
-}
-.btn-musica:hover { transform: scale(1.05); }
-.btn-musica:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--turquoise-dark); }
-.btn-musica.ativo { background: #e0f7fa; color: #006064; box-shadow: none; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--paper);
+            color: var(--brown);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-.titulo-header { font-family: 'Patrick Hand', cursive; font-size: clamp(16px, 4vw, 22px); color: var(--brown); }
+        /* Linhas do caderno nítidas */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 30px, var(--ruled-line) 30px, var(--ruled-line) 31px);
+            background-size: 100% 31px;
+        }
 
-/* ─── Área principal do Menu ─── */
-.stage { max-width: 700px; margin: 24px auto; padding: 0 16px; position: relative; z-index: 10; }
-.welcome {
-  display: flex; flex-direction: column; justify-content: center; align-items: center;
-  padding: 10px 16px; text-align: center; animation: fadeInUp 0.6s ease; gap: 20px;
-}
-.welcome h2 { font-family: 'Patrick Hand', cursive; font-size: clamp(26px, 6vw, 36px); color: var(--brown); margin: 0; line-height: 1.2; }
-.welcome p { font-size: clamp(15px, 3.5vw, 18px); color: var(--brown-light); max-width: 90%; line-height: 1.5; margin: 0; }
+        body::after {
+            content: ''; position: fixed; top: 0; bottom: 0; left: clamp(40px, 8vw, 80px);
+            width: 2px; background: var(--margin-line); opacity: 0.6;
+        }
 
-/* ─── Imagem Central ─── */
-.blocos-img { width: clamp(180px, 40vw, 280px); max-height: 100px; object-fit: contain; margin-bottom: 10px; }
+        /* Header */
+        .header { position: sticky; top: 0; z-index: 50; background: var(--header-bg); border-bottom: 2px solid var(--ruled-line); }
+        .header-inner { max-width: 800px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+        
+        .header-botoes { display: flex; gap: 10px; }
+        .theme-toggle { background: var(--lavender); border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; font-size: 20px; box-shadow: 0 4px 0 var(--lavender-dark); }
+        .btn-voltar { padding: 8px 16px; border-radius: 50px; border: none; font-weight: 800; background: #eee; color: #333; text-decoration: none; font-size: 13px; box-shadow: 0 3px 0 #bbb; }
 
-/* ─── Botões do Menu de Vogais ─── */
-.menu-container { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 320px; }
-.btn-menu {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px;
-  padding: 16px 20px; border-radius: 16px; border: none; text-decoration: none; cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-.btn-menu:hover { transform: scale(1.03); }
-.btn-menu:active { transform: translateY(4px); }
+        .stage { max-width: 700px; margin: 30px auto; padding: 0 16px; position: relative; z-index: 10; }
+        .welcome { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; }
+        
+        h2 { font-family: 'Patrick Hand', cursive; font-size: clamp(28px, 8vw, 36px); color: var(--brown); }
 
-.btn-titulo { font-family: 'Fredoka One', cursive; font-size: clamp(18px, 4vw, 22px); color: #fff; }
-.btn-subtitulo { font-family: 'Nunito', sans-serif; font-size: 14px; font-weight: 700; color: rgba(255,255,255,0.9); }
+        /* Container dos Botões do Submenu */
+        .menu-container { display: flex; flex-direction: column; gap: 18px; width: 100%; max-width: 350px; }
+        
+        .btn-submenu {
+            padding: 22px 15px; border-radius: 20px; border: none; 
+            font-family: 'Fredoka One', cursive; font-size: 18px; color: #fff; 
+            text-decoration: none; text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex; flex-direction: column; align-items: center; gap: 5px;
+        }
+        .btn-submenu span { font-size: 14px; font-family: 'Nunito', sans-serif; opacity: 0.9; font-weight: 600; }
+        .btn-submenu:hover { transform: scale(1.05) rotate(1deg); }
 
-/* Cores específicas para cada botão */
-.btn-maiusculas {
-  background: linear-gradient(135deg, var(--coral), var(--coral-dark));
-  box-shadow: 0 6px 0 #c0392b, 0 8px 20px rgba(224, 90, 58, 0.3);
-}
-.btn-maiusculas:active { box-shadow: 0 2px 0 #c0392b; }
+        /* Cores Vibrantes */
+        .btn-maiuscula { background: var(--coral); box-shadow: 0 6px 0 var(--coral-dark); }
+        .btn-minuscula { background: var(--turquoise); box-shadow: 0 6px 0 var(--turquoise-dark); }
+        .btn-palavrinhas { background: var(--lavender); box-shadow: 0 6px 0 var(--lavender-dark); }
 
-.btn-minusculas {
-  background: linear-gradient(135deg, var(--turquoise), var(--turquoise-dark));
-  box-shadow: 0 6px 0 #1a8a99, 0 8px 20px rgba(38, 168, 184, 0.3);
-}
-.btn-minusculas:active { box-shadow: 0 2px 0 #1a8a99; }
-
-.btn-palavrinhas {
-  background: linear-gradient(135deg, var(--lime), var(--lime-dark));
-  box-shadow: 0 6px 0 #689f38, 0 8px 20px rgba(139, 195, 74, 0.3);
-}
-.btn-palavrinhas:active { box-shadow: 0 2px 0 #689f38; }
-
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-</style>
+    </style>
 </head>
 <body>
 
 <header class="header">
-  <div class="header-inner">
-    <a href="index.html" class="btn-voltar">⬅️ VOLTAR</a>
-
-    <span class="titulo-header">Mundo das Vogais</span>
-
-    <button class="btn-musica" id="btnMusica" onclick="alternarMusica()">
-      🎵 MÚSICA OFF
-    </button>
-  </div>
+    <div class="header-inner">
+        <a href="index.html" class="btn-voltar">⬅ VOLTAR</a>
+        <div class="header-botoes">
+            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️</button>
+        </div>
+    </div>
 </header>
 
-<div class="stage" id="stage">
-  <div class="welcome">
+<div class="stage">
+    <div class="welcome">
+        <h2>Aventuras com as Vogais</h2>
+        <p style="font-family: 'Patrick Hand', cursive; font-size: 20px;">O que vamos aprender agora?</p>
+        
+        <div class="menu-container">
+            <a href="vogais-maiusculas.html" class="btn-submenu btn-maiuscula" 
+               onmouseenter="tocarAudio('vogais_maiuscula.mp3')">
+                A E I O U
+                <span>Vogais Maiúsculas</span>
+            </a>
 
-    <img class="blocos-img" src="imagem_blocosaeiou.png" alt="Blocos A E I O U">
+            <a href="vogais-minusculas.html" class="btn-submenu btn-minuscula" 
+               onmouseenter="tocarAudio('vogais_minusculas.mp3')">
+                a e i o u
+                <span>Vogais Minúsculas</span>
+            </a>
 
-    <h2>As Letrinhas Mágicas!</h2>
-    <p>O que você quer praticar agora?</p>
-
-    <div class="menu-container">
-      <a href="vogais_maiusculas.html" class="btn-menu btn-maiusculas">
-        <span class="btn-titulo">Vogais Maiúsculas</span>
-        <span class="btn-subtitulo">A - E - I - O - U</span>
-      </a>
-
-      <a href="vogais_minusculas.html" class="btn-menu btn-minusculas">
-        <span class="btn-titulo">Vogais Minúsculas</span>
-        <span class="btn-subtitulo">a - e - i - o - u</span>
-      </a>
-
-      <a href="palavras_com_vogais.html" class="btn-menu btn-palavrinhas">
-        <span class="btn-titulo">Formando Palavrinhas</span>
-        <span class="btn-subtitulo">AI - EU - OI - UAU</span>
-      </a>
+            <a href="palavrinhas.html" class="btn-submenu btn-palavrinhas" 
+               onmouseenter="tocarAudio('formando_palavrinhas.mp3')">
+                AO - EI - UI
+                <span>Formando Palavrinhas</span>
+            </a>
+        </div>
     </div>
-
-  </div>
 </div>
 
 <script>
-// Música de Fundo (com loop)
-const musicaFundo = new Audio('musica_fundo.ogg');
-musicaFundo.loop = true;
-musicaFundo.volume = 0.3;
+    // Gerenciador de Áudio (Voz de Criança)
+    let somSubmenu;
+    function tocarAudio(arquivo) {
+        if (somSubmenu) {
+            somSubmenu.pause();
+            somSubmenu.currentTime = 0;
+        }
+        somSubmenu = new Audio(arquivo);
+        somSubmenu.play().catch(e => console.log("Áudio aguardando interação."));
+    }
 
-function alternarMusica() {
-  const btn = document.getElementById('btnMusica');
-  if (musicaFundo.paused) {
-    musicaFundo.play().catch(e => console.log("Música bloqueada", e));
-    btn.classList.add('ativo');
-    btn.innerHTML = `🎵 MÚSICA ON`;
-  } else {
-    musicaFundo.pause();
-    btn.classList.remove('ativo');
-    btn.innerHTML = `🎵 MÚSICA OFF`;
-  }
-}
+    // Alternar Tema Noite/Dia
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.getElementById('themeToggle');
+        if (body.getAttribute('data-theme') === 'dark') {
+            body.removeAttribute('data-theme');
+            btn.innerHTML = '☀️';
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            btn.innerHTML = '🌙';
+        }
+    }
 </script>
 
 </body>
