@@ -1,220 +1,333 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Jornada das Letras: Vogais Minúsculas</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
-<style>
-/* ═══════════════════════════════════════════════════════
-   DESIGN: "Folha de Caderno Viva" — Paper Craft Escolar
-═══════════════════════════════════════════════════════ */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --coral: #f4845f; --coral-dark: #e05a3a;
-  --turquoise: #4dd0e1; --turquoise-dark: #26a8b8;
-  --lavender: #b39ddb; --lavender-dark: #8e79c0;
-  --lime: #aed581; --lime-dark: #8bc34a;
-  --peach: #ffab91; --peach-dark: #e08060;
-  --paper: #fefcf3; --brown: #5d4037; --brown-light: #795548;
-  --ruled-line: rgba(173, 200, 230, 0.25);
-  --margin-line: rgba(200, 100, 100, 0.2);
-}
-body {
-  font-family: 'Nunito', sans-serif;
-  background: var(--paper);
-  color: #333;
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
-}
-body::before {
-  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background: repeating-linear-gradient(0deg, transparent, transparent 31px, var(--ruled-line) 31px, var(--ruled-line) 32px);
-  background-size: 100% 32px; background-position: 0 16px;
-}
-body::after {
-  content: ''; position: fixed; top: 0; bottom: 0; left: clamp(40px, 8vw, 80px); width: 2px;
-  background: var(--margin-line); z-index: 0; pointer-events: none;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Jornada das Letras: Missão Vogais</title>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --coral: #f4845f; --coral-dark: #e05a3a;
+            --turquoise: #4dd0e1; --turquoise-dark: #26a8b8;
+            --lavender: #b39ddb; --lavender-dark: #8e79c0;
+            --lime: #aed581; --lime-dark: #8bc34a;
+            --peach: #ffab91; --peach-dark: #e08060;
+            --paper: #fefcf3; --brown: #5d4037; --brown-light: #795548;
+            --ruled-line: #add8e6; --margin-line: #ff9999;
+            --header-bg: rgba(254, 252, 243, 0.92);
+        }
+        [data-theme="dark"] {
+            --paper: #2c3e50; --brown: #ecf0f1; --brown-light: #bdc3c7;
+            --ruled-line: #34495e; --margin-line: #e74c3c;
+            --header-bg: rgba(44, 62, 80, 0.92);
+        }
 
-/* ─── Header fixo ─── */
-.header { position: sticky; top: 0; z-index: 50; background: rgba(254, 252, 243, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(180, 200, 220, 0.3); }
-.header-inner { max-width: 800px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
-.btn-voltar { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 50px; border: none; font-size: 13px; font-weight: 800; font-family: 'Nunito', sans-serif; background: #e0e0e0; color: #424242; box-shadow: 0 3px 0 #bdbdbd; cursor: pointer; text-decoration: none; transition: transform 0.15s; }
-.btn-voltar:hover { transform: scale(1.05); }
-.btn-voltar:active { transform: translateY(2px); box-shadow: 0 1px 0 #bdbdbd; }
-.titulo-header { font-family: 'Patrick Hand', cursive; font-size: clamp(16px, 4vw, 22px); color: var(--brown); }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
+        body { font-family: 'Nunito', sans-serif; background: var(--paper); color: var(--brown); min-height: 100vh; overflow-x: hidden; }
+        body::before { content: ''; position: fixed; inset: 0; z-index: 0; background: repeating-linear-gradient(0deg, transparent, transparent 30px, var(--ruled-line) 30px, var(--ruled-line) 31px); background-size: 100% 31px; pointer-events: none; }
+        body::after { content: ''; position: fixed; top: 0; bottom: 0; left: clamp(40px, 8vw, 80px); width: 2px; background: var(--margin-line); opacity: 0.6; pointer-events: none; }
 
-/* ─── Área principal ─── */
-.stage { max-width: 700px; margin: 24px auto; padding: 0 16px; position: relative; z-index: 10; text-align: center; }
-.instrucoes { font-family: 'Patrick Hand', cursive; font-size: 26px; color: var(--brown); margin-bottom: 8px; }
-.sub-instrucoes { font-family: 'Nunito', sans-serif; font-size: 16px; color: var(--brown-light); margin-bottom: 32px; font-weight: 600; }
+        .header { position: sticky; top: 0; z-index: 100; background: var(--header-bg); border-bottom: 2px solid var(--ruled-line); backdrop-filter: blur(10px); }
+        .header-inner { max-width: 800px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+        
+        .stage { max-width: 800px; margin: 24px auto; padding: 0 16px; position: relative; z-index: 10; text-align: center; }
+        .instrucoes { font-family: 'Patrick Hand', cursive; font-size: 32px; margin-bottom: 5px; }
+        .sub-instrucoes { font-family: 'Nunito', sans-serif; font-size: 18px; color: var(--brown-light); margin-bottom: 25px; font-weight: 600; }
 
-/* ─── GRID DE CARTAS 3D ─── */
-.cards-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; perspective: 1000px; }
-.card-container { width: 90px; height: 110px; cursor: pointer; }
-@media (min-width: 640px) { .card-container { width: 110px; height: 130px; } }
+        /* Utilitários de Fases */
+        .fase { display: none; animation: fadeIn 0.5s ease; }
+        .fase.ativa { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        .escondido { display: none !important; }
 
-.card-flipper { width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
-.card-container.girada .card-flipper { transform: rotateY(180deg); }
+        /* Cores Base para Cartões e Cubos */
+        .cor-a { background: var(--coral); border-color: var(--coral-dark); }
+        .cor-e { background: var(--turquoise); border-color: var(--turquoise-dark); }
+        .cor-i { background: var(--lavender); border-color: var(--lavender-dark); }
+        .cor-o { background: var(--lime); border-color: var(--lime-dark); }
+        .cor-u { background: var(--peach); border-color: var(--peach-dark); }
 
-.card-face { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka One', cursive; box-shadow: 0 6px 15px rgba(93, 64, 55, 0.15); border: 4px solid; }
-.card-front { background: #fff9c4; border-color: #fbc02d; color: #f57f17; font-size: 3rem; }
-.card-front::after { content: '?'; }
-.card-back { transform: rotateY(180deg); font-size: 4rem; color: #fff; }
+        /* --- FASE 1: ESCONDE-ESCONDE --- */
+        .cards-grid { display: flex; justify-content: center; flex-wrap: wrap; gap: 20px; perspective: 1000px; }
+        .card-container { width: 110px; height: 140px; cursor: pointer; }
+        .card-flipper { width: 100%; height: 100%; position: relative; transition: transform 0.6s cubic-bezier(0.4, 0.2, 0.2, 1); transform-style: preserve-3d; }
+        .card-container.girada .card-flipper { transform: rotateY(180deg); }
+        .card-face-mini { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 16px; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka One', cursive; border: 4px solid; }
+        .card-front-mini { background: #fff9c4; border-color: #fbc02d; color: #f57f17; font-size: 4rem; }
+        .card-back-mini { transform: rotateY(180deg); font-size: 5rem; color: #fff; }
 
-.card-back.cor-a { background: var(--coral); border-color: var(--coral-dark); }
-.card-back.cor-e { background: var(--turquoise); border-color: var(--turquoise-dark); }
-.card-back.cor-i { background: var(--lavender); border-color: var(--lavender-dark); }
-.card-back.cor-o { background: var(--lime); border-color: var(--lime-dark); }
-.card-back.cor-u { background: var(--peach); border-color: var(--peach-dark); }
+        /* --- FASE 2: JOGO DE LIGAR --- */
+        .jogo-container { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 500px; margin: 0 auto; }
+        .coluna { display: flex; flex-direction: column; gap: 15px; }
+        .item-jogo { border-radius: 15px; cursor: pointer; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka One', cursive; color: white; min-height: 100px; width: 100%; border: none; font-size: 4rem; box-shadow: 0 6px 0 rgba(0,0,0,0.2); transition: 0.2s; }
+        .cubo-figura { background: white; border: 4px solid var(--ruled-line); box-shadow: 0 6px var(--ruled-line); }
+        .cubo-figura img { width: 85px; height: 85px; object-fit: contain; }
+        .selecionado { outline: 6px solid #ffcc00; transform: scale(1.05); }
+        .correto { opacity: 0.4; pointer-events: none; transform: scale(0.9); box-shadow: none !important; }
 
-@keyframes popCard { 0% { transform: scale(1) rotateY(180deg); } 50% { transform: scale(1.15) rotateY(180deg); } 100% { transform: scale(1) rotateY(180deg); } }
-.card-container.girada .card-flipper { animation: popCard 0.5s ease forwards; }
+        /* --- FASE 3: JOGO DE MEMÓRIA (RETRATO E GRANDE) --- */
+        .memoria-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 12px; max-width: 700px; margin: 0 auto; }
+        .card-memo { height: 160px; /* Formato Retrato */ cursor: pointer; perspective: 1000px; position: relative; }
+        .card-inner-memo { position: absolute; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .card-memo.virada .card-inner-memo { transform: rotateY(180deg); }
+        .card-face-memo { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka One', cursive; font-size: 5rem; /* Letra Gigante */ border: 4px solid #fff; box-shadow: 0 6px 15px rgba(0,0,0,0.15); }
+        .card-front-memo { background: #3e2723; color: white; border-color: rgba(255,255,255,0.2); z-index: 2; font-size: 4rem; }
+        .card-back-memo { transform: rotateY(180deg); color: white; z-index: 1; }
 
-.btn-reset { margin-top: 40px; padding: 12px 24px; border-radius: 50px; border: none; font-family: 'Fredoka One', cursive; font-size: 16px; background: #e3f2fd; color: #1565c0; cursor: pointer; box-shadow: 0 4px 0 #bbdefb; transition: transform 0.1s; }
-.btn-reset:active { transform: translateY(4px); box-shadow: 0 0 0 #bbdefb; }
+        /* Magia e Confetes */
+        @keyframes magicMatch { 0% { transform: scale(1) rotateY(180deg); } 50% { transform: scale(1.1) rotateY(180deg); box-shadow: 0 0 30px #ffcc00; } 100% { transform: scale(1) rotateY(180deg); } }
+        .card-memo.match .card-inner-memo { animation: magicMatch 0.6s ease-out; }
+        .confete { position: fixed; width: 12px; height: 12px; z-index: 1000; pointer-events: none; border-radius: 2px; }
 
-/* ─── MODAL DE VÍDEO RECOMPENSA ─── */
-.video-modal { display: none; position: fixed; top: 0; left: 0; width: 100vw; height: 100vh; background: rgba(0, 0, 0, 0.85); z-index: 9999; align-items: center; justify-content: center; opacity: 0; transition: opacity 0.3s ease; }
-.video-modal.visivel { display: flex; opacity: 1; }
-.video-modal-content { position: relative; width: 90%; max-width: 500px; background: #fff; padding: 12px; border-radius: 20px; box-shadow: 0 10px 40px rgba(0,0,0,0.5); animation: popModal 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-@keyframes popModal { 0% { transform: scale(0.6); } 100% { transform: scale(1); } }
-.video-recompensa { width: 100%; border-radius: 12px; border: 4px dashed rgba(121, 85, 72, 0.3); display: block; background: #000; }
-.btn-fechar-video { position: absolute; top: -15px; right: -15px; width: 45px; height: 45px; border-radius: 50%; background: var(--coral-dark); color: white; border: 4px solid #fff; font-family: 'Fredoka One', cursive; font-size: 20px; cursor: pointer; box-shadow: 0 4px 10px rgba(0,0,0,0.3); z-index: 10; }
-.btn-fechar-video:active { transform: scale(0.9); }
-
-</style>
+        /* Botões Globais */
+        .btn-magic { padding: 15px 30px; border-radius: 50px; border: none; font-family: 'Fredoka One', cursive; font-size: 18px; cursor: pointer; margin-top: 30px; box-shadow: 0 5px #bbb; }
+        .btn-next { background: var(--turquoise); color: white; box-shadow: 0 5px var(--turquoise-dark); }
+        .btn-reset { background: var(--lime); color: white; box-shadow: 0 5px var(--lime-dark); }
+    </style>
 </head>
-<body>
+<body id="corpo">
 
 <header class="header">
-  <div class="header-inner">
-    <a href="vogais.html" class="btn-voltar">⬅️ VOLTAR</a>
-    <span class="titulo-header">Vogais Minúsculas</span>
-    <div style="width: 80px;"></div>
-  </div>
+    <div class="header-inner">
+        <a href="vogais.html" style="text-decoration:none; color:inherit; font-weight:800;">⬅ VOLTAR</a>
+        <button onclick="toggleTheme()" style="background:none; border:none; font-size:24px; cursor:pointer;" id="btnTema">☀️</button>
+    </div>
 </header>
 
 <div class="stage">
-  <h2 class="instrucoes">Esconde-Esconde!</h2>
-  <p class="sub-instrucoes" id="textoSub">Toque nos cartões para revelar as letrinhas minúsculas.</p>
+    
+    <div id="fase1" class="fase ativa">
+        <h2 class="instrucoes" id="titulo-fase1">Esconde-Esconde!</h2>
+        <p class="sub-instrucoes" id="sub-fase1">Toque nos cartões para ouvir as letrinhas minúsculas.</p>
+        
+        <div class="cards-grid">
+            <div class="card-container" onclick="revelarEscondeEsconde(this, 'a')">
+                <div class="card-flipper">
+                    <div class="card-face-mini card-front-mini">?</div>
+                    <div class="card-face-mini card-back-mini cor-a">a</div>
+                </div>
+            </div>
+            <div class="card-container" onclick="revelarEscondeEsconde(this, 'e')">
+                <div class="card-flipper">
+                    <div class="card-face-mini card-front-mini">?</div>
+                    <div class="card-face-mini card-back-mini cor-e">e</div>
+                </div>
+            </div>
+            <div class="card-container" onclick="revelarEscondeEsconde(this, 'i')">
+                <div class="card-flipper">
+                    <div class="card-face-mini card-front-mini">?</div>
+                    <div class="card-face-mini card-back-mini cor-i">i</div>
+                </div>
+            </div>
+            <div class="card-container" onclick="revelarEscondeEsconde(this, 'o')">
+                <div class="card-flipper">
+                    <div class="card-face-mini card-front-mini">?</div>
+                    <div class="card-face-mini card-back-mini cor-o">o</div>
+                </div>
+            </div>
+            <div class="card-container" onclick="revelarEscondeEsconde(this, 'u')">
+                <div class="card-flipper">
+                    <div class="card-face-mini card-front-mini">?</div>
+                    <div class="card-face-mini card-back-mini cor-u">u</div>
+                </div>
+            </div>
+        </div>
+        <button id="btnProxima1" class="btn-magic btn-next escondido" onclick="mudarFase(2)">Próxima Atividade ➔</button>
+    </div>
 
-  <div class="cards-grid">
-    <div class="card-container" onclick="revelarCarta(this, 'a')">
-      <div class="card-flipper"><div class="card-face card-front"></div><div class="card-face card-back cor-a">a</div></div>
+    <div id="fase2" class="fase">
+        <h2 class="instrucoes">Ligue as vogais minúsculas!</h2>
+        <p class="sub-instrucoes">Conecte o cubinho da letra com a figura correta.</p>
+        <div class="jogo-container" id="area-ligar">
+            <div class="coluna" id="colLetras"></div>
+            <div class="coluna" id="colFiguras"></div>
+        </div>
+        <button id="btnProxima2" class="btn-magic btn-next escondido" onclick="mudarFase(3)">Desafio da Memória ➔</button>
     </div>
-    <div class="card-container" onclick="revelarCarta(this, 'e')">
-      <div class="card-flipper"><div class="card-face card-front"></div><div class="card-face card-back cor-e">e</div></div>
-    </div>
-    <div class="card-container" onclick="revelarCarta(this, 'i')">
-      <div class="card-flipper"><div class="card-face card-front"></div><div class="card-face card-back cor-i">i</div></div>
-    </div>
-    <div class="card-container" onclick="revelarCarta(this, 'o')">
-      <div class="card-flipper"><div class="card-face card-front"></div><div class="card-face card-back cor-o">o</div></div>
-    </div>
-    <div class="card-container" onclick="revelarCarta(this, 'u')">
-      <div class="card-flipper"><div class="card-face card-front"></div><div class="card-face card-back cor-u">u</div></div>
-    </div>
-  </div>
 
-  <button class="btn-reset" onclick="esconderTodas()">🔄 Esconder todas de novo</button>
-</div>
+    <div id="fase3" class="fase">
+        <h2 class="instrucoes" id="feedback-memoria">Encontre os Pares Mágicos!</h2>
+        <p class="sub-instrucoes">Combine a letra Maiúscula com a Minúscula.</p>
+        <div class="memoria-grid" id="area-memoria"></div>
+        <button id="btnReiniciarMemoria" class="btn-magic btn-reset escondido" onclick="iniciarMemoria()">🔁 Jogar Novamente</button>
+    </div>
 
-<div id="videoModal" class="video-modal">
-  <div class="video-modal-content">
-    <button class="btn-fechar-video" onclick="fecharVideo()">X</button>
-    <video id="videoRecompensa" class="video-recompensa" playsinline controls></video>
-  </div>
 </div>
 
 <script>
-const audios = {
-  a: new Audio('vogal_a.ogg'), e: new Audio('vogal_e.ogg'),
-  i: new Audio('vogal_i.ogg'), o: new Audio('vogal_o.ogg'),
-  u: new Audio('vogal_u.ogg')
-};
+    const dados = {
+        a: { mai: 'A', min: 'a', img: 'aviao.png', som: 'vogal_a.ogg', cor: 'cor-a' },
+        e: { mai: 'E', min: 'e', img: 'elefante.png', som: 'vogal_e.ogg', cor: 'cor-e' },
+        i: { mai: 'I', min: 'i', img: 'iguana.png', som: 'vogal_i.ogg', cor: 'cor-i' },
+        o: { mai: 'O', min: 'o', img: 'ovo.png', som: 'vogal_o.ogg', cor: 'cor-o' },
+        u: { mai: 'U', min: 'u', img: 'unicornio.png', som: 'vogal_u.ogg', cor: 'cor-u' }
+    };
 
-const videos = {
-  a: 'a_de_aviao.mp4', e: 'e_de_elefante.mp4',
-  i: 'i_de_iguana.mp4', o: 'o_de_de_ovo.mp4',
-  u: 'u_de_unicornio.mp4'
-};
-
-const textoSub = document.getElementById('textoSub');
-
-function revelarCarta(elemento, letra) {
-  const cartasViradas = document.querySelectorAll('.card-container.girada').length;
-
-  if (elemento.classList.contains('girada')) {
-    if (cartasViradas === 5) {
-      abrirVideoRecompensa(letra);
+    let somAtual;
+    function tocarSom(arq) {
+        if(somAtual) { somAtual.pause(); somAtual.currentTime = 0; }
+        somAtual = new Audio(arq);
+        somAtual.play().catch(e=>{});
     }
-    return; 
-  }
 
-  elemento.classList.add('girada');
+    function toggleTheme() {
+        const b = document.getElementById('corpo');
+        const isDark = b.getAttribute('data-theme') === 'dark';
+        b.setAttribute('data-theme', isDark ? 'light' : 'dark');
+        document.getElementById('btnTema').innerText = isDark ? '☀️' : '🌙';
+    }
 
-  if (audios[letra]) {
-    audios[letra].currentTime = 0;
-    audios[letra].play().catch(e => console.log("Áudio bloqueado", e));
-  }
+    function mudarFase(fase) {
+        document.querySelectorAll('.fase').forEach(f => f.classList.remove('ativa'));
+        document.getElementById('fase' + fase).classList.add('ativa');
+        if(fase === 2) iniciarLigar();
+        if(fase === 3) iniciarMemoria();
+    }
 
-  const totalAgora = document.querySelectorAll('.card-container.girada').length;
-  if (totalAgora === 5) {
-    textoSub.innerHTML = "✨ <b>Parabéns!</b> Agora toque nas letrinhas para ver a mágica!";
-    textoSub.style.color = "#e05a3a"; 
-  }
-}
+    // --- FASE 1: ESCONDE-ESCONDE ---
+    function revelarEscondeEsconde(el, letra) {
+        if(el.classList.contains('girada')) return;
+        
+        el.classList.add('girada');
+        tocarSom(dados[letra].som);
 
-function abrirVideoRecompensa(letra) {
-  const modal = document.getElementById('videoModal');
-  const video = document.getElementById('videoRecompensa');
+        const totalViradas = document.querySelectorAll('#fase1 .card-container.girada').length;
+        if(totalViradas === 5) {
+            document.getElementById('sub-fase1').innerHTML = "✨ <b>Perfeito!</b> Vamos para o próximo desafio!";
+            document.getElementById('btnProxima1').classList.remove('escondido');
+        }
+    }
 
-  // Prepara o vídeo e abre o modal
-  video.src = videos[letra];
-  
-  // Força o navegador de celular a "entender" que o arquivo carregou antes de tentar tocar
-  video.load(); 
-  modal.classList.add('visivel');
-  
-  // Tenta rodar o vídeo automaticamente
-  let playPromise = video.play();
-  
-  if (playPromise !== undefined) {
-    playPromise.then(() => {
-      // Se deu certo, não faz nada
-    }).catch(error => {
-      // Se o celular bloqueou (como no seu Edge), o vídeo vai ficar na tela esperando a criança apertar o botão de Play que nós adicionamos!
-      console.log("Navegador bloqueou o autoplay. O usuário precisará clicar no Play.", error);
-    });
-  }
+    // --- FASE 2: LIGAR ---
+    let selL = null, selF = null, acertosLigar = 0;
 
-  video.onended = () => {
-    fecharVideo();
-  };
-}
+    function iniciarLigar() {
+        const colL = document.getElementById('colLetras');
+        const colF = document.getElementById('colFiguras');
+        colL.innerHTML = ''; colF.innerHTML = ''; acertosLigar = 0;
+        
+        const mistL = Object.keys(dados).sort(() => Math.random() - 0.5);
+        const mistF = Object.keys(dados).sort(() => Math.random() - 0.5);
 
-function fecharVideo() {
-  const modal = document.getElementById('videoModal');
-  const video = document.getElementById('videoRecompensa');
-  video.pause();
-  modal.classList.remove('visivel');
-}
+        mistL.forEach(l => {
+            const div = document.createElement('div');
+            div.className = `item-jogo ${dados[l].cor}`;
+            div.innerText = dados[l].min;
+            div.onclick = () => {
+                tocarSom(dados[l].som);
+                if(selL) selL.classList.remove('selecionado');
+                selL = { el: div, id: l }; div.classList.add('selecionado');
+                checarLigar();
+            };
+            colL.appendChild(div);
+        });
 
-function esconderTodas() {
-  const cartas = document.querySelectorAll('.card-container');
-  cartas.forEach(carta => {
-    carta.classList.remove('girada');
-  });
-  
-  textoSub.innerHTML = "Toque nos cartões para revelar as letrinhas minúsculas.";
-  textoSub.style.color = "var(--brown-light)";
-}
+        mistF.forEach(l => {
+            const div = document.createElement('div');
+            div.className = 'item-jogo cubo-figura';
+            div.innerHTML = `<img src="${dados[l].img}">`;
+            div.onclick = () => {
+                if(selF) selF.classList.remove('selecionado');
+                selF = { el: div, id: l }; div.classList.add('selecionado');
+                checarLigar();
+            };
+            colF.appendChild(div);
+        });
+    }
+
+    function checarLigar() {
+        if(selL && selF) {
+            if(selL.id === selF.id) {
+                selL.el.classList.add('correto'); selF.el.classList.add('correto');
+                tocarSom('aplausos.ogg'); acertosLigar++;
+                if(acertosLigar === 5) document.getElementById('btnProxima2').classList.remove('escondido');
+            } else {
+                tocarSom('erro.ogg');
+                const a = selL.el, b = selF.el;
+                setTimeout(() => { a.classList.remove('selecionado'); b.classList.remove('selecionado'); }, 500);
+            }
+            selL = null; selF = null;
+        }
+    }
+
+    // --- FASE 3: MEMÓRIA ---
+    let cartasViradas = [], paresEncontrados = 0;
+
+    function iniciarMemoria() {
+        document.getElementById('feedback-memoria').innerText = "Encontre os Pares Mágicos!";
+        document.getElementById('btnReiniciarMemoria').classList.add('escondido');
+        const grid = document.getElementById('area-memoria');
+        grid.innerHTML = ''; cartasViradas = []; paresEncontrados = 0;
+        
+        let pool = [];
+        Object.keys(dados).forEach(l => {
+            pool.push({ txt: dados[l].mai, id: l, cor: dados[l].cor });
+            pool.push({ txt: dados[l].min, id: l, cor: dados[l].cor });
+        });
+        pool.sort(() => Math.random() - 0.5);
+
+        pool.forEach(c => {
+            const card = document.createElement('div');
+            card.className = 'card-memo virada'; // Começa virada para mostrar
+            
+            // AQUI ESTAVA O SEU ERRO ANTES! Agora a classe card-face-memo está na div correta.
+            card.innerHTML = `
+                <div class="card-inner-memo">
+                    <div class="card-face-memo card-front-memo">?</div>
+                    <div class="card-face-memo card-back-memo ${c.cor}">${c.txt}</div>
+                </div>
+            `;
+            card.onclick = () => virarMemo(card, c);
+            grid.appendChild(card);
+        });
+
+        // Oculta as cartas após 3 segundos
+        setTimeout(() => {
+            document.querySelectorAll('.card-memo').forEach(k => k.classList.remove('virada'));
+        }, 3000);
+    }
+
+    function virarMemo(el, c) {
+        if(el.classList.contains('virada') || cartasViradas.length === 2) return;
+        
+        // Toca som de carta virando
+        new Audio('data:audio/wav;base64,UklGRl9vT19XQVZFZm10IBAAAAABAAEAQB8AAEAfAAABAAgAZGF0YT9vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19vT19').play();
+        
+        el.classList.add('virada');
+        cartasViradas.push({el, c});
+
+        if(cartasViradas.length === 2) {
+            if(cartasViradas[0].c.id === cartasViradas[1].c.id) {
+                paresEncontrados++;
+                cartasViradas[0].el.classList.add('match');
+                cartasViradas[1].el.classList.add('match');
+                tocarSom('aplausos.ogg');
+                cartasViradas = [];
+                if(paresEncontrados === 5) celebrarFinal();
+            } else {
+                setTimeout(() => {
+                    cartasViradas.forEach(v => v.el.classList.remove('virada'));
+                    cartasViradas = [];
+                }, 1000);
+            }
+        }
+    }
+
+    function celebrarFinal() {
+        document.getElementById('feedback-memoria').innerText = "🌟 VOCÊ COMPLETOU A MISSÃO! 🌟";
+        document.getElementById('btnReiniciarMemoria').classList.remove('escondido');
+        setTimeout(() => tocarSom('fim_jogo.ogg'), 500);
+        for(let i=0; i<80; i++) criarConfete();
+    }
+
+    function criarConfete() {
+        const c = document.createElement('div');
+        c.className = 'confete';
+        c.style.left = Math.random() * 100 + 'vw';
+        c.style.backgroundColor = ['#f4845f','#4dd0e1','#b39ddb','#aed581','#ffab91'][Math.floor(Math.random()*5)];
+        document.body.appendChild(c);
+        c.animate([{top:'-10px', transform:'rotate(0deg)'},{top:'100vh', transform:'rotate(360deg)'}], {duration: 2000+Math.random()*2000}).onfinish = () => c.remove();
+    }
 </script>
-
 </body>
 </html>
