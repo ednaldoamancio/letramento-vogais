@@ -1,254 +1,143 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Jornada das Letras: Menu Principal</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
-<style>
-/* ═══════════════════════════════════════════════════════
-   DESIGN: "Folha de Caderno Viva" — Paper Craft Escolar
-═══════════════════════════════════════════════════════ */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --coral: #f4845f;
-  --coral-dark: #e05a3a;
-  --turquoise: #4dd0e1;
-  --turquoise-dark: #26a8b8;
-  --lavender: #b39ddb;
-  --lavender-dark: #8e79c0;
-  --lime: #aed581;
-  --lime-dark: #8bc34a;
-  --peach: #ffab91;
-  --peach-dark: #e08060;
-  --paper: #fefcf3;
-  --brown: #5d4037;
-  --brown-light: #795548;
-  --ruled-line: rgba(173, 200, 230, 0.25);
-  --margin-line: rgba(200, 100, 100, 0.2);
-}
-body {
-  font-family: 'Nunito', sans-serif;
-  background: var(--paper);
-  color: #333;
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Jornada das Letras: Menu Principal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --coral: #f4845f; --coral-dark: #e05a3a;
+            --turquoise: #4dd0e1; --turquoise-dark: #26a8b8;
+            --lavender: #b39ddb; --lavender-dark: #8e79c0;
+            --paper: #fefcf3; --brown: #5d4037;
+            --ruled-line: #add8e6; --margin-line: #ff9999;
+            --header-bg: rgba(254, 252, 243, 0.92);
+        }
 
-/* ─── Fundo de caderno pautado ─── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    repeating-linear-gradient(0deg,
-      transparent,
-      transparent 31px,
-      var(--ruled-line) 31px,
-      var(--ruled-line) 32px
-    );
-  background-size: 100% 32px;
-  background-position: 0 16px;
-}
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: clamp(40px, 8vw, 80px);
-  width: 2px;
-  background: var(--margin-line);
-  z-index: 0;
-  pointer-events: none;
-}
+        [data-theme="dark"] {
+            --paper: #2c3e50; --brown: #ecf0f1;
+            --ruled-line: #34495e; --margin-line: #e74c3c;
+            --header-bg: rgba(44, 62, 80, 0.92);
+        }
 
-/* ─── Header fixo ─── */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(254, 252, 243, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(180, 200, 220, 0.3);
-}
-.header-inner {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-.header-botoes { display: flex; gap: 8px; }
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
 
-.btn-musica {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: 50px;
-  border: none;
-  font-size: 13px;
-  font-weight: 800;
-  font-family: 'Nunito', sans-serif;
-  background: var(--turquoise);
-  color: #004d40;
-  box-shadow: 0 3px 0 var(--turquoise-dark);
-  cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-.btn-musica:hover { transform: scale(1.05); }
-.btn-musica:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--turquoise-dark); }
-.btn-musica.ativo { background: #e0f7fa; color: #006064; box-shadow: none; }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--paper);
+            color: var(--brown);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
 
-.titulo-header {
-  font-family: 'Patrick Hand', cursive;
-  font-size: clamp(16px, 4vw, 22px);
-  color: var(--brown);
-  letter-spacing: -0.5px;
-}
+        /* Linhas do caderno */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 30px, var(--ruled-line) 30px, var(--ruled-line) 31px);
+            background-size: 100% 31px;
+        }
 
-/* ─── Área principal do Menu ─── */
-.stage {
-  max-width: 700px;
-  margin: 24px auto;
-  padding: 0 16px;
-  position: relative;
-  z-index: 10;
-}
-.welcome {
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 16px;
-  text-align: center;
-  animation: fadeInUp 0.6s ease;
-  gap: 24px;
-}
-.welcome-banner { 
-  border-radius: 16px; 
-  overflow: hidden; 
-  box-shadow: 0 4px 20px rgba(93, 64, 55, 0.12); 
-  border: 3px solid rgba(180, 200, 220, 0.3);
-  width: 100%;
-  max-width: 320px;
-  height: clamp(160px, 35vh, 240px);
-  background: #fff; /* Fundo branco caso a imagem demore */
-}
-.welcome-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.welcome h2 { font-family: 'Patrick Hand', cursive; font-size: clamp(26px, 6vw, 36px); color: var(--brown); margin: 0; line-height: 1.2; }
-.welcome p { font-size: clamp(15px, 3.5vw, 18px); color: var(--brown-light); max-width: 90%; line-height: 1.5; margin: 0; }
+        body::after {
+            content: ''; position: fixed; top: 0; bottom: 0; left: clamp(40px, 8vw, 80px);
+            width: 2px; background: var(--margin-line); opacity: 0.6;
+        }
 
-/* ─── Botões do Menu ─── */
-.menu-container {
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  width: 100%;
-  max-width: 320px;
-}
-.btn-menu { 
-  display: flex; 
-  align-items: center;
-  justify-content: center;
-  gap: 12px;
-  padding: 16px 24px; 
-  border-radius: 16px; 
-  border: none; 
-  font-family: 'Fredoka One', cursive; 
-  font-size: clamp(18px, 4vw, 22px); 
-  color: #fff; 
-  text-decoration: none; /* Tira o sublinhado do link */
-  cursor: pointer; 
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-.btn-menu:hover { transform: scale(1.03); }
-.btn-menu:active { transform: translateY(4px); }
+        .header { position: sticky; top: 0; z-index: 50; background: var(--header-bg); border-bottom: 2px solid var(--ruled-line); }
+        .header-inner { max-width: 800px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
+        
+        .header-botoes { display: flex; gap: 10px; }
+        .theme-toggle { background: var(--lavender); border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; font-size: 20px; box-shadow: 0 4px 0 var(--lavender-dark); }
+        .btn-musica { padding: 8px 16px; border-radius: 50px; border: none; font-weight: 800; background: var(--turquoise); color: #004d40; box-shadow: 0 3px 0 var(--turquoise-dark); cursor: pointer; }
 
-/* Cores específicas para cada botão */
-.btn-vogais { 
-  background: linear-gradient(135deg, var(--coral), var(--coral-dark)); 
-  box-shadow: 0 6px 0 #c0392b, 0 8px 20px rgba(224, 90, 58, 0.3); 
-}
-.btn-vogais:active { box-shadow: 0 2px 0 #c0392b; }
+        .stage { max-width: 700px; margin: 24px auto; padding: 0 16px; position: relative; z-index: 10; }
+        .welcome { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; }
+        .welcome-banner { border-radius: 20px; overflow: hidden; border: 5px solid #fff; width: 100%; max-width: 300px; height: 200px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .welcome-banner img { width: 100%; height: 100%; object-fit: cover; }
 
-.btn-consoantes { 
-  background: linear-gradient(135deg, var(--turquoise), var(--turquoise-dark)); 
-  box-shadow: 0 6px 0 #1a8a99, 0 8px 20px rgba(38, 168, 184, 0.3); 
-}
-.btn-consoantes:active { box-shadow: 0 2px 0 #1a8a99; }
+        .menu-container { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 320px; margin-top: 10px; }
+        .btn-menu {
+            padding: 20px; border-radius: 18px; border: none; font-family: 'Fredoka One', cursive;
+            font-size: 20px; color: #fff; text-decoration: none; text-align: center;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+        .btn-menu:hover { transform: scale(1.05); }
 
-.btn-numeros { 
-  background: linear-gradient(135deg, var(--lavender), var(--lavender-dark)); 
-  box-shadow: 0 6px 0 #6e589e, 0 8px 20px rgba(179, 157, 219, 0.3); 
-}
-.btn-numeros:active { box-shadow: 0 2px 0 #6e589e; }
-
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-
-</style>
+        .btn-vogais { background: var(--coral); box-shadow: 0 6px 0 var(--coral-dark); }
+        .btn-consoantes { background: var(--turquoise); box-shadow: 0 6px 0 var(--turquoise-dark); }
+        .btn-numeros { background: var(--lavender); box-shadow: 0 6px 0 var(--lavender-dark); }
+    </style>
 </head>
 <body>
 
 <header class="header">
-  <div class="header-inner">
-    <div class="header-botoes">
-      <button class="btn-musica" id="btnMusica" onclick="alternarMusica()">
-        🎵 MÚSICA OFF
-      </button>
+    <div class="header-inner">
+        <div class="header-botoes">
+            <button class="btn-musica" id="btnMusica" onclick="alternarMusica()">🎵 MÚSICA OFF</button>
+            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️</button>
+        </div>
+        <span class="titulo-header" style="font-family: 'Patrick Hand', cursive; font-size: 20px;">Jornada das Letras</span>
     </div>
-    <span class="titulo-header">Menu Principal</span>
-  </div>
 </header>
 
-<div class="stage" id="stage">
-  <div class="welcome">
-    <div class="welcome-banner">
-      <img src="ilha.jpg" alt="Ilha do Conhecimento">
+<div class="stage">
+    <div class="welcome">
+        <div class="welcome-banner"><img src="ilha.jpg" alt="Ilha do Conhecimento"></div>
+        <h2 style="font-family: 'Patrick Hand', cursive; font-size: 30px;">Bem-vindo(a)!</h2>
+        
+        <div class="menu-container">
+            <a href="vogais.html" class="btn-menu btn-vogais" onmouseenter="tocarSomMenu('vogais.mp3')">A E I O U - Vogais</a>
+            <a href="consoantes.html" class="btn-menu btn-consoantes" onmouseenter="tocarSomMenu('consoantes.mp3')">B C D F - Consoantes</a>
+            <a href="numeros.html" class="btn-menu btn-numeros" onmouseenter="tocarSomMenu('numeros.mp3')">1 2 3 - Números</a>
+        </div>
     </div>
-    
-    <h2>Jornada das Letras e Números!</h2>
-    <p>Escolha uma aventura abaixo para começarmos a aprender e brincar.</p>
-    
-    <div class="menu-container">
-      <a href="vogais.html" class="btn-menu btn-vogais">A E I O U - Vogais</a>
-      <a href="consoantes.html" class="btn-menu btn-consoantes">B C D F - Consoantes</a>
-      <a href="numeros.html" class="btn-menu btn-numeros">1 2 3 - Números</a>
-    </div>
-
-  </div>
 </div>
 
 <script>
-// Música de Fundo (com loop) - Mantido para consistência
-const musicaFundo = new Audio('musica_fundo.ogg');
-musicaFundo.loop = true;
-musicaFundo.volume = 0.3;
+    // Gerenciador de Áudio para o Menu (Voz de Criança)
+    let audioMenu;
+    function tocarSomMenu(arquivo) {
+        // Se já houver um som tocando, ele para antes de começar o novo
+        if (audioMenu) {
+            audioMenu.pause();
+            audioMenu.currentTime = 0;
+        }
+        audioMenu = new Audio(arquivo);
+        audioMenu.play().catch(e => console.log("Áudio aguardando interação do usuário."));
+    }
 
-function alternarMusica() {
-  const btn = document.getElementById('btnMusica');
-  if (musicaFundo.paused) {
-    musicaFundo.play().catch(e => console.log("Música bloqueada", e));
-    btn.classList.add('ativo');
-    btn.innerHTML = `🎵 MÚSICA ON`;
-  } else {
-    musicaFundo.pause();
-    btn.classList.remove('ativo');
-    btn.innerHTML = `🎵 MÚSICA OFF`;
-  }
-}
+    // Alternar Tema Noite/Dia
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.getElementById('themeToggle');
+        if (body.getAttribute('data-theme') === 'dark') {
+            body.removeAttribute('data-theme');
+            btn.innerHTML = '☀️';
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            btn.innerHTML = '🌙';
+        }
+    }
+
+    // Música de Fundo
+    const musicaFundo = new Audio('musica_fundo.ogg');
+    musicaFundo.loop = true;
+    musicaFundo.volume = 0.2;
+
+    function alternarMusica() {
+        const btn = document.getElementById('btnMusica');
+        if (musicaFundo.paused) {
+            musicaFundo.play();
+            btn.innerHTML = `🎵 MÚSICA ON`;
+            btn.style.background = "#e0f7fa";
+        } else {
+            musicaFundo.pause();
+            btn.innerHTML = `🎵 MÚSICA OFF`;
+            btn.style.background = "var(--turquoise)";
+        }
+    }
 </script>
-
-<script src="config.js"></script>
-
 </body>
 </html>
