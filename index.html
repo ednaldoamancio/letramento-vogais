@@ -7,11 +7,17 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <style>
         :root {
             --coral: #f4845f; --coral-dark: #e05a3a;
             --turquoise: #4dd0e1; --turquoise-dark: #26a8b8;
             --lavender: #b39ddb; --lavender-dark: #8e79c0;
+            /* Novas cores para o botão do Alfabeto */
+            --gold: #ffd54f; --gold-dark: #ffb300; 
+            
             --paper: #fefcf3; --brown: #5d4037;
             --ruled-line: #add8e6; --margin-line: #ff9999;
             --header-bg: rgba(254, 252, 243, 0.92);
@@ -58,6 +64,7 @@
         .welcome-banner img { width: 100%; height: 100%; object-fit: cover; }
 
         .menu-container { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 320px; margin-top: 10px; }
+        
         .btn-menu {
             padding: 20px; border-radius: 18px; border: none; font-family: 'Fredoka One', cursive;
             font-size: 20px; color: #fff; text-decoration: none; text-align: center;
@@ -66,6 +73,10 @@
         .btn-menu:hover { transform: scale(1.05); }
 
         .btn-vogais { background: var(--coral); box-shadow: 0 6px 0 var(--coral-dark); }
+        
+        /* Estilo do novo botão do Alfabeto */
+        .btn-alfabeto { background: var(--gold); box-shadow: 0 6px 0 var(--gold-dark); color: #5d4037; }
+        
         .btn-consoantes { background: var(--turquoise); box-shadow: 0 6px 0 var(--turquoise-dark); }
         .btn-numeros { background: var(--lavender); box-shadow: 0 6px 0 var(--lavender-dark); }
     </style>
@@ -89,6 +100,9 @@
         
         <div class="menu-container">
             <a href="vogais.html" class="btn-menu btn-vogais" onmouseenter="tocarSomMenu('vogais.mp3')">A E I O U - Vogais</a>
+            
+            <a href="https://alfabeto-mu.vercel.app/" class="btn-menu btn-alfabeto" onmouseenter="tocarSomMenu('alfabeto.mp3')">A a Z - Alfabeto</a>
+            
             <a href="consoantes.html" class="btn-menu btn-consoantes" onmouseenter="tocarSomMenu('consoantes.mp3')">B C D F - Consoantes</a>
             <a href="numeros.html" class="btn-menu btn-numeros" onmouseenter="tocarSomMenu('numeros.mp3')">1 2 3 - Números</a>
         </div>
@@ -96,6 +110,16 @@
 </div>
 
 <script>
+    // 🎉 Efeito lúdico: Chuva de confetes ao carregar a página!
+    window.onload = function() {
+        confetti({
+            particleCount: 150,
+            spread: 80,
+            origin: { y: 0.6 },
+            colors: ['#f4845f', '#4dd0e1', '#b39ddb', '#ffd54f']
+        });
+    };
+
     // Gerenciador de Áudio para o Menu (Voz de Criança)
     let audioMenu;
     function tocarSomMenu(arquivo) {
@@ -108,16 +132,19 @@
         audioMenu.play().catch(e => console.log("Áudio aguardando interação do usuário."));
     }
 
-    // Alternar Tema Noite/Dia
+    // Alternar Tema Noite/Dia 🌙☀️
     function toggleTheme() {
         const body = document.body;
         const btn = document.getElementById('themeToggle');
+        
         if (body.getAttribute('data-theme') === 'dark') {
             body.removeAttribute('data-theme');
             btn.innerHTML = '☀️';
         } else {
             body.setAttribute('data-theme', 'dark');
             btn.innerHTML = '🌙';
+            // Um pequeno confete noturno para comemorar a mudança!
+            confetti({ particleCount: 50, spread: 40, origin: { y: 0.1, x: 0.8 } });
         }
     }
 
