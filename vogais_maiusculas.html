@@ -1,175 +1,252 @@
-
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Jornada das Letras: Vogais Maiúsculas</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
-<style>
-/* ═══════════════════════════════════════════════════════
-   DESIGN: "Folha de Caderno Viva" — Paper Craft Escolar
-═══════════════════════════════════════════════════════ */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --coral: #f4845f; --coral-dark: #e05a3a;
-  --turquoise: #4dd0e1; --turquoise-dark: #26a8b8;
-  --lavender: #b39ddb; --lavender-dark: #8e79c0;
-  --lime: #aed581; --lime-dark: #8bc34a;
-  --peach: #ffab91; --peach-dark: #e08060;
-  --paper: #fefcf3; --brown: #5d4037; --brown-light: #795548;
-  --ruled-line: rgba(173, 200, 230, 0.25);
-  --margin-line: rgba(200, 100, 100, 0.2);
-}
-body {
-  font-family: 'Nunito', sans-serif; background: var(--paper); color: #333;
-  min-height: 100vh; position: relative; overflow-x: hidden;
-}
-body::before {
-  content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
-  background: repeating-linear-gradient(0deg, transparent, transparent 31px, var(--ruled-line) 31px, var(--ruled-line) 32px);
-  background-size: 100% 32px; background-position: 0 16px;
-}
-body::after {
-  content: ''; position: fixed; top: 0; bottom: 0; left: clamp(40px, 8vw, 80px); width: 2px;
-  background: var(--margin-line); z-index: 0; pointer-events: none;
-}
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <title>Jornada das Letras: Vogais Maiúsculas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* ═══════════════════════════════════════════════════════ 
+           DESIGN: "Folha de Caderno Viva" com Modo Noite/Dia
+        ═══════════════════════════════════════════════════════ */
+        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s ease, color 0.3s ease; }
 
-.header { position: sticky; top: 0; z-index: 50; background: rgba(254, 252, 243, 0.92); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(180, 200, 220, 0.3); }
-.header-inner { max-width: 800px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
-.btn-voltar { display: flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: 50px; border: none; font-size: 13px; font-weight: 800; font-family: 'Nunito', sans-serif; background: #e0e0e0; color: #424242; box-shadow: 0 3px 0 #bdbdbd; cursor: pointer; text-decoration: none; transition: transform 0.15s; }
-.btn-voltar:hover { transform: scale(1.05); }
-.btn-voltar:active { transform: translateY(2px); box-shadow: 0 1px 0 #bdbdbd; }
-.titulo-header { font-family: 'Patrick Hand', cursive; font-size: clamp(16px, 4vw, 22px); color: var(--brown); }
+        :root {
+            --coral: #f4845f; --coral-dark: #e05a3a;
+            --turquoise: #4dd0e1; --turquoise-dark: #26a8b8;
+            --lavender: #b39ddb; --lavender-dark: #8e79c0;
+            --lime: #aed581; --lime-dark: #8bc34a;
+            --peach: #ffab91; --peach-dark: #e08060;
+            --paper: #fefcf3; --brown: #5d4037; --brown-light: #795548;
+            --ruled-line: #add8e6; /* Azul claro para as linhas */
+            --margin-line: #ff9999; /* Vermelho para a margem */
+            --header-bg: rgba(254, 252, 243, 0.92);
+            --card-bg: rgba(255, 255, 255, 0.85);
+        }
 
-.stage { max-width: 700px; margin: 24px auto; padding: 0 16px; position: relative; z-index: 10; text-align: center; }
-.instrucoes { font-family: 'Patrick Hand', cursive; font-size: 24px; color: var(--brown); margin-bottom: 20px; }
+        /* Cores do Modo Noturno */
+        [data-theme="dark"] {
+            --paper: #2c3e50;
+            --brown: #ecf0f1;
+            --brown-light: #bdc3c7;
+            --ruled-line: #34495e;
+            --margin-line: #e74c3c;
+            --header-bg: rgba(44, 62, 80, 0.92);
+            --card-bg: rgba(52, 73, 94, 0.9);
+        }
 
-.video-card { background: rgba(255, 255, 255, 0.85); border: 2px solid rgba(180, 200, 220, 0.3); border-radius: 16px; padding: 16px; box-shadow: 0 4px 20px rgba(93, 64, 55, 0.08); margin: 0 auto 24px; max-width: 320px; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.3s ease; min-height: 250px; }
-.video-player { width: 100%; border-radius: 12px; border: 3px dashed rgba(121, 85, 72, 0.25); display: none; }
-.video-player.ativo { display: block; animation: popIn 0.4s ease; border-style: solid; }
-@keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
-.placeholder-texto { font-size: 80px; font-family: 'Fredoka One', cursive; color: rgba(121, 85, 72, 0.2); }
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: var(--paper);
+            color: var(--brown);
+            min-height: 100vh;
+            position: relative;
+            overflow-x: hidden;
+        }
 
-.blocos-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
-.blocos-container.visivel { opacity: 1; pointer-events: auto; }
-.bloco-vogal { width: 64px; height: 64px; border-radius: 12px; display: flex; align-items: center; justify-content: center; font-family: 'Fredoka One', cursive; font-size: 1.8rem; color: #fff; border: 3px solid; cursor: pointer; transition: transform 0.15s, box-shadow 0.15s; }
-.bloco-vogal:hover { transform: scale(1.12) rotate(3deg); }
-.bloco-vogal:active { transform: scale(0.9); }
-.bloco-A { background: var(--coral); border-color: var(--coral-dark); box-shadow: 0 5px 0 var(--coral-dark); }
-.bloco-E { background: var(--turquoise); border-color: var(--turquoise-dark); box-shadow: 0 5px 0 var(--turquoise-dark); }
-.bloco-I { background: var(--lavender); border-color: var(--lavender-dark); box-shadow: 0 5px 0 var(--lavender-dark); }
-.bloco-O { background: var(--lime); border-color: var(--lime-dark); box-shadow: 0 5px 0 var(--lime-dark); }
-.bloco-U { background: var(--peach); border-color: var(--peach-dark); box-shadow: 0 5px 0 var(--peach-dark); }
+        /* Linhas do Caderno */
+        body::before {
+            content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background: repeating-linear-gradient(0deg, transparent, transparent 30px, var(--ruled-line) 30px, var(--ruled-line) 31px);
+            background-size: 100% 31px;
+        }
 
-.btn-replay { margin-top: 24px; padding: 12px 24px; border-radius: 50px; border: none; font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800; background: #e3f2fd; color: #1565c0; cursor: pointer; display: inline-flex; gap: 8px; box-shadow: 0 4px 0 #bbdefb; transition: transform 0.1s; }
-.btn-replay:active { transform: translateY(4px); box-shadow: 0 0 0 #bbdefb; }
-</style>
+        body::after {
+            content: ''; position: fixed; top: 0; bottom: 0; left: clamp(40px, 8vw, 80px);
+            width: 2px; background: var(--margin-line); z-index: 0; pointer-events: none; opacity: 0.6;
+        }
+
+        /* Header */
+        .header {
+            position: sticky; top: 0; z-index: 50;
+            background: var(--header-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 2px solid var(--ruled-line);
+        }
+
+        .header-inner {
+            max-width: 800px; margin: 0 auto; padding: 10px 16px;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+
+        .header-botoes { display: flex; gap: 10px; align-items: center; }
+
+        .theme-toggle {
+            background: var(--lavender); border: none; width: 40px; height: 40px;
+            border-radius: 50%; cursor: pointer; font-size: 20px;
+            display: flex; align-items: center; justify-content: center;
+            box-shadow: 0 4px 0 var(--lavender-dark);
+        }
+
+        .btn-voltar {
+            display: flex; align-items: center; gap: 6px; padding: 8px 16px;
+            border-radius: 50px; border: none; font-size: 13px; font-weight: 800;
+            background: #e0e0e0; color: #424242; box-shadow: 0 3px 0 #bdbdbd;
+            text-decoration: none;
+        }
+
+        .titulo-header { font-family: 'Patrick Hand', cursive; font-size: clamp(16px, 4vw, 22px); color: var(--brown); }
+
+        /* Conteúdo */
+        .stage { max-width: 700px; margin: 24px auto; padding: 0 16px; position: relative; z-index: 10; text-align: center; }
+        .instrucoes { font-family: 'Patrick Hand', cursive; font-size: 28px; color: var(--brown); margin-bottom: 20px; }
+
+        .video-card {
+            background: var(--card-bg);
+            border: 2px solid var(--ruled-line);
+            border-radius: 20px; padding: 16px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin: 0 auto 24px; max-width: 320px;
+            min-height: 250px; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+
+        .video-player { width: 100%; border-radius: 12px; display: none; border: 4px solid transparent; }
+        .video-player.ativo { display: block; animation: popIn 0.4s ease; }
+
+        @keyframes popIn { 0% { transform: scale(0.8); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        .placeholder-texto { font-size: 80px; font-family: 'Fredoka One', cursive; color: var(--brown-light); opacity: 0.3; }
+
+        .blocos-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; opacity: 0; pointer-events: none; transition: opacity 0.5s ease; }
+        .blocos-container.visivel { opacity: 1; pointer-events: auto; }
+
+        .bloco-vogal {
+            width: 60px; height: 60px; border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Fredoka One', cursive; font-size: 1.8rem; color: #fff;
+            border: none; cursor: pointer; transition: transform 0.15s;
+        }
+        .bloco-vogal:hover { transform: scale(1.1); }
+        .bloco-vogal:active { transform: scale(0.9); }
+
+        .bloco-A { background: var(--coral); box-shadow: 0 5px 0 var(--coral-dark); }
+        .bloco-E { background: var(--turquoise); box-shadow: 0 5px 0 var(--turquoise-dark); }
+        .bloco-I { background: var(--lavender); box-shadow: 0 5px 0 var(--lavender-dark); }
+        .bloco-O { background: var(--lime); box-shadow: 0 5px 0 var(--lime-dark); }
+        .bloco-U { background: var(--peach); box-shadow: 0 5px 0 var(--peach-dark); }
+
+        .btn-replay {
+            margin-top: 24px; padding: 14px 28px; border-radius: 50px; border: none;
+            font-family: 'Nunito', sans-serif; font-size: 16px; font-weight: 800;
+            background: #e3f2fd; color: #1565c0; cursor: pointer;
+            box-shadow: 0 4px 0 #bbdefb;
+        }
+        [data-theme="dark"] .btn-replay { background: #1565c0; color: #fff; box-shadow: 0 4px 0 #0d47a1; }
+    </style>
 </head>
 <body>
 
 <header class="header">
-  <div class="header-inner">
-    <a href="vogais.html" class="btn-voltar">⬅️ VOLTAR</a>
-    <span class="titulo-header">Vogais Maiúsculas</span>
-    <div style="width: 80px;"></div>
-  </div>
+    <div class="header-inner">
+        <a href="vogais.html" class="btn-voltar">⬅️ VOLTAR</a>
+        <span class="titulo-header">Vogais Maiúsculas</span>
+        <div class="header-botoes">
+            <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️</button>
+        </div>
+    </div>
 </header>
 
 <div class="stage">
-  <h2 class="instrucoes" id="textoInstrucao">A mágica das letrinhas!</h2>
-  
-  <div class="video-card">
-    <div id="placeholder" class="placeholder-texto">✨</div>
+    <h2 class="instrucoes" id="textoInstrucao">A mágica das letrinhas!</h2>
     
-    <video id="meuVideo" class="video-player" playsinline></video>
-  </div>
+    <div class="video-card">
+        <div id="placeholder" class="placeholder-texto">✨</div>
+        <video id="meuVideo" class="video-player" playsinline></video>
+    </div>
 
-  <div class="blocos-container" id="painelVogais">
-    <button class="bloco-vogal bloco-A" onclick="tocarVogal('A')">A</button>
-    <button class="bloco-vogal bloco-E" onclick="tocarVogal('E')">E</button>
-    <button class="bloco-vogal bloco-I" onclick="tocarVogal('I')">I</button>
-    <button class="bloco-vogal bloco-O" onclick="tocarVogal('O')">O</button>
-    <button class="bloco-vogal bloco-U" onclick="tocarVogal('U')">U</button>
-  </div>
+    <div class="blocos-container" id="painelVogais">
+        <button class="bloco-vogal bloco-A" onclick="tocarVogal('A')">A</button>
+        <button class="bloco-vogal bloco-E" onclick="tocarVogal('E')">E</button>
+        <button class="bloco-vogal bloco-I" onclick="tocarVogal('I')">I</button>
+        <button class="bloco-vogal bloco-O" onclick="tocarVogal('O')">O</button>
+        <button class="bloco-vogal bloco-U" onclick="tocarVogal('U')">U</button>
+    </div>
 
-  <button class="btn-replay" id="btnIniciar" onclick="iniciarApresentacao()">▶️ Começar a Apresentação</button>
+    <button class="btn-replay" id="btnIniciar" onclick="iniciarApresentacao()">▶️ Começar a Apresentação</button>
 </div>
 
 <script>
-// Mapeamento dos seus vídeos MP4
-const videos = {
-  A: 'a_de_aviao.mp4',
-  E: 'e_de_elefante.mp4',
-  I: 'i_de_iguana.mp4',
-  O: 'o_de_de_ovo.mp4',
-  U: 'u_de_unicornio.mp4'
-};
-
-const sequencia = ['A', 'E', 'I', 'O', 'U'];
-const player = document.getElementById('meuVideo');
-const placeholder = document.getElementById('placeholder');
-const painel = document.getElementById('painelVogais');
-const texto = document.getElementById('textoInstrucao');
-const btnIniciar = document.getElementById('btnIniciar');
-
-let apresentando = false;
-
-function iniciarApresentacao() {
-  apresentando = true;
-  painel.classList.remove('visivel');
-  btnIniciar.style.display = 'none'; // Esconde o botão
-  texto.innerText = "Observe e ouça as letrinhas...";
-  let index = 0;
-
-  function tocarProxima() {
-    if (index >= sequencia.length) {
-      apresentando = false;
-      player.classList.remove('ativo');
-      player.pause();
-      placeholder.style.display = 'block';
-      placeholder.innerText = "✨";
-      texto.innerText = "Sua vez! Toque em uma vogal para ver a animação!";
-      painel.classList.add('visivel');
-      btnIniciar.style.display = 'inline-flex';
-      btnIniciar.innerText = "🔁 Ver apresentação de novo"; // Muda o texto do botão
-      return;
+    // Configurações de Temas
+    function toggleTheme() {
+        const body = document.body;
+        const btn = document.getElementById('themeToggle');
+        if (body.getAttribute('data-theme') === 'dark') {
+            body.removeAttribute('data-theme');
+            btn.innerHTML = '☀️';
+        } else {
+            body.setAttribute('data-theme', 'dark');
+            btn.innerHTML = '🌙';
+        }
     }
 
-    const letra = sequencia[index];
-    mostrarAnimacao(letra);
-    
-    // Deixa cada vídeo tocando por 5 segundos
-    setTimeout(() => {
-      index++;
-      tocarProxima();
-    }, 5000);
-  }
+    // Lógica dos Vídeos (Mantida conforme original)
+    const videos = {
+        A: 'a_de_aviao.mp4',
+        E: 'e_de_elefante.mp4',
+        I: 'i_de_iguana.mp4',
+        O: 'o_de_de_ovo.mp4',
+        U: 'u_de_unicornio.mp4'
+    };
 
-  tocarProxima();
-}
+    const sequencia = ['A', 'E', 'I', 'O', 'U'];
+    const player = document.getElementById('meuVideo');
+    const placeholder = document.getElementById('placeholder');
+    const painel = document.getElementById('painelVogais');
+    const texto = document.getElementById('textoInstrucao');
+    const btnIniciar = document.getElementById('btnIniciar');
 
-function mostrarAnimacao(letra) {
-  placeholder.style.display = 'none';
-  player.src = videos[letra];
-  player.classList.add('ativo');
-  
-  player.currentTime = 0;
-  player.loop = true; 
-  player.play().catch(e => console.log("Vídeo bloqueado", e));
+    let apresentando = false;
 
-  const cores = { A: '#e05a3a', E: '#26a8b8', I: '#8e79c0', O: '#8bc34a', U: '#e08060' };
-  player.style.borderColor = cores[letra];
-}
+    function iniciarApresentacao() {
+        apresentando = true;
+        painel.classList.remove('visivel');
+        btnIniciar.style.display = 'none';
+        texto.innerText = "Observe e ouça as letrinhas...";
+        let index = 0;
 
-function tocarVogal(letra) {
-  if (apresentando) return; 
-  mostrarAnimacao(letra);
-  texto.innerText = `Você escolheu a letra ${letra}!`;
-}
+        function tocarProxima() {
+            if (index >= sequencia.length) {
+                apresentando = false;
+                player.classList.remove('ativo');
+                player.pause();
+                placeholder.style.display = 'block';
+                placeholder.innerText = "✨";
+                texto.innerText = "Sua vez! Toque em uma vogal!";
+                painel.classList.add('visivel');
+                btnIniciar.style.display = 'inline-flex';
+                btnIniciar.innerText = "🔁 Ver de novo";
+                return;
+            }
 
+            mostrarAnimacao(sequencia[index]);
+            setTimeout(() => {
+                index++;
+                tocarProxima();
+            }, 5000);
+        }
+        tocarProxima();
+    }
+
+    function mostrarAnimacao(letra) {
+        placeholder.style.display = 'none';
+        player.src = videos[letra];
+        player.classList.add('ativo');
+        player.currentTime = 0;
+        player.loop = true;
+        player.play().catch(e => console.log("Vídeo bloqueado"));
+
+        const cores = { A: '#e05a3a', E: '#26a8b8', I: '#8e79c0', O: '#8bc34a', U: '#e08060' };
+        player.style.borderColor = cores[letra];
+    }
+
+    function tocarVogal(letra) {
+        if (apresentando) return;
+        mostrarAnimacao(letra);
+        texto.innerText = `Você escolheu a letra ${letra}!`;
+    }
 </script>
+
 </body>
 </html>
