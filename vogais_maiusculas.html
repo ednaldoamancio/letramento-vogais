@@ -32,194 +32,153 @@
         
         .stage { max-width: 700px; margin: 24px auto; padding: 0 16px; position: relative; z-index: 10; text-align: center; }
         
-        /* Video Card e Letra Grande */
-        .video-card { 
-            background: rgba(255,255,255,0.4); 
-            border: 3px solid var(--ruled-line); 
-            border-radius: 25px; 
-            padding: 15px; 
-            max-width: 320px; 
-            margin: 0 auto 20px; 
-            min-height: 280px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            box-shadow: 0 8px 20px rgba(0,0,0,0.05);
-        }
+        /* Video Card */
+        .video-card { background: rgba(255,255,255,0.4); border: 3px solid var(--ruled-line); border-radius: 25px; padding: 15px; max-width: 320px; margin: 0 auto 20px; min-height: 280px; display: flex; align-items: center; justify-content: center; }
         .video-player { width: 100%; border-radius: 15px; display: none; }
         .video-player.ativo { display: block; }
+        .letra-grande { font-family: 'Fredoka One', cursive; font-size: 140px; display: block; }
 
-        .letra-grande { 
-            font-family: 'Fredoka One', cursive; 
-            font-size: 140px; 
-            display: block; 
-            line-height: 1;
-            text-shadow: 4px 4px 0px rgba(0,0,0,0.1);
-        }
-        .brilho-inicial { font-size: 100px; }
-
-        /* Botões Vogais */
-        .blocos-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; margin-bottom: 25px; }
-        .bloco-vogal { 
-            width: 60px; height: 60px; border-radius: 15px; border: none; 
-            font-family: 'Fredoka One', cursive; font-size: 1.8rem; color: #fff; 
-            cursor: pointer; transition: 0.2s; 
-        }
-        .bloco-vogal:hover { transform: scale(1.15) rotate(3deg); }
-        .bloco-A { background: var(--coral); box-shadow: 0 5px var(--coral-dark); }
-        .bloco-E { background: var(--turquoise); box-shadow: 0 5px var(--turquoise-dark); }
-        .bloco-I { background: var(--lavender); box-shadow: 0 5px var(--lavender-dark); }
-        .bloco-O { background: var(--lime); box-shadow: 0 5px var(--lime-dark); }
-        .bloco-U { background: var(--peach); box-shadow: 0 5px var(--peach-dark); }
-
-        /* Jogo de Ligação */
-        .jogo-ligacao { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 450px; margin: 40px auto; display: none; }
+        /* Jogo de Ligação - Melhorado */
+        .jogo-ligacao { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; max-width: 500px; margin: 30px auto; display: none; }
         .coluna { display: flex; flex-direction: column; gap: 15px; }
         .item-jogo { 
-            padding: 15px; background: white; border: 3px solid var(--ruled-line); 
+            background: white; border: 4px solid var(--ruled-line); 
             border-radius: 20px; cursor: pointer; font-family: 'Fredoka One', cursive; 
-            font-size: 24px; transition: 0.2s; display: flex; align-items: center; justify-content: center;
-            min-height: 80px;
+            transition: 0.2s; display: flex; align-items: center; justify-content: center;
+            min-height: 110px; box-shadow: 0 6px 0 var(--ruled-line);
         }
-        .item-jogo img { width: 70px; height: 70px; object-fit: contain; }
+        .item-jogo:active { transform: translateY(4px); box-shadow: none; }
+        .item-jogo span { font-size: 50px; } /* Tamanho da letra no jogo */
+        .item-jogo img { width: 90px; height: 90px; object-fit: contain; } /* Figuras maiores */
+
         .selecionado { border-color: #ffcc00; background: #fffdeb; transform: scale(1.05); }
-        .correto { background: #d4edda !important; border-color: #28a745 !important; pointer-events: none; transform: scale(0.95); opacity: 0.8; }
+        .correto { background: #d4edda !important; border-color: #28a745 !important; pointer-events: none; opacity: 0.7; transform: scale(0.95); box-shadow: none; }
 
-        .btn-acao { 
-            padding: 16px 32px; border-radius: 50px; border: none; 
-            font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 18px;
-            cursor: pointer; margin-top: 20px; transition: 0.2s;
-        }
-        .btn-iniciar { background: var(--turquoise); color: white; box-shadow: 0 5px var(--turquoise-dark); }
+        .btn-acao { padding: 16px 32px; border-radius: 50px; border: none; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 18px; cursor: pointer; margin-top: 20px; box-shadow: 0 5px #bbb; }
+        #btnIniciar { background: var(--turquoise); color: white; box-shadow: 0 5px var(--turquoise-dark); }
         .btn-proxima { background: #ffcc00; color: #5d4037; display: none; box-shadow: 0 5px #e6b800; }
-        .btn-proxima:hover { transform: scale(1.05); }
-
     </style>
 </head>
 <body>
 
 <header class="header">
     <div class="header-inner">
-        <a href="vogais.html" style="text-decoration:none; color:inherit; font-weight:800; font-size:14px;">⬅ VOLTAR</a>
-        <span style="font-family: 'Patrick Hand'; font-size: 20px;">Vogais Maiúsculas</span>
+        <a href="vogais.html" style="text-decoration:none; color:inherit; font-weight:800;">⬅ VOLTAR</a>
         <button onclick="toggleTheme()" style="background:none; border:none; font-size:22px; cursor:pointer;" id="btnTema">☀️</button>
     </div>
 </header>
 
 <div class="stage">
-    <h2 id="feedback" style="font-family: 'Patrick Hand'; font-size: 32px; margin-bottom: 15px;">A mágica das letrinhas!</h2>
+    <h2 id="feedback" style="font-family: 'Patrick Hand'; font-size: 30px;">A mágica das letrinhas!</h2>
     
     <div id="area-apresentacao">
         <div class="video-card" id="cardPrincipal">
-            <span id="display-letra" class="letra-grande brilho-inicial">✨</span>
+            <span id="display-letra" class="letra-grande">✨</span>
             <video id="meuVideo" class="video-player" playsinline></video>
         </div>
 
-        <div class="blocos-container">
-            <button class="bloco-vogal bloco-A" onmouseenter="ouvirLetra('A.mp3')" onclick="tocarVogal('A')">A</button>
-            <button class="bloco-vogal bloco-E" onmouseenter="ouvirLetra('E.mp3')" onclick="tocarVogal('E')">E</button>
-            <button class="bloco-vogal bloco-I" onmouseenter="ouvirLetra('I.mp3')" onclick="tocarVogal('I')">I</button>
-            <button class="bloco-vogal bloco-O" onmouseenter="ouvirLetra('O.mp3')" onclick="tocarVogal('O')">O</button>
-            <button class="bloco-vogal bloco-U" onmouseenter="ouvirLetra('U.mp3')" onclick="tocarVogal('U')">U</button>
+        <div style="margin-bottom:20px;">
+            <button class="bloco-vogal bloco-A" onclick="tocarVogal('A', 'vogal_a.ogg')">A</button>
+            <button class="bloco-vogal bloco-E" onclick="tocarVogal('E', 'vogal_e.ogg')">E</button>
+            <button class="bloco-vogal bloco-I" onclick="tocarVogal('I', 'vogal_i.ogg')">I</button>
+            <button class="bloco-vogal bloco-O" onclick="tocarVogal('O', 'vogal_o.ogg')">O</button>
+            <button class="bloco-vogal bloco-U" onclick="tocarVogal('U', 'vogal_u.ogg')">U</button>
         </div>
         
-        <button class="btn-acao btn-iniciar" id="btnIniciar" onclick="iniciarApresentacao()">▶ Começar Apresentação</button>
+        <button class="btn-acao" id="btnIniciar" onclick="iniciarApresentacao()">▶ Começar Apresentação</button>
     </div>
 
     <div id="area-jogo" class="jogo-ligacao">
         <div class="coluna">
-            <div class="item-jogo" style="color:var(--coral)" onclick="selecionarItem(this, 'letra', 'A')">A</div>
-            <div class="item-jogo" style="color:var(--lavender)" onclick="selecionarItem(this, 'letra', 'I')">I</div>
-            <div class="item-jogo" style="color:var(--turquoise)" onclick="selecionarItem(this, 'letra', 'E')">E</div>
-            <div class="item-jogo" style="color:var(--peach)" onclick="selecionarItem(this, 'letra', 'U')">U</div>
-            <div class="item-jogo" style="color:var(--lime)" onclick="selecionarItem(this, 'letra', 'O')">O</div>
+            <div class="item-jogo" style="color:var(--coral)" onclick="selecionarItem(this, 'letra', 'A', 'vogal_a.ogg')"><span>A</span></div>
+            <div class="item-jogo" style="color:var(--lavender)" onclick="selecionarItem(this, 'letra', 'I', 'vogal_i.ogg')"><span>I</span></div>
+            <div class="item-jogo" style="color:var(--turquoise)" onclick="selecionarItem(this, 'letra', 'E', 'vogal_e.ogg')"><span>E</span></div>
+            <div class="item-jogo" style="color:var(--peach)" onclick="selecionarItem(this, 'letra', 'U', 'vogal_u.ogg')"><span>U</span></div>
+            <div class="item-jogo" style="color:var(--lime)" onclick="selecionarItem(this, 'letra', 'O', 'vogal_o.ogg')"><span>O</span></div>
         </div>
         <div class="coluna">
-            <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'E')"><img src="elefante.png" alt="Elefante"></div>
-            <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'A')"><img src="aviao.png" alt="Avião"></div>
-            <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'O')"><img src="ovo.png" alt="Ovo"></div>
-            <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'U')"><img src="unicornio.png" alt="Unicórnio"></div>
-            <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'I')"><img src="iguana.png" alt="Iguana"></div>
+            <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'E', 'vogal_e.ogg')"><img src="elefante.png"></div>
+            <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'A', 'vogal_a.ogg')"><img src="aviao.png"></div>
+            <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'O', 'vogal_o.ogg')"><img src="ovo.png"></div>
+            <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'U', 'vogal_u.ogg')"><img src="unicornio.png"></div>
+            <div class="item-jogo" onclick="selecionarItem(this, 'figura', 'I', 'vogal_i.ogg')"><img src="iguana.png"></div>
         </div>
     </div>
 
-    <button class="btn-acao btn-proxima" id="btnProxima" onmouseenter="ouvirLetra('proxima_atividade.mp3')" onclick="irParaJogo()">🌟 PRÓXIMA ATIVIDADE</button>
+    <button class="btn-acao btn-proxima" id="btnProxima" onclick="irParaJogo()">🌟 PRÓXIMA ATIVIDADE</button>
 </div>
 
 <script>
     const videos = { A: 'a_de_aviao.mp4', E: 'e_de_elefante.mp4', I: 'i_de_iguana.mp4', O: 'o_de_de_ovo.mp4', U: 'u_de_unicornio.mp4' };
     const coresLetras = { A: '#f4845f', E: '#4dd0e1', I: '#b39ddb', O: '#aed581', U: '#ffab91' };
     
-    const player = document.getElementById('meuVideo');
-    const displayLetra = document.getElementById('display-letra');
-    const feedback = document.getElementById('feedback');
-    let somLetra;
+    let somAtual;
 
-    function ouvirLetra(arq) {
-        if(somLetra) somLetra.pause();
-        somLetra = new Audio(arq);
-        somLetra.play().catch(e => {});
+    function tocarSom(arquivo) {
+        if(somAtual) somAtual.pause();
+        somAtual = new Audio(arquivo);
+        somAtual.play();
     }
 
-    function mostrarAnimacao(letra) {
-        // Esconde a letra e mostra o vídeo
-        displayLetra.style.display = 'none';
+    function tocarVogal(letra, som) {
+        tocarSom(som);
+        const player = document.getElementById('meuVideo');
+        const display = document.getElementById('display-letra');
+        
+        display.style.display = 'none';
         player.src = videos[letra];
         player.classList.add('ativo');
         player.play();
 
         player.onended = () => {
-            // Ao acabar o vídeo, mostra a letra grande na cor certa
             player.classList.remove('ativo');
-            displayLetra.innerText = letra;
-            displayLetra.style.color = coresLetras[letra];
-            displayLetra.classList.remove('brilho-inicial');
-            displayLetra.style.display = 'block';
+            display.innerText = letra;
+            display.style.color = coresLetras[letra];
+            display.style.display = 'block';
         };
-    }
-
-    function tocarVogal(letra) {
-        mostrarAnimacao(letra);
-        feedback.innerText = "Você escolheu a letra " + letra;
         document.getElementById('btnProxima').style.display = 'inline-block';
     }
 
     function iniciarApresentacao() {
-        let sequencia = ['A','E','I','O','U'];
+        const ordem = ['A','E','I','O','U'];
+        const sons = ['vogal_a.ogg','vogal_e.ogg','vogal_i.ogg','vogal_o.ogg','vogal_u.ogg'];
         let i = 0;
         document.getElementById('btnIniciar').style.display = 'none';
         
         function proximo() {
-            if(i < sequencia.length) {
-                tocarVogal(sequencia[i]);
-                // Sobrescreve o onended para a sequência automática
-                let originalOnEnded = player.onended;
-                player.onended = () => {
-                    originalOnEnded();
+            if(i < ordem.length) {
+                tocarVogal(ordem[i], sons[i]);
+                document.getElementById('meuVideo').onended = () => {
+                    document.getElementById('meuVideo').classList.remove('ativo');
+                    document.getElementById('display-letra').innerText = ordem[i];
+                    document.getElementById('display-letra').style.color = coresLetras[ordem[i]];
+                    document.getElementById('display-letra').style.display = 'block';
                     i++;
-                    setTimeout(proximo, 1500); // Espera 1.5s vendo a letra antes da próxima
+                    setTimeout(proximo, 1500);
                 };
             } else {
-                feedback.innerText = "Incrível! Vamos para o desafio?";
                 document.getElementById('btnProxima').style.display = 'inline-block';
             }
         }
         proximo();
     }
 
-    // Lógica do Jogo de Ligação
+    // Lógica do Jogo de Ligação Sonorizada
     let escolhaLetra = null;
     let escolhaFigura = null;
+    let acertos = 0;
 
     function irParaJogo() {
         document.getElementById('area-apresentacao').style.display = 'none';
         document.getElementById('btnProxima').style.display = 'none';
         document.getElementById('area-jogo').style.display = 'grid';
-        feedback.innerText = "Ligue a letra na figura certa!";
+        document.getElementById('feedback').innerText = "Ligue a letra na figura!";
+        tocarSom('inicio.ogg');
     }
 
-    function selecionarItem(el, tipo, valor) {
-        if(el.classList.contains('correto')) return;
+    function selecionarItem(el, tipo, valor, som) {
+        tocarSom(som);
+        el.classList.add('selecionado');
 
         if(tipo === 'letra') {
             if(escolhaLetra) escolhaLetra.el.classList.remove('selecionado');
@@ -228,20 +187,28 @@
             if(escolhaFigura) escolhaFigura.el.classList.remove('selecionado');
             escolhaFigura = { el, valor };
         }
-        el.classList.add('selecionado');
 
         if(escolhaLetra && escolhaFigura) {
             if(escolhaLetra.valor === escolhaFigura.valor) {
                 escolhaLetra.el.classList.add('correto');
                 escolhaFigura.el.classList.add('correto');
-                feedback.innerText = "Muito bem! Acertou!";
-                ouvirLetra('acerto.mp3'); 
+                tocarSom('aplausos.ogg');
+                acertos++;
+                if(acertos === 5) {
+                    document.getElementById('feedback').innerText = "PARABÉNS! VOCÊ COMPLETOU!";
+                    setTimeout(() => tocarSom('fim_jogo.ogg'), 1000);
+                }
             } else {
-                feedback.innerText = "Tente novamente!";
-                const l = escolhaLetra.el; const f = escolhaFigura.el;
-                setTimeout(() => { l.classList.remove('selecionado'); f.classList.remove('selecionado'); }, 500);
+                tocarSom('erro.ogg');
+                const l = escolhaLetra.el;
+                const f = escolhaFigura.el;
+                setTimeout(() => {
+                    l.classList.remove('selecionado');
+                    f.classList.remove('selecionado');
+                }, 500);
             }
-            escolhaLetra = null; escolhaFigura = null;
+            escolhaLetra = null;
+            escolhaFigura = null;
         }
     }
 
@@ -252,5 +219,6 @@
         document.getElementById('btnTema').innerText = isDark ? '☀️' : '🌙';
     }
 </script>
+
 </body>
 </html>
