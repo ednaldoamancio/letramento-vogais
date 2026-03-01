@@ -45,31 +45,35 @@
             font-family: 'Fredoka One', cursive; font-size: 1.8rem; color: #fff; 
             cursor: pointer; transition: 0.2s; 
         }
+        /* Classes de Cores Reutilizáveis */
         .bloco-A { background: var(--coral); box-shadow: 0 5px var(--coral-dark); }
         .bloco-E { background: var(--turquoise); box-shadow: 0 5px var(--turquoise-dark); }
         .bloco-I { background: var(--lavender); box-shadow: 0 5px var(--lavender-dark); }
         .bloco-O { background: var(--lime); box-shadow: 0 5px var(--lime-dark); }
         .bloco-U { background: var(--peach); box-shadow: 0 5px var(--peach-dark); }
+        
         .bloco-vogal:hover { transform: scale(1.1); }
 
-        /* Jogo de Ligação com Cubinhos */
+        /* Jogo de Ligação */
         .jogo-ligacao { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; max-width: 500px; margin: 30px auto; display: none; }
         .coluna { display: flex; flex-direction: column; gap: 18px; }
         
         .item-jogo { 
-            background: white; border: none; border-radius: 15px; 
+            border-radius: 15px; 
             cursor: pointer; transition: 0.2s; display: flex; 
             align-items: center; justify-content: center;
-            min-height: 100px; width: 100%;
+            min-height: 100px; width: 100%; border: none;
         }
 
-        /* Estilo dos Cubinhos no Jogo */
+        /* Cubinhos de Madeira no Jogo */
         .cubo-letra { color: white; font-family: 'Fredoka One', cursive; font-size: 50px; }
-        .cubo-figura { border: 4px solid var(--ruled-line); background: #fff; }
+        
+        /* Cubinhos das Figuras */
+        .cubo-figura { border: 4px solid var(--ruled-line); background: #fff; box-shadow: 0 5px var(--ruled-line); }
         .cubo-figura img { width: 85px; height: 85px; object-fit: contain; }
 
-        .selecionado { transform: scale(1.1) rotate(2deg); outline: 4px solid #ffcc00; z-index: 2; }
-        .correto { opacity: 0.5; pointer-events: none; transform: scale(0.9); filter: grayscale(0.5); }
+        .selecionado { transform: scale(1.1) rotate(2deg); outline: 5px solid #ffcc00; z-index: 2; }
+        .correto { opacity: 0.5; pointer-events: none; transform: scale(0.9); filter: grayscale(0.5); box-shadow: none !important; }
 
         .btn-acao { padding: 16px 32px; border-radius: 50px; border: none; font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 18px; cursor: pointer; margin-top: 20px; box-shadow: 0 5px #bbb; }
         .btn-iniciar { background: var(--turquoise); color: white; box-shadow: 0 5px var(--turquoise-dark); }
@@ -135,7 +139,6 @@
         somAtual.play();
     }
 
-    // Função para o hover do botão próxima atividade
     function ouvirLetra(arq) {
         let s = new Audio(arq);
         s.play().catch(e => {});
@@ -178,7 +181,6 @@
         proximo();
     }
 
-    // Jogo de Ligação
     let escolhaLetra = null, escolhaFigura = null, acertos = 0;
 
     function irParaJogo() {
