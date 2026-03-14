@@ -64,7 +64,7 @@
 
         .selecionado { transform: scale(1.1) rotate(2deg); outline: 5px solid #ffcc00; z-index: 2; }
         
-        /* Classe mágica para quando o vídeo da figura está tocando! */
+        /* Classe mágica para quando o vídeo da figura está a tocar! */
         .tocando-video { transform: scale(2.2) !important; z-index: 50 !important; box-shadow: 0 15px 30px rgba(0,0,0,0.3) !important; border-color: #ffcc00 !important; }
         
         .correto { opacity: 0.5; pointer-events: none; transform: scale(0.9); filter: grayscale(0.5); box-shadow: none !important; }
@@ -97,7 +97,7 @@
 </header>
 
 <div class="stage">
-    <h2 id="feedback" style="font-family: 'Patrick Hand'; font-size: 30px;">A mágica das letrinhas!</h2>
+    <h2 id="feedback" style="font-family: 'Patrick Hand'; font-size: 30px;">A magia das letrinhas!</h2>
     
     <div id="area-apresentacao">
         <div class="video-card">
@@ -144,7 +144,7 @@
 
     <div id="area-surpresa" class="area-surpresa">
         <button class="presente-btn" onclick="abrirPresente()">🎁</button>
-        <p style="font-family: 'Patrick Hand'; font-size: 24px;">Toque no presente!</p>
+        <p style="font-family: 'Patrick Hand'; font-size: 24px;">Toca no presente!</p>
     </div>
 
     <div id="area-cinema" class="area-cinema"></div>
@@ -212,7 +212,7 @@
         document.getElementById('area-apresentacao').style.display = 'none';
         document.getElementById('btnProxima').style.display = 'none';
         document.getElementById('area-jogo').style.display = 'grid';
-        document.getElementById('feedback').innerText = "Ligue o cubinho na figura certa!";
+        document.getElementById('feedback').innerText = "Liga o cubinho à figura certa!";
     }
 
     function selecionarItem(el, tipo, valor, som) {
@@ -260,7 +260,7 @@
                     
                     if(acertos === 5) {
                         setTimeout(() => {
-                            document.getElementById('feedback').innerText = "VOCÊ É DEMAIS!";
+                            document.getElementById('feedback').innerText = "ÉS INCRÍVEL!";
                             tocarSom('fim_jogo.ogg');
                             choverConfetes();
                             document.getElementById('area-jogo').style.display = 'none';
@@ -278,7 +278,7 @@
         }
     }
 
-    // A nossa chuva de confetes mágica! 🎊
+    // A nossa chuva de confettis mágica! 🎊
     function choverConfetes() {
         var duration = 3 * 1000;
         var animationEnd = Date.now() + duration;
@@ -295,7 +295,7 @@
         }, 250);
     }
 
-    // Injetando o cinema APENAS na hora do presente!
+    // Injetando o cinema com a magia da aleatoriedade!
     function abrirPresente() {
         tocarSom('aplausos.ogg');
         choverConfetes(); 
@@ -304,14 +304,24 @@
         const areaCinema = document.getElementById('area-cinema');
         areaCinema.style.display = 'block';
         
-        // O iframe é criado e inserido aqui, garantindo que o vídeo só carregue agora!
+        // Lista dos nossos vídeos espetaculares 🎬
+        const videosSurpresa = [
+            '44sQxSC8e1I', 
+            '4TyXii8rPhk', 
+            'T6D4SQ4Ap3k'
+        ];
+        
+        // A magia que escolhe um vídeo à sorte!
+        const videoSorteado = videosSurpresa[Math.floor(Math.random() * videosSurpresa.length)];
+        
+        // O iframe é criado e inserido aqui, garantindo que o vídeo só carregue agora e seja uma surpresa!
         areaCinema.innerHTML = `
             <div class="iframe-container">
-                <iframe src="https://www.youtube.com/embed/44sQxSC8e1I?autoplay=1" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                <iframe src="https://www.youtube.com/embed/${videoSorteado}?autoplay=1" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
             </div>
         `;
         
-        document.getElementById('feedback').innerText = "🍿 Sessão Pipoca Musical! 🍿";
+        document.getElementById('feedback').innerText = "🍿 Sessão Pipoca Surpresa! 🍿";
     }
 
     function toggleTheme() {
