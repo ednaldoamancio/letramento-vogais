@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <title>Quanto tem aqui? - Desafio das Quantidades</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700&display=swap" rel="stylesheet">
     <style>
@@ -16,93 +16,104 @@
 
         body { 
             font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text);
-            text-align: center; margin: 0; padding: 20px; transition: var(--transition);
-            min-height: 100vh;
+            text-align: center; margin: 0; padding: 0; transition: var(--transition);
+            height: 100vh; height: 100dvh; overflow: hidden;
+            display: flex; flex-direction: column;
         }
 
-        .header-tools { position: absolute; top: 10px; right: 10px; }
-        .btn-theme { background: none; border: none; font-size: 28px; cursor: pointer; }
-
-        .painel-progresso { margin-bottom: 10px; font-size: 30px; }
+        /* HEADER COMPACTO */
+        .header-tools { padding: 10px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .btn-theme { background: none; border: none; font-size: 24px; cursor: pointer; }
+        .painel-progresso { font-size: 25px; }
         .medalha { opacity: 0.2; filter: grayscale(1); transition: 0.5s; display: inline-block; }
-        .medalha.ganha { opacity: 1; filter: grayscale(0); transform: scale(1.3); }
+        .medalha.ganha { opacity: 1; filter: grayscale(0); transform: scale(1.2); }
 
-        /* Área onde os emojis aparecem sorteados */
-        #display-quantidades {
-            width: 95%; max-width: 600px; min-height: 250px; 
-            background: rgba(255,255,255,0.3); border: 4px dashed var(--primary);
-            border-radius: 30px; margin: 20px auto; 
-            display: flex; flex-wrap: wrap; align-items: center; justify-content: center; 
-            padding: 30px; gap: 15px; box-shadow: inset 0 0 20px rgba(0,0,0,0.05);
+        .container { 
+            flex: 1; display: flex; flex-direction: column; 
+            justify-content: space-evenly; align-items: center; padding: 5px; 
         }
 
-        .emoji-item { font-size: clamp(40px, 10vw, 65px); animation: popIn 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) forwards; }
+        /* ÁREA DE QUANTIDADES - AJUSTADA PARA NÃO ROLAR */
+        #display-quantidades {
+            width: 90%; max-width: 500px; min-height: 120px; 
+            background: rgba(255,255,255,0.3); border: 3px dashed var(--primary);
+            border-radius: 20px; display: flex; flex-wrap: wrap; 
+            align-items: center; justify-content: center; padding: 15px; gap: 8px;
+        }
+
+        .emoji-item { font-size: clamp(30px, 10vw, 55px); animation: popIn 0.5s cubic-bezier(0.3, 1.5, 0.5, 1) forwards; }
         @keyframes popIn { from { transform: scale(0); opacity: 0; } to { transform: scale(1); opacity: 1; } }
 
-        /* Cartão de Interrogação que vira o número */
+        /* CARTÃO DE RESPOSTA */
         .cartao-resposta {
-            width: 120px; height: 160px; background: var(--card-bg); 
-            border: 5px solid var(--secondary); border-radius: 20px;
-            margin: 0 auto 20px; display: flex; align-items: center; justify-content: center;
-            font-family: 'Fredoka One', cursive; font-size: 80px; color: var(--secondary);
-            box-shadow: 0 8px 0 rgba(0,0,0,0.1); transition: 0.3s;
+            width: 90px; height: 120px; background: var(--card-bg); 
+            border: 4px solid var(--secondary); border-radius: 15px;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Fredoka One', cursive; font-size: 60px; color: var(--secondary);
+            box-shadow: 0 6px 0 rgba(0,0,0,0.1); transition: 0.3s;
         }
 
-        /* Grade de números para clicar */
+        /* GRADE DE NÚMEROS COMPACTA */
         .grade-numeros {
-            display: grid; grid-template-columns: repeat(auto-fit, minmax(60px, 1fr));
-            gap: 10px; max-width: 500px; margin: 0 auto;
+            display: grid; grid-template-columns: repeat(6, 1fr);
+            gap: 6px; width: 95%; max-width: 400px;
         }
         .btn-num {
-            height: 60px; border-radius: 15px; border: 2px solid var(--text);
+            aspect-ratio: 1/1; border-radius: 12px; border: 2px solid var(--text);
             background: var(--card-bg); color: var(--text); font-family: 'Fredoka One';
-            font-size: 24px; cursor: pointer; transition: 0.2s; box-shadow: 0 4px 0 var(--text);
+            font-size: 20px; cursor: pointer; transition: 0.2s; box-shadow: 0 3px 0 var(--text);
         }
-        .btn-num:hover { transform: translateY(-3px); }
-        .btn-num:active, .btn-num.selecionado { transform: translateY(3px); box-shadow: none; background: var(--primary); color: white; }
+        .btn-num.selecionado { transform: translateY(3px); box-shadow: none; background: var(--primary); color: white; }
 
         .btn-conferir {
-            margin-top: 30px; padding: 15px 50px; border-radius: 50px; border: none;
+            padding: 12px 40px; border-radius: 50px; border: none;
             background: var(--secondary); color: white; font-family: 'Fredoka One'; 
-            font-size: 26px; cursor: pointer; box-shadow: 0 6px 0 #d35400;
+            font-size: 22px; cursor: pointer; box-shadow: 0 5px 0 #d35400;
         }
 
+        /* MODAL E CONFETES */
         #modal-presente {
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95);
             z-index: 2000; flex-direction: column; align-items: center; justify-content: center;
         }
-        .video-box { width: 90%; max-width: 750px; aspect-ratio: 16/9; border: 6px solid gold; border-radius: 15px; }
-        .confete { position: fixed; width: 10px; height: 10px; z-index: 1000; animation: cair linear forwards; }
-        @keyframes cair { to { transform: translateY(100vh) rotate(720deg); } }
+        .video-box { width: 90%; aspect-ratio: 16/9; border: 5px solid gold; border-radius: 15px; overflow: hidden; }
+        
+        .confete { 
+            position: fixed; z-index: 1000; pointer-events: none; 
+            animation: cair linear forwards; border-radius: 2px;
+        }
+        @keyframes cair { 
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
 <div class="header-tools">
+    <a href="index.html" style="text-decoration:none; font-size: 20px;">🏠</a>
+    <div class="painel-progresso">
+        <span class="medalha">⭐</span> <span class="medalha">⭐</span> <span class="medalha">⭐</span>
+    </div>
     <button class="btn-theme" onclick="toggleTheme()" id="themeIcon">🌙</button>
 </div>
 
 <div class="container">
-    <div class="painel-progresso">
-        <span class="medalha">⭐</span> <span class="medalha">⭐</span> <span class="medalha">⭐</span>
-    </div>
-
-    <h2 style="font-family: 'Fredoka One'; opacity: 0.9;">Conte e escolha o número!</h2>
-
+    <h2 style="font-family: 'Fredoka One'; font-size: 18px;">Conte e escolha o número!</h2>
+    
     <div id="display-quantidades"></div>
-
+    
     <div class="cartao-resposta" id="cartaoNumero">?</div>
-
+    
     <div class="grade-numeros" id="gradeBotoes"></div>
-
-    <button class="btn-conferir" onclick="verificarResposta()">CONFERIR (Enter)</button>
-    <p><a href="numeros.html" style="color:var(--primary); text-decoration:none; font-weight:bold;">⬅ VOLTAR</a></p>
+    
+    <button class="btn-conferir" onclick="verificarResposta()">CONFERIR! ✨</button>
 </div>
 
 <div id="modal-presente">
-    <h1 style="color:gold; font-family:'Fredoka One';">🎁 MUITO BEM! 🎁</h1>
+    <h1 style="color:gold; font-family:'Fredoka One'; font-size: 24px; margin-bottom: 10px;">🎁 PARABÉNS! 🎁</h1>
     <div class="video-box" id="areaVideo"></div>
-    <button onclick="fecharPresente()" style="margin-top:20px; padding:15px 40px; font-family:'Fredoka One'; cursor:pointer; border-radius:15px; border:none;">✖ VOLTAR</button>
+    <button onclick="fecharPresente()" style="margin-top:20px; padding:12px 30px; font-family:'Fredoka One'; cursor:pointer; border-radius:15px; border:none; background:white;">✖ VOLTAR</button>
 </div>
 
 <script>
@@ -112,15 +123,12 @@
     const IDs_YOUTUBE = ["DhEpqf2tDJw", "mJYQ1zRzqo0", "YlBdVa8QA00"];
     const emojis = ["🍎", "🦆", "⭐", "🐸", "🐞", "🦋", "🎈", "⚽", "🚗", "🍦"];
 
-    // Tema
     function toggleTheme() {
         const isDark = document.body.classList.toggle('dark-mode');
-        localStorage.setItem('tema', isDark ? 'dark' : 'light');
         document.getElementById('themeIcon').innerText = isDark ? '☀️' : '🌙';
     }
-    if(localStorage.getItem('tema') === 'dark') toggleTheme();
 
-    // Criar botões de 0 a 10
+    // Criar botões
     const grade = document.getElementById('gradeBotoes');
     for(let i=0; i<=10; i++) {
         const btn = document.createElement('button');
@@ -132,7 +140,7 @@
 
     function novoJogo() {
         palpiteAtual = null;
-        numeroSorteado = Math.floor(Math.random() * 11); // 0 a 10
+        numeroSorteado = Math.floor(Math.random() * 11);
         document.getElementById('cartaoNumero').innerText = '?';
         document.getElementById('cartaoNumero').style.color = 'var(--secondary)';
         document.querySelectorAll('.btn-num').forEach(b => b.classList.remove('selecionado'));
@@ -141,69 +149,85 @@
         display.innerHTML = '';
 
         if(numeroSorteado === 0) {
-            display.innerHTML = '<p style="font-size:24px; opacity:0.6;">A caixa está vazia!</p>';
+            display.innerHTML = '<p style="font-family:\'Patrick Hand\'; font-size:20px;">A caixa está vazia!</p>';
         } else {
             const emojiDaRodada = emojis[Math.floor(Math.random() * emojis.length)];
             for(let i=0; i < numeroSorteado; i++) {
                 const item = document.createElement('span');
                 item.className = 'emoji-item';
                 item.innerText = emojiDaRodada;
-                // Efeito sonoro de contagem progressiva ao aparecer (opcional, mas pedagógico)
                 display.appendChild(item);
             }
         }
-        // Opcional: Tocar um som de "contagem iniciada"
     }
 
-    function selecionar(n, btn) {
+    async function selecionar(n, btn) {
         palpiteAtual = n;
         document.querySelectorAll('.btn-num').forEach(b => b.classList.remove('selecionado'));
         btn.classList.add('selecionado');
-        tocarSom(`numero_${n}.mp3`); // Sonoriza o número clicado imediatamente
+        
+        // Confetes proporcionais ao número clicado!
+        if (n > 0) lancarConfetes(n);
+        
+        await tocarSom(`numero_${n}.mp3`);
     }
 
-    function verificarResposta() {
+    async function verificarResposta() {
         if(palpiteAtual === null) return;
 
         const cartao = document.getElementById('cartaoNumero');
         
         if(palpiteAtual === numeroSorteado) {
-            // ACERTOU!
             cartao.innerText = numeroSorteado;
             cartao.style.color = '#2ecc71';
-            soltarConfetes();
-            tocarSom('aplausos.ogg');
+            
+            // Festa de acerto!
+            lancarConfetes(20);
+            await tocarSom('aplausos.ogg');
+            
             acertosSeguidos++;
             atualizarMedalhas();
 
             if(acertosSeguidos >= 3) {
-                setTimeout(ganharPresente, 1000);
+                setTimeout(ganharPresente, 800);
             } else {
-                setTimeout(novoJogo, 2500);
+                setTimeout(novoJogo, 2000);
             }
         } else {
-            // ERROU
-            tocarSom('erro.ogg');
+            // Errou
+            await tocarSom('erro.ogg');
             cartao.animate([
-                { transform: 'translateX(-10px)' },
-                { transform: 'translateX(10px)' }
+                { transform: 'translateX(-5px)' },
+                { transform: 'translateX(5px)' }
             ], { duration: 100, iterations: 3 });
         }
     }
-
-    window.addEventListener('keydown', (e) => { if(e.key === "Enter") verificarResposta(); });
 
     function atualizarMedalhas() {
         const medalhas = document.querySelectorAll('.medalha');
         medalhas.forEach((m, idx) => { if(idx < acertosSeguidos) m.classList.add('ganha'); });
     }
 
+    function lancarConfetes(qtd) {
+        const cores = ['#ff0', '#f0f', '#0ff', '#f00', '#0f0', '#ff8c00'];
+        for (let i = 0; i < qtd; i++) {
+            const c = document.createElement('div');
+            c.className = 'confete';
+            c.style.left = Math.random() * 100 + 'vw';
+            c.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+            c.style.width = (Math.random() * 8 + 5) + 'px';
+            c.style.height = (Math.random() * 10 + 5) + 'px';
+            const dur = (Math.random() * 2 + 1) + 's';
+            c.style.animationDuration = dur;
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 2500);
+        }
+    }
+
     function ganharPresente() {
         const idSorteado = IDs_YOUTUBE[Math.floor(Math.random() * IDs_YOUTUBE.length)];
-        const areaVideo = document.getElementById('areaVideo');
-        areaVideo.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${idSorteado}?autoplay=1" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
+        document.getElementById('areaVideo').innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${idSorteado}?autoplay=1" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
         document.getElementById('modal-presente').style.display = 'flex';
-        tocarSom('fim_jogo.ogg');
     }
 
     function fecharPresente() {
@@ -214,19 +238,14 @@
         novoJogo();
     }
 
-    function soltarConfetes() {
-        for (let i = 0; i < 40; i++) {
-            const c = document.createElement('div');
-            c.className = 'confete';
-            c.style.left = Math.random() * 100 + 'vw';
-            c.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 50%)`;
-            c.style.animationDuration = (Math.random()*2 + 1) + 's';
-            document.body.appendChild(c);
-            setTimeout(() => c.remove(), 3000);
-        }
+    function tocarSom(arq) {
+        return new Promise(res => {
+            const a = new Audio(arq);
+            a.onended = res;
+            a.onerror = res;
+            a.play().catch(res);
+        });
     }
-
-    function tocarSom(arq) { new Audio(arq).play().catch(() => {}); }
 
     window.onload = novoJogo;
 </script>
