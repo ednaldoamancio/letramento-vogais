@@ -2,8 +2,8 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fábrica de Quantidades - Aprender Brincando</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>Fábrica de Quantidades - Giovanna</title>
     <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@700&display=swap" rel="stylesheet">
     <style>
         :root { 
@@ -16,100 +16,104 @@
 
         body { 
             font-family: 'Nunito', sans-serif; background: var(--bg); color: var(--text);
-            text-align: center; margin: 0; padding: 20px; transition: var(--transition);
+            text-align: center; margin: 0; padding: 0; transition: var(--transition);
+            height: 100vh; height: 100dvh; overflow: hidden;
+            display: flex; flex-direction: column;
         }
 
-        .header-tools { position: absolute; top: 10px; right: 10px; }
-        .btn-theme { background: none; border: none; font-size: 28px; cursor: pointer; }
-
-        .painel-progresso { margin-bottom: 10px; font-size: 30px; }
+        .header-tools { padding: 8px; display: flex; justify-content: space-between; align-items: center; z-index: 100; }
+        .btn-theme { background: none; border: none; font-size: 24px; cursor: pointer; }
+        
+        .painel-progresso { font-size: 24px; }
         .medalha { opacity: 0.2; filter: grayscale(1); transition: 0.5s; display: inline-block; }
-        .medalha.ganha { opacity: 1; filter: grayscale(0); transform: scale(1.3); }
+        .medalha.ganha { opacity: 1; filter: grayscale(0); transform: scale(1.2); }
+
+        .container { flex: 1; display: flex; flex-direction: column; justify-content: space-evenly; align-items: center; padding: 5px; }
 
         .painel-alvo {
-            background: var(--card-bg); border: 5px solid var(--primary); border-radius: 25px;
-            display: inline-block; padding: 15px 50px; margin-bottom: 15px;
-            box-shadow: 0 8px 0 rgba(0,0,0,0.1);
+            background: var(--card-bg); border: 4px solid var(--primary); border-radius: 20px;
+            padding: 10px 30px; box-shadow: 0 6px 0 rgba(0,0,0,0.1);
         }
-        .numero-pedida { font-family: 'Fredoka One'; font-size: 110px; color: var(--primary); margin: 0; line-height: 1; }
+        .numero-pedida { font-family: 'Fredoka One'; font-size: 80px; color: var(--primary); margin: 0; line-height: 1; }
 
         #caixa-deposito {
-            width: 90%; max-width: 550px; min-height: 260px; 
-            background: rgba(255,255,255,0.2); border: 6px dashed var(--primary);
-            border-radius: 35px; margin: 0 auto; display: flex; flex-wrap: wrap; 
-            align-items: center; justify-content: center; padding: 20px; gap: 15px;
+            width: 90%; max-width: 450px; min-height: 150px; 
+            background: rgba(255,255,255,0.3); border: 4px dashed var(--primary);
+            border-radius: 25px; display: flex; flex-wrap: wrap; 
+            align-items: center; justify-content: center; padding: 15px; gap: 8px;
         }
 
         .dispensador {
-            margin-top: 20px; background: var(--card-bg); padding: 15px; 
-            border-radius: 50px; display: inline-flex; gap: 25px; border: 3px solid var(--primary);
+            background: var(--card-bg); padding: 10px 20px; 
+            border-radius: 40px; display: flex; gap: 20px; border: 3px solid var(--primary);
         }
-        .item-arrastavel { font-size: 75px; cursor: grab; user-select: none; transition: 0.2s; }
-        .item-arrastavel:hover { transform: scale(1.2); }
+        .item-arrastavel { font-size: 50px; cursor: pointer; transition: 0.2s; user-select: none; }
+        .item-arrastavel:active { transform: scale(0.8); }
 
         .btn-conferir {
-            margin-top: 25px; padding: 20px 60px; border-radius: 50px; border: none;
+            padding: 15px 50px; border-radius: 50px; border: none;
             background: var(--secondary); color: white; font-family: 'Fredoka One'; 
-            font-size: 30px; cursor: pointer; box-shadow: 0 8px 0 #bf360c;
+            font-size: 24px; cursor: pointer; box-shadow: 0 6px 0 #bf360c;
         }
-        .btn-conferir:active { transform: translateY(4px); box-shadow: 0 4px 0 #bf360c; }
 
         #modal-presente {
             display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.95);
             z-index: 2000; flex-direction: column; align-items: center; justify-content: center;
         }
-        .video-box { width: 90%; max-width: 750px; aspect-ratio: 16/9; border: 6px solid gold; border-radius: 15px; }
+        .video-box { width: 90%; aspect-ratio: 16/9; border: 5px solid gold; border-radius: 15px; overflow: hidden; }
 
-        .confete { position: fixed; width: 10px; height: 10px; z-index: 1000; animation: cair linear forwards; }
-        @keyframes cair { to { transform: translateY(100vh) rotate(720deg); } }
+        .confete { 
+            position: fixed; z-index: 1000; pointer-events: none; 
+            animation: cair linear forwards;
+        }
+        @keyframes cair { 
+            0% { transform: translateY(-20px) rotate(0deg); opacity: 1; }
+            100% { transform: translateY(110vh) rotate(720deg); opacity: 0; }
+        }
     </style>
 </head>
 <body>
 
 <div class="header-tools">
+    <a href="index.html" style="text-decoration:none; font-size: 20px;">🏠</a>
+    <div class="painel-progresso">
+        <span class="medalha">⭐</span> <span class="medalha">⭐</span> <span class="medalha">⭐</span>
+    </div>
     <button class="btn-theme" onclick="toggleTheme()" id="themeIcon">🌙</button>
 </div>
 
 <div class="container">
-    <div class="painel-progresso">
-        <span class="medalha">⭐</span> <span class="medalha">⭐</span> <span class="medalha">⭐</span>
-    </div>
-
     <div class="painel-alvo">
-        <p style="margin:0; font-size: 1.2rem;">Coloque esta quantidade:</p>
+        <p style="margin:0; font-family:'Nunito'; font-weight:bold;">Giovanna, coloque:</p>
         <h1 class="numero-pedida" id="numAlvo">?</h1>
     </div>
 
-    <div id="caixa-deposito" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+    <div id="caixa-deposito"></div>
 
     <div class="dispensador">
-        <div class="item-arrastavel" draggable="true" ondragstart="drag(event)">🍎</div>
-        <div class="item-arrastavel" draggable="true" ondragstart="drag(event)">⚽</div>
-        <div class="item-arrastavel" draggable="true" ondragstart="drag(event)">🎁</div>
+        <div class="item-arrastavel" onclick="adicionarItem('🍎')">🍎</div>
+        <div class="item-arrastavel" onclick="adicionarItem('⚽')">⚽</div>
+        <div class="item-arrastavel" onclick="adicionarItem('🎁')">🎁</div>
     </div>
 
-    <br>
-    <button class="btn-conferir" onclick="verificarAcerto()">CONFERIR</button>
+    <button class="btn-conferir" onclick="verificarAcerto()">CONFERIR! ✨</button>
 </div>
 
 <div id="modal-presente">
-    <h1 style="color:gold; font-family:'Fredoka One';">🎁 MUITO BEM! 🎁</h1>
+    <h1 style="color:gold; font-family:'Fredoka One'; font-size: 24px; margin-bottom: 10px;">🎁 VOCÊ É DEMAIS! 🎁</h1>
     <div class="video-box" id="areaVideo"></div>
-    <button onclick="fecharPresente()" style="margin-top:20px; padding:15px 40px; font-family:'Fredoka One'; cursor:pointer; border-radius:15px; border:none; background:white;">✖ VOLTAR</button>
+    <button onclick="fecharPresente()" style="margin-top:20px; padding:12px 30px; font-family:'Fredoka One'; cursor:pointer; border-radius:15px; border:none; background:white;">✖ VOLTAR</button>
 </div>
 
 <script>
     let numeroAlvo = 0;
     let acertosSeguidos = 0;
-    // Utilize os IDs dos vídeos que você disponibilizou (aleatórios)
     const IDs_YOUTUBE = ["DhEpqf2tDJw", "mJYQ1zRzqo0", "YlBdVa8QA00"];
 
     function toggleTheme() {
         const isDark = document.body.classList.toggle('dark-mode');
-        localStorage.setItem('tema', isDark ? 'dark' : 'light');
         document.getElementById('themeIcon').innerText = isDark ? '☀️' : '🌙';
     }
-    if(localStorage.getItem('tema') === 'dark') toggleTheme();
 
     function novoDesafio() {
         numeroAlvo = Math.floor(Math.random() * 10) + 1;
@@ -118,70 +122,81 @@
         tocarSom(`numero_${numeroAlvo}.mp3`);
     }
 
-    function allowDrop(ev) { ev.preventDefault(); }
-    function drag(ev) { ev.dataTransfer.setData("emoji", ev.target.innerText); }
+    function adicionarItem(emoji) {
+        const totalAtual = document.getElementById('caixa-deposito').children.length;
+        
+        if (totalAtual >= 15) return; // Limite visual
 
-    function drop(ev) {
-        ev.preventDefault();
-        const emoji = ev.dataTransfer.getData("emoji");
         const novoItem = document.createElement('div');
         novoItem.innerText = emoji;
-        novoItem.style.fontSize = '65px';
+        novoItem.style.fontSize = 'clamp(40px, 12vw, 60px)';
         novoItem.style.cursor = 'pointer';
-        novoItem.title = "Clique para remover";
-        novoItem.onclick = function() { this.remove(); tocarSom('erro.ogg'); };
+        novoItem.style.animation = 'popIn 0.3s cubic-bezier(0.3, 1.5, 0.5, 1)';
         
+        novoItem.onclick = function() { 
+            this.remove(); 
+            lancarConfetes(1); // Um confetinho ao tirar
+        };
+
         document.getElementById('caixa-deposito').appendChild(novoItem);
         
-        // SONORIZAÇÃO PROGRESSIVA
-        const totalAtual = document.getElementById('caixa-deposito').children.length;
-        if(totalAtual <= 10) {
-            tocarSom(`numero_${totalAtual}.mp3`);
-        }
+        // Sonorização progressiva (Giovanna contando)
+        const novaContagem = document.getElementById('caixa-deposito').children.length;
+        tocarSom(`numero_${novaContagem}.mp3`);
+        
+        // Um confete cai cada vez que ela adiciona um item
+        lancarConfetes(1);
     }
 
-    function verificarAcerto() {
+    async function verificarAcerto() {
         const totalNaCaixa = document.getElementById('caixa-deposito').children.length;
         
         if (totalNaCaixa === numeroAlvo) {
-            // REFORÇO SONORO DO NÚMERO FINAL
-            tocarSom(`numero_${numeroAlvo}.mp3`);
+            await tocarSom(`numero_${numeroAlvo}.mp3`);
+            lancarConfetes(30);
+            await tocarSom('aplausos.ogg');
             
-            setTimeout(() => {
-                acertosSeguidos++;
-                atualizarMedalhas();
-                soltarConfetes();
-                tocarSom('aplausos.ogg');
+            acertosSeguidos++;
+            atualizarMedalhas();
 
-                if (acertosSeguidos >= 3) {
-                    setTimeout(ganharPresente, 1000);
-                } else {
-                    setTimeout(novoDesafio, 3000);
-                }
-            }, 800);
+            if (acertosSeguidos >= 3) {
+                setTimeout(ganharPresente, 800);
+            } else {
+                setTimeout(novoDesafio, 2500);
+            }
         } else {
-            tocarSom('erro.ogg');
-            alert(`Ainda não está certo. Você colocou ${totalNaCaixa}, mas precisamos de ${numeroAlvo}.`);
+            await tocarSom('erro.ogg');
+            // Feedback visual de erro
+            document.getElementById('caixa-deposito').animate([
+                { borderColor: 'red' }, { borderColor: 'var(--primary)' }
+            ], { duration: 500 });
         }
     }
 
-    window.addEventListener('keydown', function(e) {
-        if(e.key === "Enter") verificarAcerto();
-    });
-
     function atualizarMedalhas() {
         const medalhas = document.querySelectorAll('.medalha');
-        medalhas.forEach((m, idx) => {
-            if(idx < acertosSeguidos) m.classList.add('ganha');
-        });
+        medalhas.forEach((m, idx) => { if(idx < acertosSeguidos) m.classList.add('ganha'); });
+    }
+
+    function lancarConfetes(qtd) {
+        const cores = ['#ff0', '#f0f', '#0ff', '#f00', '#0f0', '#ff8c00'];
+        for (let i = 0; i < qtd; i++) {
+            const c = document.createElement('div');
+            c.className = 'confete';
+            c.style.left = Math.random() * 100 + 'vw';
+            c.style.backgroundColor = cores[Math.floor(Math.random() * cores.length)];
+            c.style.width = '8px'; c.style.height = '8px';
+            const dur = (Math.random() * 2 + 1) + 's';
+            c.style.animationDuration = dur;
+            document.body.appendChild(c);
+            setTimeout(() => c.remove(), 2500);
+        }
     }
 
     function ganharPresente() {
         const idSorteado = IDs_YOUTUBE[Math.floor(Math.random() * IDs_YOUTUBE.length)];
-        const areaVideo = document.getElementById('areaVideo');
-        areaVideo.innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${idSorteado}?autoplay=1" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
+        document.getElementById('areaVideo').innerHTML = `<iframe width="100%" height="100%" src="https://www.youtube.com/embed/${idSorteado}?autoplay=1" frameborder="0" allow="autoplay" allowfullscreen></iframe>`;
         document.getElementById('modal-presente').style.display = 'flex';
-        tocarSom('fim_jogo.ogg');
     }
 
     function fecharPresente() {
@@ -192,20 +207,13 @@
         novoDesafio();
     }
 
-    function soltarConfetes() {
-        for (let i = 0; i < 50; i++) {
-            const c = document.createElement('div');
-            c.className = 'confete';
-            c.style.left = Math.random() * 100 + 'vw';
-            c.style.backgroundColor = `hsl(${Math.random()*360}, 100%, 50%)`;
-            c.style.animationDuration = (Math.random()*2 + 1) + 's';
-            document.body.appendChild(c);
-            setTimeout(() => c.remove(), 3000);
-        }
-    }
-
-    function tocarSom(arq) { 
-        new Audio(arq).play().catch(e => console.log("Áudio bloqueado ou não encontrado")); 
+    function tocarSom(arq) {
+        return new Promise(res => {
+            const a = new Audio(arq);
+            a.onended = res;
+            a.onerror = res;
+            a.play().catch(res);
+        });
     }
 
     window.onload = novoDesafio;
