@@ -2,7 +2,7 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
     <title>Jornada das Letras: Menu Principal</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -15,70 +15,98 @@
             --coral: #f4845f; --coral-dark: #e05a3a;
             --turquoise: #4dd0e1; --turquoise-dark: #26a8b8;
             --lavender: #b39ddb; --lavender-dark: #8e79c0;
-            /* Novas cores para o botão do Alfabeto */
             --gold: #ffd54f; --gold-dark: #ffb300; 
-            
             --paper: #fefcf3; --brown: #5d4037;
             --ruled-line: #add8e6; --margin-line: #ff9999;
-            --header-bg: rgba(254, 252, 243, 0.92);
         }
 
         [data-theme="dark"] {
-            --paper: #2c3e50; --brown: #ecf0f1;
-            --ruled-line: #34495e; --margin-line: #e74c3c;
-            --header-bg: rgba(44, 62, 80, 0.92);
+            --paper: #1a1a2e; --brown: #ecf0f1;
+            --ruled-line: rgba(255,255,255,0.05); --margin-line: #e74c3c;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Nunito', sans-serif;
             background: var(--paper);
             color: var(--brown);
-            min-height: 100vh;
-            overflow-x: hidden;
+            height: 100vh; height: 100dvh;
+            overflow: hidden; /* Trava a rolagem */
+            display: flex;
+            flex-direction: column;
+            transition: background 0.5s;
         }
 
         /* Linhas do caderno */
         body::before {
-            content: ''; position: fixed; inset: 0; z-index: 0;
+            content: ''; position: fixed; inset: 0; z-index: 0; pointer-events: none;
             background: repeating-linear-gradient(0deg, transparent, transparent 30px, var(--ruled-line) 30px, var(--ruled-line) 31px);
             background-size: 100% 31px;
         }
 
-        body::after {
-            content: ''; position: fixed; top: 0; bottom: 0; left: clamp(40px, 8vw, 80px);
-            width: 2px; background: var(--margin-line); opacity: 0.6;
+        .header { position: relative; z-index: 50; padding: 10px 16px; border-bottom: 2px solid var(--ruled-line); background: rgba(255,255,255,0.1); backdrop-filter: blur(5px); }
+        .header-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        
+        .header-botoes { display: flex; gap: 8px; }
+        .theme-toggle { background: var(--lavender); border: none; width: 40px; height: 40px; border-radius: 50%; cursor: pointer; font-size: 18px; box-shadow: 0 3px 0 var(--lavender-dark); }
+        .btn-musica { padding: 6px 12px; border-radius: 50px; border: none; font-weight: 800; background: var(--turquoise); color: #004d40; box-shadow: 0 3px 0 var(--turquoise-dark); cursor: pointer; font-size: 12px; }
+
+        .stage { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 10px; 
+            z-index: 10;
+            gap: 10px;
         }
 
-        .header { position: sticky; top: 0; z-index: 50; background: var(--header-bg); border-bottom: 2px solid var(--ruled-line); }
-        .header-inner { max-width: 800px; margin: 0 auto; padding: 10px 16px; display: flex; align-items: center; justify-content: space-between; }
-        
-        .header-botoes { display: flex; gap: 10px; }
-        .theme-toggle { background: var(--lavender); border: none; width: 45px; height: 45px; border-radius: 50%; cursor: pointer; font-size: 20px; box-shadow: 0 4px 0 var(--lavender-dark); }
-        .btn-musica { padding: 8px 16px; border-radius: 50px; border: none; font-weight: 800; background: var(--turquoise); color: #004d40; box-shadow: 0 3px 0 var(--turquoise-dark); cursor: pointer; }
-
-        .stage { max-width: 700px; margin: 24px auto; padding: 0 16px; position: relative; z-index: 10; }
-        .welcome { display: flex; flex-direction: column; align-items: center; text-align: center; gap: 20px; }
-        .welcome-banner { border-radius: 20px; overflow: hidden; border: 5px solid #fff; width: 100%; max-width: 300px; height: 200px; box-shadow: 0 10px 20px rgba(0,0,0,0.1); }
+        .welcome-banner { 
+            border-radius: 20px; 
+            overflow: hidden; 
+            border: 4px solid #fff; 
+            width: 80%; 
+            max-width: 220px; 
+            aspect-ratio: 4/3;
+            box-shadow: 0 8px 15px rgba(0,0,0,0.1); 
+        }
         .welcome-banner img { width: 100%; height: 100%; object-fit: cover; }
 
-        .menu-container { display: flex; flex-direction: column; gap: 16px; width: 100%; max-width: 320px; margin-top: 10px; }
+        .menu-container { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 12px; 
+            width: 100%; 
+            max-width: 400px; 
+        }
         
         .btn-menu {
-            padding: 20px; border-radius: 18px; border: none; font-family: 'Fredoka One', cursive;
-            font-size: 20px; color: #fff; text-decoration: none; text-align: center;
+            padding: 15px 10px; 
+            border-radius: 15px; 
+            border: none; 
+            font-family: 'Fredoka One', cursive;
+            font-size: clamp(14px, 4vw, 18px); 
+            color: #fff; 
+            text-decoration: none; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
             transition: transform 0.2s, box-shadow 0.2s;
+            line-height: 1.2;
         }
-        .btn-menu:hover { transform: scale(1.05); }
+        .btn-menu:active { transform: scale(0.95); }
 
-        .btn-vogais { background: var(--coral); box-shadow: 0 6px 0 var(--coral-dark); }
-        
-        /* Estilo do novo botão do Alfabeto */
-        .btn-alfabeto { background: var(--gold); box-shadow: 0 6px 0 var(--gold-dark); color: #5d4037; }
-        
-        .btn-consoantes { background: var(--turquoise); box-shadow: 0 6px 0 var(--turquoise-dark); }
-        .btn-numeros { background: var(--lavender); box-shadow: 0 6px 0 var(--lavender-dark); }
+        .btn-vogais { background: var(--coral); box-shadow: 0 5px 0 var(--coral-dark); }
+        .btn-alfabeto { background: var(--gold); box-shadow: 0 5px 0 var(--gold-dark); color: #5d4037; }
+        .btn-consoantes { background: var(--turquoise); box-shadow: 0 5px 0 var(--turquoise-dark); }
+        .btn-numeros { background: var(--lavender); box-shadow: 0 5px 0 var(--lavender-dark); }
+
+        .emoji-btn { font-size: 24px; margin-bottom: 5px; }
+
     </style>
 </head>
 <body>
@@ -89,50 +117,62 @@
             <button class="btn-musica" id="btnMusica" onclick="alternarMusica()">🎵 MÚSICA OFF</button>
             <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️</button>
         </div>
-        <span class="titulo-header" style="font-family: 'Patrick Hand', cursive; font-size: 20px;">Jornada das Letras</span>
+        <span style="font-family: 'Patrick Hand', cursive; font-size: 18px; font-weight: bold;">Olá, Giovanna! ✨</span>
     </div>
 </header>
 
 <div class="stage">
-    <div class="welcome">
-        <div class="welcome-banner"><img src="ilha.jpg" alt="Ilha do Conhecimento"></div>
-        <h2 style="font-family: 'Patrick Hand', cursive; font-size: 30px;">Bem-vindo(a)!</h2>
+    <div class="welcome-banner">
+        <img src="ilha.jpg" alt="Ilha do Conhecimento">
+    </div>
+    
+    <h2 style="font-family: 'Patrick Hand', cursive; font-size: 24px;">Qual vamos jogar?</h2>
+    
+    <div class="menu-container">
+        <a href="vogais.html" class="btn-menu btn-vogais" onclick="tocarEfeito('vogais.mp3')">
+            <span class="emoji-btn">🅰️</span>
+            Vogais
+        </a>
         
-        <div class="menu-container">
-            <a href="vogais.html" class="btn-menu btn-vogais" onmouseenter="tocarSomMenu('vogais.mp3')">A E I O U - Vogais</a>
-            
-            <a href="https://alfabeto-mu.vercel.app/" class="btn-menu btn-alfabeto" onmouseenter="tocarSomMenu('alfabeto.mp3')">A a Z - Alfabeto</a>
-            
-            <a href="consoantes.html" class="btn-menu btn-consoantes" onmouseenter="tocarSomMenu('consoantes.mp3')">B C D F - Consoantes</a>
-            <a href="numeros.html" class="btn-menu btn-numeros" onmouseenter="tocarSomMenu('numeros.mp3')">1 2 3 - Números</a>
-        </div>
+        <a href="https://alfabeto-mu.vercel.app/" class="btn-menu btn-alfabeto" onclick="tocarEfeito('alfabeto.mp3')">
+            <span class="emoji-btn">🔤</span>
+            Alfabeto
+        </a>
+        
+        <a href="consoantes.html" class="btn-menu btn-consoantes" onclick="tocarEfeito('consoantes.mp3')">
+            <span class="emoji-btn">🅱️</span>
+            Consoantes
+        </a>
+
+        <a href="numeros.html" class="btn-menu btn-numeros" onclick="tocarEfeito('numeros.mp3')">
+            <span class="emoji-btn">🔢</span>
+            Números
+        </a>
     </div>
 </div>
 
 <script>
-    // 🎉 Efeito lúdico: Chuva de confetes ao carregar a página!
+    // 🎉 Chuva de alegria ao entrar!
     window.onload = function() {
+        lancarFesta();
+    };
+
+    function lancarFesta() {
         confetti({
-            particleCount: 150,
-            spread: 80,
+            particleCount: 100,
+            spread: 70,
             origin: { y: 0.6 },
             colors: ['#f4845f', '#4dd0e1', '#b39ddb', '#ffd54f']
         });
-    };
-
-    // Gerenciador de Áudio para o Menu (Voz de Criança)
-    let audioMenu;
-    function tocarSomMenu(arquivo) {
-        // Se já houver um som tocando, ele para antes de começar o novo
-        if (audioMenu) {
-            audioMenu.pause();
-            audioMenu.currentTime = 0;
-        }
-        audioMenu = new Audio(arquivo);
-        audioMenu.play().catch(e => console.log("Áudio aguardando interação do usuário."));
     }
 
-    // Alternar Tema Noite/Dia 🌙☀️
+    // Gerenciador de Áudio
+    function tocarEfeito(arquivo) {
+        const audio = new Audio(arquivo);
+        audio.play().catch(() => {});
+    }
+
+    // Alternar Tema 🌙☀️
     function toggleTheme() {
         const body = document.body;
         const btn = document.getElementById('themeToggle');
@@ -143,8 +183,7 @@
         } else {
             body.setAttribute('data-theme', 'dark');
             btn.innerHTML = '🌙';
-            // Um pequeno confete noturno para comemorar a mudança!
-            confetti({ particleCount: 50, spread: 40, origin: { y: 0.1, x: 0.8 } });
+            confetti({ particleCount: 30, spread: 50, origin: { y: 0.2 } });
         }
     }
 
@@ -158,7 +197,7 @@
         if (musicaFundo.paused) {
             musicaFundo.play();
             btn.innerHTML = `🎵 MÚSICA ON`;
-            btn.style.background = "#e0f7fa";
+            btn.style.background = "#fff";
         } else {
             musicaFundo.pause();
             btn.innerHTML = `🎵 MÚSICA OFF`;
