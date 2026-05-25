@@ -92,9 +92,36 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
         }
 
         .header-botoes { display: flex; gap: 10px; align-items: center; }
+
+        /* Botão Fullscreen */
+        .btn-fullscreen {
+            background: linear-gradient(135deg, #4a148c, #6a1b9a);
+            border: 2px solid var(--dourado-real);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(212, 168, 67, 0.3);
+        }
+        .btn-fullscreen:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(212, 168, 67, 0.5);
+            background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+        }
+        .btn-fullscreen.ativo {
+            background: linear-gradient(135deg, var(--dourado-real), #b8860b);
+            box-shadow: 0 0 20px rgba(212, 168, 67, 0.6);
+        }
 
         .theme-toggle {
             background: linear-gradient(135deg, var(--dourado-real), #b8860b);
@@ -298,6 +325,7 @@
             h2::before, h2::after { margin: 0 5px; }
             .btn-submenu { padding: 20px 14px; }
             .emoji-real { font-size: 26px; }
+            .header-inner { padding: 10px 12px; }
         }
     </style>
 <base target="_blank">
@@ -311,6 +339,7 @@
         <div class="header-inner">
             <a href="index.html" class="btn-voltar">⬅ VOLTAR</a>
             <div class="header-botoes">
+                <button class="btn-fullscreen" id="btnFullscreen" onclick="toggleFullscreen()" title="Tela Cheia">⛶</button>
                 <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Mudar para modo noite ou dia">☀️</button>
             </div>
         </div>
@@ -351,7 +380,128 @@
     </div>
 
     <script>
-        // Gerenciador de Áudio
+        // ========== FULLSCREEN API COM PERSISTÊNCIA ==========
+
+        // Chave do localStorage para lembrar estado fullscreen
+        const FS_KEY = 'reinoFullscreen';
+
+        // Detecta se está em fullscreen
+        function isFullscreen() {
+            return !!(document.fullscreenElement || 
+                      document.webkitFullscreenElement || 
+                      document.mozFullScreenElement || 
+                      document.msFullscreenElement);
+        }
+
+        // Entra em fullscreen
+        function enterFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) {
+                elem.requestFullscreen().catch(() => {});
+            } else if (elem.webkitRequestFullscreen) {
+                elem.webkitRequestFullscreen();
+            } else if (elem.mozRequestFullScreen) {
+                elem.mozRequestFullScreen();
+            } else if (elem.msRequestFullscreen) {
+                elem.msRequestFullscreen();
+            }
+        }
+
+        // Sai do fullscreen
+        function exitFullscreen() {
+            if (document.exitFullscreen) {
+                document.exitFullscreen().catch(() => {});
+            } else if (document.webkitExitFullscreen) {
+                document.webkitExitFullscreen();
+            } else if (document.mozCancelFullScreen) {
+                document.mozCancelFullScreen();
+            } else if (document.msExitFullscreen) {
+                document.msExitFullscreen();
+            }
+        }
+
+        // Alterna fullscreen
+        function toggleFullscreen() {
+            if (isFullscreen()) {
+                exitFullscreen();
+                localStorage.setItem(FS_KEY, 'false');
+            } else {
+                enterFullscreen();
+                localStorage.setItem(FS_KEY, 'true');
+            }
+            atualizarIconeFullscreen();
+        }
+
+        // Atualiza ícone do botão
+        function atualizarIconeFullscreen() {
+            const btn = document.getElementById('btnFullscreen');
+            if (isFullscreen()) {
+                btn.innerHTML = '⛶';
+                btn.classList.add('ativo');
+                btn.title = 'Sair da Tela Cheia';
+            } else {
+                btn.innerHTML = '⛶';
+                btn.classList.remove('ativo');
+                btn.title = 'Tela Cheia';
+            }
+        }
+
+        // Escuta mudanças no fullscreen (usuário aperta ESC, etc)
+        function setupFullscreenListeners() {
+            const events = ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'];
+            events.forEach(event => {
+                document.addEventListener(event, () => {
+                    atualizarIconeFullscreen();
+                    // Se saiu do fullscreen, atualiza localStorage
+                    if (!isFullscreen()) {
+                        localStorage.setItem(FS_KEY, 'false');
+                    }
+                });
+            });
+        }
+
+        // Restaura fullscreen ao carregar a página
+        function restaurarFullscreen() {
+            const deveFullscreen = localStorage.getItem(FS_KEY) === 'true';
+            if (deveFullscreen && !isFullscreen()) {
+                // Pequeno delay para garantir que a página carregou
+                setTimeout(() => {
+                    enterFullscreen();
+                }, 100);
+            }
+            atualizarIconeFullscreen();
+        }
+
+        // ========== TEMA NOTURNO/DIURNO ==========
+
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('themeToggle');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.innerHTML = '☀️';
+                localStorage.setItem('reinoTema', 'light');
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.innerHTML = '🌙';
+                localStorage.setItem('reinoTema', 'dark');
+            }
+        }
+
+        function restaurarTema() {
+            const tema = localStorage.getItem('reinoTema');
+            const btn = document.getElementById('themeToggle');
+            if (tema === 'dark') {
+                document.body.setAttribute('data-theme', 'dark');
+                btn.innerHTML = '🌙';
+            } else {
+                document.body.removeAttribute('data-theme');
+                btn.innerHTML = '☀️';
+            }
+        }
+
+        // ========== ÁUDIO ==========
+
         let somSubmenu;
         function tocarAudio(arquivo) {
             if (somSubmenu) {
@@ -362,20 +512,8 @@
             somSubmenu.play().catch(e => console.log("Áudio aguardando interação."));
         }
 
-        // Alternar Tema Noite/Dia
-        function toggleTheme() {
-            const body = document.body;
-            const btn = document.getElementById('themeToggle');
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                btn.innerHTML = '☀️';
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                btn.innerHTML = '🌙';
-            }
-        }
+        // ========== CORAÇÕES FLUTUANTES ==========
 
-        // Corações flutuantes mágicos
         function criarCoracoes() {
             const container = document.getElementById('coracoes-container');
             const simbolos = ['💖', '💕', '💗', '💝', '✨', '🌟'];
@@ -397,7 +535,6 @@
                 }, i * 500);
             }
 
-            // Recriar corações periodicamente
             setInterval(() => {
                 const c = document.createElement('div');
                 c.className = 'coracao-flutuante';
@@ -411,7 +548,14 @@
             }, 2500);
         }
 
-        window.onload = criarCoracoes;
+        // ========== INICIALIZAÇÃO ==========
+
+        window.onload = function() {
+            criarCoracoes();
+            setupFullscreenListeners();
+            restaurarFullscreen();
+            restaurarTema();
+        };
     </script>
 
 </body>
