@@ -4,6 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
     <title>🌿 Reino das Consoantes · Fadas, Gnomos & Duendes ✨</title>
+    <!-- Fonte Playwrite Brasil para o modo manual -->
+    <link href="https://fonts.googleapis.com/css2?family=Playwrite+BR:wght@100..400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
@@ -49,7 +51,6 @@
             z-index: 0;
         }
 
-        /* elementos flutuantes */
         .flutuante {
             position: fixed;
             pointer-events: none;
@@ -65,9 +66,8 @@
             100% { transform: translate(-5px, -10px) rotate(5deg); opacity: 0.3; }
         }
 
-        /* container principal */
         .game-container {
-            max-width: 800px;
+            max-width: 850px;
             width: 100%;
             background: rgba(30, 20, 45, 0.65);
             backdrop-filter: blur(12px);
@@ -79,7 +79,6 @@
             z-index: 10;
         }
 
-        /* barra de botões superior */
         .top-bar {
             display: flex;
             justify-content: space-between;
@@ -97,7 +96,7 @@
             border-radius: 40px;
             font-size: 0.9rem;
             cursor: pointer;
-            transition: 0.2s;
+            transition: 0.1s;
             box-shadow: 0 3px 0 #a0662c;
             display: inline-flex;
             align-items: center;
@@ -168,44 +167,72 @@
             border-radius: 40px;
         }
 
+        /* Opções de consoantes (minúsculas) */
         .opcoes {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 16px;
-            margin: 30px 0 20px;
+            gap: 14px;
+            margin: 25px 0 15px;
         }
         .btn-consoante {
             background: linear-gradient(145deg, #ffecb3, #ffd966);
             border: none;
-            width: 75px;
-            height: 75px;
+            width: 70px;
+            height: 70px;
             border-radius: 50%;
-            font-size: 2.4rem;
+            font-size: 2rem;
             font-weight: bold;
             font-family: 'Cinzel Decorative', monospace;
             color: #3a2a1f;
             cursor: pointer;
             transition: 0.1s;
-            box-shadow: 0 8px 0 #a0662c;
+            box-shadow: 0 6px 0 #a0662c;
+            text-transform: lowercase;
         }
-        .btn-consoante:active { transform: translateY(5px); box-shadow: 0 3px 0 #a0662c; }
+        .btn-consoante:active { transform: translateY(4px); box-shadow: 0 2px 0 #a0662c; }
+
+        /* Modo manual com fonte Playwrite Brasil */
+        .manual-area {
+            margin: 15px auto 5px;
+            text-align: center;
+        }
+        .manual-input {
+            font-family: 'Playwrite BR', cursive;
+            font-size: 2rem;
+            width: 100px;
+            text-align: center;
+            padding: 8px;
+            border-radius: 60px;
+            border: 3px solid #ffcd7e;
+            background: #fff9e8;
+            color: #2c1a3a;
+            font-weight: bold;
+            text-transform: lowercase;
+            outline: none;
+        }
+        .manual-label {
+            font-size: 0.85rem;
+            color: #ffeaac;
+            display: block;
+            margin-bottom: 5px;
+        }
 
         .feedback {
-            font-size: 1.1rem;
+            font-size: 1rem;
             text-align: center;
-            margin: 15px 0;
-            min-height: 60px;
+            margin: 15px 0 10px;
+            min-height: 55px;
             background: rgba(0,0,0,0.5);
             border-radius: 80px;
-            padding: 10px;
+            padding: 8px;
             color: #ffefb9;
         }
         .score-area {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            margin: 15px 10px 0;
+            align-items: center;
+            margin: 10px 5px 0;
             flex-wrap: wrap;
             gap: 10px;
         }
@@ -216,22 +243,20 @@
             color: #2c1a2e;
             font-weight: bold;
         }
-        .proximo-btn, .reset-btn {
-            background: linear-gradient(135deg, #6fbf4c, #398a2b);
+        .reset-btn {
+            background: linear-gradient(135deg, #b5651e, #8b4513);
             border: none;
             font-family: 'Nunito', sans-serif;
             font-weight: bold;
-            padding: 10px 22px;
+            padding: 8px 18px;
             border-radius: 50px;
-            font-size: 1rem;
+            font-size: 0.9rem;
             color: white;
             cursor: pointer;
-            box-shadow: 0 5px 0 #1c571c;
+            box-shadow: 0 4px 0 #4a2a0a;
             transition: 0.1s;
         }
-        .proximo-btn:active, .reset-btn:active { transform: translateY(3px); box-shadow: 0 2px 0 #1c571c; }
-        .reset-btn { background: #b5651e; box-shadow: 0 5px 0 #61380c; }
-
+        .reset-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #4a2a0a; }
         footer {
             font-size: 0.7rem;
             text-align: center;
@@ -239,9 +264,9 @@
             color: #b9d2a5;
         }
         @media (max-width: 550px) {
-            .palavra-incompleta { font-size: 1.5rem; letter-spacing: 6px; padding: 8px 15px; }
-            .btn-consoante { width: 60px; height: 60px; font-size: 1.8rem; }
-            .imagem-dica { font-size: 65px; }
+            .palavra-incompleta { font-size: 1.5rem; letter-spacing: 6px; padding: 8px 12px; }
+            .btn-consoante { width: 55px; height: 55px; font-size: 1.5rem; }
+            .manual-input { font-size: 1.5rem; width: 80px; }
             .top-bar { justify-content: center; }
         }
         .acertou-glow { animation: brilho 0.6s ease-out; }
@@ -250,14 +275,18 @@
             50% { text-shadow: 0 0 20px #ffdd77, 0 0 30px #ffaa33; }
             100% { text-shadow: 0 0 0 gold; }
         }
+        .desabilitado {
+            pointer-events: none;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body>
 
 <div class="game-container">
     <div class="top-bar">
-        <button class="btn-acao btn-voltar" id="btnVoltar">🏠 Voltar à Tela Inicial</button>
-        <div style="display: flex; gap: 12px;">
+        <button class="btn-acao btn-voltar" id="btnVoltar">🏠 Tela Inicial</button>
+        <div style="display: flex; gap: 10px;">
             <button class="btn-acao btn-fullscreen" id="btnFullscreen">⛶ Tela Cheia</button>
             <button class="btn-acao btn-musica" id="btnMusica">🎵 Música OFF</button>
         </div>
@@ -267,71 +296,75 @@
         <div class="titulo">
             <span>🧚‍♀️✨</span> Reino das Consoantes <span>🧙‍♂️🍄</span>
         </div>
-        <div class="subtitulo">Ajude fadas, gnomos e duendes a completar as palavras mágicas!</div>
+        <div class="subtitulo">Clique na consoante minúscula ou digite a letra que falta!</div>
     </div>
 
     <div class="question-area">
         <div class="imagem-dica" id="imagemDica">🍄</div>
         <div class="palavra-incompleta" id="palavraDisplay">_ _ _</div>
-        <div class="dica-texto" id="dicaTexto">✨ Clique na consoante que falta ✨</div>
+        <div class="dica-texto" id="dicaTexto">✨ Qual consoante está faltando? ✨</div>
     </div>
 
+    <!-- Botões das consoantes (minúsculas) -->
     <div class="opcoes" id="opcoesContainer"></div>
-    <div class="feedback" id="feedbackMsg">🌟 Escolha uma letra e faça a magia acontecer!</div>
+
+    <!-- Modo manual com fonte especial -->
+    <div class="manual-area">
+        <div class="manual-label">✍️ Ou digite a consoante aqui (modo manual):</div>
+        <input type="text" class="manual-input" id="manualInput" maxlength="1" placeholder="?" autocomplete="off" spellcheck="false">
+    </div>
+
+    <div class="feedback" id="feedbackMsg">🌟 Escolha uma letra ou digite a consoante que falta!</div>
 
     <div class="score-area">
         <div class="pontos">🏆 Pontos: <span id="pontuacao">0</span></div>
         <div class="pontos">🧙 Palavra: <span id="nivelAtual">1</span> / <span id="totalPerguntas">0</span></div>
         <button class="reset-btn" id="resetBtn">🔄 Novo Jogo</button>
     </div>
-    <div style="display: flex; justify-content: center; margin-top: 10px;">
-        <button class="proximo-btn" id="proximoBtn">✨ Próxima Palavra ✨</button>
-    </div>
-    <footer>🌼 Clique na consoante correta. Ao acertar, a letra aparecerá e a palavra será falada! 🌼</footer>
+    <footer>🌼 Ao acertar, a palavra se completa e avançamos automaticamente! 🌼</footer>
 </div>
 
 <script>
-    // ==================== BANCO DE DADOS CORRIGIDO ====================
-    // Cada pergunta: imagem, palavra completa, índice da consoante que falta, consoante correta, dica
+    // ==================== PERGUNTAS CORRIGIDAS ====================
+    // FADA agora é FA_A (índice 2)
     const perguntas = [
-        { imagem: "🧚", palavra: "FADA", lacunaIdx: 1, consoante: "D", dica: "Ela voa com asas brilhantes" },
-        { imagem: "🍄", palavra: "GNOMO", lacunaIdx: 0, consoante: "G", dica: "Pequeno ser que vive em cogumelos" },
-        { imagem: "🧙", palavra: "MAGO", lacunaIdx: 2, consoante: "G", dica: "Usa varinha e lança feitiços (falta consoante)" },
-        { imagem: "🐉", palavra: "DRAGAO", lacunaIdx: 1, consoante: "R", dica: "Criatura alada que cospe fogo" },
-        { imagem: "🧝", palavra: "ELFO", lacunaIdx: 1, consoante: "L", dica: "Ser imortal das florestas" },
-        { imagem: "🗡️", palavra: "ESPADA", lacunaIdx: 1, consoante: "S", dica: "Arma dos cavaleiros (falta consoante)" },
-        { imagem: "🪄", palavra: "VARINHA", lacunaIdx: 2, consoante: "R", dica: "Objeto mágico que conjura magia" },
-        { imagem: "👑", palavra: "PRINCESA", lacunaIdx: 4, consoante: "C", dica: "Realeza dos reinos encantados" },
-        { imagem: "🐸", palavra: "SAPO", lacunaIdx: 2, consoante: "P", dica: "Pode se transformar em príncipe" },
-        { imagem: "🦄", palavra: "UNICORNIO", lacunaIdx: 3, consoante: "C", dica: "Cavalo mágico com chifre" },
-        { imagem: "🧚‍♀️", palavra: "FADINHA", lacunaIdx: 2, consoante: "D", dica: "Pequena fada que concede desejos" },
-        { imagem: "🍃", palavra: "DUENDE", lacunaIdx: 0, consoante: "D", dica: "Travesso e guardião da natureza" },
-        { imagem: "🏰", palavra: "CASTELO", lacunaIdx: 2, consoante: "S", dica: "Moradia de reis e rainhas" },
-        { imagem: "📜", palavra: "PERGAMINHO", lacunaIdx: 3, consoante: "G", dica: "Rolo antigo com feitiços" },
-        // NOVAS PALAVRAS MÁGICAS
-        { imagem: "📖", palavra: "CONTO", lacunaIdx: 2, consoante: "N", dica: "História encantada do bosque" },
-        { imagem: "✨", palavra: "ENCANTADO", lacunaIdx: 2, consoante: "C", dica: "Cheio de magia e mistério" },
-        { imagem: "🌳", palavra: "BOSQUE", lacunaIdx: 2, consoante: "S", dica: "Floresta onde vivem os duendes" },
-        { imagem: "👑", palavra: "REINO", lacunaIdx: 3, consoante: "N", dica: "Terra governada por um rei ou rainha" },
-        { imagem: "🌲", palavra: "FLORESTA", lacunaIdx: 1, consoante: "L", dica: "Lar das fadas e gnomos" },
-        { imagem: "🚗", palavra: "CARROAGEM", lacunaIdx: 6, consoante: "G", dica: "Veículo puxado por cavalos mágicos" },
-        { imagem: "🐊", palavra: "CROCODILO", lacunaIdx: 5, consoante: "D", dica: "Reptil feroz do pântano encantado" },
-        { imagem: "🐦", palavra: "PASSAROS", lacunaIdx: 2, consoante: "S", dica: "Aves que cantam no bosque" },
-        { imagem: "🌸", palavra: "FLORES", lacunaIdx: 1, consoante: "L", dica: "Coloridas e perfumadas, enfeitam o jardim" },
-        { imagem: "🪟", palavra: "JANELA", lacunaIdx: 2, consoante: "N", dica: "Por onde entra a luz do reino" },
-        { imagem: "🤴", palavra: "PRINCIPE", lacunaIdx: 4, consoante: "C", dica: "Futuro rei do reino" },
-        { imagem: "👑", palavra: "REI", lacunaIdx: 0, consoante: "R", dica: "Monarca que governa" },
-        { imagem: "👸", palavra: "RAINHA", lacunaIdx: 3, consoante: "N", dica: "Esposa do rei, cheia de sabedoria" },
-        { imagem: "⚜️", palavra: "CORTE", lacunaIdx: 2, consoante: "R", dica: "Lugar onde a realeza se reúne" }
+        { imagem: "🧚", palavra: "FADA", lacunaIdx: 2, consoante: "d", dica: "Ela voa com asas brilhantes" },
+        { imagem: "🍄", palavra: "GNOMO", lacunaIdx: 0, consoante: "g", dica: "Pequeno ser que vive em cogumelos" },
+        { imagem: "🧙", palavra: "MAGO", lacunaIdx: 2, consoante: "g", dica: "Usa varinha e lança feitiços" },
+        { imagem: "🐉", palavra: "DRAGAO", lacunaIdx: 1, consoante: "r", dica: "Criatura alada que cospe fogo" },
+        { imagem: "🧝", palavra: "ELFO", lacunaIdx: 1, consoante: "l", dica: "Ser imortal das florestas" },
+        { imagem: "🗡️", palavra: "ESPADA", lacunaIdx: 1, consoante: "s", dica: "Arma dos cavaleiros (falta consoante)" },
+        { imagem: "🪄", palavra: "VARINHA", lacunaIdx: 2, consoante: "r", dica: "Objeto mágico que conjura magia" },
+        { imagem: "👑", palavra: "PRINCESA", lacunaIdx: 4, consoante: "c", dica: "Realeza dos reinos encantados" },
+        { imagem: "🐸", palavra: "SAPO", lacunaIdx: 2, consoante: "p", dica: "Pode se transformar em príncipe" },
+        { imagem: "🦄", palavra: "UNICORNIO", lacunaIdx: 3, consoante: "c", dica: "Cavalo mágico com chifre" },
+        { imagem: "🧚‍♀️", palavra: "FADINHA", lacunaIdx: 2, consoante: "d", dica: "Pequena fada que concede desejos" },
+        { imagem: "🍃", palavra: "DUENDE", lacunaIdx: 0, consoante: "d", dica: "Travesso e guardião da natureza" },
+        { imagem: "🏰", palavra: "CASTELO", lacunaIdx: 2, consoante: "s", dica: "Moradia de reis e rainhas" },
+        { imagem: "📜", palavra: "PERGAMINHO", lacunaIdx: 3, consoante: "g", dica: "Rolo antigo com feitiços" },
+        { imagem: "📖", palavra: "CONTO", lacunaIdx: 2, consoante: "n", dica: "História encantada do bosque" },
+        { imagem: "✨", palavra: "ENCANTADO", lacunaIdx: 2, consoante: "c", dica: "Cheio de magia e mistério" },
+        { imagem: "🌳", palavra: "BOSQUE", lacunaIdx: 2, consoante: "s", dica: "Floresta onde vivem os duendes" },
+        { imagem: "👑", palavra: "REINO", lacunaIdx: 3, consoante: "n", dica: "Terra governada por um rei ou rainha" },
+        { imagem: "🌲", palavra: "FLORESTA", lacunaIdx: 1, consoante: "l", dica: "Lar das fadas e gnomos" },
+        { imagem: "🚗", palavra: "CARROAGEM", lacunaIdx: 6, consoante: "g", dica: "Veículo puxado por cavalos mágicos" },
+        { imagem: "🐊", palavra: "CROCODILO", lacunaIdx: 5, consoante: "d", dica: "Reptil feroz do pântano encantado" },
+        { imagem: "🐦", palavra: "PASSAROS", lacunaIdx: 2, consoante: "s", dica: "Aves que cantam no bosque" },
+        { imagem: "🌸", palavra: "FLORES", lacunaIdx: 1, consoante: "l", dica: "Coloridas e perfumadas, enfeitam o jardim" },
+        { imagem: "🪟", palavra: "JANELA", lacunaIdx: 2, consoante: "n", dica: "Por onde entra a luz do reino" },
+        { imagem: "🤴", palavra: "PRINCIPE", lacunaIdx: 4, consoante: "c", dica: "Futuro rei do reino" },
+        { imagem: "👑", palavra: "REI", lacunaIdx: 0, consoante: "r", dica: "Monarca que governa" },
+        { imagem: "👸", palavra: "RAINHA", lacunaIdx: 3, consoante: "n", dica: "Esposa do rei, cheia de sabedoria" },
+        { imagem: "⚜️", palavra: "CORTE", lacunaIdx: 2, consoante: "r", dica: "Lugar onde a realeza se reúne" }
     ];
 
     let indiceAtual = 0;
     let pontuacao = 0;
-    let jogoBloqueado = false;
-    let acertouAtual = false;
+    let aguardandoTransicao = false;   // impede múltiplas respostas enquanto aguarda avanço
+    let timeoutProximo = null;
     let totalPerguntas = perguntas.length;
 
-    // Elementos
+    // Elementos DOM
     const imagemDica = document.getElementById('imagemDica');
     const palavraDisplay = document.getElementById('palavraDisplay');
     const dicaTexto = document.getElementById('dicaTexto');
@@ -340,20 +373,19 @@
     const pontuacaoSpan = document.getElementById('pontuacao');
     const nivelSpan = document.getElementById('nivelAtual');
     const totalSpan = document.getElementById('totalPerguntas');
-    const proximoBtn = document.getElementById('proximoBtn');
     const resetBtn = document.getElementById('resetBtn');
-
+    const manualInput = document.getElementById('manualInput');
     totalSpan.innerText = totalPerguntas;
 
-    // Conjunto de consoantes únicas do jogo
+    // Conjunto de consoantes únicas (minúsculas)
     const todasConsoantes = [...new Set(perguntas.map(p => p.consoante))].sort();
 
-    // Função para exibir palavra com lacuna
+    // Função para exibir palavra com lacuna (underscore)
     function exibirPalavraComLacuna(palavra, idxLacuna) {
         let resultado = "";
         for (let i = 0; i < palavra.length; i++) {
             if (i === idxLacuna) {
-                resultado += " _ ";
+                resultado += "_ ";
             } else {
                 resultado += palavra[i] + " ";
             }
@@ -361,8 +393,8 @@
         return resultado.trim();
     }
 
-    // Função para atualizar a palavra com a consoante preenchida (quando acerta)
-    function preencherLacuna(palavra, idxLacuna, letra) {
+    // Função para preencher a lacuna visualmente (após acerto)
+    function preencherLacunaVisual(palavra, idxLacuna, letra) {
         let resultado = "";
         for (let i = 0; i < palavra.length; i++) {
             if (i === idxLacuna) {
@@ -374,45 +406,99 @@
         return resultado.trim();
     }
 
-    // Fala suave da palavra (usando síntese de voz)
+    // Fala a palavra completa
     function falarPalavra(palavra) {
         if (!window.speechSynthesis) return;
         const utterance = new SpeechSynthesisUtterance(palavra.toLowerCase());
         utterance.lang = 'pt-BR';
         utterance.rate = 0.8;
         utterance.pitch = 1.1;
-        utterance.volume = 0.8;
-        window.speechSynthesis.cancel(); // evita acúmulo
+        window.speechSynthesis.cancel();
         window.speechSynthesis.speak(utterance);
     }
 
-    // Carregar pergunta atual
-    function carregarPergunta() {
-        if (indiceAtual >= totalPerguntas) {
-            // Fim do jogo
-            feedbackMsg.innerHTML = "🎉✨ PARABÉNS! Você ajudou todas as criaturas! ✨🎉<br>🧚‍♀️ Fadas, gnomos e duendes agradecem! 🧙‍♂️";
-            palavraDisplay.innerText = "FIM!";
-            imagemDica.innerText = "🏆✨";
-            dicaTexto.innerText = "Clique em 'Novo Jogo' para mais magia!";
-            opcoesContainer.innerHTML = "";
-            proximoBtn.disabled = true;
-            proximoBtn.style.opacity = "0.5";
-            jogoBloqueado = true;
-            confetti({ particleCount: 300, spread: 110, origin: { y: 0.6 }, colors: ['#ffd966', '#82c91e', '#ffb347'] });
-            return;
-        }
+    // Avançar para próxima palavra automaticamente após delay
+    function agendarProximaPalavra() {
+        if (timeoutProximo) clearTimeout(timeoutProximo);
+        timeoutProximo = setTimeout(() => {
+            if (indiceAtual < totalPerguntas - 1) {
+                indiceAtual++;
+                carregarPergunta();
+            } else if (indiceAtual === totalPerguntas - 1) {
+                indiceAtual++; // mostra tela de fim
+                carregarPergunta();
+            } else {
+                // fim do jogo: não faz nada, mas reset pode ser usado
+            }
+            aguardandoTransicao = false;
+            timeoutProximo = null;
+        }, 1500);
+    }
 
-        jogoBloqueado = false;
-        acertouAtual = false;
-        const q = perguntas[indiceAtual];
-        imagemDica.innerText = q.imagem;
-        dicaTexto.innerText = "✨ " + q.dica + " ✨";
-        // Mostra palavra com lacuna
-        palavraDisplay.innerText = exibirPalavraComLacuna(q.palavra, q.lacunaIdx);
-        
-        // Gerar opções: consoante correta + até 4 aleatórias diferentes
-        const opcoes = [q.consoante];
-        const outras = todasConsoantes.filter(c => c !== q.consoante);
+    // Processar resposta correta
+    function processarAcerto(consoanteCorreta, perguntaObj) {
+        if (aguardandoTransicao) return;
+        aguardandoTransicao = true;
+        pontuacao += 10;
+        pontuacaoSpan.innerText = pontuacao;
+        // Mostrar palavra completa visualmente
+        const palavraCompletaVis = preencherLacunaVisual(perguntaObj.palavra, perguntaObj.lacunaIdx, consoanteCorreta);
+        palavraDisplay.innerText = palavraCompletaVis;
+        feedbackMsg.innerHTML = `✨✨ Acertou! A consoante "${consoanteCorreta}" completa "${perguntaObj.palavra}"! +10 pontos ✨✨`;
+        falarPalavra(perguntaObj.palavra);
+        palavraDisplay.classList.add('acertou-glow');
+        setTimeout(() => palavraDisplay.classList.remove('acertou-glow'), 600);
+        confetti({ particleCount: 80, spread: 55, origin: { y: 0.5 }, colors: ['#ffd966', '#b0e57c', '#ffb347'] });
+        // Desabilitar inputs
+        desabilitarControles(true);
+        agendarProximaPalavra();
+    }
+
+    function processarErro(consoanteCorreta, perguntaObj) {
+        if (aguardandoTransicao) return;
+        aguardandoTransicao = true;
+        feedbackMsg.innerHTML = `❌ Que pena! A consoante mágica era "${consoanteCorreta}". Vamos praticar! ❌`;
+        // Mostrar a palavra correta por um instante? (opcional, mas ajuda)
+        const palavraCorretaVis = preencherLacunaVisual(perguntaObj.palavra, perguntaObj.lacunaIdx, consoanteCorreta);
+        palavraDisplay.innerText = palavraCorretaVis;
+        falarPalavra(perguntaObj.palavra);
+        confetti({ particleCount: 15, spread: 30, origin: { y: 0.7 }, colors: ['#c0c0c0'], startVelocity: 5 });
+        desabilitarControles(true);
+        agendarProximaPalavra();
+    }
+
+    // Desabilitar/habilitar botões e input manual durante animação
+    function desabilitarControles(desabilitar) {
+        const botoes = document.querySelectorAll('.btn-consoante');
+        botoes.forEach(btn => {
+            if (desabilitar) btn.disabled = true;
+            else btn.disabled = false;
+        });
+        if (desabilitar) manualInput.disabled = true;
+        else manualInput.disabled = false;
+    }
+
+    // Verificar resposta (usada tanto pelos botões quanto pelo input manual)
+    function verificarResposta(letraDigitada) {
+        if (aguardandoTransicao) return;
+        if (indiceAtual >= totalPerguntas) return;
+        const perguntaAtual = perguntas[indiceAtual];
+        const letraNormalizada = letraDigitada.toLowerCase().trim();
+        if (letraNormalizada === "") return;
+        const correta = perguntaAtual.consoante;
+        if (letraNormalizada === correta) {
+            processarAcerto(correta, perguntaAtual);
+        } else {
+            processarErro(correta, perguntaAtual);
+        }
+        // Limpar campo manual após resposta
+        manualInput.value = "";
+    }
+
+    // Criar os botões de consoante (minúsculas)
+    function gerarBotoesConsoantes(perguntaObj) {
+        const opcoes = [perguntaObj.consoante];
+        const outras = todasConsoantes.filter(c => c !== perguntaObj.consoante);
         const outrasEmbaralhadas = [...outras].sort(() => Math.random() - 0.5);
         const adicionar = outrasEmbaralhadas.slice(0, 4);
         opcoes.push(...adicionar);
@@ -423,107 +509,73 @@
             const btn = document.createElement('button');
             btn.innerText = letra;
             btn.classList.add('btn-consoante');
-            btn.addEventListener('click', () => verificarResposta(letra, q, btn));
+            btn.addEventListener('click', () => verificarResposta(letra));
             opcoesContainer.appendChild(btn);
         });
-        
-        nivelSpan.innerText = indiceAtual + 1;
-        feedbackMsg.innerHTML = "🍄 Escolha a consoante que completa a magia! 🍄";
-        proximoBtn.disabled = true;
-        proximoBtn.style.opacity = "0.5";
     }
 
-    function verificarResposta(letraEscolhida, perguntaObj, btnClicado) {
-        if (jogoBloqueado) {
-            feedbackMsg.innerHTML = "🧚‍♀️ Você já respondeu! Clique em 'Próxima Palavra'.";
+    function carregarPergunta() {
+        // Limpar timeouts pendentes
+        if (timeoutProximo) {
+            clearTimeout(timeoutProximo);
+            timeoutProximo = null;
+        }
+        aguardandoTransicao = false;
+        
+        if (indiceAtual >= totalPerguntas) {
+            // Fim do jogo
+            feedbackMsg.innerHTML = "🎉✨ PARABÉNS! Você completou todo o reino mágico! ✨🎉<br>🧚‍♀️ Fadas, gnomos e duendes te agradecem! 🧙‍♂️";
+            palavraDisplay.innerText = "FIM!";
+            imagemDica.innerText = "🏆✨";
+            dicaTexto.innerText = "Clique em 'Novo Jogo' para mais magia!";
+            opcoesContainer.innerHTML = "";
+            manualInput.disabled = true;
+            desabilitarControles(true);
+            confetti({ particleCount: 300, spread: 110, origin: { y: 0.6 }, colors: ['#ffd966', '#82c91e', '#ffb347'] });
             return;
         }
-        const correta = perguntaObj.consoante;
-        if (letraEscolhida === correta) {
-            // ACERTOU
-            acertouAtual = true;
-            pontuacao += 10;
-            pontuacaoSpan.innerText = pontuacao;
-            jogoBloqueado = true;
-            // Mostrar a palavra com a lacuna preenchida
-            const palavraCompletaVisivel = preencherLacuna(perguntaObj.palavra, perguntaObj.lacunaIdx, correta);
-            palavraDisplay.innerText = palavraCompletaVisivel;
-            feedbackMsg.innerHTML = `✨✨ Acertou! A consoante "${correta}" completa a palavra "${perguntaObj.palavra}"! ✨✨ +10 pontos!`;
-            // Falar a palavra inteira
-            falarPalavra(perguntaObj.palavra);
-            // Efeito visual e confete
-            palavraDisplay.classList.add('acertou-glow');
-            setTimeout(() => palavraDisplay.classList.remove('acertou-glow'), 600);
-            confetti({ particleCount: 80, spread: 55, origin: { y: 0.5 }, colors: ['#ffd966', '#b0e57c', '#ffb347'] });
-            btnClicado.style.background = "#8bc34a";
-            setTimeout(() => { if(btnClicado) btnClicado.style.background = ""; }, 400);
-            // Desabilitar outros botões
-            const todosBotoes = document.querySelectorAll('.btn-consoante');
-            todosBotoes.forEach(btn => { btn.disabled = true; btn.style.opacity = "0.6"; });
-            proximoBtn.disabled = false;
-            proximoBtn.style.opacity = "1";
-        } else {
-            // ERROU
-            jogoBloqueado = true;
-            feedbackMsg.innerHTML = `❌ Ah não! A consoante mágica era "${correta}". Tente lembrar na próxima! ❌`;
-            btnClicado.style.background = "#d9534f";
-            setTimeout(() => btnClicado.style.background = "", 500);
-            // Destacar botão correto
-            const botoes = document.querySelectorAll('.btn-consoante');
-            botoes.forEach(btn => {
-                if (btn.innerText === correta) {
-                    btn.style.background = "#5cb85c";
-                    setTimeout(() => { btn.style.background = ""; }, 800);
-                }
-                btn.disabled = true;
-                btn.style.opacity = "0.6";
-            });
-            proximoBtn.disabled = false;
-            proximoBtn.style.opacity = "1";
-            confetti({ particleCount: 15, spread: 30, origin: { y: 0.7 }, colors: ['#c0c0c0'], startVelocity: 5 });
-        }
-    }
-
-    function proximaPalavra() {
-        if (proximoBtn.disabled === false && jogoBloqueado === true) {
-            if (indiceAtual < totalPerguntas - 1) {
-                indiceAtual++;
-                carregarPergunta();
-            } else if (indiceAtual === totalPerguntas - 1) {
-                indiceAtual++; // vai para o fim
-                carregarPergunta();
-            } else {
-                carregarPergunta();
-            }
-        } else if (!jogoBloqueado) {
-            feedbackMsg.innerHTML = "🍄 Responda a pergunta atual primeiro! 🌟";
-        }
+        
+        const q = perguntas[indiceAtual];
+        imagemDica.innerText = q.imagem;
+        dicaTexto.innerText = "✨ " + q.dica + " ✨";
+        palavraDisplay.innerText = exibirPalavraComLacuna(q.palavra, q.lacunaIdx);
+        gerarBotoesConsoantes(q);
+        nivelSpan.innerText = indiceAtual + 1;
+        feedbackMsg.innerHTML = "🍄 Escolha uma consoante ou digite a letra que falta!";
+        manualInput.disabled = false;
+        manualInput.value = "";
+        manualInput.focus();
+        desabilitarControles(false);
     }
 
     function resetarJogo() {
+        if (timeoutProximo) clearTimeout(timeoutProximo);
         indiceAtual = 0;
         pontuacao = 0;
         pontuacaoSpan.innerText = "0";
-        jogoBloqueado = false;
-        acertouAtual = false;
-        proximoBtn.disabled = false;
-        proximoBtn.style.opacity = "1";
+        aguardandoTransicao = false;
         carregarPergunta();
         feedbackMsg.innerHTML = "✨ Novo ciclo de magia! Ajude as criaturas! ✨";
         confetti({ particleCount: 40, spread: 45, origin: { y: 0.8 }, colors: ['#ffea8c', '#96e6b3'] });
     }
 
-    proximoBtn.addEventListener('click', proximaPalavra);
     resetBtn.addEventListener('click', resetarJogo);
+    manualInput.addEventListener('input', (e) => {
+        let val = e.target.value;
+        if (val.length > 0) {
+            const ultimaLetra = val[val.length-1].toLowerCase();
+            if (/[a-z]/.test(ultimaLetra)) {
+                verificarResposta(ultimaLetra);
+            }
+            manualInput.value = "";
+        }
+    });
 
-    // Inicializar
-    carregarPergunta();
-
-    // ========== FULLSCREEN ==========
+    // Fullscreen
     const btnFull = document.getElementById('btnFullscreen');
     function toggleFullscreen() {
         if (!document.fullscreenElement) {
-            document.documentElement.requestFullscreen().catch(err => console.warn(err));
+            document.documentElement.requestFullscreen();
             btnFull.innerHTML = '✖ Sair Tela';
         } else {
             document.exitFullscreen();
@@ -531,37 +583,30 @@
         }
     }
     document.addEventListener('fullscreenchange', () => {
-        if (document.fullscreenElement) btnFull.innerHTML = '✖ Sair Tela';
-        else btnFull.innerHTML = '⛶ Tela Cheia';
+        btnFull.innerHTML = document.fullscreenElement ? '✖ Sair Tela' : '⛶ Tela Cheia';
     });
     btnFull.addEventListener('click', toggleFullscreen);
 
-    // ========== VOLTAR PARA TELA INICIAL ==========
+    // Voltar para tela inicial
     const btnVoltar = document.getElementById('btnVoltar');
     btnVoltar.addEventListener('click', () => {
         window.location.href = 'https://ilha-das-vogais.vercel.app/';
     });
 
-    // ========== MÚSICA DE FUNDO (floresta suave) ==========
-    // Usamos um arquivo de áudio royalty-free de floresta ambiente (pode ser substituído)
-    // Caso o arquivo não exista, a música apenas não tocará, mas o botão permitirá.
+    // Música ambiente (floresta suave)
     const musicaFundo = new Audio();
-    // URL de música ambiente gratuita e leve (Creative Commons) - Substitua pelo seu arquivo se desejar
     musicaFundo.src = 'https://cdn.pixabay.com/download/audio/2022/03/10/audio_c8c8f0b3c2.mp3?filename=forest-ambience-101080.mp3';
     musicaFundo.loop = true;
-    musicaFundo.volume = 0.25;
+    musicaFundo.volume = 0.2;
     let musicaAtiva = false;
     const btnMusica = document.getElementById('btnMusica');
-    
     function toggleMusica() {
         if (!musicaAtiva) {
             musicaFundo.play().then(() => {
                 musicaAtiva = true;
                 btnMusica.innerHTML = '🎵 Música ON';
                 btnMusica.style.background = "linear-gradient(135deg, #c8e6a0, #8bc34a)";
-            }).catch(e => {
-                console.log("Música não pode tocar automaticamente. Clique novamente.");
-                // Se falhar, tenta recarregar com interação
+            }).catch(() => {
                 musicaAtiva = false;
                 btnMusica.innerHTML = '🔇 Música OFF';
             });
@@ -573,7 +618,6 @@
         }
     }
     btnMusica.addEventListener('click', toggleMusica);
-    // Tentar ativar música na primeira interação amigável
     const ativarMusicaNaInteracao = () => {
         if (!musicaAtiva && musicaFundo.paused) {
             musicaFundo.play().catch(()=>{}).then(() => {
@@ -588,7 +632,7 @@
     document.addEventListener('click', ativarMusicaNaInteracao);
     document.addEventListener('touchstart', ativarMusicaNaInteracao);
 
-    // Elementos flutuantes decorativos (fadas, gnomos)
+    // Elementos flutuantes
     function criarFlutuantes() {
         const simbolos = ['🧚‍♀️', '🧙‍♂️', '🍄', '🌿', '✨', '🐞', '🦋', '🍂', '🔮'];
         setInterval(() => {
@@ -601,9 +645,10 @@
             el.style.animationDuration = (Math.random() * 10 + 8) + 's';
             document.body.appendChild(el);
             setTimeout(() => el.remove(), 13000);
-        }, 4000);
+        }, 4200);
     }
     criarFlutuantes();
+    carregarPergunta();
 </script>
 </body>
 </html>
