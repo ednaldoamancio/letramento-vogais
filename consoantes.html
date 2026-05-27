@@ -213,39 +213,40 @@
         const estilo = modoEstilo[modoAtual];
         return estilo.buttonCase === "upper" ? letra.toUpperCase() : letra.toLowerCase();
     }
+    
     function exibirPalavraComLacuna(palavra, idx) {
         const estilo = modoEstilo[modoAtual];
         let res = "";
-        for (let i=0; i<palavra.length; i++) {
-            if (i === idx) { res += "_ "; continue; }
+        for (let i = 0; i < palavra.length; i++) {
+            if (i === idx) {
+                res += "_ ";
+                continue;
+            }
             let ch = palavra[i];
-            if (estilo.textTransform === "lowercase") ch = ch.toLowerCase();
-            else if (estilo.textTransform === "capitalize-first") {
-                if (i===0) ch = ch.toUpperCase();
-                else ch = ch.toLowerCase();
+            // Aplica a regra de caixa rigorosamente
+            if (estilo.textTransform === "lowercase") {
+                ch = ch.toLowerCase();
+            } else if (estilo.textTransform === "capitalize-first") {
+                ch = (i === 0) ? ch.toUpperCase() : ch.toLowerCase();
             }
             res += ch + " ";
         }
         return res.trim();
     }
+    
     function preencherLacunaVisual(palavra, idx, letraCorreta) {
         const estilo = modoEstilo[modoAtual];
         let res = "";
-        for (let i=0; i<palavra.length; i++) {
-            if (i === idx) {
-                let ch = (estilo.buttonCase === "upper" ? letraCorreta.toUpperCase() : letraCorreta.toLowerCase());
-                if (estilo.textTransform === "lowercase") ch = ch.toLowerCase();
-                else if (estilo.textTransform === "capitalize-first" && i===0) ch = ch.toUpperCase();
-                res += ch + " ";
-            } else {
-                let ch = palavra[i];
-                if (estilo.textTransform === "lowercase") ch = ch.toLowerCase();
-                else if (estilo.textTransform === "capitalize-first") {
-                    if (i===0) ch = ch.toUpperCase();
-                    else ch = ch.toLowerCase();
-                }
-                res += ch + " ";
+        for (let i = 0; i < palavra.length; i++) {
+            let ch = (i === idx) ? letraCorreta : palavra[i];
+            
+            // Aplica a regra de caixa rigorosamente
+            if (estilo.textTransform === "lowercase") {
+                ch = ch.toLowerCase();
+            } else if (estilo.textTransform === "capitalize-first") {
+                ch = (i === 0) ? ch.toUpperCase() : ch.toLowerCase();
             }
+            res += ch + " ";
         }
         return res.trim();
     }
@@ -297,7 +298,10 @@
         falarPalavra(q.palavra);
         palavraDisplay.classList.add('acertou-glow');
         setTimeout(() => palavraDisplay.classList.remove('acertou-glow'), 600);
-        canvasConfetti({ particleCount: 80, spread: 55, origin: { y: 0.5 }, colors: ['#ffd966', '#b0e57c', '#ffb347'] });
+        
+        // CORREÇÃO: "confetti" em vez de "canvasConfetti"
+        confetti({ particleCount: 80, spread: 55, origin: { y: 0.5 }, colors: ['#ffd966', '#b0e57c', '#ffb347'] });
+        
         desabilitarControles(true);
         agendarProximo();
     }
@@ -309,7 +313,10 @@
         const palavraCorreta = preencherLacunaVisual(q.palavra, q.lacunaIdx, q.consoante);
         palavraDisplay.innerText = palavraCorreta;
         falarPalavra(q.palavra);
-        canvasConfetti({ particleCount: 15, spread: 30, origin: { y: 0.7 }, colors: ['#c0c0c0'], startVelocity: 5 });
+        
+        // CORREÇÃO: "confetti" em vez de "canvasConfetti"
+        confetti({ particleCount: 15, spread: 30, origin: { y: 0.7 }, colors: ['#c0c0c0'], startVelocity: 5 });
+        
         desabilitarControles(true);
         agendarProximo();
     }
@@ -327,14 +334,10 @@
                     indiceAtual++;
                     carregarPergunta();
                 } else if (indiceAtual === totalPerguntas - 1) {
-                    // Última palavra concluída, finaliza o jogo
                     finalizarJogo();
-                } else {
-                    // Já finalizado, não faz nada
                 }
             } catch (e) {
                 console.error("Erro no avanço:", e);
-                // Força reset do estado para não travar
                 aguardandoTransicao = false;
                 desabilitarControles(false);
             } finally {
@@ -368,11 +371,9 @@
     }
 
     function finalizarJogo() {
-        // Impede múltiplas finalizações
         if (aguardandoTransicao && indiceAtual >= totalPerguntas) return;
         aguardandoTransicao = true;
-        indiceAtual = totalPerguntas; // marca como finalizado
-        // Limpa a tela
+        indiceAtual = totalPerguntas;
         opcoesContainer.innerHTML = "";
         palavraDisplay.innerText = "🏆 FIM! 🏆";
         imagemDica.innerText = "🎉✨🎊";
@@ -380,17 +381,17 @@
         feedbackMsg.innerHTML = "🎉✨ PARABÉNS! Você completou todo o reino mágico! ✨🎉<br>🧚‍♀️ Fadas, gnomos e duendes te agradecem! 🧙‍♂️";
         manualInput.disabled = true;
         desabilitarControles(true);
-        // Efeitos de vitória
         tocarPalmas();
-        // Chuva de fogos por 3 segundos
+        
         for (let i = 0; i < 8; i++) {
             setTimeout(() => {
-                canvasConfetti({ particleCount: 200, spread: 100, origin: { y: 0.6 }, colors: ['#ffd966', '#ff6b6b', '#6bff6b', '#ff6bff'], startVelocity: 25, decay: 0.9 });
-                canvasConfetti({ particleCount: 100, spread: 70, origin: { y: 0.7, x: 0.3 }, startVelocity: 20 });
-                canvasConfetti({ particleCount: 100, spread: 70, origin: { y: 0.7, x: 0.7 }, startVelocity: 20 });
+                // CORREÇÃO: "confetti" em vez de "canvasConfetti"
+                confetti({ particleCount: 200, spread: 100, origin: { y: 0.6 }, colors: ['#ffd966', '#ff6b6b', '#6bff6b', '#ff6bff'], startVelocity: 25, decay: 0.9 });
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.7, x: 0.3 }, startVelocity: 20 });
+                confetti({ particleCount: 100, spread: 70, origin: { y: 0.7, x: 0.7 }, startVelocity: 20 });
             }, i * 400);
         }
-        // Mensagem de voz
+        
         const utterance = new SpeechSynthesisUtterance("Parabéns! Você venceu o jogo das consoantes!");
         utterance.lang = 'pt-BR';
         utterance.rate = 0.9;
@@ -405,7 +406,8 @@
         aguardandoTransicao = false;
         carregarPergunta();
         feedbackMsg.innerHTML = "✨ Novo ciclo de magia! Ajude as criaturas! ✨";
-        canvasConfetti({ particleCount: 40, spread: 45, origin: { y: 0.8 }, colors: ['#ffea8c', '#96e6b3'] });
+        // CORREÇÃO: "confetti" em vez de "canvasConfetti"
+        confetti({ particleCount: 40, spread: 45, origin: { y: 0.8 }, colors: ['#ffea8c', '#96e6b3'] });
     }
 
     function alterarModo(modo) {
