@@ -85,7 +85,6 @@
         .reset-btn { background: linear-gradient(135deg, #b5651e, #8b4513); border: none; font-family: 'Nunito', sans-serif; font-weight: bold; padding: 8px 18px; border-radius: 50px; font-size: 0.9rem; color: white; cursor: pointer; box-shadow: 0 4px 0 #4a2a0a; transition: 0.1s; }
         .reset-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #4a2a0a; }
         
-        /* ESTILOS DA TELA FINAL */
         .tela-final { text-align: center; padding: 40px 20px; display: none; }
         .tela-final h2 { font-family: 'Cinzel Decorative', cursive; font-size: 2.5rem; color: #ffd966; margin-bottom: 15px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
         .tela-final p { font-size: 1.3rem; color: #fff; margin-bottom: 25px; font-weight: 600; }
@@ -152,7 +151,6 @@
         </div>
     </div>
 
-    <!-- TELA GRANDE FINAL -->
     <div id="telaFinal" class="tela-final">
         <div class="trofeu">🏆</div>
         <h2>Grande Final Fantástico!</h2>
@@ -208,7 +206,7 @@ const bancoPerguntas = [
     { imagem: "🌙", palavra: "LUA", lacunaIdx: 0, consoante: "l", dica: "Clareia o céu de noite." },
     { imagem: "🐘", palavra: "ELEFANTE", lacunaIdx: 3, consoante: "f", dica: "Animal com uma tromba comprida." },
     { imagem: "🦷", palavra: "DENTE", lacunaIdx: 2, consoante: "n", dica: "Usado para mastigar a comida." },
-    { imagem: "🐻", palavra: "URSO", lacunaIdx: 2, consoante: "s", dica: "Animal grande e peludo." },
+    { imagem: "🐻", warning: "evitar erros", palavra: "URSO", lacunaIdx: 2, consoante: "s", dica: "Animal grande e peludo." },
     { imagem: "🎋", palavra: "BAMBU", lacunaIdx: 2, consoante: "m", dica: "Planta alta que os pandas adoram comer." },
     { imagem: "🥁", palavra: "TAMBOR", lacunaIdx: 2, consoante: "m", dica: "Instrumento musical de percussão." },
     { imagem: "🕊️", palavra: "POMBA", lacunaIdx: 2, consoante: "m", dica: "Ave símbolo da paz." },
@@ -217,7 +215,7 @@ const bancoPerguntas = [
     { imagem: "🧯", palavra: "BOMBEIRO", lacunaIdx: 2, consoante: "m", dica: "Profissional que apaga incêndios." },
     { imagem: "🎶", palavra: "CANTO", lacunaIdx: 2, consoante: "n", dica: "Música feita com a voz." },
     { imagem: "🌍", palavra: "MUNDO", lacunaIdx: 2, consoante: "n", dica: "O planeta Terra onde vivemos." },
-    { imagem: "梳", palavra: "PENTE", lacunaIdx: 2, consoante: "n", dica: "Usado para arrumar o cabelo." },
+    { imagem: "🪮", palavra: "PENTE", lacunaIdx: 2, consoante: "n", dica: "Usado para arrumar o cabelo." },
     { imagem: "🎨", palavra: "TINTA", lacunaIdx: 2, consoante: "n", dica: "Líquido colorido usado para pintar." },
     { imagem: "🏦", palavra: "BANCO", lacunaIdx: 2, consoante: "n", dica: "Assento de praça ou lugar que guarda dinheiro." },
     { imagem: "💃", palavra: "DANÇA", lacunaIdx: 2, consoante: "n", pronuncia: "dança", dica: "Arte de movimentar o corpo no ritmo." },
@@ -237,10 +235,17 @@ let intervaloConfetti;
 const audMusica = document.getElementById('musicaFundo');
 audMusica.volume = 0.3;
 
+// FUNÇÃO PARA ATIVAR O FULLSCREEN AUTOMÁTICO VIA CLIQUE
+function tentarAtivarFullscreen() {
+    if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen().catch(() => {});
+        document.getElementById('btnFullscreen').textContent = "⛶ Sair";
+    }
+}
+
 function iniciarJornada() {
     clearInterval(intervaloConfetti);
     acertosSequenciais = 0;
-    // Embaralha o deck inicial de 50 palavras
     filaPerguntas = [...bancoPerguntas].sort(() => 0.5 - Math.random());
     
     document.getElementById('conteudoJogo').style.display = "block";
@@ -257,13 +262,11 @@ function escolherNova() {
     }
 
     respondida = false;
-    document.getElementById('opcoesArea').classList.remove('desabilitated');
     document.getElementById('opcoesArea').classList.remove('desabilitado');
     document.getElementById('manualInput').value = "";
     document.getElementById('manualInput').disabled = false;
     document.getElementById('palavraArea').classList.remove('acertou-glow');
 
-    // Pega o primeiro item da fila sequencial
     perguntaAtual = filaPerguntas.shift();
     
     document.getElementById('imagemArea').textContent = perguntaAtual.imagem;
@@ -356,12 +359,9 @@ function processarErro(letraSelecionada) {
     
     falarLetra(letraSelecionada);
 
-    // REINSERÇÃO INTELIGENTE NA FILA SEQUENCIAL:
     if (filaPerguntas.length >= 3) {
-        // Se houver espaço, reinsere pulando 3 posições à frente
         filaPerguntas.splice(3, 0, perguntaAtual);
     } else {
-        // Se for a penúltima ou última posição restante do jogo, insere no fim absoluto
         filaPerguntas.push(perguntaAtual);
     }
     
@@ -372,8 +372,6 @@ function processarErro(letraSelecionada) {
         document.getElementById('manualInput').value = "";
         if (tipoEntrada === 'teclado') document.getElementById('manualInput').focus();
         
-        // Passa direto para a próxima palavra da sequência. 
-        // A palavra errada reaparecerá no momento em que chegar o novo índice dela.
         escolherNova();
     }, 2500);
 }
@@ -384,12 +382,11 @@ function exibirGrandeFinal() {
     
     if (synth) {
         if (falando) synth.cancel();
-        const ut = new SpeechSynthesisUtterance("Parabéns! Você completou o Reino das Consoantes! Você é demais!");
+        const ut = new SpeechSynthesisUtterance("Parabéns! Você completou o Reino das Consoantes!");
         ut.lang = 'pt-BR';
         synth.speak(ut);
     }
 
-    // Chuva contínua de confetes para comemoração
     intervaloConfetti = setInterval(() => {
         confetti({ particleCount: 30, angle: 60, spread: 55, origin: { x: 0 } });
         confetti({ particleCount: 30, angle: 120, spread: 55, origin: { x: 1 } });
@@ -409,6 +406,7 @@ function falarPalavra(q) {
     synth.speak(utterance);
 }
 
+function hablarLetra(l) {}
 function falarLetra(l) {
     if (!synth) return;
     if (falando) synth.cancel();
@@ -422,7 +420,10 @@ function falarLetra(l) {
     synth.speak(ut);
 }
 
-// Controles de Modo (Maiúscula, Minúscula, Cursiva)
+// Ouvinte global para forçar Fullscreen na primeira interação do usuário
+document.addEventListener('click', tentarAtivarFullscreen, { once: false });
+document.addEventListener('keydown', tentarAtivarFullscreen, { once: false });
+
 document.querySelectorAll('.modo-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
         document.querySelectorAll('.modo-btn').forEach(b => b.classList.remove('ativo'));
@@ -434,7 +435,6 @@ document.querySelectorAll('.modo-btn').forEach(btn => {
     });
 });
 
-// Suporte para Teclado/Input Manual (Mobile/Desktop)
 document.getElementById('manualInput').addEventListener('input', (e) => {
     let val = e.target.value;
     if (val.length > 0) {
@@ -447,26 +447,30 @@ document.getElementById('manualInput').addEventListener('input', (e) => {
     }
 });
 
-// Botões Ação Topo
-document.getElementById('btnMusica').addEventListener('click', function() {
+document.getElementById('btnMusica').addEventListener('click', function(e) {
+    e.stopPropagation(); // Evita conflito com listener global
     somAtivo = !somAtivo;
     if (somAtivo) { this.textContent = "🔊 Som"; this.style.background = "linear-gradient(135deg, #a7d489, #6f9e3f)"; audMusica.play().catch(()=>{}); }
     else { this.textContent = "🔇 Som"; this.style.background = ""; audMusica.pause(); }
 });
 
-document.getElementById('btnFullscreen').addEventListener('click', function() {
+document.getElementById('btnFullscreen').addEventListener('click', function(e) {
+    e.stopPropagation(); // Evita conflito com listener global
     if (!document.fullscreenElement) { document.documentElement.requestFullscreen().catch(err=>{}); this.textContent = "⛶ Sair"; }
     else { document.exitFullscreen(); this.textContent = "⛶ Tela Cheia"; }
 });
 
-document.getElementById('btnVoltar').addEventListener('click', () => {
-    if (confirm("Quer voltar para a tela inicial do EdHumanas?")) window.location.href = "https://www.edhumanas.com.br/";
+// ALTERADO: Redirecionamento correto para o hub da Ilha das Vogais na Vercel
+document.getElementById('btnVoltar').addEventListener('click', (e) => {
+    e.stopPropagation();
+    if (confirm("Quer voltar para a tela inicial?")) {
+        window.location.href = "https://ilha-das-vogais.vercel.app/";
+    }
 });
 
-document.getElementById('btnRestart').addEventListener('click', () => { if(confirm("Deseja recomeçar a jornada do início?")) iniciarJornada(); });
-document.getElementById('btnJogarNovamente').addEventListener('click', iniciarJornada);
+document.getElementById('btnRestart').addEventListener('click', (e) => { e.stopPropagation(); if(confirm("Deseja recomeçar a jornada do início?")) iniciarJornada(); });
+document.getElementById('btnJogarNovamente').addEventListener('click', (e) => { e.stopPropagation(); iniciarJornada(); });
 
-// Inicialização
 document.addEventListener('keydown', (e) => {
     if (respondida) return;
     if (e.key === "Backspace") return;
