@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>🌿 Reino das Consoantes · Fadas, Gnomos & Duendes ✨</title>
-    <!-- Fonte Playwrite Brasil para o modo manual -->
+    <title>🌿 Reino das Consoantes · Modos de Escrita 🖌️</title>
+    <!-- Fonte Playwrite Brasil para o modo cursivo -->
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+BR:wght@100..400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
@@ -39,7 +39,6 @@
             pointer-events: none;
             z-index: 0;
         }
-
         body::after {
             content: "🧙‍♂️🍂✨";
             position: fixed;
@@ -67,7 +66,7 @@
         }
 
         .game-container {
-            max-width: 850px;
+            max-width: 950px;
             width: 100%;
             background: rgba(30, 20, 45, 0.65);
             backdrop-filter: blur(12px);
@@ -106,6 +105,38 @@
         .btn-voltar { background: linear-gradient(135deg, #a7d489, #6f9e3f); color: #2c2b1f; }
         .btn-fullscreen { background: linear-gradient(135deg, #6ec8e0, #2c8faa); }
         .btn-musica { background: linear-gradient(135deg, #d9b48b, #b87c4a); }
+
+        /* SELEÇÃO DE MODOS DE ESCRITA */
+        .modos-escrita {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            background: rgba(0,0,0,0.3);
+            padding: 10px 12px;
+            border-radius: 60px;
+        }
+        .modo-btn {
+            background: rgba(255,245,200,0.3);
+            border: 2px solid #ffcd7e;
+            border-radius: 40px;
+            padding: 6px 16px;
+            font-family: 'Nunito', sans-serif;
+            font-weight: bold;
+            font-size: 0.8rem;
+            color: #fff2c4;
+            cursor: pointer;
+            transition: 0.1s;
+            backdrop-filter: blur(4px);
+        }
+        .modo-btn.ativo {
+            background: #ffd966;
+            border-color: #fff;
+            color: #2c1a2e;
+            box-shadow: 0 0 8px #ffea9e;
+        }
+        .modo-btn:active { transform: scale(0.96); }
 
         .header-magico {
             text-align: center;
@@ -146,16 +177,16 @@
             padding: 8px 25px;
         }
         .palavra-incompleta {
-            font-size: 2.5rem;
+            font-size: 2.2rem;
             font-weight: 800;
-            letter-spacing: 12px;
+            letter-spacing: 10px;
             background: #fff0cc;
             display: inline-block;
             padding: 12px 28px;
             border-radius: 70px;
             color: #2c1a3a;
-            font-family: 'Cinzel Decorative', monospace;
             box-shadow: inset 0 0 0 2px #ffbc6e, 0 8px 18px black;
+            transition: all 0.2s;
         }
         .dica-texto {
             margin-top: 18px;
@@ -167,7 +198,6 @@
             border-radius: 40px;
         }
 
-        /* Opções de consoantes (minúsculas) */
         .opcoes {
             display: flex;
             flex-wrap: wrap;
@@ -183,22 +213,18 @@
             border-radius: 50%;
             font-size: 2rem;
             font-weight: bold;
-            font-family: 'Cinzel Decorative', monospace;
-            color: #3a2a1f;
             cursor: pointer;
             transition: 0.1s;
             box-shadow: 0 6px 0 #a0662c;
-            text-transform: lowercase;
+            transition: 0.08s linear;
         }
         .btn-consoante:active { transform: translateY(4px); box-shadow: 0 2px 0 #a0662c; }
 
-        /* Modo manual com fonte Playwrite Brasil */
         .manual-area {
             margin: 15px auto 5px;
             text-align: center;
         }
         .manual-input {
-            font-family: 'Playwrite BR', cursive;
             font-size: 2rem;
             width: 100px;
             text-align: center;
@@ -208,7 +234,6 @@
             background: #fff9e8;
             color: #2c1a3a;
             font-weight: bold;
-            text-transform: lowercase;
             outline: none;
         }
         .manual-label {
@@ -264,10 +289,12 @@
             color: #b9d2a5;
         }
         @media (max-width: 550px) {
-            .palavra-incompleta { font-size: 1.5rem; letter-spacing: 6px; padding: 8px 12px; }
+            .palavra-incompleta { font-size: 1.4rem; letter-spacing: 5px; padding: 8px 12px; }
             .btn-consoante { width: 55px; height: 55px; font-size: 1.5rem; }
             .manual-input { font-size: 1.5rem; width: 80px; }
             .top-bar { justify-content: center; }
+            .modos-escrita { gap: 6px; }
+            .modo-btn { font-size: 0.7rem; padding: 4px 10px; }
         }
         .acertou-glow { animation: brilho 0.6s ease-out; }
         @keyframes brilho {
@@ -292,11 +319,19 @@
         </div>
     </div>
 
+    <!-- SELETOR DE MODOS DE ESCRITA -->
+    <div class="modos-escrita" id="modosEscrita">
+        <button data-modo="forma-minuscula" class="modo-btn">🔤 Forma minúscula</button>
+        <button data-modo="forma-maiuscula" class="modo-btn">🔠 Forma maiúscula (1ª letra)</button>
+        <button data-modo="cursiva-minuscula" class="modo-btn">✍️ Cursiva minúscula</button>
+        <button data-modo="cursiva-maiuscula" class="modo-btn">✨ Cursiva maiúscula (1ª letra)</button>
+    </div>
+
     <div class="header-magico">
         <div class="titulo">
             <span>🧚‍♀️✨</span> Reino das Consoantes <span>🧙‍♂️🍄</span>
         </div>
-        <div class="subtitulo">Clique na consoante minúscula ou digite a letra que falta!</div>
+        <div class="subtitulo">Clique na consoante ou digite a letra que falta! 🔊 Cada letra tem som!</div>
     </div>
 
     <div class="question-area">
@@ -305,10 +340,10 @@
         <div class="dica-texto" id="dicaTexto">✨ Qual consoante está faltando? ✨</div>
     </div>
 
-    <!-- Botões das consoantes (minúsculas) -->
+    <!-- Botões das consoantes -->
     <div class="opcoes" id="opcoesContainer"></div>
 
-    <!-- Modo manual com fonte especial -->
+    <!-- Modo manual -->
     <div class="manual-area">
         <div class="manual-label">✍️ Ou digite a consoante aqui (modo manual):</div>
         <input type="text" class="manual-input" id="manualInput" maxlength="1" placeholder="?" autocomplete="off" spellcheck="false">
@@ -325,15 +360,14 @@
 </div>
 
 <script>
-    // ==================== PERGUNTAS CORRIGIDAS ====================
-    // FADA agora é FA_A (índice 2)
+    // ==================== PERGUNTAS (mesmo banco) ====================
     const perguntas = [
         { imagem: "🧚", palavra: "FADA", lacunaIdx: 2, consoante: "d", dica: "Ela voa com asas brilhantes" },
         { imagem: "🍄", palavra: "GNOMO", lacunaIdx: 0, consoante: "g", dica: "Pequeno ser que vive em cogumelos" },
         { imagem: "🧙", palavra: "MAGO", lacunaIdx: 2, consoante: "g", dica: "Usa varinha e lança feitiços" },
         { imagem: "🐉", palavra: "DRAGAO", lacunaIdx: 1, consoante: "r", dica: "Criatura alada que cospe fogo" },
         { imagem: "🧝", palavra: "ELFO", lacunaIdx: 1, consoante: "l", dica: "Ser imortal das florestas" },
-        { imagem: "🗡️", palavra: "ESPADA", lacunaIdx: 1, consoante: "s", dica: "Arma dos cavaleiros (falta consoante)" },
+        { imagem: "🗡️", palavra: "ESPADA", lacunaIdx: 1, consoante: "s", dica: "Arma dos cavaleiros" },
         { imagem: "🪄", palavra: "VARINHA", lacunaIdx: 2, consoante: "r", dica: "Objeto mágico que conjura magia" },
         { imagem: "👑", palavra: "PRINCESA", lacunaIdx: 4, consoante: "c", dica: "Realeza dos reinos encantados" },
         { imagem: "🐸", palavra: "SAPO", lacunaIdx: 2, consoante: "p", dica: "Pode se transformar em príncipe" },
@@ -358,11 +392,26 @@
         { imagem: "⚜️", palavra: "CORTE", lacunaIdx: 2, consoante: "r", dica: "Lugar onde a realeza se reúne" }
     ];
 
+    // Estado do jogo
     let indiceAtual = 0;
     let pontuacao = 0;
-    let aguardandoTransicao = false;   // impede múltiplas respostas enquanto aguarda avanço
+    let aguardandoTransicao = false;
     let timeoutProximo = null;
     let totalPerguntas = perguntas.length;
+
+    // Modo atual (inicia como forma minúscula)
+    let modoAtual = "forma-minuscula"; // 'forma-minuscula', 'forma-maiuscula', 'cursiva-minuscula', 'cursiva-maiuscula'
+
+    // Mapeamento de modos para estilos
+    const modoEstilo = {
+        "forma-minuscula": { fontFamily: "'Nunito', sans-serif", textTransform: "lowercase", buttonCase: "lower", desc: "Forma minúscula" },
+        "forma-maiuscula": { fontFamily: "'Nunito', sans-serif", textTransform: "capitalize-first", buttonCase: "upper", desc: "Forma maiúscula (1ª letra)" },
+        "cursiva-minuscula": { fontFamily: "'Playwrite BR', cursive", textTransform: "lowercase", buttonCase: "lower", desc: "Cursiva minúscula" },
+        "cursiva-maiuscula": { fontFamily: "'Playwrite BR', cursive", textTransform: "capitalize-first", buttonCase: "upper", desc: "Cursiva maiúscula" }
+    };
+
+    // Conjunto de consoantes únicas
+    const todasConsoantes = [...new Set(perguntas.map(p => p.consoante))].sort();
 
     // Elementos DOM
     const imagemDica = document.getElementById('imagemDica');
@@ -377,36 +426,26 @@
     const manualInput = document.getElementById('manualInput');
     totalSpan.innerText = totalPerguntas;
 
-    // Conjunto de consoantes únicas (minúsculas)
-    const todasConsoantes = [...new Set(perguntas.map(p => p.consoante))].sort();
-
-    // Função para exibir palavra com lacuna (underscore)
-    function exibirPalavraComLacuna(palavra, idxLacuna) {
-        let resultado = "";
-        for (let i = 0; i < palavra.length; i++) {
-            if (i === idxLacuna) {
-                resultado += "_ ";
-            } else {
-                resultado += palavra[i] + " ";
-            }
-        }
-        return resultado.trim();
+    // ========== SINCRONIZADOR DE VOZ PARA LETRAS ==========
+    function falarLetra(letra) {
+        if (!window.speechSynthesis) return;
+        // fala o nome da consoante em português (ex: 'bê', 'cê'...)
+        let pronuncia;
+        const mapaPronuncia = {
+            'b':'bê', 'c':'cê', 'd':'dê', 'f':'efe', 'g':'gê', 'h':'agá', 'j':'jota', 'k':'cá', 'l':'éle',
+            'm':'ême', 'n':'êne', 'p':'pê', 'q':'quê', 'r':'érre', 's':'ésse', 't':'tê', 'v':'vê', 'w':'dáblio',
+            'x':'xis', 'y':'ípsilon', 'z':'zê'
+        };
+        const chave = letra.toLowerCase();
+        pronuncia = mapaPronuncia[chave] || chave;
+        const utterance = new SpeechSynthesisUtterance(pronuncia);
+        utterance.lang = 'pt-BR';
+        utterance.rate = 0.85;
+        utterance.pitch = 1.0;
+        window.speechSynthesis.cancel(); // evita sobreposição
+        window.speechSynthesis.speak(utterance);
     }
 
-    // Função para preencher a lacuna visualmente (após acerto)
-    function preencherLacunaVisual(palavra, idxLacuna, letra) {
-        let resultado = "";
-        for (let i = 0; i < palavra.length; i++) {
-            if (i === idxLacuna) {
-                resultado += letra + " ";
-            } else {
-                resultado += palavra[i] + " ";
-            }
-        }
-        return resultado.trim();
-    }
-
-    // Fala a palavra completa
     function falarPalavra(palavra) {
         if (!window.speechSynthesis) return;
         const utterance = new SpeechSynthesisUtterance(palavra.toLowerCase());
@@ -417,68 +456,125 @@
         window.speechSynthesis.speak(utterance);
     }
 
-    // Avançar para próxima palavra automaticamente após delay
-    function agendarProximaPalavra() {
-        if (timeoutProximo) clearTimeout(timeoutProximo);
-        timeoutProximo = setTimeout(() => {
-            if (indiceAtual < totalPerguntas - 1) {
-                indiceAtual++;
-                carregarPergunta();
-            } else if (indiceAtual === totalPerguntas - 1) {
-                indiceAtual++; // mostra tela de fim
-                carregarPergunta();
+    // ========== FORMATAÇÃO DE TEXTO CONFORME MODO ==========
+    function formatarPalavraConformeModo(palavra) {
+        const estilo = modoEstilo[modoAtual];
+        if (estilo.textTransform === "lowercase") {
+            return palavra.toLowerCase();
+        } else if (estilo.textTransform === "capitalize-first") {
+            // primeira letra maiúscula, restante minúscula
+            if (!palavra) return palavra;
+            return palavra.charAt(0).toUpperCase() + palavra.slice(1).toLowerCase();
+        }
+        return palavra;
+    }
+
+    function formatarLetraConformeModo(letra, paraBotao = true) {
+        const estilo = modoEstilo[modoAtual];
+        if (paraBotao) {
+            return estilo.buttonCase === "upper" ? letra.toUpperCase() : letra.toLowerCase();
+        } else {
+            // para exibição na palavra (quando não é lacuna)
+            return estilo.textTransform === "lowercase" ? letra.toLowerCase() : 
+                   (estilo.textTransform === "capitalize-first" ? letra.toUpperCase() : letra);
+        }
+    }
+
+    // Exibir palavra com lacuna (underscores) respeitando o modo
+    function exibirPalavraComLacuna(palavra, idxLacuna) {
+        const estilo = modoEstilo[modoAtual];
+        let resultado = "";
+        for (let i = 0; i < palavra.length; i++) {
+            let char = palavra[i];
+            if (i === idxLacuna) {
+                resultado += "_ ";
             } else {
-                // fim do jogo: não faz nada, mas reset pode ser usado
+                // formata a letra conforme o modo (maiúscula/minúscula)
+                if (estilo.textTransform === "lowercase") char = char.toLowerCase();
+                else if (estilo.textTransform === "capitalize-first") {
+                    // apenas a primeira letra da palavra fica maiúscula? Mas aqui é letra individual
+                    // Para o visual, mantemos a letra como na palavra original? Vamos usar a regra: a letra visível segue o caso do resto da palavra
+                    // Simples: para "capitalize-first", as letras normais (não primeira) ficam minúsculas.
+                    if (i === 0) char = char.toUpperCase();
+                    else char = char.toLowerCase();
+                }
+                resultado += char + " ";
             }
-            aguardandoTransicao = false;
-            timeoutProximo = null;
-        }, 1500);
+        }
+        return resultado.trim();
     }
 
-    // Processar resposta correta
-    function processarAcerto(consoanteCorreta, perguntaObj) {
-        if (aguardandoTransicao) return;
-        aguardandoTransicao = true;
-        pontuacao += 10;
-        pontuacaoSpan.innerText = pontuacao;
-        // Mostrar palavra completa visualmente
-        const palavraCompletaVis = preencherLacunaVisual(perguntaObj.palavra, perguntaObj.lacunaIdx, consoanteCorreta);
-        palavraDisplay.innerText = palavraCompletaVis;
-        feedbackMsg.innerHTML = `✨✨ Acertou! A consoante "${consoanteCorreta}" completa "${perguntaObj.palavra}"! +10 pontos ✨✨`;
-        falarPalavra(perguntaObj.palavra);
-        palavraDisplay.classList.add('acertou-glow');
-        setTimeout(() => palavraDisplay.classList.remove('acertou-glow'), 600);
-        confetti({ particleCount: 80, spread: 55, origin: { y: 0.5 }, colors: ['#ffd966', '#b0e57c', '#ffb347'] });
-        // Desabilitar inputs
-        desabilitarControles(true);
-        agendarProximaPalavra();
+    // Preencher a lacuna visual após acerto (mostra a letra correta formatada)
+    function preencherLacunaVisual(palavra, idxLacuna, letraCorreta) {
+        const estilo = modoEstilo[modoAtual];
+        let resultado = "";
+        for (let i = 0; i < palavra.length; i++) {
+            let char = palavra[i];
+            if (i === idxLacuna) {
+                char = (estilo.buttonCase === "upper" ? letraCorreta.toUpperCase() : letraCorreta.toLowerCase());
+                if (estilo.textTransform === "lowercase") char = char.toLowerCase();
+                else if (estilo.textTransform === "capitalize-first" && i === 0) char = char.toUpperCase();
+                resultado += char + " ";
+            } else {
+                if (estilo.textTransform === "lowercase") char = char.toLowerCase();
+                else if (estilo.textTransform === "capitalize-first") {
+                    if (i === 0) char = char.toUpperCase();
+                    else char = char.toLowerCase();
+                }
+                resultado += char + " ";
+            }
+        }
+        return resultado.trim();
     }
 
-    function processarErro(consoanteCorreta, perguntaObj) {
-        if (aguardandoTransicao) return;
-        aguardandoTransicao = true;
-        feedbackMsg.innerHTML = `❌ Que pena! A consoante mágica era "${consoanteCorreta}". Vamos praticar! ❌`;
-        // Mostrar a palavra correta por um instante? (opcional, mas ajuda)
-        const palavraCorretaVis = preencherLacunaVisual(perguntaObj.palavra, perguntaObj.lacunaIdx, consoanteCorreta);
-        palavraDisplay.innerText = palavraCorretaVis;
-        falarPalavra(perguntaObj.palavra);
-        confetti({ particleCount: 15, spread: 30, origin: { y: 0.7 }, colors: ['#c0c0c0'], startVelocity: 5 });
-        desabilitarControles(true);
-        agendarProximaPalavra();
-    }
-
-    // Desabilitar/habilitar botões e input manual durante animação
-    function desabilitarControles(desabilitar) {
-        const botoes = document.querySelectorAll('.btn-consoante');
-        botoes.forEach(btn => {
-            if (desabilitar) btn.disabled = true;
-            else btn.disabled = false;
+    // ========== GERAR BOTÕES (com áudio na letra) ==========
+    function gerarBotoesConsoantes(perguntaObj) {
+        const correta = perguntaObj.consoante;
+        const opcoes = [correta];
+        const outras = todasConsoantes.filter(c => c !== correta);
+        const outrasEmbaralhadas = [...outras].sort(() => Math.random() - 0.5);
+        const adicionar = outrasEmbaralhadas.slice(0, 4);
+        opcoes.push(...adicionar);
+        const opcoesFinais = opcoes.sort(() => Math.random() - 0.5);
+        
+        opcoesContainer.innerHTML = "";
+        opcoesFinais.forEach(letra => {
+            const btn = document.createElement('button');
+            const letraExibida = formatarLetraConformeModo(letra, true);
+            btn.innerText = letraExibida;
+            btn.classList.add('btn-consoante');
+            // aplica a fonte e estilo de acordo com o modo
+            const estilo = modoEstilo[modoAtual];
+            btn.style.fontFamily = estilo.fontFamily;
+            btn.style.textTransform = estilo.buttonCase === "upper" ? "uppercase" : "lowercase";
+            // evento: primeiro fala a letra, depois verifica resposta
+            btn.addEventListener('click', () => {
+                if (aguardandoTransicao) return;
+                falarLetra(letra);   // sonoriza a consoante clicada
+                verificarResposta(letra);
+            });
+            opcoesContainer.appendChild(btn);
         });
-        if (desabilitar) manualInput.disabled = true;
-        else manualInput.disabled = false;
     }
 
-    // Verificar resposta (usada tanto pelos botões quanto pelo input manual)
+    // Atualizar toda a interface após mudança de modo (sem perder progresso)
+    function aplicarModoNaInterface() {
+        if (indiceAtual >= totalPerguntas) return;
+        const q = perguntas[indiceAtual];
+        // Atualiza exibição da palavra com lacuna
+        palavraDisplay.innerText = exibirPalavraComLacuna(q.palavra, q.lacunaIdx);
+        // Atualiza estilo da palavraDisplay (fonte e transform)
+        const estilo = modoEstilo[modoAtual];
+        palavraDisplay.style.fontFamily = estilo.fontFamily;
+        palavraDisplay.style.textTransform = (estilo.textTransform === "lowercase" ? "lowercase" : "none");
+        // Recria botões com novo estilo
+        gerarBotoesConsoantes(q);
+        // Atualiza estilo do input manual
+        manualInput.style.fontFamily = estilo.fontFamily;
+        manualInput.style.textTransform = (estilo.buttonCase === "upper" ? "uppercase" : "lowercase");
+    }
+
+    // ========== LÓGICA DO JOGO ==========
     function verificarResposta(letraDigitada) {
         if (aguardandoTransicao) return;
         if (indiceAtual >= totalPerguntas) return;
@@ -491,39 +587,65 @@
         } else {
             processarErro(correta, perguntaAtual);
         }
-        // Limpar campo manual após resposta
         manualInput.value = "";
     }
 
-    // Criar os botões de consoante (minúsculas)
-    function gerarBotoesConsoantes(perguntaObj) {
-        const opcoes = [perguntaObj.consoante];
-        const outras = todasConsoantes.filter(c => c !== perguntaObj.consoante);
-        const outrasEmbaralhadas = [...outras].sort(() => Math.random() - 0.5);
-        const adicionar = outrasEmbaralhadas.slice(0, 4);
-        opcoes.push(...adicionar);
-        const opcoesFinais = opcoes.sort(() => Math.random() - 0.5);
-        
-        opcoesContainer.innerHTML = "";
-        opcoesFinais.forEach(letra => {
-            const btn = document.createElement('button');
-            btn.innerText = letra;
-            btn.classList.add('btn-consoante');
-            btn.addEventListener('click', () => verificarResposta(letra));
-            opcoesContainer.appendChild(btn);
-        });
+    function processarAcerto(consoanteCorreta, perguntaObj) {
+        if (aguardandoTransicao) return;
+        aguardandoTransicao = true;
+        pontuacao += 10;
+        pontuacaoSpan.innerText = pontuacao;
+        const palavraCompletaVis = preencherLacunaVisual(perguntaObj.palavra, perguntaObj.lacunaIdx, consoanteCorreta);
+        palavraDisplay.innerText = palavraCompletaVis;
+        feedbackMsg.innerHTML = `✨✨ Acertou! A consoante "${consoanteCorreta.toUpperCase()}" completa "${formatarPalavraConformeModo(perguntaObj.palavra)}"! +10 pontos ✨✨`;
+        falarPalavra(perguntaObj.palavra);
+        palavraDisplay.classList.add('acertou-glow');
+        setTimeout(() => palavraDisplay.classList.remove('acertou-glow'), 600);
+        canvasConfetti({ particleCount: 80, spread: 55, origin: { y: 0.5 }, colors: ['#ffd966', '#b0e57c', '#ffb347'] });
+        desabilitarControles(true);
+        agendarProximaPalavra();
+    }
+
+    function processarErro(consoanteCorreta, perguntaObj) {
+        if (aguardandoTransicao) return;
+        aguardandoTransicao = true;
+        feedbackMsg.innerHTML = `❌ Que pena! A consoante mágica era "${consoanteCorreta.toUpperCase()}". Vamos praticar! ❌`;
+        const palavraCorretaVis = preencherLacunaVisual(perguntaObj.palavra, perguntaObj.lacunaIdx, consoanteCorreta);
+        palavraDisplay.innerText = palavraCorretaVis;
+        falarPalavra(perguntaObj.palavra);
+        canvasConfetti({ particleCount: 15, spread: 30, origin: { y: 0.7 }, colors: ['#c0c0c0'], startVelocity: 5 });
+        desabilitarControles(true);
+        agendarProximaPalavra();
+    }
+
+    function desabilitarControles(desabilitar) {
+        const botoes = document.querySelectorAll('.btn-consoante');
+        botoes.forEach(btn => btn.disabled = desabilitar);
+        manualInput.disabled = desabilitar;
+    }
+
+    function agendarProximaPalavra() {
+        if (timeoutProximo) clearTimeout(timeoutProximo);
+        timeoutProximo = setTimeout(() => {
+            if (indiceAtual < totalPerguntas - 1) {
+                indiceAtual++;
+                carregarPergunta();
+            } else if (indiceAtual === totalPerguntas - 1) {
+                indiceAtual++; // fim
+                carregarPergunta();
+            } else {
+                // já no fim
+            }
+            aguardandoTransicao = false;
+            timeoutProximo = null;
+        }, 1500);
     }
 
     function carregarPergunta() {
-        // Limpar timeouts pendentes
-        if (timeoutProximo) {
-            clearTimeout(timeoutProximo);
-            timeoutProximo = null;
-        }
+        if (timeoutProximo) clearTimeout(timeoutProximo);
         aguardandoTransicao = false;
         
         if (indiceAtual >= totalPerguntas) {
-            // Fim do jogo
             feedbackMsg.innerHTML = "🎉✨ PARABÉNS! Você completou todo o reino mágico! ✨🎉<br>🧚‍♀️ Fadas, gnomos e duendes te agradecem! 🧙‍♂️";
             palavraDisplay.innerText = "FIM!";
             imagemDica.innerText = "🏆✨";
@@ -531,7 +653,7 @@
             opcoesContainer.innerHTML = "";
             manualInput.disabled = true;
             desabilitarControles(true);
-            confetti({ particleCount: 300, spread: 110, origin: { y: 0.6 }, colors: ['#ffd966', '#82c91e', '#ffb347'] });
+            canvasConfetti({ particleCount: 300, spread: 110, origin: { y: 0.6 }, colors: ['#ffd966', '#82c91e', '#ffb347'] });
             return;
         }
         
@@ -539,6 +661,10 @@
         imagemDica.innerText = q.imagem;
         dicaTexto.innerText = "✨ " + q.dica + " ✨";
         palavraDisplay.innerText = exibirPalavraComLacuna(q.palavra, q.lacunaIdx);
+        // Aplica estilo visual do modo atual
+        const estilo = modoEstilo[modoAtual];
+        palavraDisplay.style.fontFamily = estilo.fontFamily;
+        palavraDisplay.style.textTransform = (estilo.textTransform === "lowercase" ? "lowercase" : "none");
         gerarBotoesConsoantes(q);
         nivelSpan.innerText = indiceAtual + 1;
         feedbackMsg.innerHTML = "🍄 Escolha uma consoante ou digite a letra que falta!";
@@ -556,19 +682,51 @@
         aguardandoTransicao = false;
         carregarPergunta();
         feedbackMsg.innerHTML = "✨ Novo ciclo de magia! Ajude as criaturas! ✨";
-        confetti({ particleCount: 40, spread: 45, origin: { y: 0.8 }, colors: ['#ffea8c', '#96e6b3'] });
+        canvasConfetti({ particleCount: 40, spread: 45, origin: { y: 0.8 }, colors: ['#ffea8c', '#96e6b3'] });
     }
 
+    // ========== MUDANÇA DE MODO ==========
+    function alterarModo(modo) {
+        modoAtual = modo;
+        // atualiza classe ativa nos botões
+        document.querySelectorAll('.modo-btn').forEach(btn => {
+            if (btn.dataset.modo === modo) btn.classList.add('ativo');
+            else btn.classList.remove('ativo');
+        });
+        // Recarrega a pergunta atual com o novo estilo (preserva progresso)
+        if (indiceAtual < totalPerguntas) {
+            const q = perguntas[indiceAtual];
+            palavraDisplay.innerText = exibirPalavraComLacuna(q.palavra, q.lacunaIdx);
+            const estilo = modoEstilo[modoAtual];
+            palavraDisplay.style.fontFamily = estilo.fontFamily;
+            palavraDisplay.style.textTransform = (estilo.textTransform === "lowercase" ? "lowercase" : "none");
+            gerarBotoesConsoantes(q);
+            manualInput.style.fontFamily = estilo.fontFamily;
+            manualInput.style.textTransform = (estilo.buttonCase === "upper" ? "uppercase" : "lowercase");
+        }
+    }
+
+    // ========== EVENTOS E INICIALIZAÇÃO ==========
     resetBtn.addEventListener('click', resetarJogo);
     manualInput.addEventListener('input', (e) => {
         let val = e.target.value;
         if (val.length > 0) {
             const ultimaLetra = val[val.length-1].toLowerCase();
             if (/[a-z]/.test(ultimaLetra)) {
+                falarLetra(ultimaLetra);   // sonoriza a letra digitada
                 verificarResposta(ultimaLetra);
             }
             manualInput.value = "";
         }
+    });
+
+    // Configurar botões de modo
+    const botoesModo = document.querySelectorAll('.modo-btn');
+    botoesModo.forEach(btn => {
+        btn.addEventListener('click', () => {
+            const modo = btn.dataset.modo;
+            alterarModo(modo);
+        });
     });
 
     // Fullscreen
@@ -593,7 +751,7 @@
         window.location.href = 'https://ilha-das-vogais.vercel.app/';
     });
 
-    // Música ambiente (floresta suave)
+    // Música ambiente
     const musicaFundo = new Audio();
     musicaFundo.src = 'musica_fundo.mp3';
     musicaFundo.loop = true;
@@ -606,10 +764,7 @@
                 musicaAtiva = true;
                 btnMusica.innerHTML = '🎵 Música ON';
                 btnMusica.style.background = "linear-gradient(135deg, #c8e6a0, #8bc34a)";
-            }).catch(() => {
-                musicaAtiva = false;
-                btnMusica.innerHTML = '🔇 Música OFF';
-            });
+            }).catch(() => {});
         } else {
             musicaFundo.pause();
             musicaAtiva = false;
@@ -648,7 +803,11 @@
         }, 4200);
     }
     criarFlutuantes();
+    
+    // Inicializar
     carregarPergunta();
+    // Definir modo inicial ativo
+    document.querySelector('.modo-btn[data-modo="forma-minuscula"]').classList.add('ativo');
 </script>
 </body>
 </html>
