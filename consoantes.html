@@ -319,20 +319,11 @@ function gerarOpcoes() {
     });
 }
 
-function checarResposta(letraSelecionada) {
-    if (respondida) return;
-    respondida = true;
-    document.getElementById('opcoesArea').classList.add('desabilitado');
-    document.getElementById('manualInput').disabled = true;
-    
-    const letraNorm = letraSelecionada.toLowerCase();
-    
-    if (letraNorm === perguntaAtual.consoante) {
-        processarAcerto();
-    } else {
-        processarErro(letraSelecionada);
-    }
-}
+// CORRIGIDO: Redirecionamento IMEDIATO e direto para o hub da Ilha das Vogais na Vercel (sem caixas de pergunta)
+document.getElementById('btnVoltar').addEventListener('click', (e) => {
+    e.stopPropagation();
+    window.location.href = "https://ilha-das-vogais.vercel.app/";
+});
 
 function processarAcerto() {
     acertosSequenciais++;
