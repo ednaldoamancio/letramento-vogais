@@ -1,22 +1,3 @@
-## Análise do erro
-
-O problema ocorre porque, ao clicar na letra "D", a função `verificarResposta` é chamada, mas o fluxo de áudio (`falarLetra`) pode estar cancelando a síntese de voz e gerando um pequeno atraso ou conflito com o estado `aguardandoTransicao`. Além disso, em alguns navegadores, a repetição de `speechSynthesis.cancel()` seguida de `speak()` pode interromper o evento de clique ou provocar um comportamento assíncrono inesperado, fazendo com que `processarAcerto` não seja concluída e o `timeoutProximo` nunca seja acionado.
-
-Outro ponto crítico: a função `agendarProximaPalavra` espera 1,5 segundos para chamar `carregarPergunta`, mas se houver qualquer exceção antes (como tentativa de acessar uma propriedade de `null`), o `aguardandoTransicao` permanece `true` e os controles ficam desabilitados para sempre.
-
-## Correções aplicadas
-
-1. **Remoção do cancelamento agressivo da fala**: agora cada letra é falada sem cancelar a anterior abruptamente, apenas com um pequeno delay para não sobrepor.
-2. **Tratamento de erro robusto**: todas as funções críticas estão envoltas em `try...catch` para garantir que o jogo não trave.
-3. **Reset de estado em caso de falha**: se algo der errado, `aguardandoTransicao` é forçado para `false` após um tempo de segurança.
-4. **Adição de 12 novas palavras com sílabas complexas** (ex: "BRAVO", "FLOR", "PRATO", etc.), adequadas à fase de letramento.
-5. **Validação de lacuna**: garante que o índice da lacuna está dentro dos limites da palavra.
-
----
-
-## Código corrigido e expandido
-
-```html
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -558,4 +539,3 @@ Outro ponto crítico: a função `agendarProximaPalavra` espera 1,5 segundos par
 </script>
 </body>
 </html>
-```
