@@ -10,7 +10,6 @@
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
         
-        /* CORREÇÃO DO LAYOUT AQUI: flex-direction: column e fundo verde */
         body {
             min-height: 100vh;
             background: linear-gradient(145deg, #184a26 0%, #266b38 50%, #0e3017 100%);
@@ -24,7 +23,6 @@
             overflow-x: hidden;
         }
 
-        /* FIGURAS EM SUAVE MOVIMENTO */
         .figura-flutuante {
             position: fixed;
             pointer-events: none;
@@ -87,9 +85,16 @@
         .reset-btn { background: linear-gradient(135deg, #b5651e, #8b4513); border: none; font-family: 'Nunito', sans-serif; font-weight: bold; padding: 8px 18px; border-radius: 50px; font-size: 0.9rem; color: white; cursor: pointer; box-shadow: 0 4px 0 #4a2a0a; transition: 0.1s; }
         .reset-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #4a2a0a; }
         
+        /* ESTILOS DA TELA FINAL */
+        .tela-final { text-align: center; padding: 40px 20px; display: none; }
+        .tela-final h2 { font-family: 'Cinzel Decorative', cursive; font-size: 2.5rem; color: #ffd966; margin-bottom: 15px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
+        .tela-final p { font-size: 1.3rem; color: #fff; margin-bottom: 25px; font-weight: 600; }
+        .trofeu { font-size: 100px; margin-bottom: 20px; filter: drop-shadow(0 0 15px gold); animation: pulsarTrofeu 1.5s infinite alternate ease-in-out; }
+        @keyframes pulsarTrofeu { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
+
         footer { width: 100%; font-size: 0.85rem; font-weight: bold; text-align: center; margin-top: 25px; color: #a4e5ab; z-index: 10; position: relative; }
         
-        @media (max-width: 550px) { .palavra-incompleta { font-size: 1.4rem; letter-spacing: 5px; padding: 8px 12px; } .btn-consoante { width: 55px; height: 55px; font-size: 1.5rem; } .manual-input { font-size: 1.5rem; width: 80px; } .top-bar { justify-content: center; } .modos-escrita { gap: 6px; } .modo-btn { font-size: 0.7rem; padding: 4px 10px; } }
+        @media (max-width: 550px) { .palavra-incompleta { font-size: 1.4rem; letter-spacing: 5px; padding: 8px 12px; } .btn-consoante { width: 55px; height: 55px; font-size: 1.5rem; } .manual-input { font-size: 1.5rem; width: 80px; } .top-bar { justify-content: center; } .modos-escrita { gap: 6px; } .modo-btn { font-size: 0.7rem; padding: 4px 10px; } .tela-final h2 { font-size: 1.8rem; } }
         
         .acertou-glow { animation: brilho 0.6s ease-out; }
         @keyframes brilho { 0% { text-shadow: 0 0 0 gold; } 50% { text-shadow: 0 0 20px #ffdd77, 0 0 30px #ffaa33; } 100% { text-shadow: 0 0 0 gold; } }
@@ -98,7 +103,6 @@
 </head>
 <body>
 
-<!-- Elementos visuais flutuantes de fundo -->
 <div class="figura-flutuante" style="top: 10%; left: 5%; font-size: 45px; animation-duration: 8s;">🌿</div>
 <div class="figura-flutuante" style="top: 75%; left: 10%; font-size: 55px; animation-duration: 12s; animation-delay: 2s;">🧚‍♀️</div>
 <div class="figura-flutuante" style="top: 20%; right: 8%; font-size: 50px; animation-duration: 10s; animation-delay: 1s;">✨</div>
@@ -107,43 +111,53 @@
 <div class="figura-flutuante" style="top: 50%; left: 3%; font-size: 35px; animation-duration: 11s; animation-delay: 1.5s;">🪄</div>
 
 <div class="game-container">
-    <div class="top-bar">
-        <button class="btn-acao btn-voltar" id="btnVoltar">🏠 Tela Inicial</button>
-        <div style="display: flex; gap: 10px;">
-            <button class="btn-acao btn-fullscreen" id="btnFullscreen">⛶ Tela Cheia</button>
-            <button class="btn-acao btn-musica" id="btnMusica">🔇 Som</button>
+    <div id="conteudoJogo">
+        <div class="top-bar">
+            <button class="btn-acao btn-voltar" id="btnVoltar">🏠 Tela Inicial</button>
+            <div style="display: flex; gap: 10px;">
+                <button class="btn-acao btn-fullscreen" id="btnFullscreen">⛶ Tela Cheia</button>
+                <button class="btn-acao btn-musica" id="btnMusica">🔇 Som</button>
+            </div>
+        </div>
+
+        <div class="header-magico">
+            <h1 class="titulo">🧚‍♀️ Reino das Consoantes 🌿</h1>
+            <p class="subtitulo">A magia para treinar encontros e sílabas complexas!</p>
+        </div>
+
+        <div class="modos-escrita">
+            <button class="modo-btn ativo" data-modo="MAIUSCULA">LETRA DE FORMA</button>
+            <button class="modo-btn" data-modo="minuscula">letra minúscula</button>
+            <button class="modo-btn" style="font-family: 'Dancing Script', cursive; font-size: 1rem;" data-modo="cursiva">Letra Cursiva</button>
+        </div>
+
+        <div class="question-area">
+            <div class="imagem-dica" id="imagemArea">🌟</div>
+            <div id="palavraArea" class="palavra-incompleta">_ _ _</div>
+            <div class="dica-texto" id="dicaTexto">Dica: ???</div>
+        </div>
+
+        <div id="opcoesArea" class="opcoes"></div>
+        
+        <div id="manualAreaContainer" class="manual-area" style="display: none;">
+            <label for="manualInput" class="manual-label">Qual consoante está faltando? Pressione a tecla!</label>
+            <input type="text" id="manualInput" class="manual-input" maxlength="1" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="none">
+        </div>
+
+        <div id="feedback" class="feedback">Escolha a consoante correta!</div>
+        
+        <div class="score-area">
+            <div class="pontos" id="scoreDisplay">Palavras Concluídas: 0 / 50</div>
+            <button class="reset-btn" id="btnRestart">🔄 Recomeçar</button>
         </div>
     </div>
 
-    <div class="header-magico">
-        <h1 class="titulo">🧚‍♀️ Reino das Consoantes 🌿</h1>
-        <p class="subtitulo">A magia para treinar encontros e sílabas complexas!</p>
-    </div>
-
-    <div class="modos-escrita">
-        <button class="modo-btn ativo" data-modo="MAIUSCULA">LETRA DE FORMA</button>
-        <button class="modo-btn" data-modo="minuscula">letra minúscula</button>
-        <button class="modo-btn" style="font-family: 'Dancing Script', cursive; font-size: 1rem;" data-modo="cursiva">Letra Cursiva</button>
-    </div>
-
-    <div class="question-area">
-        <div class="imagem-dica" id="imagemArea">🌟</div>
-        <div id="palavraArea" class="palavra-incompleta">_ _ _</div>
-        <div class="dica-texto" id="dicaTexto">Dica: ???</div>
-    </div>
-
-    <div id="opcoesArea" class="opcoes"></div>
-    
-    <div id="manualAreaContainer" class="manual-area" style="display: none;">
-        <label for="manualInput" class="manual-label">Qual consoante está faltando? Pressione a tecla!</label>
-        <input type="text" id="manualInput" class="manual-input" maxlength="1" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="none">
-    </div>
-
-    <div id="feedback" class="feedback">Escolha a consoante correta!</div>
-    
-    <div class="score-area">
-        <div class="pontos" id="scoreDisplay">Acertos: 0</div>
-        <button class="reset-btn" id="btnRestart">🔄 Recomeçar</button>
+    <!-- TELA GRANDE FINAL -->
+    <div id="telaFinal" class="tela-final">
+        <div class="trofeu">🏆</div>
+        <h2>Grande Final Fantástico!</h2>
+        <p id="mensagemFinal">Parabéns! Você concluiu com maestria o desafio das 50 palavras mágicas!</p>
+        <button class="btn-acao" id="btnJogarNovamente" style="font-size: 1.2rem; padding: 12px 30px;">🧚‍♀️ Jogar de Novo ✨</button>
     </div>
 </div>
 
@@ -157,7 +171,7 @@
 </audio>
 
 <script>
-const perguntas = [
+const bancoPerguntas = [
     { imagem: "🧚", palavra: "FADA", lacunaIdx: 2, consoante: "d", dica: "A criatura mágica que tem asinhas." },
     { imagem: "🍄", palavra: "GNOMO", lacunaIdx: 0, consoante: "g", dica: "Vive no jardim e usa um gorro vermelho." },
     { imagem: "🧙‍♂️", palavra: "MAGO", lacunaIdx: 2, consoante: "g", dica: "Aquele que faz feitiços." },
@@ -210,21 +224,47 @@ const perguntas = [
     { imagem: "🌉", palavra: "PONTE", lacunaIdx: 2, consoante: "n", dica: "Construção que atravessa um rio." }
 ];
 
-let perguntaAtual; let score = 0; let respondida = false;
-let modoTexto = 'MAIUSCULA'; let tipoEntrada = 'botoes';
-let synth = window.speechSynthesis; let falando = false;
-let somAtivo = false; const audMusica = document.getElementById('musicaFundo');
+let filaPerguntas = [];
+let perguntaAtual; 
+let acertosSequenciais = 0; 
+let respondida = false;
+let modoTexto = 'MAIUSCULA'; 
+let tipoEntrada = 'botoes';
+let synth = window.speechSynthesis; 
+let falando = false;
+let somAtivo = false; 
+let intervaloConfetti;
+const audMusica = document.getElementById('musicaFundo');
 audMusica.volume = 0.3;
 
+function iniciarJornada() {
+    clearInterval(intervaloConfetti);
+    acertosSequenciais = 0;
+    // Embaralha o deck inicial de 50 palavras
+    filaPerguntas = [...bancoPerguntas].sort(() => 0.5 - Math.random());
+    
+    document.getElementById('conteudoJogo').style.display = "block";
+    document.getElementById('telaFinal').style.display = "none";
+    document.getElementById('scoreDisplay').textContent = `Palavras Concluídas: ${acertosSequenciais} / 50`;
+    
+    escolherNova();
+}
+
 function escolherNova() {
+    if (acertosSequenciais >= 50 || filaPerguntas.length === 0) {
+        exibirGrandeFinal();
+        return;
+    }
+
     respondida = false;
+    document.getElementById('opcoesArea').classList.remove('desabilitated');
     document.getElementById('opcoesArea').classList.remove('desabilitado');
     document.getElementById('manualInput').value = "";
     document.getElementById('manualInput').disabled = false;
     document.getElementById('palavraArea').classList.remove('acertou-glow');
 
-    const naoSorteada = perguntas[Math.floor(Math.random() * perguntas.length)];
-    perguntaAtual = naoSorteada;
+    // Pega o primeiro item da fila sequencial
+    perguntaAtual = filaPerguntas.shift();
     
     document.getElementById('imagemArea').textContent = perguntaAtual.imagem;
     document.getElementById('dicaTexto').textContent = "Dica: " + perguntaAtual.dica;
@@ -258,8 +298,7 @@ function gerarOpcoes() {
     const opcoesArea = document.getElementById('opcoesArea');
     opcoesArea.innerHTML = '';
     
-    let certas = [perguntaAtual.consoante];
-    const todasConsoantes = [...new Set(perguntas.map(p => p.consoante))].sort();
+    const todasConsoantes = [...new Set(bancoPerguntas.map(p => p.consoante))].sort();
     
     let misturadas = todasConsoantes.filter(c => c !== perguntaAtual.consoante);
     misturadas = misturadas.sort(() => 0.5 - Math.random()).slice(0, 5);
@@ -293,8 +332,8 @@ function checarResposta(letraSelecionada) {
 }
 
 function processarAcerto() {
-    score++;
-    document.getElementById('scoreDisplay').textContent = "Acertos: " + score;
+    acertosSequenciais++;
+    document.getElementById('scoreDisplay').textContent = `Palavras Concluídas: ${acertosSequenciais} / 50`;
     document.getElementById('feedback').textContent = "✨ Correto! Parabéns! ✨";
     document.getElementById('feedback').style.color = "#aaffaa";
     
@@ -307,7 +346,7 @@ function processarAcerto() {
     }
     
     falarPalavra(perguntaAtual);
-    confetti({ particleCount: 60, spread: 80, origin: { y: 0.6 } });
+    confetti({ particleCount: 40, spread: 60, origin: { y: 0.6 } });
     setTimeout(escolherNova, 2500);
 }
 
@@ -316,13 +355,45 @@ function processarErro(letraSelecionada) {
     document.getElementById('feedback').style.color = "#ffaaaa";
     
     falarLetra(letraSelecionada);
+
+    // REINSERÇÃO INTELIGENTE NA FILA SEQUENCIAL:
+    if (filaPerguntas.length >= 3) {
+        // Se houver espaço, reinsere pulando 3 posições à frente
+        filaPerguntas.splice(3, 0, perguntaAtual);
+    } else {
+        // Se for a penúltima ou última posição restante do jogo, insere no fim absoluto
+        filaPerguntas.push(perguntaAtual);
+    }
+    
     setTimeout(() => {
         respondida = false;
         document.getElementById('opcoesArea').classList.remove('desabilitado');
         document.getElementById('manualInput').disabled = false;
         document.getElementById('manualInput').value = "";
         if (tipoEntrada === 'teclado') document.getElementById('manualInput').focus();
-    }, 1500);
+        
+        // Passa direto para a próxima palavra da sequência. 
+        // A palavra errada reaparecerá no momento em que chegar o novo índice dela.
+        escolherNova();
+    }, 2500);
+}
+
+function exibirGrandeFinal() {
+    document.getElementById('conteudoJogo').style.display = "none";
+    document.getElementById('telaFinal').style.display = "block";
+    
+    if (synth) {
+        if (falando) synth.cancel();
+        const ut = new SpeechSynthesisUtterance("Parabéns! Você completou o Reino das Consoantes! Você é demais!");
+        ut.lang = 'pt-BR';
+        synth.speak(ut);
+    }
+
+    // Chuva contínua de confetes para comemoração
+    intervaloConfetti = setInterval(() => {
+        confetti({ particleCount: 30, angle: 60, spread: 55, origin: { x: 0 } });
+        confetti({ particleCount: 30, angle: 120, spread: 55, origin: { x: 1 } });
+    }, 750);
 }
 
 function falarPalavra(q) {
@@ -392,7 +463,8 @@ document.getElementById('btnVoltar').addEventListener('click', () => {
     if (confirm("Quer voltar para a tela inicial do EdHumanas?")) window.location.href = "https://www.edhumanas.com.br/";
 });
 
-document.getElementById('btnRestart').addEventListener('click', () => { score = 0; document.getElementById('scoreDisplay').textContent = "Acertos: 0"; escolherNova(); });
+document.getElementById('btnRestart').addEventListener('click', () => { if(confirm("Deseja recomeçar a jornada do início?")) iniciarJornada(); });
+document.getElementById('btnJogarNovamente').addEventListener('click', iniciarJornada);
 
 // Inicialização
 document.addEventListener('keydown', (e) => {
@@ -401,7 +473,7 @@ document.addEventListener('keydown', (e) => {
     if (/[a-zç]/i.test(e.key) && e.key.length === 1) { checarResposta(e.key); }
 });
 
-window.onload = () => { escolherNova(); };
+window.onload = () => { iniciarJornada(); };
 </script>
 </body>
 </html>
