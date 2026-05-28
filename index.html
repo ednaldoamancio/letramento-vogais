@@ -72,9 +72,6 @@
         .header-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
         .header-botoes { display: flex; gap: 10px; align-items: center; }
         
-        .theme-toggle { background: linear-gradient(135deg, var(--ouro-real), #b8860b); border: 2px solid #fff; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; font-size: 20px; box-shadow: 0 0 15px rgba(212, 168, 67, 0.4); transition: all 0.3s; }
-        .theme-toggle:hover { transform: scale(1.1); box-shadow: 0 0 25px rgba(212, 168, 67, 0.6); }
-        
         .btn-fullscreen { background: linear-gradient(135deg, var(--azul-netuno), #0d3a5c); border: 2px solid #fff; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; font-size: 20px; box-shadow: 0 0 15px rgba(30, 95, 142, 0.4); transition: all 0.3s; display: flex; align-items: center; justify-content: center; color: white; }
         .btn-fullscreen:hover { transform: scale(1.1); box-shadow: 0 0 25px rgba(30, 95, 142, 0.7); }
         
@@ -85,16 +82,17 @@
         
         .stage { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px; z-index: 10; gap: 15px; overflow-y: auto; }
         
-        .banner-reinos { border-radius: 20px; overflow: hidden; border: 3px solid var(--ouro-real); width: 85%; max-width: 280px; aspect-ratio: 16/10; box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(212, 168, 67, 0.2); position: relative; }
+        .banner-reinos { border-radius: 20px; overflow: hidden; border: 3px solid var(--ouro-real); width: 85%; max-width: 280px; aspect-ratio: 16/10; box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(212, 168, 67, 0.2); position: relative; background: linear-gradient(135deg, #2d1b4e, #1a0a2e); display: flex; align-items: center; justify-content: center; }
         .banner-reinos img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) saturate(1.2); }
         .banner-reinos::after { content: "🗺️"; position: absolute; bottom: -15px; right: -10px; font-size: 35px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
+        .fallback-banner { font-size: 48px; text-align: center; padding: 20px; }
         
         .titulo-reinos { font-family: 'Cinzel Decorative', cursive; font-size: clamp(20px, 5vw, 28px); color: var(--ouro-real); text-shadow: 0 0 10px rgba(212, 168, 67, 0.6), 2px 2px 4px rgba(0,0,0,0.5); text-align: center; margin: 5px 0; }
         .subtitulo-magico { font-family: 'Dancing Script', cursive; font-size: clamp(16px, 4vw, 22px); color: rgba(255, 255, 255, 0.7); text-align: center; margin-bottom: 10px; }
         
         .reinos-container { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; max-width: 420px; }
         
-        .card-reino { padding: 18px 12px; border-radius: 18px; border: none; font-family: 'Cinzel Decorative', cursive; font-size: clamp(13px, 3.5vw, 16px); color: #fff; text-decoration: none; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); line-height: 1.3; position: relative; overflow: hidden; min-height: 110px; }
+        .card-reino { padding: 18px 12px; border-radius: 18px; border: none; font-family: 'Cinzel Decorative', cursive; font-size: clamp(13px, 3.5vw, 16px); color: #fff; text-decoration: none; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); line-height: 1.3; position: relative; overflow: hidden; min-height: 110px; cursor: pointer; }
         .card-reino::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); opacity: 0; transition: opacity 0.3s; }
         .card-reino:hover::before { opacity: 1; }
         .card-reino:active { transform: scale(0.95); }
@@ -138,9 +136,8 @@
     <header class="header">
         <div class="header-inner">
             <div class="header-botoes">
-                <button class="btn-musica" id="btnMusica" onclick="alternarMusica(event)">🎵 MÚSICA OFF</button>
-                <button class="btn-fullscreen" id="fullscreenBtn" onclick="toggleFullScreen(event)" aria-label="Tela cheia">⛶</button>
-                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme(event)">☀️</button>
+                <button class="btn-musica" id="btnMusica">🎵 MÚSICA OFF</button>
+                <button class="btn-fullscreen" id="fullscreenBtn" aria-label="Tela cheia">⛶</button>
             </div>
             <span class="saudacao-real">👑 Olá, damas e cavalheiros!</span>
         </div>
@@ -148,37 +145,37 @@
 
     <div class="stage">
         <div class="banner-reinos">
-            <img src="ilha.jpg" alt="Mapa dos Reinos Encantados">
+            <img src="ilha.jpg" alt="Mapa dos Reinos Encantados" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=\'fallback-banner\'>🗺️🏰✨</div>';">
         </div>
         <h2 class="titulo-reinos">🏰 Reinos Encantados</h2>
         <p class="subtitulo-magico">Escolha seu reino e embarque em uma aventura mágica... ✨</p>
         
         <div class="reinos-container">
-            <a href="vogais.html" class="card-reino reino-vogais" onclick="tocarEfeito('vogais.mp3')">
+            <a href="vogais.html" class="card-reino reino-vogais" data-sound="vogais.mp3">
                 <span class="emoji-reino">👸🤴</span>
                 <span class="nome-reino">Reino das Vogais</span>
                 <span class="desc-reino">Princesas & Príncipes</span>
             </a>
 
-            <a href="https://alfabeto-mu.vercel.app/" class="card-reino reino-alfabeto" onclick="tocarEfeito('alfabeto.mp3')">
+            <a href="https://alfabeto-mu.vercel.app/" class="card-reino reino-alfabeto" data-sound="alfabeto.mp3" target="_blank" rel="noopener">
                 <span class="emoji-reino">🧜‍♂️🔱</span>
                 <span class="nome-reino">Reino do Alfabeto</span>
                 <span class="desc-reino">Netuno & o Mar</span>
             </a>
 
-            <a href="consoantes.html" class="card-reino reino-consoantes" onclick="tocarEfeito('consoantes.mp3')">
+            <a href="consoantes.html" class="card-reino reino-consoantes" data-sound="consoantes.mp3">
                 <span class="emoji-reino">🧚🧙‍♂️</span>
                 <span class="nome-reino">Reino das Consoantes</span>
                 <span class="desc-reino">Fadas, Gnomos & Duendes</span>
             </a>
 
-            <a href="numeros.html" class="card-reino reino-numeros" onclick="tocarEfeito('numeros.mp3')">
+            <a href="numeros.html" class="card-reino reino-numeros" data-sound="numeros.mp3">
                 <span class="emoji-reino">🧙‍♀️🔮</span>
                 <span class="nome-reino">Reino dos Números</span>
                 <span class="desc-reino">A Bruxa da Tabuada</span>
             </a>
 
-            <a href="https://tabuada-da-bruxinha.vercel.app/" target="_blank" rel="noopener" class="card-reino card-bruxinha-especial" onclick="tocarEfeito('bruxinha.mp3')">
+            <a href="https://tabuada-da-bruxinha.vercel.app/" class="card-reino card-bruxinha-especial" data-sound="bruxinha.mp3" target="_blank" rel="noopener">
                 <span class="emoji-reino">🧙‍♀️✨</span>
                 <span class="nome-reino">Tabuada da Bruxinha</span>
                 <span class="desc-reino">🧹 Voe na vassoura e aprenda magia matemática!</span>
@@ -187,20 +184,63 @@
     </div>
 
     <script>
+        // Configuração de áudio (inativo até primeira interação)
+        let musicaFundo = null;
+        let audioContextAcordado = false;
+
+        function initAudio() {
+            if (!audioContextAcordado) {
+                musicaFundo = new Audio('musica_fundo.ogg');
+                musicaFundo.loop = true;
+                musicaFundo.volume = 0.2;
+                audioContextAcordado = true;
+            }
+        }
+
+        function tocarEfeito(arquivo) {
+            if (!arquivo) return;
+            const audio = new Audio(arquivo);
+            audio.play().catch(e => console.log('Áudio não pôde ser reproduzido:', e));
+        }
+
+        // Função principal de navegação unificada
+        function navegarParaReino(event) {
+            const link = event.currentTarget;
+            const url = link.getAttribute('href');
+            const som = link.getAttribute('data-sound');
+            const target = link.getAttribute('target') || '_self';
+            
+            if (!url) return;
+            
+            event.preventDefault();
+            
+            if (som) {
+                tocarEfeito(som);
+            }
+            
+            // Pequeno delay para o som ter chance de iniciar
+            setTimeout(() => {
+                if (target === '_blank') {
+                    window.open(url, '_blank', 'noopener');
+                } else {
+                    window.location.href = adicionarFlagFullscreenNaUrl(url);
+                }
+            }, 50);
+        }
+
+        // Força fullscreen nas páginas de destino
+        function adicionarFlagFullscreenNaUrl(url) {
+            if (!url) return url;
+            if (url.startsWith('http')) return url; // Não modifica URLs externas
+            const flag = 'fullscreen=force';
+            return url.includes('?') ? `${url}&${flag}` : `${url}?${flag}`;
+        }
+
         window.onload = function() {
             lancarFestaMagica();
             criarParticulas();
-            configurarLinksFullscreen();
+            configurarCards();
         };
-
-        // GATILHO GLOBAL PARA TELA CHEIA NA PRIMEIRA INTERAÇÃO
-        function forcarFullscreenInteracao() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(() => {});
-            }
-        }
-        document.addEventListener('click', forcarFullscreenInteracao, { once: false });
-        document.addEventListener('touchstart', forcarFullscreenInteracao, { once: false });
 
         function lancarFestaMagica() {
             confetti({
@@ -218,51 +258,54 @@
             const simbolos = ['✨', '⭐', '🔮', '🌟', '💫', '⚡'];
             const cores = ['#d4a843', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'];
 
+            function criarParticula() {
+                const p = document.createElement('div');
+                p.className = 'particula';
+                p.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                p.style.left = Math.random() * 100 + '%';
+                p.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                p.style.color = cores[Math.floor(Math.random() * cores.length)];
+                p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+                container.appendChild(p);
+                setTimeout(() => p.remove(), 14000);
+            }
+
+            // Cria partículas periodicamente
             for (let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    const p = document.createElement('div');
-                    p.className = 'particula';
-                    p.innerText = symbolsRandom(simbolos);
-                    p.style.left = Math.random() * 100 + '%';
-                    p.style.fontSize = (Math.random() * 15 + 10) + 'px';
-                    p.style.color = cores[Math.floor(Math.random() * cores.length)];
-                    p.style.animationDuration = (Math.random() * 8 + 6) + 's';
-                    container.appendChild(p);
-                    setTimeout(() => p.remove(), 14000);
-                }, i * 400);
+                setTimeout(criarParticula, i * 400);
             }
+            
+            // Continua criando partículas
+            setInterval(criarParticula, 3000);
         }
 
-        function symbolsRandom(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
-
-        function tocarEfeito(arquivo) {
-            const audio = new Audio(arquivo);
-            audio.play().catch(() => {});
+        function configurarCards() {
+            const cards = document.querySelectorAll('.card-reino');
+            cards.forEach(card => {
+                card.addEventListener('click', navegarParaReino);
+            });
         }
 
-        function toggleTheme(e) {
-            if(e) e.stopPropagation();
-            const body = document.body;
-            const btn = document.getElementById('themeToggle');
-
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                btn.innerHTML = '☀️';
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                btn.innerHTML = '🌙';
-            }
-        }
-
-        const musicaFundo = new Audio('musica_fundo.ogg');
-        musicaFundo.loop = true;
-        musicaFundo.volume = 0.2;
-
-        function alternarMusica(e) {
-            if(e) e.stopPropagation();
+        // Música com toggle
+        function alternarMusica(event) {
+            if(event) event.stopPropagation();
+            
+            initAudio();
+            
             const btn = document.getElementById('btnMusica');
+            if (!musicaFundo) {
+                musicaFundo = new Audio('musica_fundo.ogg');
+                musicaFundo.loop = true;
+                musicaFundo.volume = 0.2;
+            }
+            
             if (musicaFundo.paused) {
-                musicaFundo.play().catch(()=>{});
+                musicaFundo.play().catch(e => {
+                    console.log('Não foi possível tocar música:', e);
+                    btn.innerHTML = `🎵 MÚSICA OFF`;
+                    btn.style.background = "rgba(212, 168, 67, 0.2)";
+                    btn.style.color = "var(--ouro-real)";
+                });
                 btn.innerHTML = `🎵 MÚSICA ON`;
                 btn.style.background = "rgba(212, 168, 67, 0.5)";
                 btn.style.color = "#fff";
@@ -274,13 +317,14 @@
             }
         }
 
+        // Fullscreen
         let isFullscreenActive = false;
         const fullscreenBtn = document.getElementById('fullscreenBtn');
 
-        function toggleFullScreen(e) {
-            if(e) e.stopPropagation();
+        function toggleFullScreen(event) {
+            if(event) event.stopPropagation();
             if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(() => {});
+                document.documentElement.requestFullscreen().catch(e => console.log('Erro ao entrar em tela cheia:', e));
             } else {
                 document.exitFullscreen();
             }
@@ -294,42 +338,22 @@
             }
         }
 
-        function adicionarFlagFullscreenNaUrl(url) {
-            if (!url) return url;
-            const flag = 'fullscreen=force';
-            return url.includes('?') ? `${url}&${flag}` : `${url}?${flag}`;
+        // Ativa fullscreen na primeira interação (opcional, mas mantido)
+        function ativarFullscreenNaInteracao() {
+            if (!document.fullscreenElement && window.innerWidth < 768) {
+                document.documentElement.requestFullscreen().catch(() => {});
+            }
         }
-
-        // FORÇA A INJEÇÃO DA FLAG DE FULLSCREEN NOS LINKS DA VERCEL E OUTROS REINOS
-        function configurarLinksFullscreen() {
-            const links = document.querySelectorAll('.card-reino');
-            links.forEach(link => {
-                link.addEventListener('click', function(e) {
-                    const urlOriginal = link.getAttribute('href');
-                    if (!urlOriginal) return;
-
-                    e.preventDefault();
-                    let novaUrl = adicionarFlagFullscreenNaUrl(urlOriginal);
-                    const targetOriginal = link.getAttribute('target') || '_self';
-
-                    // Executa o áudio do clique nativo
-                    const onclickAttr = link.getAttribute('onclick');
-                    if (onclickAttr && onclickAttr.includes('tocarEfeito')) {
-                        const match = onclickAttr.match(/tocarEfeito\(['"]([^'"]+)['"]\)/);
-                        if (match && match[1]) tocarEfeito(match[1]);
-                    }
-
-                    if (targetOriginal === '_blank') {
-                        window.open(novaUrl, '_blank', 'noopener');
-                    } else {
-                        window.location.href = novaUrl;
-                    }
-                });
-            });
-        }
-
+        
+        document.addEventListener('click', ativarFullscreenNaInteracao, { once: true });
+        document.addEventListener('touchstart', ativarFullscreenNaInteracao, { once: true });
+        
         document.addEventListener('fullscreenchange', updateFullscreenState);
         updateFullscreenState();
+
+        // Expor funções globalmente para os botões
+        window.alternarMusica = alternarMusica;
+        window.toggleFullScreen = toggleFullScreen;
     </script>
 </body>
 </html>
