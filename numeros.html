@@ -2,101 +2,85 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>🎃 Reino dos Números - Halloween</title>
-    <link href="https://fonts.googleapis.com/css2?family=Creepster&family=Nunito:wght@700;900&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>🎃 Reino dos Números - Jornada das Letras</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Creepster&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
-
+        :root {
+            --ouro-real: #d4a843;
+            --roxo-magia: #6b2d8e;
+            --laranja-halloween: #ff6b35;
+            --marrom-antigo: #5d3a1a;
+            --branco-perola: #fff8f0;
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        
         body {
             font-family: 'Nunito', sans-serif;
-            background: #0d0d1a;
-            text-align: center;
-            padding: 20px;
-            color: #e8dcc8;
+            background: linear-gradient(135deg, #0d0d1a 0%, #1a0a2e 50%, #0d0d1a 100%);
+            color: var(--branco-perola);
             min-height: 100vh;
             overflow-x: hidden;
             position: relative;
         }
-
-        /* Fundo com estrelas cintilantes */
+        
+        /* Fundo com estrelas cintilantes estilo menu principal */
         body::before {
-            content: "";
+            content: '';
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: 
-                radial-gradient(2px 2px at 20px 30px, #fff, transparent),
-                radial-gradient(2px 2px at 40px 70px, rgba(255,200,100,0.8), transparent),
-                radial-gradient(1px 1px at 90px 40px, #fff, transparent),
-                radial-gradient(2px 2px at 160px 120px, rgba(255,150,50,0.6), transparent),
-                radial-gradient(1px 1px at 230px 80px, #fff, transparent),
-                radial-gradient(2px 2px at 300px 20px, rgba(255,200,100,0.8), transparent),
-                radial-gradient(1px 1px at 350px 150px, #fff, transparent),
-                radial-gradient(2px 2px at 450px 60px, rgba(255,150,50,0.6), transparent),
-                radial-gradient(1px 1px at 520px 180px, #fff, transparent),
-                radial-gradient(2px 2px at 600px 40px, rgba(255,200,100,0.8), transparent),
-                radial-gradient(1px 1px at 680px 120px, #fff, transparent),
-                radial-gradient(2px 2px at 750px 90px, rgba(255,150,50,0.6), transparent),
-                radial-gradient(1px 1px at 820px 30px, #fff, transparent),
-                radial-gradient(2px 2px at 900px 160px, rgba(255,200,100,0.8), transparent);
-            background-size: 950px 200px;
-            animation: twinkle 4s ease-in-out infinite alternate;
-            pointer-events: none;
+            inset: 0;
             z-index: 0;
+            pointer-events: none;
+            background: 
+                radial-gradient(2px 2px at 10% 20%, #fff, transparent),
+                radial-gradient(2px 2px at 30% 60%, rgba(255,220,150,0.8), transparent),
+                radial-gradient(1px 1px at 50% 10%, #fff, transparent),
+                radial-gradient(2px 2px at 70% 40%, rgba(255,200,100,0.6), transparent),
+                radial-gradient(1px 1px at 90% 80%, #fff, transparent),
+                radial-gradient(2px 2px at 20% 80%, rgba(255,220,150,0.7), transparent),
+                radial-gradient(1px 1px at 60% 90%, #fff, transparent),
+                radial-gradient(2px 2px at 80% 15%, rgba(255,200,100,0.5), transparent),
+                radial-gradient(1px 1px at 40% 30%, #fff, transparent),
+                radial-gradient(2px 2px at 15% 50%, rgba(255,220,150,0.6), transparent);
+            background-size: 100% 100%;
+            animation: cintilar 3s ease-in-out infinite alternate;
         }
-
-        @keyframes twinkle {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        /* Lua */
-        .lua {
+        
+        @keyframes cintilar { 0% { opacity: 0.6; } 100% { opacity: 1; } }
+        
+        /* Lua mágica */
+        .lua-magica {
             position: fixed;
-            top: 30px;
-            right: 40px;
-            width: 80px;
-            height: 80px;
-            background: radial-gradient(circle at 30% 30%, #fff8dc, #ffd700);
+            top: 20px; right: 30px;
+            width: 70px; height: 70px;
+            background: radial-gradient(circle at 35% 35%, #fff8e7, #f0e68c);
             border-radius: 50%;
-            box-shadow: 0 0 40px rgba(255, 215, 0, 0.4), 0 0 80px rgba(255, 215, 0, 0.2);
-            z-index: 1;
-            animation: luaPulse 3s ease-in-out infinite;
+            box-shadow: 0 0 30px rgba(240, 230, 140, 0.5), 0 0 60px rgba(240, 230, 140, 0.3), inset -10px -10px 20px rgba(200, 180, 100, 0.3);
+            z-index: 2;
+            animation: luaBrilho 4s ease-in-out infinite;
         }
-        .lua::before {
-            content: "";
-            position: absolute;
-            top: 15px; left: 20px;
-            width: 12px; height: 12px;
-            background: rgba(180, 160, 100, 0.3);
-            border-radius: 50%;
-        }
-        .lua::after {
-            content: "";
-            position: absolute;
-            top: 35px; left: 45px;
-            width: 8px; height: 8px;
-            background: rgba(180, 160, 100, 0.2);
-            border-radius: 50%;
-        }
-        @keyframes luaPulse {
-            0%, 100% { box-shadow: 0 0 40px rgba(255, 215, 0, 0.4), 0 0 80px rgba(255, 215, 0, 0.2); }
-            50% { box-shadow: 0 0 60px rgba(255, 215, 0, 0.6), 0 0 100px rgba(255, 215, 0, 0.3); }
-        }
-
+        
+        .lua-magica::before { content: ""; position: absolute; top: 12px; left: 18px; width: 10px; height: 10px; background: rgba(180, 160, 100, 0.25); border-radius: 50%; }
+        .lua-magica::after { content: ""; position: absolute; top: 30px; left: 40px; width: 6px; height: 6px; background: rgba(180, 160, 100, 0.2); border-radius: 50%; }
+        
+        @keyframes luaBrilho { 0%, 100% { box-shadow: 0 0 30px rgba(240, 230, 140, 0.5), 0 0 60px rgba(240, 230, 140, 0.3); } 50% { box-shadow: 0 0 50px rgba(240, 230, 140, 0.7), 0 0 90px rgba(240, 230, 140, 0.4); } }
+        
         /* Morcegos voando */
         .morcego {
             position: fixed;
-            font-size: 24px;
+            font-size: 28px;
             z-index: 2;
             pointer-events: none;
             animation: voar 12s linear infinite;
             filter: drop-shadow(0 0 5px rgba(0,0,0,0.8));
         }
-        .morcego:nth-child(1) { top: 10%; animation-delay: 0s; animation-duration: 15s; }
-        .morcego:nth-child(2) { top: 25%; animation-delay: -5s; animation-duration: 18s; }
-        .morcego:nth-child(3) { top: 15%; animation-delay: -10s; animation-duration: 14s; }
-        .morcego:nth-child(4) { top: 35%; animation-delay: -3s; animation-duration: 16s; }
+        .morcego:nth-child(2) { top: 15%; animation-delay: 0s; animation-duration: 15s; }
+        .morcego:nth-child(3) { top: 30%; animation-delay: -5s; animation-duration: 18s; }
+        .morcego:nth-child(4) { top: 20%; animation-delay: -10s; animation-duration: 14s; }
+        .morcego:nth-child(5) { top: 45%; animation-delay: -3s; animation-duration: 16s; }
+        .morcego:nth-child(6) { top: 60%; animation-delay: -7s; animation-duration: 20s; }
 
         @keyframes voar {
             0% { left: -50px; transform: translateY(0) rotate(0deg); }
@@ -105,33 +89,86 @@
             75% { transform: translateY(-15px) rotate(3deg); }
             100% { left: 110%; transform: translateY(0) rotate(0deg); }
         }
-
-        /* Teias de aranha nos cantos */
-        .teia {
-            position: fixed;
-            width: 120px;
-            height: 120px;
-            pointer-events: none;
-            z-index: 1;
-            opacity: 0.3;
+        
+        /* Header com barra superior igual ao menu principal */
+        .header {
+            position: relative;
+            z-index: 50;
+            padding: 12px 16px;
+            background: linear-gradient(180deg, rgba(13,13,26,0.95) 0%, rgba(13,13,26,0.7) 100%);
+            border-bottom: 2px solid var(--ouro-real);
+            backdrop-filter: blur(8px);
         }
-        .teia-esq { top: 0; left: 0; }
-        .teia-dir { top: 0; right: 0; transform: scaleX(-1); }
-
-        /* Container principal */
-        .hub-container {
-            max-width: 850px;
+        
+        .header-inner {
+            max-width: 1200px;
             margin: 0 auto;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        
+        .header-botoes {
+            display: flex;
+            gap: 12px;
+            align-items: center;
+        }
+        
+        /* Botão voltar dourado cintilante */
+        .btn-voltar-dourado {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--ouro-real), #b8860b);
+            border: 2px solid #fff;
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            color: #1a0a2e;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(212, 168, 67, 0.4);
+            animation: brilhoDourado 1.5s ease-in-out infinite;
+        }
+        
+        .btn-voltar-dourado:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(212, 168, 67, 0.8);
+            background: linear-gradient(135deg, #e8c060, #d4a843);
+        }
+        
+        @keyframes brilhoDourado {
+            0%, 100% { box-shadow: 0 0 15px rgba(212, 168, 67, 0.4); border-color: #fff; }
+            50% { box-shadow: 0 0 30px rgba(212, 168, 67, 0.8); border-color: #ffe6a3; }
+        }
+        
+        .saudacao-real {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--ouro-real);
+            text-shadow: 0 0 10px rgba(212, 168, 67, 0.5);
+        }
+        
+        /* Container principal */
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
             position: relative;
             z-index: 10;
         }
-
+        
         /* Título estilo Halloween */
-        h1 {
+        .titulo-reino {
             font-family: 'Creepster', cursive;
-            font-size: 3.5rem;
+            font-size: clamp(2rem, 8vw, 3.8rem);
+            text-align: center;
             margin-bottom: 10px;
-            color: #ff6b35;
+            color: var(--laranja-halloween);
             text-shadow: 
                 0 0 10px rgba(255, 107, 53, 0.8),
                 0 0 30px rgba(255, 107, 53, 0.4),
@@ -140,47 +177,46 @@
             animation: titleGlow 2s ease-in-out infinite alternate;
             letter-spacing: 3px;
         }
+        
         @keyframes titleGlow {
             0% { text-shadow: 0 0 10px rgba(255, 107, 53, 0.8), 0 0 30px rgba(255, 107, 53, 0.4), 3px 3px 0 #8b0000, -1px -1px 0 #000; }
             100% { text-shadow: 0 0 20px rgba(255, 107, 53, 1), 0 0 50px rgba(255, 107, 53, 0.6), 3px 3px 0 #8b0000, -1px -1px 0 #000; }
         }
-
-        .subtitulo {
-            font-size: 1.1rem;
-            color: #a08060;
+        
+        .subtitulo-magico {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(16px, 4vw, 22px);
+            text-align: center;
+            color: rgba(255, 255, 255, 0.8);
             margin-bottom: 40px;
-            font-weight: 700;
             text-shadow: 1px 1px 2px rgba(0,0,0,0.5);
         }
-
+        
         /* Grid de cards */
-        .grid-menu {
+        .grid-cards {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
             gap: 25px;
-            margin-bottom: 30px;
+            margin-bottom: 40px;
         }
-
-        /* Cards estilo Halloween */
+        
+        /* Cards estilo Halloween com sombras iguais ao menu principal */
         .card-aula {
             background: linear-gradient(145deg, #1a1a2e, #16213e);
             border-radius: 20px;
-            padding: 30px 20px;
+            padding: 25px 20px;
             border: 3px solid;
             text-decoration: none;
-            color: #e8dcc8;
+            color: var(--branco-perola);
             transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
-            box-shadow: 
-                0 8px 0 rgba(0,0,0,0.5),
-                0 0 20px rgba(255, 107, 53, 0.1),
-                inset 0 1px 0 rgba(255,255,255,0.05);
+            box-shadow: 0 8px 0 rgba(0,0,0,0.5), 0 0 20px rgba(255, 107, 53, 0.1), inset 0 1px 0 rgba(255,255,255,0.05);
             display: flex;
             flex-direction: column;
             align-items: center;
             position: relative;
             overflow: hidden;
         }
-
+        
         .card-aula::before {
             content: "";
             position: absolute;
@@ -191,74 +227,36 @@
             background: radial-gradient(circle, rgba(255,107,53,0.08) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.3s;
-            pointer-events: none;
         }
-
-        .card-aula:hover::before {
-            opacity: 1;
-        }
-
+        
+        .card-aula:hover::before { opacity: 1; }
+        
         .card-aula:hover {
             transform: translateY(-8px) scale(1.02);
-            box-shadow: 
-                0 15px 0 rgba(0,0,0,0.4),
-                0 0 30px rgba(255, 107, 53, 0.3),
-                inset 0 1px 0 rgba(255,255,255,0.1);
+            box-shadow: 0 15px 0 rgba(0,0,0,0.4), 0 0 30px rgba(255, 107, 53, 0.4), inset 0 1px 0 rgba(255,255,255,0.1);
         }
-
+        
         .card-aula:active {
             transform: translateY(4px) scale(0.98);
             box-shadow: 0 3px 0 rgba(0,0,0,0.5);
         }
-
+        
         /* Cores específicas dos cards */
         .card-aula:nth-child(1) { border-color: #ff6b35; }
-        .card-aula:nth-child(1):hover { box-shadow: 0 15px 0 rgba(0,0,0,0.4), 0 0 30px rgba(255, 107, 53, 0.4); }
-
         .card-aula:nth-child(2) { border-color: #9d4edd; }
-        .card-aula:nth-child(2):hover { box-shadow: 0 15px 0 rgba(0,0,0,0.4), 0 0 30px rgba(157, 78, 221, 0.4); }
-
         .card-aula:nth-child(3) { border-color: #2ec4b6; }
-        .card-aula:nth-child(3):hover { box-shadow: 0 15px 0 rgba(0,0,0,0.4), 0 0 30px rgba(46, 196, 182, 0.4); }
-
-        /* Card especial da Bruxinha */
-        .card-bruxinha {
-            background: linear-gradient(145deg, #2d0a31, #1a0520);
-            border-color: #e0aaff !important;
-            grid-column: 1 / -1;
-            max-width: 400px;
-            margin: 0 auto;
-            position: relative;
-        }
-        .card-bruxinha::after {
-            content: "🧙‍♀️";
-            position: absolute;
-            top: -15px;
-            right: 20px;
-            font-size: 40px;
-            animation: flutuarBruxa 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 10px rgba(224, 170, 255, 0.5));
-        }
-        @keyframes flutuarBruxa {
-            0%, 100% { transform: translateY(0) rotate(-5deg); }
-            50% { transform: translateY(-10px) rotate(5deg); }
-        }
-        .card-bruxinha:hover {
-            box-shadow: 0 15px 0 rgba(0,0,0,0.4), 0 0 40px rgba(224, 170, 255, 0.4) !important;
-        }
-        .card-bruxinha .icon { font-size: 55px; }
-        .card-bruxinha .card-title { color: #e0aaff; }
-
+        
         .icon {
-            font-size: 50px;
+            font-size: 55px;
             margin-bottom: 15px;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.5));
             transition: transform 0.3s;
         }
+        
         .card-aula:hover .icon {
-            transform: scale(1.15) rotate(-3deg);
+            transform: scale(1.15) rotate(-5deg);
         }
-
+        
         .card-title {
             font-family: 'Creepster', cursive;
             font-size: 22px;
@@ -266,116 +264,232 @@
             color: #ff6b35;
             letter-spacing: 1px;
         }
-
+        
         .card-desc {
             font-size: 14px;
-            opacity: 0.75;
+            opacity: 0.85;
             line-height: 1.5;
-            font-weight: 700;
+            font-weight: 600;
+            text-align: center;
         }
-
-        /* Link de voltar estilo Halloween */
-        .voltar-link {
-            display: inline-block;
-            font-weight: 900;
-            color: #a08060;
-            text-decoration: none;
-            padding: 12px 25px;
-            border-radius: 30px;
-            border: 2px solid #5d4037;
-            background: rgba(0,0,0,0.3);
-            transition: all 0.3s;
-            margin-top: 20px;
-            font-size: 1rem;
+        
+        /* Card especial da Bruxinha */
+        .card-bruxinha {
+            background: linear-gradient(145deg, #2d0a31, #1a0520);
+            border-color: #e0aaff !important;
+            grid-column: 1 / -1;
+            position: relative;
         }
-        .voltar-link:hover {
-            color: #ff6b35;
-            border-color: #ff6b35;
-            background: rgba(255, 107, 53, 0.1);
-            box-shadow: 0 0 20px rgba(255, 107, 53, 0.2);
+        
+        .card-bruxinha::after {
+            content: "🧙‍♀️";
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            font-size: 42px;
+            animation: flutuarBruxa 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(224, 170, 255, 0.5));
         }
-
+        
+        @keyframes flutuarBruxa {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        .card-bruxinha:hover {
+            box-shadow: 0 15px 0 rgba(0,0,0,0.4), 0 0 40px rgba(224, 170, 255, 0.4) !important;
+        }
+        
+        .card-bruxinha .icon { font-size: 60px; }
+        .card-bruxinha .card-title { color: #e0aaff; }
+        
         /* Abóboras decorativas no rodapé */
         .decoracao-rodape {
-            margin-top: 40px;
-            font-size: 30px;
+            text-align: center;
+            margin-top: 30px;
+            font-size: 28px;
             opacity: 0.6;
-            letter-spacing: 15px;
+            letter-spacing: 12px;
         }
-
+        
+        /* Teias de aranha decorativas */
+        .teia {
+            position: fixed;
+            width: 150px;
+            height: 150px;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.25;
+        }
+        .teia-esq { bottom: 0; left: 0; }
+        .teia-dir { bottom: 0; right: 0; transform: scaleX(-1); }
+        
+        /* Partículas flutuantes */
+        .particula {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: flutuarParticula linear infinite;
+            opacity: 0.6;
+            font-size: 20px;
+        }
+        
+        @keyframes flutuarParticula {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+        }
+        
         /* Responsivo */
-        @media (max-width: 600px) {
-            h1 { font-size: 2.2rem; }
-            .card-aula { padding: 25px 15px; }
-            .icon { font-size: 40px; }
+        @media (max-width: 640px) {
+            .container { padding: 20px 15px; }
+            .grid-cards { gap: 18px; }
+            .card-aula { padding: 20px 15px; }
+            .icon { font-size: 42px; }
             .card-title { font-size: 18px; }
-            .lua { width: 50px; height: 50px; top: 15px; right: 15px; }
+            .lua-magica { width: 50px; height: 50px; top: 10px; right: 15px; }
+            .btn-voltar-dourado { padding: 6px 15px; font-size: 12px; }
+            .saudacao-real { font-size: 12px; }
         }
     </style>
-<base target="_blank">
 </head>
 <body>
 
-    <!-- Lua -->
-    <div class="lua"></div>
-
+    <!-- Lua mágica -->
+    <div class="lua-magica"></div>
+    
     <!-- Morcegos voando -->
     <div class="morcego">🦇</div>
     <div class="morcego">🦇</div>
     <div class="morcego">🦇</div>
     <div class="morcego">🦇</div>
-
+    <div class="morcego">🦇</div>
+    <div class="morcego">🦇</div>
+    
     <!-- Teias de aranha -->
-    <svg class="teia teia-esq" viewBox="0 0 120 120">
-        <path d="M0,0 L120,120 M0,20 L100,120 M0,40 L80,120 M0,60 L60,120 M0,80 L40,120 M0,100 L20,120" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/>
-        <path d="M20,0 L120,100 M40,0 L120,80 M60,0 L120,60 M80,0 L120,40 M100,0 L120,20" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/>
-        <path d="M0,0 Q60,60 120,0" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
-        <path d="M0,40 Q60,80 120,40" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
-        <path d="M0,80 Q60,100 120,80" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+    <svg class="teia teia-esq" viewBox="0 0 150 150">
+        <path d="M0,150 L150,0 M0,130 L130,0 M0,110 L110,0 M0,90 L90,0 M0,70 L70,0 M0,50 L50,0 M0,30 L30,0" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+        <path d="M30,150 L150,30 M50,150 L150,50 M70,150 L150,70 M90,150 L150,90 M110,150 L150,110 M130,150 L150,130" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+        <path d="M0,0 Q75,75 150,150" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+        <path d="M0,50 Q75,100 150,150" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
     </svg>
-    <svg class="teia teia-dir" viewBox="0 0 120 120">
-        <path d="M0,0 L120,120 M0,20 L100,120 M0,40 L80,120 M0,60 L60,120 M0,80 L40,120 M0,100 L20,120" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/>
-        <path d="M20,0 L120,100 M40,0 L120,80 M60,0 L120,60 M80,0 L120,40 M100,0 L120,20" stroke="rgba(255,255,255,0.3)" stroke-width="1" fill="none"/>
-        <path d="M0,0 Q60,60 120,0" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
-        <path d="M0,40 Q60,80 120,40" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
-        <path d="M0,80 Q60,100 120,80" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+    <svg class="teia teia-dir" viewBox="0 0 150 150">
+        <path d="M0,150 L150,0 M0,130 L130,0 M0,110 L110,0 M0,90 L90,0 M0,70 L70,0 M0,50 L50,0 M0,30 L30,0" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+        <path d="M30,150 L150,30 M50,150 L150,50 M70,150 L150,70 M90,150 L150,90 M110,150 L150,110 M130,150 L150,130" stroke="rgba(255,255,255,0.3)" stroke-width="1.5" fill="none"/>
+        <path d="M0,0 Q75,75 150,150" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
+        <path d="M0,50 Q75,100 150,150" stroke="rgba(255,255,255,0.2)" stroke-width="1" fill="none"/>
     </svg>
-
-    <div class="hub-container">
-        <h1>🎃 Reino dos Números</h1>
-        <p class="subtitulo">✨ Uma jornada mágica pelo mundo dos números... cuidado com os fantasmas! 👻</p>
-
-        <div class="grid-menu">
+    
+    <div id="particulas-container"></div>
+    
+    <!-- Header com barra superior igual ao menu principal -->
+    <header class="header">
+        <div class="header-inner">
+            <div class="header-botoes">
+                <a href="index.html" class="btn-voltar-dourado">
+                    ← ✨ Voltar aos Reinos ✨
+                </a>
+            </div>
+            <span class="saudacao-real">🎃 Reino dos Números 🧙‍♀️</span>
+        </div>
+    </header>
+    
+    <div class="container">
+        <h1 class="titulo-reino">🎃 Reino dos Números</h1>
+        <p class="subtitulo-magico">✨ Uma jornada mágica pelo mundo dos números... cuidado com os fantasmas! 👻</p>
+        
+        <div class="grid-cards">
             <a href="aprender_contar.html" class="card-aula">
                 <div class="icon">📖</div>
                 <div class="card-title">1. Conte de 0 a 10</div>
                 <div class="card-desc">Clique nos números para ver e ouvir as quantidades.</div>
             </a>
+            
             <a href="desafio_quanto_tem.html" class="card-aula">
                 <div class="icon">🎯</div>
                 <div class="card-title">2. Quanto tem aqui?</div>
                 <div class="card-desc">Conte os desenhos e escolha o número certo.</div>
             </a>
+            
             <a href="jogo_transformar.html" class="card-aula">
                 <div class="icon">🎨</div>
                 <div class="card-title">3. Fábrica de Quantidades</div>
                 <div class="card-desc">Arraste os itens para formar o número pedido!</div>
             </a>
-
+            
             <!-- Card especial da Tabuada da Bruxinha -->
             <a href="https://tabuada-da-bruxinha.vercel.app/" target="_blank" rel="noopener" class="card-aula card-bruxinha">
-                <div class="icon">🧙‍♀️</div>
+                <div class="icon">🧙‍♀️✨</div>
                 <div class="card-title">Tabuada da Bruxinha</div>
-                <div class="card-desc">🧹 Voe na vassoura e aprenda a tabuada com a bruxinha mais divertida! ✨</div>
+                <div class="card-desc">🧹 Voe na vassoura e aprenda a tabuada com a bruxinha mais divertida!</div>
             </a>
         </div>
-
-        <a href="index.html" class="voltar-link">⬅ Voltar ao Início</a>
-
+        
         <div class="decoracao-rodape">
-            🎃 🦇 🕷️ 👻 🎃 🦇 🕷️ 👻
+            🎃 🦇 🕷️ 👻 🧙‍♀️ 🎃 🦇 🕷️ 👻
         </div>
     </div>
-
+    
+    <script>
+        // Criar partículas flutuantes estilo menu principal
+        function criarParticulas() {
+            const container = document.getElementById('particulas-container');
+            if (!container) return;
+            
+            const simbolos = ['✨', '⭐', '🔮', '🌟', '💫', '🎃', '🦇', '👻'];
+            const cores = ['#d4a843', '#ff6b35', '#9d4edd', '#2ec4b6', '#e0aaff'];
+            
+            function criarParticula() {
+                const p = document.createElement('div');
+                p.className = 'particula';
+                p.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                p.style.left = Math.random() * 100 + '%';
+                p.style.fontSize = (Math.random() * 18 + 12) + 'px';
+                p.style.color = cores[Math.floor(Math.random() * cores.length)];
+                p.style.animationDuration = (Math.random() * 10 + 8) + 's';
+                p.style.animationDelay = Math.random() * 5 + 's';
+                container.appendChild(p);
+                setTimeout(() => p.remove(), 15000);
+            }
+            
+            // Criar partículas iniciais
+            for (let i = 0; i < 20; i++) {
+                setTimeout(criarParticula, i * 300);
+            }
+            
+            // Continuar criando partículas
+            setInterval(criarParticula, 3500);
+        }
+        
+        // Iniciar animações quando a página carregar
+        window.addEventListener('load', function() {
+            criarParticulas();
+            
+            // Pequena surpresa - confetti sutil de boas-vindas
+            if (typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 40,
+                    spread: 70,
+                    origin: { y: 0.6 },
+                    colors: ['#d4a843', '#ff6b35', '#9d4edd', '#2ec4b6'],
+                    scalar: 0.8
+                });
+            }
+        });
+        
+        // Adicionar efeito sonoro opcional ao clicar nos cards (se disponível)
+        function tocarSomCard() {
+            // Som opcional - pode ser adicionado depois
+        }
+        
+        // Garantir que links externos abram em nova aba
+        document.querySelectorAll('a[target="_blank"]').forEach(link => {
+            link.setAttribute('rel', 'noopener noreferrer');
+        });
+    </script>
+    
+    <!-- Canvas Confetti opcional para efeitos -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </body>
 </html>
