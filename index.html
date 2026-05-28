@@ -184,17 +184,18 @@
     </div>
 
     <script>
-        // Configuração de áudio (inativo até primeira interação)
+        // Configuração de áudio
         let musicaFundo = null;
-        let audioContextAcordado = false;
+        let musicaInicializada = false;
 
-        function initAudio() {
-            if (!audioContextAcordado) {
+        function initMusica() {
+            if (!musicaInicializada) {
                 musicaFundo = new Audio('musica_fundo.ogg');
                 musicaFundo.loop = true;
                 musicaFundo.volume = 0.2;
-                audioContextAcordado = true;
+                musicaInicializada = true;
             }
+            return musicaFundo;
         }
 
         function tocarEfeito(arquivo) {
@@ -231,7 +232,7 @@
         // Força fullscreen nas páginas de destino
         function adicionarFlagFullscreenNaUrl(url) {
             if (!url) return url;
-            if (url.startsWith('http')) return url; // Não modifica URLs externas
+            if (url.startsWith('http')) return url;
             const flag = 'fullscreen=force';
             return url.includes('?') ? `${url}&${flag}` : `${url}?${flag}`;
         }
@@ -240,21 +241,40 @@
             lancarFestaMagica();
             criarParticulas();
             configurarCards();
+            configurarBotoes();
         };
+        
+        function configurarBotoes() {
+            // Configurar botão de música
+            const btnMusica = document.getElementById('btnMusica');
+            if (btnMusica) {
+                btnMusica.addEventListener('click', alternarMusica);
+            }
+            
+            // Configurar botão de fullscreen
+            const btnFullscreen = document.getElementById('fullscreenBtn');
+            if (btnFullscreen) {
+                btnFullscreen.addEventListener('click', toggleFullScreen);
+            }
+        }
 
         function lancarFestaMagica() {
-            confetti({
-                particleCount: 80,
-                spread: 100,
-                origin: { y: 0.5 },
-                colors: ['#d4a843', '#f0e68c', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'],
-                shapes: ['circle', 'square'],
-                scalar: 1.2
-            });
+            if (typeof confetti !== 'undefined') {
+                confetti({
+                    particleCount: 80,
+                    spread: 100,
+                    origin: { y: 0.5 },
+                    colors: ['#d4a843', '#f0e68c', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'],
+                    shapes: ['circle', 'square'],
+                    scalar: 1.2
+                });
+            }
         }
 
         function criarParticulas() {
             const container = document.getElementById('particulas-container');
+            if (!container) return;
+            
             const simbolos = ['✨', '⭐', '🔮', '🌟', '💫', '⚡'];
             const cores = ['#d4a843', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'];
 
@@ -270,12 +290,10 @@
                 setTimeout(() => p.remove(), 14000);
             }
 
-            // Cria partículas periodicamente
             for (let i = 0; i < 15; i++) {
                 setTimeout(criarParticula, i * 400);
             }
             
-            // Continua criando partículas
             setInterval(criarParticula, 3000);
         }
 
@@ -286,74 +304,54 @@
             });
         }
 
-        // Música com toggle
+        // Função para alternar música
         function alternarMusica(event) {
             if(event) event.stopPropagation();
             
-            initAudio();
-            
+            const musica = initMusica();
             const btn = document.getElementById('btnMusica');
-            if (!musicaFundo) {
-                musicaFundo = new Audio('musica_fundo.ogg');
-                musicaFundo.loop = true;
-                musicaFundo.volume = 0.2;
-            }
             
-            if (musicaFundo.paused) {
-                musicaFundo.play().catch(e => {
+            if (musica.paused) {
+                musica.play().catch(e => {
                     console.log('Não foi possível tocar música:', e);
-                    btn.innerHTML = `🎵 MÚSICA OFF`;
-                    btn.style.background = "rgba(212, 168, 67, 0.2)";
-                    btn.style.color = "var(--ouro-real)";
                 });
                 btn.innerHTML = `🎵 MÚSICA ON`;
                 btn.style.background = "rgba(212, 168, 67, 0.5)";
                 btn.style.color = "#fff";
             } else {
-                musicaFundo.pause();
+                musica.pause();
                 btn.innerHTML = `🎵 MÚSICA OFF`;
                 btn.style.background = "rgba(212, 168, 67, 0.2)";
                 btn.style.color = "var(--ouro-real)";
             }
         }
 
-        // Fullscreen
-        let isFullscreenActive = false;
-        const fullscreenBtn = document.getElementById('fullscreenBtn');
-
+        // Função para alternar tela cheia
         function toggleFullScreen(event) {
             if(event) event.stopPropagation();
+            
             if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(e => console.log('Erro ao entrar em tela cheia:', e));
+                document.documentElement.requestFullscreen().catch(e => {
+                    console.log('Erro ao entrar em tela cheia:', e);
+                });
             } else {
-                document.exitFullscreen();
+                document.exitFullscreen().catch(e => {
+                    console.log('Erro ao sair da tela cheia:', e);
+                });
             }
         }
 
         function updateFullscreenState() {
-            isFullscreenActive = !!document.fullscreenElement;
+            const fullscreenBtn = document.getElementById('fullscreenBtn');
             if (fullscreenBtn) {
-                fullscreenBtn.innerHTML = isFullscreenActive ? '✖' : '⛶';
-                fullscreenBtn.style.background = isFullscreenActive ? '#9c1460' : 'linear-gradient(135deg, var(--azul-netuno), #0d3a5c)';
+                const isFullscreen = !!document.fullscreenElement;
+                fullscreenBtn.innerHTML = isFullscreen ? '✖' : '⛶';
+                fullscreenBtn.style.background = isFullscreen ? '#9c1460' : 'linear-gradient(135deg, var(--azul-netuno), #0d3a5c)';
             }
         }
-
-        // Ativa fullscreen na primeira interação (opcional, mas mantido)
-        function ativarFullscreenNaInteracao() {
-            if (!document.fullscreenElement && window.innerWidth < 768) {
-                document.documentElement.requestFullscreen().catch(() => {});
-            }
-        }
-        
-        document.addEventListener('click', ativarFullscreenNaInteracao, { once: true });
-        document.addEventListener('touchstart', ativarFullscreenNaInteracao, { once: true });
         
         document.addEventListener('fullscreenchange', updateFullscreenState);
         updateFullscreenState();
-
-        // Expor funções globalmente para os botões
-        window.alternarMusica = alternarMusica;
-        window.toggleFullScreen = toggleFullScreen;
     </script>
 </body>
 </html>
