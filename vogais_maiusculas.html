@@ -209,10 +209,11 @@
             border: 2px solid var(--dourado-real);
             border-radius: 25px;
             padding: 15px;
-            max-width: 300px;
+            max-width: 320px;
             margin: 0 auto 15px;
-            min-height: 220px;
+            min-height: 240px;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
             backdrop-filter: blur(5px);
@@ -226,14 +227,33 @@
             color: var(--dourado-branco);
         }
         
+        .imagem-figura {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            display: none;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+        }
+        
+        .imagem-figura.ativo {
+            display: block;
+            animation: fadeInScale 0.5s ease-out;
+        }
+        
         .video-player {
             width: 100%;
+            max-width: 280px;
             border-radius: 15px;
             display: none;
         }
         
         .video-player.ativo {
             display: block;
+        }
+        
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         /* Blocos das vogais */
@@ -246,24 +266,24 @@
         }
         
         .bloco-vogal {
-            width: 60px;
-            height: 60px;
-            border-radius: 12px;
+            width: 65px;
+            height: 65px;
+            border-radius: 15px;
             border: none;
             font-family: 'Fredoka One', cursive;
-            font-size: 1.8rem;
+            font-size: 2rem;
             color: #fff;
             cursor: pointer;
-            transition: 0.2s;
+            transition: all 0.2s;
         }
         
-        .bloco-A { background: var(--coral); box-shadow: 0 5px #e05a3a; }
-        .bloco-E { background: var(--turquoise); box-shadow: 0 5px #26a8b8; }
-        .bloco-I { background: var(--lavender); box-shadow: 0 5px #8e79c0; }
-        .bloco-O { background: var(--lime); box-shadow: 0 5px #8bc34a; }
-        .bloco-U { background: var(--peach); box-shadow: 0 5px #e08060; }
+        .bloco-A { background: var(--coral); box-shadow: 0 5px #c94a2a; }
+        .bloco-E { background: var(--turquoise); box-shadow: 0 5px #1a8a98; }
+        .bloco-I { background: var(--lavender); box-shadow: 0 5px #6a5590; }
+        .bloco-O { background: var(--lime); box-shadow: 0 5px #6a9a2a; }
+        .bloco-U { background: var(--peach); box-shadow: 0 5px #c06040; }
         
-        .bloco-vogal:hover { transform: scale(1.15) rotate(3deg); }
+        .bloco-vogal:hover { transform: scale(1.1) translateY(-3px); }
         .bloco-vogal:active { transform: scale(0.95); }
 
         /* Botões de ação */
@@ -324,7 +344,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            min-height: 70px;
+            min-height: 80px;
             width: 100%;
             border: none;
             opacity: 0;
@@ -333,7 +353,7 @@
         .cubo-letra {
             color: white;
             font-family: 'Fredoka One', cursive;
-            font-size: 40px;
+            font-size: 45px;
             border-radius: 12px;
         }
         
@@ -395,22 +415,16 @@
         
         /* Responsivo */
         @media (max-width: 500px) {
-            .bloco-vogal { width: 50px; height: 50px; font-size: 1.5rem; }
+            .bloco-vogal { width: 55px; height: 55px; font-size: 1.6rem; }
             .letra-grande { font-size: 70px; }
-            .video-card { min-height: 180px; max-width: 250px; }
+            .video-card { min-height: 200px; max-width: 280px; }
             .cubo-figura img { width: 45px; height: 45px; }
-            .cubo-letra { font-size: 30px; min-height: 55px; }
+            .cubo-letra { font-size: 35px; min-height: 65px; }
             .btn-acao { padding: 10px 20px; font-size: 14px; }
             .btn-voltar-dourado { padding: 6px 15px; font-size: 12px; }
+            .imagem-figura { width: 90px; height: 90px; }
         }
         
-        @media (max-width: 400px) {
-            .blocos-container { gap: 8px; }
-            .jogo-ligacao { gap: 12px; }
-            .coluna { gap: 8px; }
-        }
-        
-        /* Esconder barra de rolagem mas manter funcionalidade */
         .stage::-webkit-scrollbar {
             width: 4px;
         }
@@ -447,15 +461,16 @@
             <div id="area-apresentacao">
                 <div class="video-card">
                     <span id="display-letra" class="letra-grande">✨</span>
+                    <img id="imagem-figura" class="imagem-figura" alt="Figura da vogal">
                     <video id="meuVideo" class="video-player" playsinline></video>
                 </div>
 
                 <div class="blocos-container">
-                    <button class="bloco-vogal bloco-A" data-letra="A" data-som="vogal_a.ogg" data-video="a_de_aviao.mp4">A</button>
-                    <button class="bloco-vogal bloco-E" data-letra="E" data-som="vogal_e.ogg" data-video="e_de_elefante.mp4">E</button>
-                    <button class="bloco-vogal bloco-I" data-letra="I" data-som="vogal_i.ogg" data-video="i_de_iguana.mp4">I</button>
-                    <button class="bloco-vogal bloco-O" data-letra="O" data-som="vogal_o.ogg" data-video="o_de_de_ovo.mp4">O</button>
-                    <button class="bloco-vogal bloco-U" data-letra="U" data-som="vogal_u.ogg" data-video="u_de_unicornio.mp4">U</button>
+                    <button class="bloco-vogal bloco-A" data-letra="A" data-som="vogal_a.ogg" data-video="a_de_aviao.mp4" data-imagem="aviao.png">A</button>
+                    <button class="bloco-vogal bloco-E" data-letra="E" data-som="vogal_e.ogg" data-video="e_de_elefante.mp4" data-imagem="elefante.png">E</button>
+                    <button class="bloco-vogal bloco-I" data-letra="I" data-som="vogal_i.ogg" data-video="i_de_iguana.mp4" data-imagem="iguana.png">I</button>
+                    <button class="bloco-vogal bloco-O" data-letra="O" data-som="vogal_o.ogg" data-video="o_de_de_ovo.mp4" data-imagem="ovo.png">O</button>
+                    <button class="bloco-vogal bloco-U" data-letra="U" data-som="vogal_u.ogg" data-video="u_de_unicornio.mp4" data-imagem="unicornio.png">U</button>
                 </div>
                 
                 <button class="btn-acao btn-iniciar" id="btnIniciar">▶ Começar Apresentação</button>
@@ -476,118 +491,122 @@
     </div>
 
     <script>
-        // ========== FULLSCREEN API ==========
-        const FS_KEY = 'reinoFullscreen';
-        
-        function isFullscreen() {
-            return !!(document.fullscreenElement || document.webkitFullscreenElement);
-        }
-        
-        function enterFullscreen() {
-            const elem = document.documentElement;
-            if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
-            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
-        }
-        
-        function exitFullscreen() {
-            if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
-            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-        }
-        
-        function toggleFullscreen() {
-            if (isFullscreen()) {
-                exitFullscreen();
-                localStorage.setItem(FS_KEY, 'false');
-            } else {
-                enterFullscreen();
-                localStorage.setItem(FS_KEY, 'true');
-            }
-            atualizarIconeFullscreen();
-        }
-        
-        function atualizarIconeFullscreen() {
-            const btn = document.getElementById('btnFullscreen');
-            if (isFullscreen()) {
-                btn.innerHTML = '✖';
-                btn.classList.add('ativo');
-                btn.title = 'Sair da Tela Cheia';
-            } else {
-                btn.innerHTML = '⛶';
-                btn.classList.remove('ativo');
-                btn.title = 'Tela Cheia';
-            }
-        }
-        
-        function setupFullscreenListeners() {
-            const events = ['fullscreenchange', 'webkitfullscreenchange'];
-            events.forEach(event => {
-                document.addEventListener(event, () => {
-                    atualizarIconeFullscreen();
-                    if (!isFullscreen()) localStorage.setItem(FS_KEY, 'false');
-                });
-            });
-        }
-        
-        function restaurarFullscreen() {
-            const deveFullscreen = localStorage.getItem(FS_KEY) === 'true';
-            if (deveFullscreen && !isFullscreen()) {
-                setTimeout(() => enterFullscreen(), 100);
-            }
-            atualizarIconeFullscreen();
-        }
-        
-        // ========== ÁUDIO E VÍDEO ==========
+        // ========== ÁUDIO ==========
         let somAtual = null;
-        let audioContextAtivo = false;
         
         function tocarSom(arquivo) {
             if (!arquivo) return;
-            if (somAtual) {
-                somAtual.pause();
-                somAtual.currentTime = 0;
-            }
-            somAtual = new Audio(arquivo);
-            somAtual.play().catch(e => console.log('Áudio aguardando interação'));
+            try {
+                if (somAtual) {
+                    somAtual.pause();
+                    somAtual.currentTime = 0;
+                }
+                somAtual = new Audio(arquivo);
+                somAtual.play().catch(e => console.log('Áudio:', e));
+            } catch(e) { console.log('Erro no áudio:', e); }
         }
         
         const coresVogais = {
             'A': '#f4845f', 'E': '#4dd0e1', 'I': '#b39ddb', 'O': '#aed581', 'U': '#ffab91'
         };
         
-        const videos = {
-            'A': 'a_de_aviao.mp4', 'E': 'e_de_elefante.mp4', 'I': 'i_de_iguana.mp4',
-            'O': 'o_de_de_ovo.mp4', 'U': 'u_de_unicornio.mp4'
-        };
-        
-        const sons = {
-            'A': 'vogal_a.ogg', 'E': 'vogal_e.ogg', 'I': 'vogal_i.ogg',
-            'O': 'vogal_o.ogg', 'U': 'vogal_u.ogg'
+        const dadosVogais = {
+            'A': { som: 'vogal_a.ogg', video: 'a_de_aviao.mp4', imagem: 'aviao.png', nome: 'A de Avião' },
+            'E': { som: 'vogal_e.ogg', video: 'e_de_elefante.mp4', imagem: 'elefante.png', nome: 'E de Elefante' },
+            'I': { som: 'vogal_i.ogg', video: 'i_de_iguana.mp4', imagem: 'iguana.png', nome: 'I de Iguana' },
+            'O': { som: 'vogal_o.ogg', video: 'o_de_de_ovo.mp4', imagem: 'ovo.png', nome: 'O de Ovo' },
+            'U': { som: 'vogal_u.ogg', video: 'u_de_unicornio.mp4', imagem: 'unicornio.png', nome: 'U de Unicórnio' }
         };
         
         function tocarVogal(letra) {
-            const player = document.getElementById('meuVideo');
             const display = document.getElementById('display-letra');
+            const imagemFigura = document.getElementById('imagem-figura');
+            const player = document.getElementById('meuVideo');
             
-            tocarSom(sons[letra]);
-            
-            display.style.display = 'none';
+            // Para qualquer mídia tocando
+            if (player && !player.paused) {
+                player.pause();
+                player.currentTime = 0;
+            }
             player.classList.remove('ativo');
+            imagemFigura.classList.remove('ativo');
+            
+            // Toca o som da vogal
+            tocarSom(dadosVogais[letra].som);
+            
+            // Mostra a letra
+            display.style.display = 'block';
+            display.style.transform = 'scale(1.1)';
+            display.innerText = letra;
+            display.style.color = coresVogais[letra];
             
             setTimeout(() => {
-                player.src = videos[letra];
-                player.classList.add('ativo');
-                player.play().catch(e => console.log('Vídeo não pode ser reproduzido'));
-            }, 300);
+                display.style.transform = 'scale(1)';
+            }, 200);
             
-            player.onended = () => {
-                player.classList.remove('ativo');
-                display.innerText = letra;
-                display.style.color = coresVogais[letra];
-                display.style.display = 'block';
-            };
+            // Após o som, mostra o vídeo
+            setTimeout(() => {
+                display.style.display = 'none';
+                player.src = dadosVogais[letra].video;
+                player.classList.add('ativo');
+                player.play().catch(e => console.log('Vídeo:', e));
+                
+                player.onended = () => {
+                    player.classList.remove('ativo');
+                    // Mostra a imagem
+                    imagemFigura.src = dadosVogais[letra].imagem;
+                    imagemFigura.classList.add('ativo');
+                    tocarSom('acerto.ogg');
+                    
+                    setTimeout(() => {
+                        imagemFigura.classList.remove('ativo');
+                        display.style.display = 'block';
+                        display.innerText = letra;
+                    }, 2000);
+                };
+            }, 1500);
             
             document.getElementById('btnProxima').style.display = 'inline-block';
-            document.getElementById('feedback').innerHTML = `✨ Letra ${letra} ✨`;
+            document.getElementById('feedback').innerHTML = `✨ ${letra} - ${dadosVogais[letra].nome} ✨`;
+        }
+        
+        function tocarVogalApresentacao(letra, callback) {
+            const display = document.getElementById('display-letra');
+            const imagemFigura = document.getElementById('imagem-figura');
+            const player = document.getElementById('meuVideo');
+            
+            if (player && !player.paused) {
+                player.pause();
+                player.currentTime = 0;
+            }
+            player.classList.remove('ativo');
+            imagemFigura.classList.remove('ativo');
+            
+            tocarSom(dadosVogais[letra].som);
+            display.style.display = 'block';
+            display.innerText = letra;
+            display.style.color = coresVogais[letra];
+            
+            setTimeout(() => {
+                display.style.display = 'none';
+                player.src = dadosVogais[letra].video;
+                player.classList.add('ativo');
+                player.play().catch(e => console.log('Vídeo:', e));
+                
+                player.onended = () => {
+                    player.classList.remove('ativo');
+                    imagemFigura.src = dadosVogais[letra].imagem;
+                    imagemFigura.classList.add('ativo');
+                    tocarSom('acerto.ogg');
+                    
+                    setTimeout(() => {
+                        imagemFigura.classList.remove('ativo');
+                        display.style.display = 'block';
+                        display.innerText = letra;
+                        if (callback) callback();
+                    }, 2000);
+                };
+            }, 1500);
         }
         
         function iniciarApresentacao() {
@@ -599,28 +618,10 @@
             
             function proximo() {
                 if (i < ordem.length) {
-                    const letra = ordem[i];
-                    const player = document.getElementById('meuVideo');
-                    const display = document.getElementById('display-letra');
-                    
-                    tocarSom(sons[letra]);
-                    display.style.display = 'none';
-                    player.classList.remove('ativo');
-                    
-                    setTimeout(() => {
-                        player.src = videos[letra];
-                        player.classList.add('ativo');
-                        player.play().catch(e => console.log('Vídeo não pode ser reproduzido'));
-                    }, 300);
-                    
-                    player.onended = () => {
-                        player.classList.remove('ativo');
-                        display.innerText = letra;
-                        display.style.color = coresVogais[letra];
-                        display.style.display = 'block';
+                    tocarVogalApresentacao(ordem[i], () => {
                         i++;
-                        setTimeout(proximo, 800);
-                    };
+                        setTimeout(proximo, 2800);
+                    });
                 } else {
                     document.getElementById('feedback').innerHTML = '📖 Maravilhoso! Agora pratique! 📖';
                     document.getElementById('btnProxima').style.display = 'inline-block';
@@ -634,12 +635,12 @@
         let escolhaFigura = null;
         let acertos = 0;
         
-        const dadosJogo = [
-            { letra: 'A', som: 'vogal_a.ogg', img: 'aviao.png', cor: '#f4845f' },
-            { letra: 'E', som: 'vogal_e.ogg', img: 'elefante.png', cor: '#4dd0e1' },
-            { letra: 'I', som: 'vogal_i.ogg', img: 'iguana.png', cor: '#b39ddb' },
-            { letra: 'O', som: 'vogal_o.ogg', img: 'ovo.png', cor: '#aed581' },
-            { letra: 'U', som: 'vogal_u.ogg', img: 'unicornio.png', cor: '#ffab91' }
+        const figurasJogo = [
+            { letra: 'A', imagem: 'aviao.png', cor: '#f4845f', som: 'vogal_a.ogg' },
+            { letra: 'E', imagem: 'elefante.png', cor: '#4dd0e1', som: 'vogal_e.ogg' },
+            { letra: 'I', imagem: 'iguana.png', cor: '#b39ddb', som: 'vogal_i.ogg' },
+            { letra: 'O', imagem: 'ovo.png', cor: '#aed581', som: 'vogal_o.ogg' },
+            { letra: 'U', imagem: 'unicornio.png', cor: '#ffab91', som: 'vogal_u.ogg' }
         ];
         
         function montarJogo() {
@@ -651,8 +652,8 @@
             escolhaLetra = null;
             escolhaFigura = null;
             
-            const letrasMisturadas = [...dadosJogo].sort(() => Math.random() - 0.5);
-            const figurasMisturadas = [...dadosJogo].sort(() => Math.random() - 0.5);
+            const letrasMisturadas = [...figurasJogo].sort(() => Math.random() - 0.5);
+            const figurasMisturadas = [...figurasJogo].sort(() => Math.random() - 0.5);
             
             letrasMisturadas.forEach((d, index) => {
                 const div = document.createElement('div');
@@ -671,7 +672,7 @@
                 const div = document.createElement('div');
                 div.className = 'item-jogo cubo-figura animar-pulo';
                 div.style.animationDelay = `${(index + 2) * 0.1}s`;
-                div.innerHTML = `<img src="${d.img}" alt="${d.letra}">`;
+                div.innerHTML = `<img src="${d.imagem}" alt="${d.letra}">`;
                 div.setAttribute('data-letra', d.letra);
                 div.setAttribute('data-som', d.som);
                 div.onclick = () => selecionarItem(div, 'figura', d.letra, d.som);
@@ -711,7 +712,7 @@
                     if (acertos === 5) {
                         document.getElementById('feedback').innerHTML = "🏆 PARABÉNS! VOCÊ COMPLETOU O REINO! 🏆";
                         document.getElementById('btnReiniciar').style.display = 'inline-block';
-                        setTimeout(() => tocarSom('fim_jogo.ogg'), 500);
+                        tocarSom('fim_jogo.ogg');
                     }
                 } else {
                     tocarSom('erro.ogg');
@@ -733,6 +734,65 @@
             montarJogo();
             document.getElementById('btnReiniciar').style.display = 'none';
             document.getElementById('feedback').innerHTML = '🔗 Ligue cada letra à sua figura! 🔗';
+            tocarSom('inicio.ogg');
+        }
+        
+        // ========== FULLSCREEN ==========
+        const FS_KEY = 'reinoFullscreen';
+        
+        function isFullscreen() {
+            return !!(document.fullscreenElement || document.webkitFullscreenElement);
+        }
+        
+        function enterFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
+            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+        }
+        
+        function exitFullscreen() {
+            if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        }
+        
+        function toggleFullscreen() {
+            if (isFullscreen()) {
+                exitFullscreen();
+                localStorage.setItem(FS_KEY, 'false');
+            } else {
+                enterFullscreen();
+                localStorage.setItem(FS_KEY, 'true');
+            }
+            atualizarIconeFullscreen();
+        }
+        
+        function atualizarIconeFullscreen() {
+            const btn = document.getElementById('btnFullscreen');
+            if (isFullscreen()) {
+                btn.innerHTML = '✖';
+                btn.classList.add('ativo');
+            } else {
+                btn.innerHTML = '⛶';
+                btn.classList.remove('ativo');
+            }
+        }
+        
+        function setupFullscreenListeners() {
+            const events = ['fullscreenchange', 'webkitfullscreenchange'];
+            events.forEach(event => {
+                document.addEventListener(event, () => {
+                    atualizarIconeFullscreen();
+                    if (!isFullscreen()) localStorage.setItem(FS_KEY, 'false');
+                });
+            });
+        }
+        
+        function restaurarFullscreen() {
+            const deveFullscreen = localStorage.getItem(FS_KEY) === 'true';
+            if (deveFullscreen && !isFullscreen()) {
+                setTimeout(() => enterFullscreen(), 100);
+            }
+            atualizarIconeFullscreen();
         }
         
         // ========== CORAÇÕES FLUTUANTES ==========
@@ -756,11 +816,10 @@
             for (let i = 0; i < 15; i++) {
                 setTimeout(adicionarCoracao, i * 400);
             }
-            
             setInterval(adicionarCoracao, 3000);
         }
         
-        // ========== CONFIGURAÇÃO DOS BOTÕES ==========
+        // ========== CONFIGURAÇÃO ==========
         function configurarBotoes() {
             const botoesVogais = document.querySelectorAll('.bloco-vogal');
             botoesVogais.forEach(btn => {
@@ -776,20 +835,13 @@
             document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
         }
         
-        // ========== INICIALIZAÇÃO ==========
         window.onload = function() {
             criarCoracoes();
             setupFullscreenListeners();
             restaurarFullscreen();
             configurarBotoes();
+            tocarSom('inicio.ogg');
         };
-        
-        // Prevenir teclado virtual em mobile (inputs não são usados)
-        document.addEventListener('touchstart', function(e) {
-            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
-                // Isso mantém o foco fora de campos de input
-            }
-        });
     </script>
 </body>
 </html>
