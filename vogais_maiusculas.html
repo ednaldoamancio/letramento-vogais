@@ -3,19 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-    <title>👸🤴 Reino das Vogais - Letras Maiúsculas</title>
+    <title>👸🤴 Reino das Vogais - Minúsculas Cursiva</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Fredoka+One&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Great+Vibes&display=swap" rel="stylesheet">
     <style>
         :root {
             --rosa-princesa: #e91e8c;
             --rosa-escuro: #9c1460;
-            --rosa-claro: #ff80c0;
             --dourado-real: #d4a843;
             --dourado-escuro: #b8860b;
             --dourado-branco: #fff8f0;
-            --noite-real: #1a0a1e;
+            --verde-jardim: #2d8e5f;
+            --verde-claro: #4caf50;
             --coral: #f4845f;
             --turquoise: #4dd0e1;
             --lavender: #b39ddb;
@@ -27,7 +27,7 @@
 
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(180deg, #2d0a1e 0%, #1a0a1e 40%, #0d0418 100%);
+            background: linear-gradient(180deg, #0a2e1a 0%, #0a1e0d 40%, #051004 100%);
             color: var(--dourado-branco);
             height: 100vh;
             height: 100dvh;
@@ -37,7 +37,6 @@
             position: relative;
         }
 
-        /* Estrelas cintilantes no céu do reino */
         body::before {
             content: '';
             position: fixed;
@@ -46,15 +45,15 @@
             pointer-events: none;
             background:
                 radial-gradient(2px 2px at 15% 25%, #fff, transparent),
-                radial-gradient(2px 2px at 35% 55%, rgba(255,200,220,0.8), transparent),
+                radial-gradient(2px 2px at 35% 55%, rgba(100,255,150,0.8), transparent),
                 radial-gradient(1px 1px at 55% 15%, #fff, transparent),
-                radial-gradient(2px 2px at 75% 45%, rgba(255,180,200,0.6), transparent),
+                radial-gradient(2px 2px at 75% 45%, rgba(100,200,100,0.6), transparent),
                 radial-gradient(1px 1px at 85% 75%, #fff, transparent),
-                radial-gradient(2px 2px at 25% 85%, rgba(255,200,220,0.7), transparent),
+                radial-gradient(2px 2px at 25% 85%, rgba(100,255,150,0.7), transparent),
                 radial-gradient(1px 1px at 65% 95%, #fff, transparent),
-                radial-gradient(2px 2px at 45% 35%, rgba(255,180,200,0.5), transparent),
+                radial-gradient(2px 2px at 45% 35%, rgba(100,200,100,0.5), transparent),
                 radial-gradient(1px 1px at 95% 35%, #fff, transparent),
-                radial-gradient(2px 2px at 5% 65%, rgba(255,200,220,0.6), transparent);
+                radial-gradient(2px 2px at 5% 65%, rgba(100,255,150,0.6), transparent);
             background-size: 100% 100%;
             animation: cintilarEstrelas 3s ease-in-out infinite alternate;
         }
@@ -64,28 +63,26 @@
             100% { opacity: 1; }
         }
 
-        /* Corações flutuantes mágicos */
-        .coracao-flutuante {
+        .borboleta-flutuante {
             position: fixed;
             pointer-events: none;
             z-index: 1;
-            animation: flutuarCoracao linear infinite;
+            animation: flutuarBorboleta linear infinite;
             opacity: 0.4;
-            filter: drop-shadow(0 0 5px rgba(233, 30, 140, 0.5));
+            filter: drop-shadow(0 0 5px rgba(255, 128, 192, 0.5));
         }
         
-        @keyframes flutuarCoracao {
+        @keyframes flutuarBorboleta {
             0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
             15% { opacity: 0.6; }
             85% { opacity: 0.6; }
-            100% { transform: translateY(-20vh) scale(1) rotate(20deg); opacity: 0; }
+            100% { transform: translateY(-20vh) scale(1) rotate(30deg); opacity: 0; }
         }
 
-        /* Header real */
         .header {
             position: relative;
             z-index: 50;
-            background: linear-gradient(180deg, rgba(45,10,30,0.95) 0%, rgba(26,10,30,0.8) 100%);
+            background: linear-gradient(180deg, rgba(10,46,26,0.95) 0%, rgba(10,30,13,0.8) 100%);
             border-bottom: 2px solid var(--dourado-real);
             backdrop-filter: blur(10px);
         }
@@ -103,7 +100,6 @@
 
         .header-botoes { display: flex; gap: 10px; align-items: center; }
 
-        /* Botão Fullscreen */
         .btn-fullscreen {
             background: linear-gradient(135deg, #4a148c, #6a1b9a);
             border: 2px solid var(--dourado-real);
@@ -131,7 +127,6 @@
             box-shadow: 0 0 20px rgba(212, 168, 67, 0.6);
         }
 
-        /* Botão voltar dourado */
         .btn-voltar-dourado {
             display: flex;
             align-items: center;
@@ -162,7 +157,6 @@
             50% { box-shadow: 0 0 30px rgba(212, 168, 67, 0.8); border-color: #ffe6a3; }
         }
 
-        /* Stage principal - sem rolagem */
         .stage {
             flex: 1;
             display: flex;
@@ -177,7 +171,6 @@
             overflow-x: hidden;
         }
 
-        /* Container do conteúdo */
         .conteudo-central {
             max-width: 700px;
             width: 100%;
@@ -185,12 +178,11 @@
             text-align: center;
         }
 
-        /* Título real */
         .titulo-reino {
             font-family: 'Cinzel Decorative', cursive;
             font-size: clamp(20px, 5vw, 28px);
             color: var(--dourado-real);
-            text-shadow: 0 0 15px rgba(233, 30, 140, 0.5), 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 0 15px rgba(46, 125, 50, 0.5), 2px 2px 4px rgba(0,0,0,0.5);
             text-align: center;
             margin-bottom: 8px;
         }
@@ -203,8 +195,7 @@
             margin-bottom: 15px;
         }
 
-        /* Card de vídeo/letra */
-        .video-card {
+        .card-exibicao {
             background: rgba(255,255,255,0.1);
             border: 2px solid var(--dourado-real);
             border-radius: 25px;
@@ -220,8 +211,8 @@
         }
         
         .letra-grande {
-            font-family: 'Fredoka One', cursive;
-            font-size: 100px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 120px;
             display: block;
             text-shadow: 4px 4px 0 rgba(0,0,0,0.2);
             color: var(--dourado-branco);
@@ -256,7 +247,6 @@
             to { opacity: 1; transform: scale(1); }
         }
 
-        /* Blocos das vogais */
         .blocos-container {
             display: flex;
             justify-content: center;
@@ -270,23 +260,22 @@
             height: 65px;
             border-radius: 15px;
             border: none;
-            font-family: 'Fredoka One', cursive;
-            font-size: 2rem;
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.5rem;
             color: #fff;
             cursor: pointer;
             transition: all 0.2s;
         }
         
-        .bloco-A { background: var(--coral); box-shadow: 0 5px #c94a2a; }
-        .bloco-E { background: var(--turquoise); box-shadow: 0 5px #1a8a98; }
-        .bloco-I { background: var(--lavender); box-shadow: 0 5px #6a5590; }
-        .bloco-O { background: var(--lime); box-shadow: 0 5px #6a9a2a; }
-        .bloco-U { background: var(--peach); box-shadow: 0 5px #c06040; }
+        .bloco-a { background: var(--coral); box-shadow: 0 5px #c94a2a; }
+        .bloco-e { background: var(--turquoise); box-shadow: 0 5px #1a8a98; }
+        .bloco-i { background: var(--lavender); box-shadow: 0 5px #6a5590; }
+        .bloco-o { background: var(--lime); box-shadow: 0 5px #6a9a2a; }
+        .bloco-u { background: var(--peach); box-shadow: 0 5px #c06040; }
         
         .bloco-vogal:hover { transform: scale(1.1) translateY(-3px); }
         .bloco-vogal:active { transform: scale(0.95); }
 
-        /* Botões de ação */
         .btn-acao {
             padding: 12px 28px;
             border-radius: 50px;
@@ -300,9 +289,9 @@
         }
         
         .btn-iniciar {
-            background: linear-gradient(135deg, var(--turquoise), #26a8b8);
+            background: linear-gradient(135deg, var(--verde-jardim), #1a5c3a);
             color: white;
-            box-shadow: 0 4px 0 #1a8a98;
+            box-shadow: 0 4px 0 #124529;
         }
         
         .btn-proxima {
@@ -320,7 +309,6 @@
         .btn-acao:hover { transform: translateY(-2px); }
         .btn-acao:active { transform: translateY(2px); }
 
-        /* Jogo de ligação */
         .jogo-ligacao {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -352,8 +340,8 @@
         
         .cubo-letra {
             color: white;
-            font-family: 'Fredoka One', cursive;
-            font-size: 45px;
+            font-family: 'Great Vibes', cursive;
+            font-size: 50px;
             border-radius: 12px;
         }
         
@@ -383,7 +371,6 @@
             filter: grayscale(0.3);
         }
         
-        /* Feedback */
         .feedback-texto {
             font-family: 'Dancing Script', cursive;
             font-size: clamp(18px, 5vw, 24px);
@@ -392,7 +379,6 @@
             color: var(--dourado-real);
         }
         
-        /* Animações */
         @keyframes cuboPulo {
             0% { transform: scale(0.3); opacity: 0; }
             50% { transform: scale(1.1); }
@@ -404,8 +390,7 @@
             animation: cuboPulo 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
         }
         
-        /* Decoração */
-        .decoracao-castelo {
+        .decoracao-jardim {
             margin-top: 10px;
             font-size: 20px;
             opacity: 0.4;
@@ -413,13 +398,12 @@
             text-align: center;
         }
         
-        /* Responsivo */
         @media (max-width: 500px) {
-            .bloco-vogal { width: 55px; height: 55px; font-size: 1.6rem; }
-            .letra-grande { font-size: 70px; }
-            .video-card { min-height: 200px; max-width: 280px; }
+            .bloco-vogal { width: 55px; height: 55px; font-size: 2rem; }
+            .letra-grande { font-size: 90px; }
+            .card-exibicao { min-height: 200px; max-width: 280px; }
             .cubo-figura img { width: 45px; height: 45px; }
-            .cubo-letra { font-size: 35px; min-height: 65px; }
+            .cubo-letra { font-size: 40px; min-height: 65px; }
             .btn-acao { padding: 10px 20px; font-size: 14px; }
             .btn-voltar-dourado { padding: 6px 15px; font-size: 12px; }
             .imagem-figura { width: 90px; height: 90px; }
@@ -442,7 +426,7 @@
 </head>
 <body>
 
-    <div id="coracoes-container"></div>
+    <div id="borboletas-container"></div>
 
     <header class="header">
         <div class="header-inner">
@@ -455,22 +439,22 @@
 
     <div class="stage">
         <div class="conteudo-central">
-            <h1 class="titulo-reino">🏰 Vogais Maiúsculas</h1>
-            <p class="subtitulo-real">Aprenda com as letras do castelo real 👑</p>
+            <h1 class="titulo-reino">🦋 Vogais Minúsculas</h1>
+            <p class="subtitulo-real">A caligrafia elegante do jardim encantado - CURSIVA ✍️🌸</p>
             
             <div id="area-apresentacao">
-                <div class="video-card">
+                <div class="card-exibicao">
                     <span id="display-letra" class="letra-grande">✨</span>
                     <img id="imagem-figura" class="imagem-figura" alt="Figura da vogal">
                     <video id="meuVideo" class="video-player" playsinline></video>
                 </div>
 
                 <div class="blocos-container">
-                    <button class="bloco-vogal bloco-A" data-letra="A" data-som="vogal_a.ogg" data-video="a_de_aviao.mp4" data-imagem="aviao.png">A</button>
-                    <button class="bloco-vogal bloco-E" data-letra="E" data-som="vogal_e.ogg" data-video="e_de_elefante.mp4" data-imagem="elefante.png">E</button>
-                    <button class="bloco-vogal bloco-I" data-letra="I" data-som="vogal_i.ogg" data-video="i_de_iguana.mp4" data-imagem="iguana.png">I</button>
-                    <button class="bloco-vogal bloco-O" data-letra="O" data-som="vogal_o.ogg" data-video="o_de_de_ovo.mp4" data-imagem="ovo.png">O</button>
-                    <button class="bloco-vogal bloco-U" data-letra="U" data-som="vogal_u.ogg" data-video="u_de_unicornio.mp4" data-imagem="unicornio.png">U</button>
+                    <button class="bloco-vogal bloco-a" data-letra="a" data-som="vogal_a.ogg" data-video="a_de_aviao.mp4" data-imagem="aviao.png">a</button>
+                    <button class="bloco-vogal bloco-e" data-letra="e" data-som="vogal_e.ogg" data-video="e_de_elefante.mp4" data-imagem="elefante.png">e</button>
+                    <button class="bloco-vogal bloco-i" data-letra="i" data-som="vogal_i.ogg" data-video="i_de_iguana.mp4" data-imagem="iguana.png">i</button>
+                    <button class="bloco-vogal bloco-o" data-letra="o" data-som="vogal_o.ogg" data-video="o_de_de_ovo.mp4" data-imagem="ovo.png">o</button>
+                    <button class="bloco-vogal bloco-u" data-letra="u" data-som="vogal_u.ogg" data-video="u_de_unicornio.mp4" data-imagem="unicornio.png">u</button>
                 </div>
                 
                 <button class="btn-acao btn-iniciar" id="btnIniciar">▶ Começar Apresentação</button>
@@ -481,17 +465,17 @@
                 <div class="coluna" id="colunaFiguras"></div>
             </div>
 
-            <div class="feedback-texto" id="feedback">✨ A mágica das letrinhas! ✨</div>
+            <div class="feedback-texto" id="feedback">✨ A mágica das letrinhas cursivas! ✨</div>
             
             <button class="btn-acao btn-proxima" id="btnProxima">🌟 PRÓXIMA ATIVIDADE</button>
             <button class="btn-acao btn-reiniciar" id="btnReiniciar">🔁 Jogar Novamente</button>
             
-            <div class="decoracao-castelo">👑 💖 🏰 💖 👑</div>
+            <div class="decoracao-jardim">🌸 🦋 🌹 🦋 🌸</div>
         </div>
     </div>
 
     <script>
-        // ========== ÁUDIO ==========
+        // Mesmo JavaScript da versão minúsculas forma
         let somAtual = null;
         
         function tocarSom(arquivo) {
@@ -507,15 +491,15 @@
         }
         
         const coresVogais = {
-            'A': '#f4845f', 'E': '#4dd0e1', 'I': '#b39ddb', 'O': '#aed581', 'U': '#ffab91'
+            'a': '#f4845f', 'e': '#4dd0e1', 'i': '#b39ddb', 'o': '#aed581', 'u': '#ffab91'
         };
         
         const dadosVogais = {
-            'A': { som: 'vogal_a.ogg', video: 'a_de_aviao.mp4', imagem: 'aviao.png', nome: 'A de Avião' },
-            'E': { som: 'vogal_e.ogg', video: 'e_de_elefante.mp4', imagem: 'elefante.png', nome: 'E de Elefante' },
-            'I': { som: 'vogal_i.ogg', video: 'i_de_iguana.mp4', imagem: 'iguana.png', nome: 'I de Iguana' },
-            'O': { som: 'vogal_o.ogg', video: 'o_de_de_ovo.mp4', imagem: 'ovo.png', nome: 'O de Ovo' },
-            'U': { som: 'vogal_u.ogg', video: 'u_de_unicornio.mp4', imagem: 'unicornio.png', nome: 'U de Unicórnio' }
+            'a': { som: 'vogal_a.ogg', video: 'a_de_aviao.mp4', imagem: 'aviao.png', nome: 'a de Avião' },
+            'e': { som: 'vogal_e.ogg', video: 'e_de_elefante.mp4', imagem: 'elefante.png', nome: 'e de Elefante' },
+            'i': { som: 'vogal_i.ogg', video: 'i_de_iguana.mp4', imagem: 'iguana.png', nome: 'i de Iguana' },
+            'o': { som: 'vogal_o.ogg', video: 'o_de_de_ovo.mp4', imagem: 'ovo.png', nome: 'o de Ovo' },
+            'u': { som: 'vogal_u.ogg', video: 'u_de_unicornio.mp4', imagem: 'unicornio.png', nome: 'u de Unicórnio' }
         };
         
         function tocarVogal(letra) {
@@ -523,7 +507,6 @@
             const imagemFigura = document.getElementById('imagem-figura');
             const player = document.getElementById('meuVideo');
             
-            // Para qualquer mídia tocando
             if (player && !player.paused) {
                 player.pause();
                 player.currentTime = 0;
@@ -531,10 +514,8 @@
             player.classList.remove('ativo');
             imagemFigura.classList.remove('ativo');
             
-            // Toca o som da vogal
             tocarSom(dadosVogais[letra].som);
             
-            // Mostra a letra
             display.style.display = 'block';
             display.style.transform = 'scale(1.1)';
             display.innerText = letra;
@@ -544,7 +525,6 @@
                 display.style.transform = 'scale(1)';
             }, 200);
             
-            // Após o som, mostra o vídeo
             setTimeout(() => {
                 display.style.display = 'none';
                 player.src = dadosVogais[letra].video;
@@ -553,7 +533,6 @@
                 
                 player.onended = () => {
                     player.classList.remove('ativo');
-                    // Mostra a imagem
                     imagemFigura.src = dadosVogais[letra].imagem;
                     imagemFigura.classList.add('ativo');
                     tocarSom('acerto.ogg');
@@ -610,11 +589,11 @@
         }
         
         function iniciarApresentacao() {
-            const ordem = ['A', 'E', 'I', 'O', 'U'];
+            const ordem = ['a', 'e', 'i', 'o', 'u'];
             let i = 0;
             const btnIniciar = document.getElementById('btnIniciar');
             btnIniciar.style.display = 'none';
-            document.getElementById('feedback').innerHTML = '🎭 Assistindo ao espetáculo real...';
+            document.getElementById('feedback').innerHTML = '🎭 Assistindo ao espetáculo do jardim...';
             
             function proximo() {
                 if (i < ordem.length) {
@@ -630,17 +609,16 @@
             proximo();
         }
         
-        // ========== JOGO DE LIGAÇÃO ==========
         let escolhaLetra = null;
         let escolhaFigura = null;
         let acertos = 0;
         
         const figurasJogo = [
-            { letra: 'A', imagem: 'aviao.png', cor: '#f4845f', som: 'vogal_a.ogg' },
-            { letra: 'E', imagem: 'elefante.png', cor: '#4dd0e1', som: 'vogal_e.ogg' },
-            { letra: 'I', imagem: 'iguana.png', cor: '#b39ddb', som: 'vogal_i.ogg' },
-            { letra: 'O', imagem: 'ovo.png', cor: '#aed581', som: 'vogal_o.ogg' },
-            { letra: 'U', imagem: 'unicornio.png', cor: '#ffab91', som: 'vogal_u.ogg' }
+            { letra: 'a', imagem: 'aviao.png', cor: '#f4845f', som: 'vogal_a.ogg' },
+            { letra: 'e', imagem: 'elefante.png', cor: '#4dd0e1', som: 'vogal_e.ogg' },
+            { letra: 'i', imagem: 'iguana.png', cor: '#b39ddb', som: 'vogal_i.ogg' },
+            { letra: 'o', imagem: 'ovo.png', cor: '#aed581', som: 'vogal_o.ogg' },
+            { letra: 'u', imagem: 'unicornio.png', cor: '#ffab91', som: 'vogal_u.ogg' }
         ];
         
         function montarJogo() {
@@ -710,7 +688,7 @@
                     document.getElementById('feedback').innerHTML = `🎉 Correto! ${acertos}/5 🎉`;
                     
                     if (acertos === 5) {
-                        document.getElementById('feedback').innerHTML = "🏆 PARABÉNS! VOCÊ COMPLETOU O REINO! 🏆";
+                        document.getElementById('feedback').innerHTML = "🏆 PARABÉNS! VOCÊ COMPLETOU O JARDIM! 🏆";
                         document.getElementById('btnReiniciar').style.display = 'inline-block';
                         tocarSom('fim_jogo.ogg');
                     }
@@ -737,7 +715,6 @@
             tocarSom('inicio.ogg');
         }
         
-        // ========== FULLSCREEN ==========
         const FS_KEY = 'reinoFullscreen';
         
         function isFullscreen() {
@@ -795,16 +772,15 @@
             atualizarIconeFullscreen();
         }
         
-        // ========== CORAÇÕES FLUTUANTES ==========
-        function criarCoracoes() {
-            const container = document.getElementById('coracoes-container');
-            const simbolos = ['💖', '💕', '💗', '💝', '✨', '🌟', '👑'];
-            const cores = ['#e91e8c', '#ff80c0', '#d4a843', '#ff4081'];
+        function criarBorboletas() {
+            const container = document.getElementById('borboletas-container');
+            const borboletas = ['🦋', '🐝', '🐞', '🦋', '🐝', '🦋'];
+            const cores = ['#e91e8c', '#ff80c0', '#d4a843', '#4caf50'];
             
-            function adicionarCoracao() {
+            function adicionarBorboleta() {
                 const c = document.createElement('div');
-                c.className = 'coracao-flutuante';
-                c.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                c.className = 'borboleta-flutuante';
+                c.innerText = borboletas[Math.floor(Math.random() * borboletas.length)];
                 c.style.left = Math.random() * 100 + '%';
                 c.style.fontSize = (Math.random() * 14 + 12) + 'px';
                 c.style.color = cores[Math.floor(Math.random() * cores.length)];
@@ -814,12 +790,11 @@
             }
             
             for (let i = 0; i < 15; i++) {
-                setTimeout(adicionarCoracao, i * 400);
+                setTimeout(adicionarBorboleta, i * 400);
             }
-            setInterval(adicionarCoracao, 3000);
+            setInterval(adicionarBorboleta, 3000);
         }
         
-        // ========== CONFIGURAÇÃO ==========
         function configurarBotoes() {
             const botoesVogais = document.querySelectorAll('.bloco-vogal');
             botoesVogais.forEach(btn => {
@@ -836,7 +811,7 @@
         }
         
         window.onload = function() {
-            criarCoracoes();
+            criarBorboletas();
             setupFullscreenListeners();
             restaurarFullscreen();
             configurarBotoes();
