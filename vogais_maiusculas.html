@@ -2,356 +2,794 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
-    <title>🏰 Reinos Encantados - Jornada das Letras</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>👸🤴 Reino das Vogais - Letras Maiúsculas</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Fredoka+One&display=swap" rel="stylesheet">
     <style>
         :root {
-            --papel-pergaminho: #f5e6c8;
-            --ouro-real: #d4a843;
-            --roxo-magia: #6b2d8e;
             --rosa-princesa: #e91e8c;
-            --azul-netuno: #1e5f8e;
-            --verde-fada: #2d8e5f;
-            --marrom-antigo: #5d3a1a;
-            --branco-perola: #fff8f0;
+            --rosa-escuro: #9c1460;
+            --rosa-claro: #ff80c0;
+            --dourado-real: #d4a843;
+            --dourado-escuro: #b8860b;
+            --dourado-branco: #fff8f0;
+            --noite-real: #1a0a1e;
+            --coral: #f4845f;
+            --turquoise: #4dd0e1;
+            --lavender: #b39ddb;
+            --lime: #aed581;
+            --peach: #ffab91;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
         body {
             font-family: 'Nunito', sans-serif;
-            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #1a0a2e 100%);
-            color: var(--branco-perola);
-            height: 100vh; height: 100dvh;
+            background: linear-gradient(180deg, #2d0a1e 0%, #1a0a1e 40%, #0d0418 100%);
+            color: var(--dourado-branco);
+            height: 100vh;
+            height: 100dvh;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             position: relative;
         }
+
+        /* Estrelas cintilantes no céu do reino */
         body::before {
             content: '';
             position: fixed;
             inset: 0;
             z-index: 0;
             pointer-events: none;
-            background: 
-                radial-gradient(2px 2px at 10% 20%, #fff, transparent),
-                radial-gradient(2px 2px at 30% 60%, rgba(255,220,150,0.8), transparent),
-                radial-gradient(1px 1px at 50% 10%, #fff, transparent),
-                radial-gradient(2px 2px at 70% 40%, rgba(255,200,100,0.6), transparent),
-                radial-gradient(1px 1px at 90% 80%, #fff, transparent),
-                radial-gradient(2px 2px at 20% 80%, rgba(255,220,150,0.7), transparent),
-                radial-gradient(1px 1px at 60% 90%, #fff, transparent),
-                radial-gradient(2px 2px at 80% 15%, rgba(255,200,100,0.5), transparent),
-                radial-gradient(1px 1px at 40% 30%, #fff, transparent),
-                radial-gradient(2px 2px at 15% 50%, rgba(255,220,150,0.6), transparent);
+            background:
+                radial-gradient(2px 2px at 15% 25%, #fff, transparent),
+                radial-gradient(2px 2px at 35% 55%, rgba(255,200,220,0.8), transparent),
+                radial-gradient(1px 1px at 55% 15%, #fff, transparent),
+                radial-gradient(2px 2px at 75% 45%, rgba(255,180,200,0.6), transparent),
+                radial-gradient(1px 1px at 85% 75%, #fff, transparent),
+                radial-gradient(2px 2px at 25% 85%, rgba(255,200,220,0.7), transparent),
+                radial-gradient(1px 1px at 65% 95%, #fff, transparent),
+                radial-gradient(2px 2px at 45% 35%, rgba(255,180,200,0.5), transparent),
+                radial-gradient(1px 1px at 95% 35%, #fff, transparent),
+                radial-gradient(2px 2px at 5% 65%, rgba(255,200,220,0.6), transparent);
             background-size: 100% 100%;
-            animation: cintilar 3s ease-in-out infinite alternate;
+            animation: cintilarEstrelas 3s ease-in-out infinite alternate;
         }
-        @keyframes cintilar { 0% { opacity: 0.6; } 100% { opacity: 1; } }
-        
-        .lua-magica {
+
+        @keyframes cintilarEstrelas {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        /* Corações flutuantes mágicos */
+        .coracao-flutuante {
             position: fixed;
-            top: 20px; right: 30px;
-            width: 70px; height: 70px;
-            background: radial-gradient(circle at 35% 35%, #fff8e7, #f0e68c);
-            border-radius: 50%;
-            box-shadow: 0 0 30px rgba(240, 230, 140, 0.5), 0 0 60px rgba(240, 230, 140, 0.3), inset -10px -10px 20px rgba(200, 180, 100, 0.3);
-            z-index: 2;
-            animation: luaBrilho 4s ease-in-out infinite;
+            pointer-events: none;
+            z-index: 1;
+            animation: flutuarCoracao linear infinite;
+            opacity: 0.4;
+            filter: drop-shadow(0 0 5px rgba(233, 30, 140, 0.5));
         }
-        .lua-magica::before { content: ""; position: absolute; top: 12px; left: 18px; width: 10px; height: 10px; background: rgba(180, 160, 100, 0.25); border-radius: 50%; }
-        .lua-magica::after { content: ""; position: absolute; top: 30px; left: 40px; width: 6px; height: 6px; background: rgba(180, 160, 100, 0.2); border-radius: 50%; }
-        @keyframes luaBrilho { 0%, 100% { box-shadow: 0 0 30px rgba(240, 230, 140, 0.5), 0 0 60px rgba(240, 230, 140, 0.3); } 50% { box-shadow: 0 0 50px rgba(240, 230, 140, 0.7), 0 0 90px rgba(240, 230, 140, 0.4); } }
         
-        .castelo-decor { position: fixed; top: 0; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 1; opacity: 0.15; filter: drop-shadow(0 0 10px rgba(212, 168, 67, 0.3)); pointer-events: none; }
+        @keyframes flutuarCoracao {
+            0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
+            15% { opacity: 0.6; }
+            85% { opacity: 0.6; }
+            100% { transform: translateY(-20vh) scale(1) rotate(20deg); opacity: 0; }
+        }
+
+        /* Header real */
+        .header {
+            position: relative;
+            z-index: 50;
+            background: linear-gradient(180deg, rgba(45,10,30,0.95) 0%, rgba(26,10,30,0.8) 100%);
+            border-bottom: 2px solid var(--dourado-real);
+            backdrop-filter: blur(10px);
+        }
         
-        .header { position: relative; z-index: 50; padding: 12px 16px; background: linear-gradient(180deg, rgba(26,10,46,0.9) 0%, rgba(26,10,46,0.6) 100%); border-bottom: 2px solid var(--ouro-real); backdrop-filter: blur(8px); }
-        .header-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .header-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
         .header-botoes { display: flex; gap: 10px; align-items: center; }
+
+        /* Botão Fullscreen */
+        .btn-fullscreen {
+            background: linear-gradient(135deg, #4a148c, #6a1b9a);
+            border: 2px solid var(--dourado-real);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(212, 168, 67, 0.3);
+            color: white;
+        }
         
-        .btn-fullscreen { background: linear-gradient(135deg, var(--azul-netuno), #0d3a5c); border: 2px solid #fff; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; font-size: 20px; box-shadow: 0 0 15px rgba(30, 95, 142, 0.4); transition: all 0.3s; display: flex; align-items: center; justify-content: center; color: white; }
-        .btn-fullscreen:hover { transform: scale(1.1); box-shadow: 0 0 25px rgba(30, 95, 142, 0.7); }
+        .btn-fullscreen:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(212, 168, 67, 0.5);
+            background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+        }
         
-        .btn-musica { padding: 8px 14px; border-radius: 50px; border: 2px solid var(--ouro-real); font-weight: 800; background: rgba(212, 168, 67, 0.2); color: var(--ouro-real); cursor: pointer; font-size: 12px; font-family: 'Nunito', sans-serif; transition: all 0.3s; }
-        .btn-musica:hover { background: rgba(212, 168, 67, 0.4); box-shadow: 0 0 15px rgba(212, 168, 67, 0.3); }
+        .btn-fullscreen.ativo {
+            background: linear-gradient(135deg, var(--dourado-real), #b8860b);
+            box-shadow: 0 0 20px rgba(212, 168, 67, 0.6);
+        }
+
+        /* Botão voltar dourado */
+        .btn-voltar-dourado {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--dourado-real), var(--dourado-escuro));
+            border: 2px solid #fff;
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            color: #1a0a2e;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(212, 168, 67, 0.4);
+            animation: brilhoDourado 1.5s ease-in-out infinite;
+        }
         
-        .saudacao-real { font-family: 'Cinzel Decorative', cursive; font-size: 16px; font-weight: 700; color: var(--ouro-real); text-shadow: 0 0 10px rgba(212, 168, 67, 0.5); }
+        .btn-voltar-dourado:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(212, 168, 67, 0.8);
+            background: linear-gradient(135deg, #e8c060, var(--dourado-real));
+        }
         
-        .stage { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px; z-index: 10; gap: 15px; overflow-y: auto; }
+        @keyframes brilhoDourado {
+            0%, 100% { box-shadow: 0 0 15px rgba(212, 168, 67, 0.4); border-color: #fff; }
+            50% { box-shadow: 0 0 30px rgba(212, 168, 67, 0.8); border-color: #ffe6a3; }
+        }
+
+        /* Stage principal - sem rolagem */
+        .stage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            position: relative;
+            z-index: 10;
+            gap: 15px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Container do conteúdo */
+        .conteudo-central {
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Título real */
+        .titulo-reino {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: clamp(20px, 5vw, 28px);
+            color: var(--dourado-real);
+            text-shadow: 0 0 15px rgba(233, 30, 140, 0.5), 2px 2px 4px rgba(0,0,0,0.5);
+            text-align: center;
+            margin-bottom: 8px;
+        }
         
-        .banner-reinos { border-radius: 20px; overflow: hidden; border: 3px solid var(--ouro-real); width: 85%; max-width: 280px; aspect-ratio: 16/10; box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(212, 168, 67, 0.2); position: relative; background: linear-gradient(135deg, #2d1b4e, #1a0a2e); display: flex; align-items: center; justify-content: center; }
-        .banner-reinos img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) saturate(1.2); }
-        .banner-reinos::after { content: "🗺️"; position: absolute; bottom: -15px; right: -10px; font-size: 35px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
-        .fallback-banner { font-size: 48px; text-align: center; padding: 20px; }
+        .subtitulo-real {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(14px, 4vw, 18px);
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        /* Card de vídeo/letra */
+        .video-card {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid var(--dourado-real);
+            border-radius: 25px;
+            padding: 15px;
+            max-width: 300px;
+            margin: 0 auto 15px;
+            min-height: 220px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            backdrop-filter: blur(5px);
+        }
         
-        .titulo-reinos { font-family: 'Cinzel Decorative', cursive; font-size: clamp(20px, 5vw, 28px); color: var(--ouro-real); text-shadow: 0 0 10px rgba(212, 168, 67, 0.6), 2px 2px 4px rgba(0,0,0,0.5); text-align: center; margin: 5px 0; }
-        .subtitulo-magico { font-family: 'Dancing Script', cursive; font-size: clamp(16px, 4vw, 22px); color: rgba(255, 255, 255, 0.7); text-align: center; margin-bottom: 10px; }
+        .letra-grande {
+            font-family: 'Fredoka One', cursive;
+            font-size: 100px;
+            display: block;
+            text-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+            color: var(--dourado-branco);
+        }
         
-        .reinos-container { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; max-width: 420px; }
+        .video-player {
+            width: 100%;
+            border-radius: 15px;
+            display: none;
+        }
         
-        .card-reino { padding: 18px 12px; border-radius: 18px; border: none; font-family: 'Cinzel Decorative', cursive; font-size: clamp(13px, 3.5vw, 16px); color: #fff; text-decoration: none; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); line-height: 1.3; position: relative; overflow: hidden; min-height: 110px; cursor: pointer; }
-        .card-reino::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); opacity: 0; transition: opacity 0.3s; }
-        .card-reino:hover::before { opacity: 1; }
-        .card-reino:active { transform: scale(0.95); }
-        .card-reino:hover { transform: translateY(-6px) scale(1.03); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
+        .video-player.ativo {
+            display: block;
+        }
+
+        /* Blocos das vogais */
+        .blocos-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
         
-        .emoji-reino { font-size: 32px; margin-bottom: 8px; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4)); transition: transform 0.3s; }
-        .card-reino:hover .emoji-reino { transform: scale(1.2) rotate(-5deg); }
-        .nome-reino { font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; }
-        .desc-reino { font-family: 'Nunito', sans-serif; font-size: 10px; opacity: 0.85; font-weight: 600; }
+        .bloco-vogal {
+            width: 60px;
+            height: 60px;
+            border-radius: 12px;
+            border: none;
+            font-family: 'Fredoka One', cursive;
+            font-size: 1.8rem;
+            color: #fff;
+            cursor: pointer;
+            transition: 0.2s;
+        }
         
-        .reino-vogais { background: linear-gradient(145deg, #e91e8c, #9c1460); box-shadow: 0 6px 0 #7a0f4a, 0 0 20px rgba(233, 30, 140, 0.3), inset 0 1px 0 rgba(255,255,255,0.2); border: 2px solid rgba(255, 200, 220, 0.3); }
-        .reino-vogais:hover { box-shadow: 0 12px 0 #7a0f4a, 0 0 40px rgba(233, 30, 140, 0.5), inset 0 1px 0 rgba(255,255,255,0.3); }
+        .bloco-A { background: var(--coral); box-shadow: 0 5px #e05a3a; }
+        .bloco-E { background: var(--turquoise); box-shadow: 0 5px #26a8b8; }
+        .bloco-I { background: var(--lavender); box-shadow: 0 5px #8e79c0; }
+        .bloco-O { background: var(--lime); box-shadow: 0 5px #8bc34a; }
+        .bloco-U { background: var(--peach); box-shadow: 0 5px #e08060; }
         
-        .reino-alfabeto { background: linear-gradient(145deg, #1e5f8e, #0d3a5c); box-shadow: 0 6px 0 #0a2d47, 0 0 20px rgba(30, 95, 142, 0.3), inset 0 1px 0 rgba(255,255,255,0.2); border: 2px solid rgba(100, 200, 255, 0.3); }
-        .reino-alfabeto:hover { box-shadow: 0 12px 0 #0a2d47, 0 0 40px rgba(30, 95, 142, 0.5), inset 0 1px 0 rgba(255,255,255,0.3); }
+        .bloco-vogal:hover { transform: scale(1.15) rotate(3deg); }
+        .bloco-vogal:active { transform: scale(0.95); }
+
+        /* Botões de ação */
+        .btn-acao {
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s;
+        }
         
-        .reino-consoantes { background: linear-gradient(145deg, #2d8e5f, #1a5c3a); box-shadow: 0 6px 0 #124529, 0 0 20px rgba(45, 142, 95, 0.3), inset 0 1px 0 rgba(255,255,255,0.2); border: 2px solid rgba(150, 255, 180, 0.3); }
-        .reino-consoantes:hover { box-shadow: 0 12px 0 #124529, 0 0 40px rgba(45, 142, 95, 0.5), inset 0 1px 0 rgba(255,255,255,0.3); }
+        .btn-iniciar {
+            background: linear-gradient(135deg, var(--turquoise), #26a8b8);
+            color: white;
+            box-shadow: 0 4px 0 #1a8a98;
+        }
         
-        .reino-numeros { background: linear-gradient(145deg, #6b2d8e, #3d1a52); box-shadow: 0 6px 0 #2a1238, 0 0 20px rgba(107, 45, 142, 0.3), inset 0 1px 0 rgba(255,255,255,0.2); border: 2px solid rgba(200, 150, 255, 0.3); }
-        .reino-numeros:hover { box-shadow: 0 12px 0 #2a1238, 0 0 40px rgba(107, 45, 142, 0.5), inset 0 1px 0 rgba(255,255,255,0.3); }
+        .btn-proxima {
+            background: linear-gradient(135deg, #ffcc00, #e6b800);
+            color: #5d4037;
+            display: none;
+        }
         
-        .card-bruxinha-especial { grid-column: 1 / -1; background: linear-gradient(145deg, #4a1a6e, #2d0a42); border: 2px solid var(--ouro-real); position: relative; }
-        .card-bruxinha-especial::after { content: "🧹"; position: absolute; top: -12px; right: 25px; font-size: 28px; animation: flutuarVassoura 2s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(212, 168, 67, 0.5)); }
-        @keyframes flutuarVassoura { 0%, 100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-8px) rotate(8deg); } }
-        .card-bruxinha-especial .emoji-reino { font-size: 38px; }
-        .card-bruxinha-especial:hover { box-shadow: 0 12px 0 #1a0a2e, 0 0 40px rgba(212, 168, 67, 0.4); }
+        .btn-reiniciar {
+            background: linear-gradient(135deg, var(--lime), #8bc34a);
+            color: white;
+            display: none;
+        }
         
-        .particula { position: fixed; pointer-events: none; z-index: 1; animation: flutuarParticula linear infinite; opacity: 0.6; }
-        @keyframes flutuarParticula { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; }  90% { opacity: 0.8; } 100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; } }
+        .btn-acao:hover { transform: translateY(-2px); }
+        .btn-acao:active { transform: translateY(2px); }
+
+        /* Jogo de ligação */
+        .jogo-ligacao {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 500px;
+            width: 100%;
+            margin: 15px auto;
+            display: none;
+        }
         
-        @media (max-width: 400px) { .reinos-container { gap: 10px; } .card-reino { padding: 14px 8px; min-height: 95px; } .emoji-reino { font-size: 26px; } .lua-magica { width: 50px; height: 50px; top: 10px; right: 15px; } .castelo-decor { font-size: 40px; } }
+        .coluna {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .item-jogo {
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 70px;
+            width: 100%;
+            border: none;
+            opacity: 0;
+        }
+        
+        .cubo-letra {
+            color: white;
+            font-family: 'Fredoka One', cursive;
+            font-size: 40px;
+            border-radius: 12px;
+        }
+        
+        .cubo-figura {
+            border: 3px solid var(--dourado-real);
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+        }
+        
+        .cubo-figura img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+        
+        .selecionado {
+            transform: scale(1.08);
+            outline: 4px solid #ffcc00;
+            z-index: 2;
+            opacity: 1 !important;
+        }
+        
+        .correto {
+            opacity: 0.5 !important;
+            pointer-events: none;
+            transform: scale(0.9);
+            filter: grayscale(0.3);
+        }
+        
+        /* Feedback */
+        .feedback-texto {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(18px, 5vw, 24px);
+            text-align: center;
+            margin: 10px 0;
+            color: var(--dourado-real);
+        }
+        
+        /* Animações */
+        @keyframes cuboPulo {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .animar-pulo {
+            animation: cuboPulo 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+        
+        /* Decoração */
+        .decoracao-castelo {
+            margin-top: 10px;
+            font-size: 20px;
+            opacity: 0.4;
+            letter-spacing: 8px;
+            text-align: center;
+        }
+        
+        /* Responsivo */
+        @media (max-width: 500px) {
+            .bloco-vogal { width: 50px; height: 50px; font-size: 1.5rem; }
+            .letra-grande { font-size: 70px; }
+            .video-card { min-height: 180px; max-width: 250px; }
+            .cubo-figura img { width: 45px; height: 45px; }
+            .cubo-letra { font-size: 30px; min-height: 55px; }
+            .btn-acao { padding: 10px 20px; font-size: 14px; }
+            .btn-voltar-dourado { padding: 6px 15px; font-size: 12px; }
+        }
+        
+        @media (max-width: 400px) {
+            .blocos-container { gap: 8px; }
+            .jogo-ligacao { gap: 12px; }
+            .coluna { gap: 8px; }
+        }
+        
+        /* Esconder barra de rolagem mas manter funcionalidade */
+        .stage::-webkit-scrollbar {
+            width: 4px;
+        }
+        
+        .stage::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+        
+        .stage::-webkit-scrollbar-thumb {
+            background: var(--dourado-real);
+            border-radius: 10px;
+        }
     </style>
 </head>
 <body>
 
-    <div class="lua-magica"></div>
-    <div class="castelo-decor">🏰</div>
-    <div id="particulas-container"></div>
-    
+    <div id="coracoes-container"></div>
+
     <header class="header">
         <div class="header-inner">
+            <a href="vogais.html" class="btn-voltar-dourado">← ✨ Voltar ao Reino ✨</a>
             <div class="header-botoes">
-                <button class="btn-musica" id="btnMusica">🎵 MÚSICA OFF</button>
-                <button class="btn-fullscreen" id="fullscreenBtn" aria-label="Tela cheia">⛶</button>
+                <button class="btn-fullscreen" id="btnFullscreen" title="Tela Cheia">⛶</button>
             </div>
-            <span class="saudacao-real">👑 Olá, damas e cavalheiros!</span>
         </div>
     </header>
 
     <div class="stage">
-        <div class="banner-reinos">
-            <img src="ilha.jpg" alt="Mapa dos Reinos Encantados" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=\'fallback-banner\'>🗺️🏰✨</div>';">
-        </div>
-        <h2 class="titulo-reinos">🏰 Reinos Encantados</h2>
-        <p class="subtitulo-magico">Escolha seu reino e embarque em uma aventura mágica... ✨</p>
-        
-        <div class="reinos-container">
-            <a href="vogais.html" class="card-reino reino-vogais" data-sound="vogais.mp3">
-                <span class="emoji-reino">👸🤴</span>
-                <span class="nome-reino">Reino das Vogais</span>
-                <span class="desc-reino">Princesas & Príncipes</span>
-            </a>
+        <div class="conteudo-central">
+            <h1 class="titulo-reino">🏰 Vogais Maiúsculas</h1>
+            <p class="subtitulo-real">Aprenda com as letras do castelo real 👑</p>
+            
+            <div id="area-apresentacao">
+                <div class="video-card">
+                    <span id="display-letra" class="letra-grande">✨</span>
+                    <video id="meuVideo" class="video-player" playsinline></video>
+                </div>
 
-            <a href="https://alfabeto-mu.vercel.app/" class="card-reino reino-alfabeto" data-sound="alfabeto.mp3" target="_blank" rel="noopener">
-                <span class="emoji-reino">🧜‍♂️🔱</span>
-                <span class="nome-reino">Reino do Alfabeto</span>
-                <span class="desc-reino">Netuno & o Mar</span>
-            </a>
+                <div class="blocos-container">
+                    <button class="bloco-vogal bloco-A" data-letra="A" data-som="vogal_a.ogg" data-video="a_de_aviao.mp4">A</button>
+                    <button class="bloco-vogal bloco-E" data-letra="E" data-som="vogal_e.ogg" data-video="e_de_elefante.mp4">E</button>
+                    <button class="bloco-vogal bloco-I" data-letra="I" data-som="vogal_i.ogg" data-video="i_de_iguana.mp4">I</button>
+                    <button class="bloco-vogal bloco-O" data-letra="O" data-som="vogal_o.ogg" data-video="o_de_de_ovo.mp4">O</button>
+                    <button class="bloco-vogal bloco-U" data-letra="U" data-som="vogal_u.ogg" data-video="u_de_unicornio.mp4">U</button>
+                </div>
+                
+                <button class="btn-acao btn-iniciar" id="btnIniciar">▶ Começar Apresentação</button>
+            </div>
 
-            <a href="consoantes.html" class="card-reino reino-consoantes" data-sound="consoantes.mp3">
-                <span class="emoji-reino">🧚🧙‍♂️</span>
-                <span class="nome-reino">Reino das Consoantes</span>
-                <span class="desc-reino">Fadas, Gnomos & Duendes</span>
-            </a>
+            <div id="area-jogo" class="jogo-ligacao">
+                <div class="coluna" id="colunaLetras"></div>
+                <div class="coluna" id="colunaFiguras"></div>
+            </div>
 
-            <a href="numeros.html" class="card-reino reino-numeros" data-sound="numeros.mp3">
-                <span class="emoji-reino">🧙‍♀️🔮</span>
-                <span class="nome-reino">Reino dos Números</span>
-                <span class="desc-reino">A Bruxa da Tabuada</span>
-            </a>
-
-            <a href="https://tabuada-da-bruxinha.vercel.app/" class="card-reino card-bruxinha-especial" data-sound="bruxinha.mp3" target="_blank" rel="noopener">
-                <span class="emoji-reino">🧙‍♀️✨</span>
-                <span class="nome-reino">Tabuada da Bruxinha</span>
-                <span class="desc-reino">🧹 Voe na vassoura e aprenda magia matemática!</span>
-            </a>
+            <div class="feedback-texto" id="feedback">✨ A mágica das letrinhas! ✨</div>
+            
+            <button class="btn-acao btn-proxima" id="btnProxima">🌟 PRÓXIMA ATIVIDADE</button>
+            <button class="btn-acao btn-reiniciar" id="btnReiniciar">🔁 Jogar Novamente</button>
+            
+            <div class="decoracao-castelo">👑 💖 🏰 💖 👑</div>
         </div>
     </div>
 
     <script>
-        // Configuração de áudio
-        let musicaFundo = null;
-        let musicaInicializada = false;
-
-        function initMusica() {
-            if (!musicaInicializada) {
-                musicaFundo = new Audio('musica_fundo.ogg');
-                musicaFundo.loop = true;
-                musicaFundo.volume = 0.2;
-                musicaInicializada = true;
-            }
-            return musicaFundo;
+        // ========== FULLSCREEN API ==========
+        const FS_KEY = 'reinoFullscreen';
+        
+        function isFullscreen() {
+            return !!(document.fullscreenElement || document.webkitFullscreenElement);
         }
-
-        function tocarEfeito(arquivo) {
+        
+        function enterFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
+            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+        }
+        
+        function exitFullscreen() {
+            if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        }
+        
+        function toggleFullscreen() {
+            if (isFullscreen()) {
+                exitFullscreen();
+                localStorage.setItem(FS_KEY, 'false');
+            } else {
+                enterFullscreen();
+                localStorage.setItem(FS_KEY, 'true');
+            }
+            atualizarIconeFullscreen();
+        }
+        
+        function atualizarIconeFullscreen() {
+            const btn = document.getElementById('btnFullscreen');
+            if (isFullscreen()) {
+                btn.innerHTML = '✖';
+                btn.classList.add('ativo');
+                btn.title = 'Sair da Tela Cheia';
+            } else {
+                btn.innerHTML = '⛶';
+                btn.classList.remove('ativo');
+                btn.title = 'Tela Cheia';
+            }
+        }
+        
+        function setupFullscreenListeners() {
+            const events = ['fullscreenchange', 'webkitfullscreenchange'];
+            events.forEach(event => {
+                document.addEventListener(event, () => {
+                    atualizarIconeFullscreen();
+                    if (!isFullscreen()) localStorage.setItem(FS_KEY, 'false');
+                });
+            });
+        }
+        
+        function restaurarFullscreen() {
+            const deveFullscreen = localStorage.getItem(FS_KEY) === 'true';
+            if (deveFullscreen && !isFullscreen()) {
+                setTimeout(() => enterFullscreen(), 100);
+            }
+            atualizarIconeFullscreen();
+        }
+        
+        // ========== ÁUDIO E VÍDEO ==========
+        let somAtual = null;
+        let audioContextAtivo = false;
+        
+        function tocarSom(arquivo) {
             if (!arquivo) return;
-            const audio = new Audio(arquivo);
-            audio.play().catch(e => console.log('Áudio não pôde ser reproduzido:', e));
+            if (somAtual) {
+                somAtual.pause();
+                somAtual.currentTime = 0;
+            }
+            somAtual = new Audio(arquivo);
+            somAtual.play().catch(e => console.log('Áudio aguardando interação'));
         }
-
-        // Função principal de navegação unificada
-        function navegarParaReino(event) {
-            const link = event.currentTarget;
-            const url = link.getAttribute('href');
-            const som = link.getAttribute('data-sound');
-            const target = link.getAttribute('target') || '_self';
+        
+        const coresVogais = {
+            'A': '#f4845f', 'E': '#4dd0e1', 'I': '#b39ddb', 'O': '#aed581', 'U': '#ffab91'
+        };
+        
+        const videos = {
+            'A': 'a_de_aviao.mp4', 'E': 'e_de_elefante.mp4', 'I': 'i_de_iguana.mp4',
+            'O': 'o_de_de_ovo.mp4', 'U': 'u_de_unicornio.mp4'
+        };
+        
+        const sons = {
+            'A': 'vogal_a.ogg', 'E': 'vogal_e.ogg', 'I': 'vogal_i.ogg',
+            'O': 'vogal_o.ogg', 'U': 'vogal_u.ogg'
+        };
+        
+        function tocarVogal(letra) {
+            const player = document.getElementById('meuVideo');
+            const display = document.getElementById('display-letra');
             
-            if (!url) return;
+            tocarSom(sons[letra]);
             
-            event.preventDefault();
+            display.style.display = 'none';
+            player.classList.remove('ativo');
             
-            if (som) {
-                tocarEfeito(som);
+            setTimeout(() => {
+                player.src = videos[letra];
+                player.classList.add('ativo');
+                player.play().catch(e => console.log('Vídeo não pode ser reproduzido'));
+            }, 300);
+            
+            player.onended = () => {
+                player.classList.remove('ativo');
+                display.innerText = letra;
+                display.style.color = coresVogais[letra];
+                display.style.display = 'block';
+            };
+            
+            document.getElementById('btnProxima').style.display = 'inline-block';
+            document.getElementById('feedback').innerHTML = `✨ Letra ${letra} ✨`;
+        }
+        
+        function iniciarApresentacao() {
+            const ordem = ['A', 'E', 'I', 'O', 'U'];
+            let i = 0;
+            const btnIniciar = document.getElementById('btnIniciar');
+            btnIniciar.style.display = 'none';
+            document.getElementById('feedback').innerHTML = '🎭 Assistindo ao espetáculo real...';
+            
+            function proximo() {
+                if (i < ordem.length) {
+                    const letra = ordem[i];
+                    const player = document.getElementById('meuVideo');
+                    const display = document.getElementById('display-letra');
+                    
+                    tocarSom(sons[letra]);
+                    display.style.display = 'none';
+                    player.classList.remove('ativo');
+                    
+                    setTimeout(() => {
+                        player.src = videos[letra];
+                        player.classList.add('ativo');
+                        player.play().catch(e => console.log('Vídeo não pode ser reproduzido'));
+                    }, 300);
+                    
+                    player.onended = () => {
+                        player.classList.remove('ativo');
+                        display.innerText = letra;
+                        display.style.color = coresVogais[letra];
+                        display.style.display = 'block';
+                        i++;
+                        setTimeout(proximo, 800);
+                    };
+                } else {
+                    document.getElementById('feedback').innerHTML = '📖 Maravilhoso! Agora pratique! 📖';
+                    document.getElementById('btnProxima').style.display = 'inline-block';
+                }
+            }
+            proximo();
+        }
+        
+        // ========== JOGO DE LIGAÇÃO ==========
+        let escolhaLetra = null;
+        let escolhaFigura = null;
+        let acertos = 0;
+        
+        const dadosJogo = [
+            { letra: 'A', som: 'vogal_a.ogg', img: 'aviao.png', cor: '#f4845f' },
+            { letra: 'E', som: 'vogal_e.ogg', img: 'elefante.png', cor: '#4dd0e1' },
+            { letra: 'I', som: 'vogal_i.ogg', img: 'iguana.png', cor: '#b39ddb' },
+            { letra: 'O', som: 'vogal_o.ogg', img: 'ovo.png', cor: '#aed581' },
+            { letra: 'U', som: 'vogal_u.ogg', img: 'unicornio.png', cor: '#ffab91' }
+        ];
+        
+        function montarJogo() {
+            const colLetras = document.getElementById('colunaLetras');
+            const colFiguras = document.getElementById('colunaFiguras');
+            colLetras.innerHTML = '';
+            colFiguras.innerHTML = '';
+            acertos = 0;
+            escolhaLetra = null;
+            escolhaFigura = null;
+            
+            const letrasMisturadas = [...dadosJogo].sort(() => Math.random() - 0.5);
+            const figurasMisturadas = [...dadosJogo].sort(() => Math.random() - 0.5);
+            
+            letrasMisturadas.forEach((d, index) => {
+                const div = document.createElement('div');
+                div.className = `item-jogo cubo-letra animar-pulo`;
+                div.style.backgroundColor = d.cor;
+                div.style.boxShadow = `0 4px 0 ${d.cor}99`;
+                div.style.animationDelay = `${index * 0.1}s`;
+                div.innerText = d.letra;
+                div.setAttribute('data-letra', d.letra);
+                div.setAttribute('data-som', d.som);
+                div.onclick = () => selecionarItem(div, 'letra', d.letra, d.som);
+                colLetras.appendChild(div);
+            });
+            
+            figurasMisturadas.forEach((d, index) => {
+                const div = document.createElement('div');
+                div.className = 'item-jogo cubo-figura animar-pulo';
+                div.style.animationDelay = `${(index + 2) * 0.1}s`;
+                div.innerHTML = `<img src="${d.img}" alt="${d.letra}">`;
+                div.setAttribute('data-letra', d.letra);
+                div.setAttribute('data-som', d.som);
+                div.onclick = () => selecionarItem(div, 'figura', d.letra, d.som);
+                colFiguras.appendChild(div);
+            });
+        }
+        
+        function irParaJogo() {
+            document.getElementById('area-apresentacao').style.display = 'none';
+            document.getElementById('btnProxima').style.display = 'none';
+            document.getElementById('area-jogo').style.display = 'grid';
+            document.getElementById('feedback').innerHTML = '🔗 Ligue cada letra à sua figura! 🔗';
+            document.getElementById('btnReiniciar').style.display = 'none';
+            montarJogo();
+        }
+        
+        function selecionarItem(el, tipo, valor, som) {
+            tocarSom(som);
+            el.classList.add('selecionado');
+            
+            if (tipo === 'letra') {
+                if (escolhaLetra) escolhaLetra.el.classList.remove('selecionado');
+                escolhaLetra = { el, valor };
+            } else {
+                if (escolhaFigura) escolhaFigura.el.classList.remove('selecionado');
+                escolhaFigura = { el, valor };
             }
             
-            // Pequeno delay para o som ter chance de iniciar
-            setTimeout(() => {
-                if (target === '_blank') {
-                    window.open(url, '_blank', 'noopener');
+            if (escolhaLetra && escolhaFigura) {
+                if (escolhaLetra.valor === escolhaFigura.valor) {
+                    escolhaLetra.el.classList.add('correto');
+                    escolhaFigura.el.classList.add('correto');
+                    tocarSom('aplausos.ogg');
+                    acertos++;
+                    document.getElementById('feedback').innerHTML = `🎉 Correto! ${acertos}/5 🎉`;
+                    
+                    if (acertos === 5) {
+                        document.getElementById('feedback').innerHTML = "🏆 PARABÉNS! VOCÊ COMPLETOU O REINO! 🏆";
+                        document.getElementById('btnReiniciar').style.display = 'inline-block';
+                        setTimeout(() => tocarSom('fim_jogo.ogg'), 500);
+                    }
                 } else {
-                    window.location.href = adicionarFlagFullscreenNaUrl(url);
+                    tocarSom('erro.ogg');
+                    document.getElementById('feedback').innerHTML = '❌ Tente novamente! ❌';
+                    const l = escolhaLetra.el;
+                    const f = escolhaFigura.el;
+                    setTimeout(() => {
+                        l.classList.remove('selecionado');
+                        f.classList.remove('selecionado');
+                        document.getElementById('feedback').innerHTML = '🔗 Ligue cada letra à sua figura! 🔗';
+                    }, 500);
                 }
-            }, 50);
+                escolhaLetra = null;
+                escolhaFigura = null;
+            }
         }
-
-        // Força fullscreen nas páginas de destino
-        function adicionarFlagFullscreenNaUrl(url) {
-            if (!url) return url;
-            if (url.startsWith('http')) return url;
-            const flag = 'fullscreen=force';
-            return url.includes('?') ? `${url}&${flag}` : `${url}?${flag}`;
+        
+        function reiniciarJogo() {
+            montarJogo();
+            document.getElementById('btnReiniciar').style.display = 'none';
+            document.getElementById('feedback').innerHTML = '🔗 Ligue cada letra à sua figura! 🔗';
         }
-
+        
+        // ========== CORAÇÕES FLUTUANTES ==========
+        function criarCoracoes() {
+            const container = document.getElementById('coracoes-container');
+            const simbolos = ['💖', '💕', '💗', '💝', '✨', '🌟', '👑'];
+            const cores = ['#e91e8c', '#ff80c0', '#d4a843', '#ff4081'];
+            
+            function adicionarCoracao() {
+                const c = document.createElement('div');
+                c.className = 'coracao-flutuante';
+                c.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                c.style.left = Math.random() * 100 + '%';
+                c.style.fontSize = (Math.random() * 14 + 12) + 'px';
+                c.style.color = cores[Math.floor(Math.random() * cores.length)];
+                c.style.animationDuration = (Math.random() * 6 + 5) + 's';
+                container.appendChild(c);
+                setTimeout(() => c.remove(), 11000);
+            }
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(adicionarCoracao, i * 400);
+            }
+            
+            setInterval(adicionarCoracao, 3000);
+        }
+        
+        // ========== CONFIGURAÇÃO DOS BOTÕES ==========
+        function configurarBotoes() {
+            const botoesVogais = document.querySelectorAll('.bloco-vogal');
+            botoesVogais.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const letra = btn.getAttribute('data-letra');
+                    tocarVogal(letra);
+                });
+            });
+            
+            document.getElementById('btnIniciar').addEventListener('click', iniciarApresentacao);
+            document.getElementById('btnProxima').addEventListener('click', irParaJogo);
+            document.getElementById('btnReiniciar').addEventListener('click', reiniciarJogo);
+            document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
+        }
+        
+        // ========== INICIALIZAÇÃO ==========
         window.onload = function() {
-            lancarFestaMagica();
-            criarParticulas();
-            configurarCards();
+            criarCoracoes();
+            setupFullscreenListeners();
+            restaurarFullscreen();
             configurarBotoes();
         };
         
-        function configurarBotoes() {
-            // Configurar botão de música
-            const btnMusica = document.getElementById('btnMusica');
-            if (btnMusica) {
-                btnMusica.addEventListener('click', alternarMusica);
+        // Prevenir teclado virtual em mobile (inputs não são usados)
+        document.addEventListener('touchstart', function(e) {
+            if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'TEXTAREA') {
+                // Isso mantém o foco fora de campos de input
             }
-            
-            // Configurar botão de fullscreen
-            const btnFullscreen = document.getElementById('fullscreenBtn');
-            if (btnFullscreen) {
-                btnFullscreen.addEventListener('click', toggleFullScreen);
-            }
-        }
-
-        function lancarFestaMagica() {
-            if (typeof confetti !== 'undefined') {
-                confetti({
-                    particleCount: 80,
-                    spread: 100,
-                    origin: { y: 0.5 },
-                    colors: ['#d4a843', '#f0e68c', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'],
-                    shapes: ['circle', 'square'],
-                    scalar: 1.2
-                });
-            }
-        }
-
-        function criarParticulas() {
-            const container = document.getElementById('particulas-container');
-            if (!container) return;
-            
-            const simbolos = ['✨', '⭐', '🔮', '🌟', '💫', '⚡'];
-            const cores = ['#d4a843', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'];
-
-            function criarParticula() {
-                const p = document.createElement('div');
-                p.className = 'particula';
-                p.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
-                p.style.left = Math.random() * 100 + '%';
-                p.style.fontSize = (Math.random() * 15 + 10) + 'px';
-                p.style.color = cores[Math.floor(Math.random() * cores.length)];
-                p.style.animationDuration = (Math.random() * 8 + 6) + 's';
-                container.appendChild(p);
-                setTimeout(() => p.remove(), 14000);
-            }
-
-            for (let i = 0; i < 15; i++) {
-                setTimeout(criarParticula, i * 400);
-            }
-            
-            setInterval(criarParticula, 3000);
-        }
-
-        function configurarCards() {
-            const cards = document.querySelectorAll('.card-reino');
-            cards.forEach(card => {
-                card.addEventListener('click', navegarParaReino);
-            });
-        }
-
-        // Função para alternar música
-        function alternarMusica(event) {
-            if(event) event.stopPropagation();
-            
-            const musica = initMusica();
-            const btn = document.getElementById('btnMusica');
-            
-            if (musica.paused) {
-                musica.play().catch(e => {
-                    console.log('Não foi possível tocar música:', e);
-                });
-                btn.innerHTML = `🎵 MÚSICA ON`;
-                btn.style.background = "rgba(212, 168, 67, 0.5)";
-                btn.style.color = "#fff";
-            } else {
-                musica.pause();
-                btn.innerHTML = `🎵 MÚSICA OFF`;
-                btn.style.background = "rgba(212, 168, 67, 0.2)";
-                btn.style.color = "var(--ouro-real)";
-            }
-        }
-
-        // Função para alternar tela cheia
-        function toggleFullScreen(event) {
-            if(event) event.stopPropagation();
-            
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(e => {
-                    console.log('Erro ao entrar em tela cheia:', e);
-                });
-            } else {
-                document.exitFullscreen().catch(e => {
-                    console.log('Erro ao sair da tela cheia:', e);
-                });
-            }
-        }
-
-        function updateFullscreenState() {
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
-            if (fullscreenBtn) {
-                const isFullscreen = !!document.fullscreenElement;
-                fullscreenBtn.innerHTML = isFullscreen ? '✖' : '⛶';
-                fullscreenBtn.style.background = isFullscreen ? '#9c1460' : 'linear-gradient(135deg, var(--azul-netuno), #0d3a5c)';
-            }
-        }
-        
-        document.addEventListener('fullscreenchange', updateFullscreenState);
-        updateFullscreenState();
+        });
     </script>
 </body>
 </html>
