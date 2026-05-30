@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-    <title>👸🤴 Reino das Vogais - Escolha sua Aventura</title>
+    <title>👸🤴 Reino das Vogais - Aprenda as Vogais</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&family=Fredoka+One&family=Great+Vibes&display=swap" rel="stylesheet">
@@ -11,18 +11,21 @@
         :root {
             --rosa-princesa: #e91e8c;
             --rosa-escuro: #9c1460;
-            --rosa-claro: #ff80c0;
             --dourado-real: #d4a843;
             --dourado-escuro: #b8860b;
             --dourado-branco: #fff8f0;
             --noite-real: #1a0a1e;
             --verde-jardim: #2d8e5f;
-            --verde-escuro: #1a5c3a;
             --coral: #f4845f;
+            --coral-escuro: #c94a2a;
             --turquoise: #4dd0e1;
+            --turquoise-escuro: #1a8a98;
             --lavender: #b39ddb;
+            --lavender-escuro: #6a5590;
             --lime: #aed581;
+            --lime-escuro: #6a9a2a;
             --peach: #ffab91;
+            --peach-escuro: #c06040;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -39,7 +42,7 @@
             position: relative;
         }
 
-        /* Estrelas cintilantes no céu do reino */
+        /* Estrelas cintilantes */
         body::before {
             content: '';
             position: fixed;
@@ -66,24 +69,22 @@
             100% { opacity: 1; }
         }
 
-        /* Corações flutuantes mágicos */
-        .coracao-flutuante {
+        /* Elementos flutuantes */
+        .elemento-flutuante {
             position: fixed;
             pointer-events: none;
             z-index: 1;
-            animation: flutuarCoracao linear infinite;
+            animation: flutuarElemento linear infinite;
             opacity: 0.4;
-            filter: drop-shadow(0 0 5px rgba(233, 30, 140, 0.5));
         }
         
-        @keyframes flutuarCoracao {
+        @keyframes flutuarElemento {
             0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
             15% { opacity: 0.6; }
             85% { opacity: 0.6; }
-            100% { transform: translateY(-20vh) scale(1) rotate(20deg); opacity: 0; }
+            100% { transform: translateY(-20vh) scale(1) rotate(360deg); opacity: 0; }
         }
 
-        /* Header real */
         .header {
             position: relative;
             z-index: 50;
@@ -93,7 +94,7 @@
         }
         
         .header-inner {
-            max-width: 800px;
+            max-width: 900px;
             margin: 0 auto;
             padding: 12px 16px;
             display: flex;
@@ -105,7 +106,6 @@
 
         .header-botoes { display: flex; gap: 10px; align-items: center; }
 
-        /* Botão Fullscreen */
         .btn-fullscreen {
             background: linear-gradient(135deg, #4a148c, #6a1b9a);
             border: 2px solid var(--dourado-real);
@@ -133,7 +133,6 @@
             box-shadow: 0 0 20px rgba(212, 168, 67, 0.6);
         }
 
-        /* Botão voltar dourado */
         .btn-voltar-dourado {
             display: flex;
             align-items: center;
@@ -164,209 +163,312 @@
             50% { box-shadow: 0 0 30px rgba(212, 168, 67, 0.8); border-color: #ffe6a3; }
         }
 
-        /* Stage principal */
         .stage {
             flex: 1;
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             position: relative;
             z-index: 10;
-            gap: 20px;
+            gap: 15px;
             overflow-y: auto;
             overflow-x: hidden;
         }
 
         .conteudo-central {
-            max-width: 900px;
+            max-width: 700px;
             width: 100%;
             margin: 0 auto;
             text-align: center;
         }
 
-        /* Banner */
-        .banner-reinos {
-            border-radius: 20px;
-            overflow: hidden;
-            border: 3px solid var(--dourado-real);
-            width: 85%;
-            max-width: 280px;
-            margin: 0 auto 15px;
-            aspect-ratio: 16/10;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(212, 168, 67, 0.2);
-            position: relative;
-            background: linear-gradient(135deg, #2d1b4e, #1a0a2e);
-        }
-        
-        .banner-reinos img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
-        
-        .banner-reinos::after {
-            content: "👑";
-            position: absolute;
-            bottom: -15px;
-            right: -10px;
-            font-size: 35px;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
-        }
-
         /* Títulos */
         .titulo-reino {
             font-family: 'Cinzel Decorative', cursive;
-            font-size: clamp(24px, 6vw, 32px);
+            font-size: clamp(20px, 5vw, 28px);
             color: var(--dourado-real);
             text-shadow: 0 0 15px rgba(233, 30, 140, 0.5), 2px 2px 4px rgba(0,0,0,0.5);
             text-align: center;
             margin-bottom: 5px;
         }
         
-        .subtitulo-magico {
+        .subtitulo-real {
             font-family: 'Dancing Script', cursive;
-            font-size: clamp(16px, 4vw, 20px);
-            color: rgba(255, 255, 255, 0.8);
+            font-size: clamp(14px, 4vw, 18px);
+            color: rgba(255, 255, 255, 0.7);
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 15px;
         }
 
-        /* Grid de modalidades */
-        .modalidades-container {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 20px;
-            width: 100%;
-            margin: 0 auto;
+        /* Botões de modalidade (os 4 botões pequenos) */
+        .modalidades-botoes {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 20px;
+        }
+        
+        .btn-modalidade {
+            padding: 10px 18px;
+            border-radius: 50px;
+            border: 2px solid var(--dourado-real);
+            background: rgba(212, 168, 67, 0.15);
+            color: var(--dourado-real);
+            font-family: 'Nunito', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            transition: all 0.3s;
+            backdrop-filter: blur(5px);
+        }
+        
+        .btn-modalidade:hover {
+            background: rgba(212, 168, 67, 0.35);
+            transform: translateY(-2px);
+            box-shadow: 0 0 15px rgba(212, 168, 67, 0.3);
+        }
+        
+        .btn-modalidade.ativo {
+            background: linear-gradient(135deg, var(--dourado-real), var(--dourado-escuro));
+            color: #1a0a2e;
+            border-color: #fff;
+            box-shadow: 0 0 20px rgba(212, 168, 67, 0.5);
         }
 
-        /* Cards das modalidades */
-        .card-modalidade {
-            padding: 25px 15px;
-            border-radius: 20px;
-            border: none;
-            text-decoration: none;
-            text-align: center;
-            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+        /* Card de exibição */
+        .card-exibicao {
+            background: rgba(255,255,255,0.1);
+            border: 2px solid var(--dourado-real);
+            border-radius: 25px;
+            padding: 15px;
+            max-width: 320px;
+            margin: 0 auto 15px;
+            min-height: 240px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 10px;
-            position: relative;
-            overflow: hidden;
-            cursor: pointer;
-            min-height: 180px;
+            backdrop-filter: blur(5px);
         }
         
-        .card-modalidade::before {
-            content: "";
-            position: absolute;
-            top: -50%;
-            left: -50%;
-            width: 200%;
-            height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
-            opacity: 0;
-            transition: opacity 0.3s;
+        .letra-grande {
+            font-size: 100px;
+            display: block;
+            text-shadow: 4px 4px 0 rgba(0,0,0,0.2);
+            color: var(--dourado-branco);
+            transition: all 0.2s;
         }
         
-        .card-modalidade:hover::before { opacity: 1; }
-        .card-modalidade:hover { transform: translateY(-8px) scale(1.02); }
-        .card-modalidade:active { transform: scale(0.98); }
-
-        /* Cores e estilos específicos de cada modalidade */
-        .card-maiuscula-forma {
-            background: linear-gradient(145deg, #f4845f, #e05a3a);
-            box-shadow: 0 8px 0 #c94a2a, 0 0 20px rgba(244, 132, 95, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        .card-maiuscula-forma:hover { box-shadow: 0 12px 0 #c94a2a, 0 0 40px rgba(244, 132, 95, 0.5); }
-
-        .card-minuscula-forma {
-            background: linear-gradient(145deg, #2d8e5f, #1a5c3a);
-            box-shadow: 0 8px 0 #124529, 0 0 20px rgba(45, 142, 95, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        .card-minuscula-forma:hover { box-shadow: 0 12px 0 #124529, 0 0 40px rgba(45, 142, 95, 0.5); }
-
-        .card-maiuscula-cursiva {
-            background: linear-gradient(145deg, #b39ddb, #8e79c0);
-            box-shadow: 0 8px 0 #6a5590, 0 0 20px rgba(179, 157, 219, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        .card-maiuscula-cursiva:hover { box-shadow: 0 12px 0 #6a5590, 0 0 40px rgba(179, 157, 219, 0.5); }
-
-        .card-minuscula-cursiva {
-            background: linear-gradient(145deg, #ffab91, #e08060);
-            box-shadow: 0 8px 0 #c06040, 0 0 20px rgba(255, 171, 145, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-        .card-minuscula-cursiva:hover { box-shadow: 0 12px 0 #c06040, 0 0 40px rgba(255, 171, 145, 0.5); }
-
-        /* Ícones e textos dos cards */
-        .icone-modalidade {
-            font-size: 50px;
+        /* Fontes específicas para cada modalidade */
+        .modal-maiuscula-forma .letra-grande { font-family: 'Fredoka One', cursive; }
+        .modal-minuscula-forma .letra-grande { font-family: 'Nunito', sans-serif; font-weight: 800; }
+        .modal-maiuscula-cursiva .letra-grande { font-family: 'Great Vibes', cursive; font-size: 110px; }
+        .modal-minuscula-cursiva .letra-grande { font-family: 'Great Vibes', cursive; font-size: 110px; }
+        
+        .imagem-figura {
+            width: 120px;
+            height: 120px;
+            object-fit: contain;
+            display: none;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
-            transition: transform 0.3s;
         }
         
-        .card-modalidade:hover .icone-modalidade {
-            transform: scale(1.15) rotate(-5deg);
+        .imagem-figura.ativo {
+            display: block;
+            animation: fadeInScale 0.5s ease-out;
         }
         
-        .titulo-modalidade {
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 20px;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 1px 1px 2px rgba(0,0,0,0.3);
+        .video-player {
+            width: 100%;
+            max-width: 280px;
+            border-radius: 15px;
+            display: none;
         }
         
-        .desc-modalidade {
-            font-family: 'Nunito', sans-serif;
-            font-size: 13px;
-            opacity: 0.9;
-            font-weight: 600;
+        .video-player.ativo {
+            display: block;
         }
         
-        .exemplo-letra {
-            font-family: 'Fredoka One', cursive;
-            font-size: 28px;
-            margin-top: 5px;
-            color: rgba(255,255,255,0.8);
-        }
-        
-        .card-maiuscula-cursiva .exemplo-letra,
-        .card-minuscula-cursiva .exemplo-letra {
-            font-family: 'Great Vibes', cursive;
-            font-size: 32px;
+        @keyframes fadeInScale {
+            from { opacity: 0; transform: scale(0.5); }
+            to { opacity: 1; transform: scale(1); }
         }
 
-        /* Decoração */
+        /* Blocos das vogais */
+        .blocos-container {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        
+        .bloco-vogal {
+            width: 65px;
+            height: 65px;
+            border-radius: 15px;
+            border: none;
+            font-size: 2rem;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+        
+        /* Fontes dos blocos conforme modalidade */
+        .modal-maiuscula-forma .bloco-vogal { font-family: 'Fredoka One', cursive; }
+        .modal-minuscula-forma .bloco-vogal { font-family: 'Nunito', sans-serif; font-weight: 800; text-transform: lowercase; }
+        .modal-maiuscula-cursiva .bloco-vogal { font-family: 'Great Vibes', cursive; font-size: 2.2rem; }
+        .modal-minuscula-cursiva .bloco-vogal { font-family: 'Great Vibes', cursive; font-size: 2.2rem; text-transform: lowercase; }
+        
+        .bloco-A, .bloco-a { background: var(--coral); box-shadow: 0 5px var(--coral-escuro); }
+        .bloco-E, .bloco-e { background: var(--turquoise); box-shadow: 0 5px var(--turquoise-escuro); }
+        .bloco-I, .bloco-i { background: var(--lavender); box-shadow: 0 5px var(--lavender-escuro); }
+        .bloco-O, .bloco-o { background: var(--lime); box-shadow: 0 5px var(--lime-escuro); }
+        .bloco-U, .bloco-u { background: var(--peach); box-shadow: 0 5px var(--peach-escuro); }
+        
+        .bloco-vogal:hover { transform: scale(1.1) translateY(-3px); }
+        .bloco-vogal:active { transform: scale(0.95); }
+
+        /* Botões de ação */
+        .btn-acao {
+            padding: 12px 28px;
+            border-radius: 50px;
+            border: none;
+            font-family: 'Nunito', sans-serif;
+            font-weight: 800;
+            font-size: 16px;
+            cursor: pointer;
+            margin: 5px;
+            transition: all 0.3s;
+        }
+        
+        .btn-iniciar {
+            background: linear-gradient(135deg, var(--turquoise), #26a8b8);
+            color: white;
+            box-shadow: 0 4px 0 #1a8a98;
+        }
+        
+        .btn-proxima {
+            background: linear-gradient(135deg, #ffcc00, #e6b800);
+            color: #5d4037;
+            display: none;
+        }
+        
+        .btn-reiniciar {
+            background: linear-gradient(135deg, var(--lime), #8bc34a);
+            color: white;
+            display: none;
+        }
+        
+        .btn-acao:hover { transform: translateY(-2px); }
+        .btn-acao:active { transform: translateY(2px); }
+
+        /* Jogo de ligação */
+        .jogo-ligacao {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            max-width: 500px;
+            width: 100%;
+            margin: 15px auto;
+            display: none;
+        }
+        
+        .coluna {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .item-jogo {
+            border-radius: 15px;
+            cursor: pointer;
+            transition: 0.2s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 80px;
+            width: 100%;
+            border: none;
+            opacity: 0;
+        }
+        
+        .cubo-letra {
+            color: white;
+            border-radius: 12px;
+        }
+        
+        .modal-maiuscula-forma .cubo-letra { font-family: 'Fredoka One', cursive; font-size: 45px; }
+        .modal-minuscula-forma .cubo-letra { font-family: 'Nunito', sans-serif; font-weight: 800; font-size: 45px; text-transform: lowercase; }
+        .modal-maiuscula-cursiva .cubo-letra { font-family: 'Great Vibes', cursive; font-size: 50px; }
+        .modal-minuscula-cursiva .cubo-letra { font-family: 'Great Vibes', cursive; font-size: 50px; text-transform: lowercase; }
+        
+        .cubo-figura {
+            border: 3px solid var(--dourado-real);
+            background: rgba(255,255,255,0.9);
+            border-radius: 12px;
+        }
+        
+        .cubo-figura img {
+            width: 60px;
+            height: 60px;
+            object-fit: contain;
+        }
+        
+        .selecionado {
+            transform: scale(1.08);
+            outline: 4px solid #ffcc00;
+            z-index: 2;
+            opacity: 1 !important;
+        }
+        
+        .correto {
+            opacity: 0.5 !important;
+            pointer-events: none;
+            transform: scale(0.9);
+            filter: grayscale(0.3);
+        }
+        
+        .feedback-texto {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(18px, 5vw, 24px);
+            text-align: center;
+            margin: 10px 0;
+            color: var(--dourado-real);
+        }
+        
+        @keyframes cuboPulo {
+            0% { transform: scale(0.3); opacity: 0; }
+            50% { transform: scale(1.1); }
+            70% { transform: scale(0.9); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .animar-pulo {
+            animation: cuboPulo 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+        }
+        
         .decoracao-castelo {
-            margin-top: 20px;
-            font-size: 20px;
+            margin-top: 15px;
+            font-size: 18px;
             opacity: 0.4;
             letter-spacing: 8px;
             text-align: center;
         }
-
-        /* Responsivo */
-        @media (max-width: 640px) {
-            .modalidades-container { gap: 15px; }
-            .card-modalidade { padding: 20px 12px; min-height: 160px; }
-            .icone-modalidade { font-size: 40px; }
-            .titulo-modalidade { font-size: 16px; }
-            .exemplo-letra { font-size: 22px; }
-            .card-maiuscula-cursiva .exemplo-letra,
-            .card-minuscula-cursiva .exemplo-letra { font-size: 26px; }
-        }
         
-        @media (max-width: 480px) {
-            .modalidades-container { grid-template-columns: 1fr; max-width: 280px; margin: 0 auto; }
+        @media (max-width: 550px) {
+            .bloco-vogal { width: 55px; height: 55px; font-size: 1.6rem; }
+            .letra-grande { font-size: 70px; }
+            .modal-maiuscula-cursiva .letra-grande,
+            .modal-minuscula-cursiva .letra-grande { font-size: 80px; }
+            .card-exibicao { min-height: 200px; max-width: 280px; }
+            .cubo-figura img { width: 45px; height: 45px; }
+            .btn-acao { padding: 10px 20px; font-size: 14px; }
+            .btn-voltar-dourado { padding: 6px 15px; font-size: 12px; }
+            .btn-modalidade { padding: 6px 12px; font-size: 11px; }
         }
         
         .stage::-webkit-scrollbar {
@@ -386,11 +488,11 @@
 </head>
 <body>
 
-    <div id="coracoes-container"></div>
+    <div id="elementos-container"></div>
 
     <header class="header">
         <div class="header-inner">
-            <a href="index.html" class="btn-voltar-dourado">← ✨ Voltar aos Reinos ✨</a>
+            <a href="vogais.html" class="btn-voltar-dourado">← ✨ Voltar ao Reino ✨</a>
             <div class="header-botoes">
                 <button class="btn-fullscreen" id="btnFullscreen" title="Tela Cheia">⛶</button>
             </div>
@@ -399,52 +501,112 @@
 
     <div class="stage">
         <div class="conteudo-central">
-            <div class="banner-reinos">
-                <img src="ilha.jpg" alt="Mapa dos Reinos Encantados" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #e91e8c, #9c1460)'; this.parentElement.innerHTML += '<span style=\"font-size:48px;\">👸🤴</span>';">
+            <h1 class="titulo-reino">🏰 Aprenda as Vogais</h1>
+            <p class="subtitulo-real">Escolha o estilo mágico das letras ✨</p>
+            
+            <!-- Botões de modalidade -->
+            <div class="modalidades-botoes">
+                <button class="btn-modalidade" data-modal="maiuscula-forma">🏰 Maiúscula Forma</button>
+                <button class="btn-modalidade" data-modal="minuscula-forma">🌹 Minúscula Forma</button>
+                <button class="btn-modalidade" data-modal="maiuscula-cursiva">✨ Maiúscula Cursiva</button>
+                <button class="btn-modalidade" data-modal="minuscula-cursiva">🦋 Minúscula Cursiva</button>
             </div>
             
-            <h1 class="titulo-reino">🏰 Reino das Vogais</h1>
-            <p class="subtitulo-magico">Escolha como deseja aprender as letras mágicas... ✨</p>
-            
-            <div class="modalidades-container">
-                <!-- Maiúsculas de Forma -->
-                <a href="vogais_maiusculas_forma.html" class="card-modalidade card-maiuscula-forma">
-                    <span class="icone-modalidade">🏰</span>
-                    <span class="titulo-modalidade">Vogais Maiúsculas</span>
-                    <span class="desc-modalidade">Letras do Castelo Real</span>
-                    <span class="exemplo-letra">A E I O U</span>
-                </a>
+            <div id="area-apresentacao">
+                <div class="card-exibicao">
+                    <span id="display-letra" class="letra-grande">✨</span>
+                    <img id="imagem-figura" class="imagem-figura" alt="Figura da vogal">
+                    <video id="meuVideo" class="video-player" playsinline></video>
+                </div>
 
-                <!-- Minúsculas de Forma -->
-                <a href="vogais_minusculas_forma.html" class="card-modalidade card-minuscula-forma">
-                    <span class="icone-modalidade">🌹</span>
-                    <span class="titulo-modalidade">Vogais Minúsculas</span>
-                    <span class="desc-modalidade">Letras do Jardim Encantado</span>
-                    <span class="exemplo-letra">a e i o u</span>
-                </a>
-
-                <!-- Maiúsculas Cursiva -->
-                <a href="vogais_maiusculas_cursiva.html" class="card-modalidade card-maiuscula-cursiva">
-                    <span class="icone-modalidade">✨</span>
-                    <span class="titulo-modalidade">Vogais Maiúsculas</span>
-                    <span class="desc-modalidade">Caligrafia Elegante</span>
-                    <span class="exemplo-letra">A E I O U</span>
-                </a>
-
-                <!-- Minúsculas Cursiva -->
-                <a href="vogais_minusculas_cursiva.html" class="card-modalidade card-minuscula-cursiva">
-                    <span class="icone-modalidade">🦋</span>
-                    <span class="titulo-modalidade">Vogais Minúsculas</span>
-                    <span class="desc-modalidade">Caligrafia do Jardim</span>
-                    <span class="exemplo-letra">a e i o u</span>
-                </a>
+                <div class="blocos-container" id="blocos-container">
+                    <button class="bloco-vogal bloco-A" data-letra="A" data-som="vogal_a.ogg" data-video="a_de_aviao.mp4" data-imagem="aviao.png">A</button>
+                    <button class="bloco-vogal bloco-E" data-letra="E" data-som="vogal_e.ogg" data-video="e_de_elefante.mp4" data-imagem="elefante.png">E</button>
+                    <button class="bloco-vogal bloco-I" data-letra="I" data-som="vogal_i.ogg" data-video="i_de_iguana.mp4" data-imagem="iguana.png">I</button>
+                    <button class="bloco-vogal bloco-O" data-letra="O" data-som="vogal_o.ogg" data-video="o_de_de_ovo.mp4" data-imagem="ovo.png">O</button>
+                    <button class="bloco-vogal bloco-U" data-letra="U" data-som="vogal_u.ogg" data-video="u_de_unicornio.mp4" data-imagem="unicornio.png">U</button>
+                </div>
+                
+                <button class="btn-acao btn-iniciar" id="btnIniciar">▶ Começar Apresentação</button>
             </div>
+
+            <div id="area-jogo" class="jogo-ligacao">
+                <div class="coluna" id="colunaLetras"></div>
+                <div class="coluna" id="colunaFiguras"></div>
+            </div>
+
+            <div class="feedback-texto" id="feedback">✨ Clique em uma letra para começar! ✨</div>
+            
+            <button class="btn-acao btn-proxima" id="btnProxima">🌟 PRÓXIMA ATIVIDADE</button>
+            <button class="btn-acao btn-reiniciar" id="btnReiniciar">🔁 Jogar Novamente</button>
             
             <div class="decoracao-castelo">👑 💖 🏰 💖 👑</div>
         </div>
     </div>
 
     <script>
+        // ========== ESTADO DA MODALIDADE ==========
+        let modalidadeAtual = 'maiuscula-forma';
+        
+        // Dados das vogais
+        const dadosVogais = {
+            'A': { som: 'vogal_a.ogg', video: 'a_de_aviao.mp4', imagem: 'aviao.png', nome: 'A de Avião' },
+            'E': { som: 'vogal_e.ogg', video: 'e_de_elefante.mp4', imagem: 'elefante.png', nome: 'E de Elefante' },
+            'I': { som: 'vogal_i.ogg', video: 'i_de_iguana.mp4', imagem: 'iguana.png', nome: 'I de Iguana' },
+            'O': { som: 'vogal_o.ogg', video: 'o_de_de_ovo.mp4', imagem: 'ovo.png', nome: 'O de Ovo' },
+            'U': { som: 'vogal_u.ogg', video: 'u_de_unicornio.mp4', imagem: 'unicornio.png', nome: 'U de Unicórnio' }
+        };
+        
+        const dadosVogaisMinusculas = {
+            'a': { som: 'vogal_a.ogg', video: 'a_de_aviao.mp4', imagem: 'aviao.png', nome: 'a de Avião' },
+            'e': { som: 'vogal_e.ogg', video: 'e_de_elefante.mp4', imagem: 'elefante.png', nome: 'e de Elefante' },
+            'i': { som: 'vogal_i.ogg', video: 'i_de_iguana.mp4', imagem: 'iguana.png', nome: 'i de Iguana' },
+            'o': { som: 'vogal_o.ogg', video: 'o_de_de_ovo.mp4', imagem: 'ovo.png', nome: 'o de Ovo' },
+            'u': { som: 'vogal_u.ogg', video: 'u_de_unicornio.mp4', imagem: 'unicornio.png', nome: 'u de Unicórnio' }
+        };
+        
+        const coresVogais = {
+            'A': '#f4845f', 'E': '#4dd0e1', 'I': '#b39ddb', 'O': '#aed581', 'U': '#ffab91',
+            'a': '#f4845f', 'e': '#4dd0e1', 'i': '#b39ddb', 'o': '#aed581', 'u': '#ffab91'
+        };
+        
+        // Função para atualizar a fonte conforme modalidade
+        function atualizarEstilosModalidade() {
+            const body = document.body;
+            // Remove classes anteriores
+            body.classList.remove('modal-maiuscula-forma', 'modal-minuscula-forma', 'modal-maiuscula-cursiva', 'modal-minuscula-cursiva');
+            body.classList.add(`modal-${modalidadeAtual}`);
+            
+            // Atualizar os textos dos botões conforme modalidade
+            const botoesVogais = document.querySelectorAll('.bloco-vogal');
+            const ehMaiuscula = modalidadeAtual === 'maiuscula-forma' || modalidadeAtual === 'maiuscula-cursiva';
+            const ehMinuscula = modalidadeAtual === 'minuscula-forma' || modalidadeAtual === 'minuscula-cursiva';
+            
+            botoesVogais.forEach(btn => {
+                const letraOriginal = btn.getAttribute('data-letra');
+                if (ehMaiuscula) {
+                    btn.innerText = letraOriginal.toUpperCase();
+                    btn.classList.remove('bloco-a', 'bloco-e', 'bloco-i', 'bloco-o', 'bloco-u');
+                    btn.classList.add(`bloco-${letraOriginal.toUpperCase()}`);
+                } else {
+                    btn.innerText = letraOriginal.toLowerCase();
+                    btn.classList.remove('bloco-A', 'bloco-E', 'bloco-I', 'bloco-O', 'bloco-U');
+                    btn.classList.add(`bloco-${letraOriginal.toLowerCase()}`);
+                }
+            });
+            
+            // Resetar exibição
+            const display = document.getElementById('display-letra');
+            const imagemFigura = document.getElementById('imagem-figura');
+            const player = document.getElementById('meuVideo');
+            imagemFigura.classList.remove('ativo');
+            player.classList.remove('ativo');
+            player.pause();
+            display.style.display = 'block';
+            display.innerText = '✨';
+        }
+        
+        // Função para tocar vogal
         let somAtual = null;
         
         function tocarSom(arquivo) {
@@ -459,7 +621,230 @@
             } catch(e) { console.log('Erro no áudio:', e); }
         }
         
-        // Fullscreen
+        function tocarVogal(letra) {
+            const display = document.getElementById('display-letra');
+            const imagemFigura = document.getElementById('imagem-figura');
+            const player = document.getElementById('meuVideo');
+            const ehMaiuscula = modalidadeAtual === 'maiuscula-forma' || modalidadeAtual === 'maiuscula-cursiva';
+            
+            // Escolher os dados corretos
+            const dados = ehMaiuscula ? dadosVogais : dadosVogaisMinusculas;
+            const letraKey = ehMaiuscula ? letra.toUpperCase() : letra.toLowerCase();
+            const dadosLetra = dados[letraKey];
+            
+            if (!dadosLetra) return;
+            
+            if (player && !player.paused) {
+                player.pause();
+                player.currentTime = 0;
+            }
+            player.classList.remove('ativo');
+            imagemFigura.classList.remove('ativo');
+            
+            tocarSom(dadosLetra.som);
+            
+            display.style.display = 'block';
+            display.style.transform = 'scale(1.1)';
+            display.innerText = ehMaiuscula ? letra.toUpperCase() : letra.toLowerCase();
+            display.style.color = coresVogais[letraKey];
+            
+            setTimeout(() => {
+                display.style.transform = 'scale(1)';
+            }, 200);
+            
+            setTimeout(() => {
+                display.style.display = 'none';
+                player.src = dadosLetra.video;
+                player.classList.add('ativo');
+                player.play().catch(e => console.log('Vídeo:', e));
+                
+                player.onended = () => {
+                    player.classList.remove('ativo');
+                    imagemFigura.src = dadosLetra.imagem;
+                    imagemFigura.classList.add('ativo');
+                    tocarSom('acerto.ogg');
+                    
+                    setTimeout(() => {
+                        imagemFigura.classList.remove('ativo');
+                        display.style.display = 'block';
+                        display.innerText = ehMaiuscula ? letra.toUpperCase() : letra.toLowerCase();
+                    }, 2000);
+                };
+            }, 1500);
+            
+            document.getElementById('btnProxima').style.display = 'inline-block';
+            document.getElementById('feedback').innerHTML = `✨ ${dadosLetra.nome} ✨`;
+        }
+        
+        // Apresentação automática
+        function iniciarApresentacao() {
+            const ehMaiuscula = modalidadeAtual === 'maiuscula-forma' || modalidadeAtual === 'maiuscula-cursiva';
+            const ordem = ehMaiuscula ? ['A', 'E', 'I', 'O', 'U'] : ['a', 'e', 'i', 'o', 'u'];
+            let i = 0;
+            const btnIniciar = document.getElementById('btnIniciar');
+            btnIniciar.style.display = 'none';
+            document.getElementById('feedback').innerHTML = '🎭 Assistindo ao espetáculo real...';
+            
+            function proximo() {
+                if (i < ordem.length) {
+                    const letra = ordem[i];
+                    const display = document.getElementById('display-letra');
+                    const imagemFigura = document.getElementById('imagem-figura');
+                    const player = document.getElementById('meuVideo');
+                    const dados = ehMaiuscula ? dadosVogais : dadosVogaisMinusculas;
+                    const letraKey = ehMaiuscula ? letra.toUpperCase() : letra.toLowerCase();
+                    const dadosLetra = dados[letraKey];
+                    
+                    if (player && !player.paused) {
+                        player.pause();
+                        player.currentTime = 0;
+                    }
+                    player.classList.remove('ativo');
+                    imagemFigura.classList.remove('ativo');
+                    
+                    tocarSom(dadosLetra.som);
+                    display.style.display = 'block';
+                    display.innerText = letra;
+                    display.style.color = coresVogais[letraKey];
+                    
+                    setTimeout(() => {
+                        display.style.display = 'none';
+                        player.src = dadosLetra.video;
+                        player.classList.add('ativo');
+                        player.play().catch(e => console.log('Vídeo:', e));
+                        
+                        player.onended = () => {
+                            player.classList.remove('ativo');
+                            imagemFigura.src = dadosLetra.imagem;
+                            imagemFigura.classList.add('ativo');
+                            tocarSom('acerto.ogg');
+                            
+                            setTimeout(() => {
+                                imagemFigura.classList.remove('ativo');
+                                display.style.display = 'block';
+                                display.innerText = letra;
+                                i++;
+                                setTimeout(proximo, 2000);
+                            }, 2000);
+                        };
+                    }, 1500);
+                } else {
+                    document.getElementById('feedback').innerHTML = '📖 Maravilhoso! Agora pratique! 📖';
+                    document.getElementById('btnProxima').style.display = 'inline-block';
+                }
+            }
+            proximo();
+        }
+        
+        // Jogo de ligação
+        let escolhaLetra = null;
+        let escolhaFigura = null;
+        let acertos = 0;
+        
+        const figurasJogo = [
+            { letra: 'A', imagem: 'aviao.png', cor: '#f4845f', som: 'vogal_a.ogg' },
+            { letra: 'E', imagem: 'elefante.png', cor: '#4dd0e1', som: 'vogal_e.ogg' },
+            { letra: 'I', imagem: 'iguana.png', cor: '#b39ddb', som: 'vogal_i.ogg' },
+            { letra: 'O', imagem: 'ovo.png', cor: '#aed581', som: 'vogal_o.ogg' },
+            { letra: 'U', imagem: 'unicornio.png', cor: '#ffab91', som: 'vogal_u.ogg' }
+        ];
+        
+        function montarJogo() {
+            const colLetras = document.getElementById('colunaLetras');
+            const colFiguras = document.getElementById('colunaFiguras');
+            colLetras.innerHTML = '';
+            colFiguras.innerHTML = '';
+            acertos = 0;
+            escolhaLetra = null;
+            escolhaFigura = null;
+            
+            const ehMaiuscula = modalidadeAtual === 'maiuscula-forma' || modalidadeAtual === 'maiuscula-cursiva';
+            const letrasMisturadas = [...figurasJogo].sort(() => Math.random() - 0.5);
+            const figurasMisturadas = [...figurasJogo].sort(() => Math.random() - 0.5);
+            
+            letrasMisturadas.forEach((d, index) => {
+                const div = document.createElement('div');
+                div.className = `item-jogo cubo-letra animar-pulo`;
+                div.style.backgroundColor = d.cor;
+                div.style.boxShadow = `0 4px 0 ${d.cor}99`;
+                div.style.animationDelay = `${index * 0.1}s`;
+                div.innerText = ehMaiuscula ? d.letra : d.letra.toLowerCase();
+                div.setAttribute('data-letra', d.letra);
+                div.setAttribute('data-som', d.som);
+                div.onclick = () => selecionarItem(div, 'letra', d.letra, d.som);
+                colLetras.appendChild(div);
+            });
+            
+            figurasMisturadas.forEach((d, index) => {
+                const div = document.createElement('div');
+                div.className = 'item-jogo cubo-figura animar-pulo';
+                div.style.animationDelay = `${(index + 2) * 0.1}s`;
+                div.innerHTML = `<img src="${d.imagem}" alt="${d.letra}">`;
+                div.setAttribute('data-letra', d.letra);
+                div.setAttribute('data-som', d.som);
+                div.onclick = () => selecionarItem(div, 'figura', d.letra, d.som);
+                colFiguras.appendChild(div);
+            });
+        }
+        
+        function irParaJogo() {
+            document.getElementById('area-apresentacao').style.display = 'none';
+            document.getElementById('btnProxima').style.display = 'none';
+            document.getElementById('area-jogo').style.display = 'grid';
+            document.getElementById('feedback').innerHTML = '🔗 Ligue cada letra à sua figura! 🔗';
+            document.getElementById('btnReiniciar').style.display = 'none';
+            montarJogo();
+        }
+        
+        function selecionarItem(el, tipo, valor, som) {
+            tocarSom(som);
+            el.classList.add('selecionado');
+            
+            if (tipo === 'letra') {
+                if (escolhaLetra) escolhaLetra.el.classList.remove('selecionado');
+                escolhaLetra = { el, valor };
+            } else {
+                if (escolhaFigura) escolhaFigura.el.classList.remove('selecionado');
+                escolhaFigura = { el, valor };
+            }
+            
+            if (escolhaLetra && escolhaFigura) {
+                if (escolhaLetra.valor === escolhaFigura.valor) {
+                    escolhaLetra.el.classList.add('correto');
+                    escolhaFigura.el.classList.add('correto');
+                    tocarSom('aplausos.ogg');
+                    acertos++;
+                    document.getElementById('feedback').innerHTML = `🎉 Correto! ${acertos}/5 🎉`;
+                    
+                    if (acertos === 5) {
+                        document.getElementById('feedback').innerHTML = "🏆 PARABÉNS! VOCÊ COMPLETOU O REINO! 🏆";
+                        document.getElementById('btnReiniciar').style.display = 'inline-block';
+                        tocarSom('fim_jogo.ogg');
+                    }
+                } else {
+                    tocarSom('erro.ogg');
+                    document.getElementById('feedback').innerHTML = '❌ Tente novamente! ❌';
+                    const l = escolhaLetra.el;
+                    const f = escolhaFigura.el;
+                    setTimeout(() => {
+                        l.classList.remove('selecionado');
+                        f.classList.remove('selecionado');
+                        document.getElementById('feedback').innerHTML = '🔗 Ligue cada letra à sua figura! 🔗';
+                    }, 500);
+                }
+                escolhaLetra = null;
+                escolhaFigura = null;
+            }
+        }
+        
+        function reiniciarJogo() {
+            montarJogo();
+            document.getElementById('btnReiniciar').style.display = 'none';
+            document.getElementById('feedback').innerHTML = '🔗 Ligue cada letra à sua figura! 🔗';
+            tocarSom('inicio.ogg');
+        }
+        
+        // ========== FULLSCREEN ==========
         const FS_KEY = 'reinoFullscreen';
         
         function isFullscreen() {
@@ -517,16 +902,16 @@
             atualizarIconeFullscreen();
         }
         
-        // Corações flutuantes
-        function criarCoracoes() {
-            const container = document.getElementById('coracoes-container');
-            const simbolos = ['💖', '💕', '💗', '💝', '✨', '🌟', '👑'];
-            const cores = ['#e91e8c', '#ff80c0', '#d4a843', '#ff4081'];
+        // ========== ELEMENTOS FLUTUANTES ==========
+        function criarElementosFlutuantes() {
+            const container = document.getElementById('elementos-container');
+            const elementos = ['💖', '💕', '💗', '✨', '🌟', '👑', '🌸', '🦋'];
+            const cores = ['#e91e8c', '#ff80c0', '#d4a843', '#ff4081', '#4caf50'];
             
-            function adicionarCoracao() {
+            function adicionarElemento() {
                 const c = document.createElement('div');
-                c.className = 'coracao-flutuante';
-                c.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                c.className = 'elemento-flutuante';
+                c.innerText = elementos[Math.floor(Math.random() * elementos.length)];
                 c.style.left = Math.random() * 100 + '%';
                 c.style.fontSize = (Math.random() * 14 + 12) + 'px';
                 c.style.color = cores[Math.floor(Math.random() * cores.length)];
@@ -536,26 +921,67 @@
             }
             
             for (let i = 0; i < 15; i++) {
-                setTimeout(adicionarCoracao, i * 400);
+                setTimeout(adicionarElemento, i * 400);
             }
-            setInterval(adicionarCoracao, 3000);
+            setInterval(adicionarElemento, 3000);
         }
         
-        // Efeito sonoro ao passar o mouse nos cards
-        function configurarEfeitosCards() {
-            const cards = document.querySelectorAll('.card-modalidade');
-            cards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
+        // ========== CONFIGURAÇÃO ==========
+        function configurarBotoes() {
+            // Botões das vogais
+            const botoesVogais = document.querySelectorAll('.bloco-vogal');
+            botoesVogais.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    const letra = btn.getAttribute('data-letra');
+                    tocarVogal(letra);
+                });
+            });
+            
+            // Botões das modalidades
+            const botoesModalidade = document.querySelectorAll('.btn-modalidade');
+            botoesModalidade.forEach(btn => {
+                btn.addEventListener('click', () => {
+                    // Remove classe ativo de todos
+                    botoesModalidade.forEach(b => b.classList.remove('ativo'));
+                    btn.classList.add('ativo');
+                    
+                    // Atualiza modalidade
+                    modalidadeAtual = btn.getAttribute('data-modal');
+                    atualizarEstilosModalidade();
+                    
+                    // Resetar exibição
+                    const display = document.getElementById('display-letra');
+                    const imagemFigura = document.getElementById('imagem-figura');
+                    const player = document.getElementById('meuVideo');
+                    imagemFigura.classList.remove('ativo');
+                    player.classList.remove('ativo');
+                    player.pause();
+                    display.style.display = 'block';
+                    display.innerText = '✨';
+                    
                     tocarSom('inicio.ogg');
                 });
             });
+            
+            // Ativar primeira modalidade por padrão
+            const primeiroBotao = document.querySelector('.btn-modalidade');
+            if (primeiroBotao) {
+                primeiroBotao.classList.add('ativo');
+            }
+            
+            document.getElementById('btnIniciar').addEventListener('click', iniciarApresentacao);
+            document.getElementById('btnProxima').addEventListener('click', irParaJogo);
+            document.getElementById('btnReiniciar').addEventListener('click', reiniciarJogo);
+            document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
         }
         
         window.onload = function() {
-            criarCoracoes();
+            criarElementosFlutuantes();
             setupFullscreenListeners();
             restaurarFullscreen();
-            configurarEfeitosCards();
+            configurarBotoes();
+            atualizarEstilosModalidade();
+            tocarSom('inicio.ogg');
         };
     </script>
 </body>
