@@ -1,850 +1,485 @@
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-<title>Jornada das Letras: Formando Palavrinhas com Vogais</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Patrick+Hand&family=Nunito:wght@400;600;700;800&family=Fredoka+One&family=Baloo+2:wght@500;700;800&display=swap" rel="stylesheet">
-<style>
-/* ═══════════════════════════════════════════════════════
-   DESIGN: "Folha de Caderno Viva" — Paper Craft Escolar
-═══════════════════════════════════════════════════════ */
-* { margin: 0; padding: 0; box-sizing: border-box; }
-:root {
-  --coral: #f4845f;
-  --coral-dark: #e05a3a;
-  --turquoise: #4dd0e1;
-  --turquoise-dark: #26a8b8;
-  --lavender: #b39ddb;
-  --lavender-dark: #8e79c0;
-  --lime: #aed581;
-  --lime-dark: #8bc34a;
-  --peach: #ffab91;
-  --peach-dark: #e08060;
-  --paper: #fefcf3;
-  --brown: #5d4037;
-  --brown-light: #795548;
-  --brown-lighter: #8d6e63;
-  --ruled-line: rgba(173, 200, 230, 0.25);
-  --margin-line: rgba(200, 100, 100, 0.2);
-}
-body {
-  font-family: 'Nunito', sans-serif;
-  background: var(--paper);
-  color: #333;
-  min-height: 100vh;
-  position: relative;
-  overflow-x: hidden;
-}
-
-/* ─── MODO BOAS-VINDAS: 100% viewport sem scroll ─── */
-body.boas-vindas {
-  height: 100vh;
-  overflow: hidden;
-}
-
-/* ─── Fundo de caderno pautado ─── */
-body::before {
-  content: '';
-  position: fixed;
-  inset: 0;
-  z-index: 0;
-  pointer-events: none;
-  background:
-    repeating-linear-gradient(0deg,
-      transparent,
-      transparent 31px,
-      var(--ruled-line) 31px,
-      var(--ruled-line) 32px
-    );
-  background-size: 100% 32px;
-  background-position: 0 16px;
-}
-body::after {
-  content: '';
-  position: fixed;
-  top: 0;
-  bottom: 0;
-  left: clamp(40px, 8vw, 80px);
-  width: 2px;
-  background: var(--margin-line);
-  z-index: 0;
-  pointer-events: none;
-}
-/* ─── Header fixo ─── */
-.header {
-  position: sticky;
-  top: 0;
-  z-index: 50;
-  background: rgba(254, 252, 243, 0.92);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border-bottom: 1px solid rgba(180, 200, 220, 0.3);
-}
-.header-inner {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 10px 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 10px;
-  flex-wrap: wrap;
-}
-/* Grupo de botões no header */
-.header-botoes {
-  display: flex;
-  gap: 8px;
-}
-.btn-som {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: 50px;
-  border: none;
-  font-size: 13px;
-  font-weight: 800;
-  font-family: 'Nunito', sans-serif;
-  background: var(--lime);
-  color: #2e5016;
-  box-shadow: 0 3px 0 var(--lime-dark);
-  cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-.btn-som:hover { transform: scale(1.05); }
-.btn-som:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--lime-dark); }
-.btn-som.ativo {
-  background: #e8f5e9;
-  color: #2e7d32;
-  box-shadow: none;
-  cursor: default;
-}
-.btn-musica {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  border-radius: 50px;
-  border: none;
-  font-size: 13px;
-  font-weight: 800;
-  font-family: 'Nunito', sans-serif;
-  background: var(--turquoise);
-  color: #004d40;
-  box-shadow: 0 3px 0 var(--turquoise-dark);
-  cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-}
-.btn-musica:hover { transform: scale(1.05); }
-.btn-musica:active { transform: translateY(2px); box-shadow: 0 1px 0 var(--turquoise-dark); }
-.btn-musica.ativo {
-  background: #e0f7fa;
-  color: #006064;
-  box-shadow: none;
-}
-
-.titulo-header {
-  font-family: 'Patrick Hand', cursive;
-  font-size: clamp(16px, 4vw, 22px);
-  color: var(--brown);
-  letter-spacing: -0.5px;
-}
-.estrelas-badge {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 16px;
-  border-radius: 50px;
-  background: linear-gradient(135deg, #fff8e1, #ffecb3);
-  border: 2px solid #f9a825;
-  font-family: 'Fredoka One', cursive;
-  font-size: 16px;
-  color: #e65100;
-}
-/* ─── Navegação de palavras ─── */
-.nav-palavras {
-  max-width: 800px;
-  margin: 0 auto;
-  padding: 12px 16px 0;
-  display: flex;
-  flex-wrap: wrap;
-  gap: 6px;
-  justify-content: center;
-  position: relative;
-  z-index: 10;
-}
-.nav-pill {
-  padding: 4px 12px;
-  border-radius: 50px;
-  font-size: 12px;
-  font-weight: 700;
-  font-family: 'Nunito', sans-serif;
-  border: 2px solid rgba(121, 85, 72, 0.2);
-  background: rgba(255, 255, 255, 0.7);
-  color: var(--brown-light);
-  cursor: pointer;
-  transition: all 0.2s;
-}
-.nav-pill:hover { transform: scale(1.05); }
-.nav-pill.ativo { background: var(--brown); color: #fff; border-color: #3e2723; box-shadow: 0 2px 8px rgba(93,64,55,0.3); }
-.nav-pill.completo { background: #c8e6c9; color: #2e7d32; border-color: #81c784; }
-/* ─── Área principal ─── */
-.stage {
-  max-width: 700px;
-  margin: 24px auto;
-  padding: 0 16px;
-  position: relative;
-  z-index: 10;
-}
-/* ─── BOAS-VINDAS RESPONSIVA 100% VIEWPORT ─── */
-.welcome {
-  height: calc(100vh - 140px);
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  padding: 20px 16px;
-  text-align: center;
-  animation: fadeInUp 0.6s ease;
-  gap: 20px;
-}
-.welcome-banner { 
-  border-radius: 16px; 
-  overflow: hidden; 
-  box-shadow: 0 4px 20px rgba(93, 64, 55, 0.12); 
-  border: 3px solid rgba(180, 200, 220, 0.3);
-  width: 100%;
-  max-width: 320px;
-  height: clamp(160px, 35vh, 240px);
-}
-.welcome-banner img { width: 100%; height: 100%; object-fit: cover; display: block; }
-.welcome h2 { font-family: 'Patrick Hand', cursive; font-size: clamp(22px, 5.5vw, 32px); color: var(--brown); margin: 0; line-height: 1.2; }
-.welcome p { font-size: clamp(13px, 3vw, 15px); color: var(--brown-light); max-width: 90%; line-height: 1.5; margin: 0; }
-.welcome-blocos { width: clamp(180px, 40vw, 280px); height: auto; display: block; max-height: 80px; object-fit: contain; }
-.btn-comecar { 
-  display: inline-block; 
-  padding: clamp(12px, 3vw, 16px) clamp(24px, 8vw, 36px); 
-  border-radius: 16px; 
-  border: none; 
-  font-family: 'Fredoka One', cursive; 
-  font-size: clamp(16px, 4vw, 20px); 
-  color: #fff; 
-  background: linear-gradient(135deg, var(--coral), var(--coral-dark)); 
-  box-shadow: 0 6px 0 #c0392b, 0 8px 20px rgba(224, 90, 58, 0.3); 
-  cursor: pointer; 
-  transition: transform 0.15s, box-shadow 0.15s;
-  min-height: 52px;
-}
-.btn-comecar:hover { transform: scale(1.05); }
-.btn-comecar:active { transform: translateY(4px); box-shadow: 0 2px 0 #c0392b; }
-
-/* ─── Barra de progresso ─── */
-.progresso-bar {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  margin-bottom: 20px;
-}
-.progresso-label {
-  font-size: 13px;
-  font-weight: 700;
-  font-family: 'Nunito', sans-serif;
-  padding: 4px 12px;
-  border-radius: 50px;
-  background: rgba(93, 64, 55, 0.08);
-  color: var(--brown-light);
-  white-space: nowrap;
-}
-.progresso-track {
-  flex: 1;
-  height: 8px;
-  border-radius: 50px;
-  background: rgba(93, 64, 55, 0.08);
-  overflow: hidden;
-}
-.progresso-fill {
-  height: 100%;
-  border-radius: 50px;
-  background: linear-gradient(90deg, var(--lime), #81c784);
-  transition: width 0.5s ease;
-}
-/* ─── Card do exercício ─── */
-.card-exercicio {
-  background: rgba(255, 255, 255, 0.85);
-  border: 2px solid rgba(180, 200, 220, 0.3);
-  border-radius: 16px;
-  padding: 24px;
-  box-shadow: 0 4px 20px rgba(93, 64, 55, 0.08), 0 1px 3px rgba(0,0,0,0.05);
-  position: relative;
-  overflow: hidden;
-}
-.card-exercicio::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background:
-    repeating-linear-gradient(0deg,
-      transparent,
-      transparent 31px,
-      rgba(173, 200, 230, 0.12) 31px,
-      rgba(173, 200, 230, 0.12) 32px
-    );
-  background-size: 100% 32px;
-  background-position: 0 8px;
-}
-.card-conteudo { position: relative; z-index: 1; }
-.dica-texto {
-  text-align: center;
-  font-size: 14px;
-  font-weight: 600;
-  color: var(--brown-lighter);
-  margin-bottom: 16px;
-  font-family: 'Nunito', sans-serif;
-}
-
-.img-placeholder {
-  width: 240px;  
-  height: 240px; 
-  margin: 0 auto 20px;
-  border: 3px dashed rgba(121, 85, 72, 0.25);
-  border-radius: 12px;
-  background: rgba(255, 248, 225, 0.5);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  padding: 0;
-}
-.img-placeholder img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  border-radius: 9px;
-}
-.img-placeholder::before {
-  content: '';
-  position: absolute;
-  top: -8px;
-  left: -8px;
-  width: 40px;
-  height: 16px;
-  border-radius: 3px;
-  background: rgba(255, 235, 59, 0.4);
-  transform: rotate(-15deg);
-  z-index: 2;
-}
-@media (min-width: 640px) {
-  .img-placeholder { width: 300px; height: 300px; }
-}
-
-.btn-ouvir {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin: 0 auto 24px;
-  padding: 10px 20px;
-  border-radius: 50px;
-  border: 2px solid rgba(21, 101, 192, 0.2);
-  background: linear-gradient(135deg, #e3f2fd, #bbdefb);
-  color: #1565c0;
-  font-size: 14px;
-  font-weight: 700;
-  font-family: 'Nunito', sans-serif;
-  cursor: pointer;
-  box-shadow: 0 2px 8px rgba(21, 101, 192, 0.1);
-  transition: transform 0.15s;
-}
-.btn-ouvir:hover { transform: scale(1.05); }
-.btn-ouvir:active { transform: scale(0.95); }
-.slots-container {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  margin-bottom: 28px;
-  flex-wrap: wrap;
-}
-.slot {
-  width: 56px;
-  height: 64px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.5rem;
-  position: relative;
-  transition: all 0.3s ease;
-}
-@media (min-width: 640px) { .slot { width: 64px; height: 76px; font-size: 2rem; } }
-.slot.vazio { background: rgba(245, 240, 230, 0.6); color: rgba(121, 85, 72, 0.2); border: 3px dashed rgba(121, 85, 72, 0.15); }
-.slot.proximo { background: rgba(255, 255, 255, 0.9); color: rgba(121, 85, 72, 0.25); border: 3px dashed rgba(121, 85, 72, 0.4); box-shadow: 0 2px 8px rgba(93, 64, 55, 0.1); animation: pulseSlot 1.5s ease-in-out infinite; }
-.slot.preenchido { color: #fff; border-style: solid; border-width: 3px; animation: popIn 0.3s ease; }
-@keyframes pulseSlot { 0%, 100% { border-color: rgba(121, 85, 72, 0.4); } 50% { border-color: rgba(121, 85, 72, 0.15); } }
-@keyframes popIn { 0% { transform: scale(1.3); } 100% { transform: scale(1); } }
-.slot::after {
-  content: '';
-  position: absolute;
-  bottom: -8px;
-  left: 4px;
-  right: 4px;
-  height: 2px;
-  border-radius: 2px;
-  background: rgba(173, 200, 230, 0.4);
-}
-.slot.cor-A { background: var(--coral); border-color: var(--coral-dark); box-shadow: 0 4px 0 var(--coral-dark), 0 6px 15px rgba(244,132,95,0.4); }
-.slot.cor-E { background: var(--turquoise); border-color: var(--turquoise-dark); box-shadow: 0 4px 0 var(--turquoise-dark), 0 6px 15px rgba(77,208,225,0.4); }
-.slot.cor-I { background: var(--lavender); border-color: var(--lavender-dark); box-shadow: 0 4px 0 var(--lavender-dark), 0 6px 15px rgba(179,157,219,0.4); }
-.slot.cor-O { background: var(--lime); border-color: var(--lime-dark); box-shadow: 0 4px 0 var(--lime-dark), 0 6px 15px rgba(174,213,129,0.4); }
-.slot.cor-U { background: var(--peach); border-color: var(--peach-dark); box-shadow: 0 4px 0 var(--peach-dark), 0 6px 15px rgba(255,171,145,0.4); }
-.msg-acerto { text-align: center; margin-bottom: 12px; opacity: 0; transform: scale(0.8); transition: all 0.3s ease; }
-.msg-acerto.visivel { opacity: 1; transform: scale(1); }
-.msg-acerto span { display: inline-flex; align-items: center; gap: 8px; padding: 8px 20px; border-radius: 50px; font-size: 16px; font-weight: 700; font-family: 'Fredoka One', cursive; background: linear-gradient(135deg, #c8e6c9, #a5d6a7); color: #2e7d32; box-shadow: 0 3px 10px rgba(46, 125, 50, 0.2); }
-.blocos-container { display: flex; justify-content: center; gap: 12px; flex-wrap: wrap; }
-@media (min-width: 640px) { .blocos-container { gap: 16px; } }
-/* Blocos de Vogais Coloridos */
-.bloco-vogal {
-  width: 56px;
-  height: 56px;
-  border-radius: 12px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  font-family: 'Fredoka One', cursive;
-  font-size: 1.5rem;
-  color: #fff;
-  border: 3px solid;
-  cursor: pointer;
-  transition: transform 0.15s, box-shadow 0.15s;
-  -webkit-tap-highlight-color: transparent;
-}
-@media (min-width: 640px) { .bloco-vogal { width: 64px; height: 64px; font-size: 1.6rem; } }
-.bloco-vogal:hover { transform: scale(1.12) rotate(3deg); }
-.bloco-vogal:active { transform: scale(0.9); }
-.bloco-vogal.desabilitado { opacity: 0.4; pointer-events: none; }
-.bloco-A { background: var(--coral); border-color: var(--coral-dark); box-shadow: 0 5px 0 var(--coral-dark), 0 7px 15px rgba(244,132,95,0.3); }
-.bloco-E { background: var(--turquoise); border-color: var(--turquoise-dark); box-shadow: 0 5px 0 var(--turquoise-dark), 0 7px 15px rgba(77,208,225,0.3); }
-.bloco-I { background: var(--lavender); border-color: var(--lavender-dark); box-shadow: 0 5px 0 var(--lavender-dark), 0 7px 15px rgba(179,157,219,0.3); }
-.bloco-O { background: var(--lime); border-color: var(--lime-dark); box-shadow: 0 5px 0 var(--lime-dark), 0 7px 15px rgba(174,213,129,0.3); }
-.bloco-U { background: var(--peach); border-color: var(--peach-dark); box-shadow: 0 5px 0 var(--peach-dark), 0 7px 15px rgba(255,171,145,0.3); }
-.instrucao { text-align: center; font-size: 12px; margin-top: 16px; opacity: 0.5; color: var(--brown-light); font-family: 'Nunito', sans-serif; }
-@keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
-.parabens { text-align: center; animation: fadeInUp 0.5s ease; padding: 32px 0; }
-.parabens .trofeu { font-size: 80px; margin-bottom: 12px; display: block; animation: wiggle 0.8s ease 0.3s; }
-@keyframes wiggle { 0%, 100% { transform: rotate(0); } 20% { transform: rotate(-8deg); } 40% { transform: rotate(8deg); } 60% { transform: rotate(-4deg); } 80% { transform: rotate(4deg); } }
-.parabens h2 { font-family: 'Patrick Hand', cursive; font-size: 36px; color: var(--brown); margin-bottom: 8px; }
-.parabens p { font-size: 18px; color: var(--brown-light); margin-bottom: 8px; }
-.parabens .estrelas-final { display: inline-flex; align-items: center; gap: 8px; padding: 12px 24px; border-radius: 50px; background: linear-gradient(135deg, #fff8e1, #ffecb3); border: 3px solid #f9a825; font-family: 'Fredoka One', cursive; font-size: 1.4rem; color: #e65100; margin-bottom: 28px; }
-.btn-replay { display: inline-flex; align-items: center; gap: 8px; padding: 12px 28px; border-radius: 16px; border: none; font-family: 'Fredoka One', cursive; font-size: 16px; color: #fff; background: linear-gradient(135deg, var(--turquoise), var(--turquoise-dark)); box-shadow: 0 5px 0 #1a8a99, 0 7px 15px rgba(38, 168, 184, 0.3); cursor: pointer; transition: transform 0.15s; }
-.btn-replay:hover { transform: scale(1.05); }
-.btn-replay:active { transform: translateY(3px); box-shadow: 0 2px 0 #1a8a99; }
-.flash-letra { position: fixed; top: 50%; left: 50%; transform: translate(-50%, -50%) scale(0); font-size: min(200px, 40vw); font-family: 'Fredoka One', cursive; pointer-events: none; z-index: 200; opacity: 0; transition: transform 0.35s ease, opacity 0.35s ease; }
-.flash-letra.visivel { transform: translate(-50%, -50%) scale(1); opacity: 1; }
-.flash-letra.saindo { transform: translate(-50%, -50%) scale(2); opacity: 0; }
-@keyframes shake { 0%, 100% { transform: translateX(0); } 20% { transform: translateX(-8px); } 40% { transform: translateX(8px); } 60% { transform: translateX(-4px); } 80% { transform: translateX(4px); } }
-.shake { animation: shake 0.4s ease; }
-@keyframes slideIn { from { opacity: 0; transform: translateX(40px); } to { opacity: 1; transform: translateX(0); } }
-.slide-in { animation: slideIn 0.4s ease; }
-.escondido { display: none !important; }
-/* Animação das palmas */
-.chuva-palmas { position: fixed; pointer-events: none; z-index: 9999; animation: cair 2s linear forwards; }
-@keyframes cair {
-  0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
-  100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
-}
-</style>
-</head>
-<body class="boas-vindas">
-<header class="header">
-  <div class="header-inner">
-    <div class="header-botoes">
-      <button class="btn-som" id="btnSom" onclick="ativarSonsVoz()">
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-        VOZ DA PROFª
-      </button>
-      <button class="btn-musica" id="btnMusica" onclick="alternarMusica()">
-        🎵 MÚSICA OFF
-      </button>
-    </div>
-    <span class="titulo-header">Formando Palavrinhas</span>
-    <div class="estrelas-badge">
-      <svg width="18" height="18" viewBox="0 0 24 24" fill="#f9a825" stroke="#f57f17" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-      <span id="estrelasCount">0</span>
-    </div>
-  </div>
-</header>
-
-<div class="nav-palavras escondido" id="navPalavras"></div>
-<div class="flash-letra" id="flashLetra"></div>
-<div class="stage" id="stage"></div>
-
-<script>
-// GERENCIADOR DE ÁUDIOS LOCAIS (OGG)
-const audios = {
-  // Feedbacks
-  sons_ativados: new Audio('sons_ativados.ogg'),
-  inicio: new Audio('inicio.ogg'),
-  erro: new Audio('erro.ogg'),
-  acerto: new Audio('acerto.ogg'),
-  fim_jogo: new Audio('fim_jogo.ogg'),
-  aplausos: new Audio('aplausos.ogg'),
-  
-  // Vogais isoladas
-  vogal_A: new Audio('vogal_a.ogg'),
-  vogal_E: new Audio('vogal_e.ogg'),
-  vogal_I: new Audio('vogal_i.ogg'),
-  vogal_O: new Audio('vogal_o.ogg'),
-  vogal_U: new Audio('vogal_u.ogg')
-};
-
-// Música de Fundo (com loop)
-const musicaFundo = new Audio('musica_fundo.ogg');
-musicaFundo.loop = true;
-musicaFundo.volume = 0.3; // 30% de volume para não tampar a voz
-
-// DADOS DAS PALAVRAS
-const PALAVRAS = [
-  { word: "AI", letters: ["A","I"], hint: "Expressão de dor — Ai!", audioUrl: "palavra_ai.ogg", imagem: "imagem_ai.jpg" },
-  { word: "OU", letters: ["O","U"], hint: "Palavra de escolha — Ou", audioUrl: "palavra_ou.ogg", imagem: "imagem_ou.jpg" },
-  { word: "EU", letters: ["E","U"], hint: "Eu mesmo — Eu", audioUrl: "palavra_eu.ogg", imagem: "imagem_eu.jpg" },
-  { word: "IA", letters: ["I","A"], hint: "Ia embora — Ia", audioUrl: "palavra_ia.ogg", imagem: "imagem_ia.jpg" },
-  { word: "UAI", letters: ["U","A","I"], hint: "Expressão mineira — Uai!", audioUrl: "palavra_uai.ogg", imagem: "imagem_uai.jpg" },
-  { word: "UAU", letters: ["U","A","U"], hint: "Expressão de surpresa — Uau!", audioUrl: "palavra_uau.ogg", imagem: "imagem_uau.jpg" },
-  { word: "OI", letters: ["O","I"], hint: "Cumprimento — Oi!", audioUrl: "palavra_oi.ogg", imagem: "imagem_oi.jpg" },
-  { word: "AÍ", letters: ["A","I"], hint: "Lugar — Aí", audioUrl: "palavra_ai_acento.ogg", imagem: "imagem_ai_acento.jpg" }, 
-  { word: "EI", letters: ["E","I"], hint: "Chamando alguém — Ei!", audioUrl: "palavra_ei.ogg", imagem: "imagem_ei.jpg" },
-  { word: "AUAU", letters: ["A","U","A","U"], hint: "Som do cachorro — Au au!", audioUrl: "palavra_auau.ogg", imagem: "imagem_auau.jpg" },
-  { word: "IAIÁ", letters: ["I","A","I","A"], hint: "Iaiá — tratamento carinhoso", audioUrl: "palavra_iaia.ogg", imagem: "imagem_iaia.jpg" },
-  { word: "IOIÔ", letters: ["I","O","I","O"], hint: "Brinquedo — Ioiô", audioUrl: "palavra_ioio.ogg", imagem: "imagem_ioio.jpg" },
-];
-
-// Pré-carregando os áudios das palavras no objeto 'audios'
-PALAVRAS.forEach(palavra => {
-  audios[palavra.word] = new Audio(palavra.audioUrl);
-});
-
-const VOGAIS = ["A", "E", "I", "O", "U"];
-const CORES = {
-  A: { flash: "#f4845f" },
-  E: { flash: "#4dd0e1" },
-  I: { flash: "#b39ddb" },
-  O: { flash: "#aed581" },
-  U: { flash: "#ffab91" },
-};
-
-let vozAtivada = false;
-let estrelas = 0;
-let indexAtual = 0;
-let letrasColocadas = [];
-let acertou = false;
-let completados = new Set();
-let currentAudio = null; 
-let autoPlayTimeout = null; // Variável para controlar o áudio automático
-
-function pararVozAtual() {
-  if (currentAudio) {
-    currentAudio.pause();
-    currentAudio.currentTime = 0;
-  }
-}
-
-function tocar(audioKey) {
-  if (!vozAtivada) return;
-  pararVozAtual();
-  
-  const som = audios[audioKey];
-  if (som) {
-    currentAudio = som;
-    som.currentTime = 0;
-    som.play().catch(e => console.log("Áudio bloqueado pelo navegador.", e));
-  }
-}
-
-function ativarSonsVoz() {
-  vozAtivada = true;
-  const btn = document.getElementById('btnSom');
-  btn.classList.add('ativo');
-  btn.innerHTML = `<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/></svg>VOZ ATIVA`;
-  btn.onclick = null; 
-  
-  tocar('sons_ativados');
-}
-
-function alternarMusica() {
-  const btn = document.getElementById('btnMusica');
-  if (musicaFundo.paused) {
-    musicaFundo.play().catch(e => console.log("Música bloqueada", e));
-    btn.classList.add('ativo');
-    btn.innerHTML = `🎵 MÚSICA ON`;
-  } else {
-    musicaFundo.pause();
-    btn.classList.remove('ativo');
-    btn.innerHTML = `🎵 MÚSICA OFF`;
-  }
-}
-
-function ouvirSomPalavra() {
-  const palavra = PALAVRAS[indexAtual];
-  tocar(palavra.word);
-}
-
-function tocarAplausos() {
-  if (!vozAtivada) return;
-  const som = audios['aplausos'];
-  som.currentTime = 0;
-  som.volume = 0.5;
-  som.play().catch(e => console.log("Áudio bloqueado."));
-  
-  for(let i = 0; i < 20; i++) {
-    setTimeout(() => {
-      const palma = document.createElement('div');
-      palma.innerText = '👏';
-      palma.className = 'chuva-palmas';
-      palma.style.left = Math.random() * 90 + 'vw';
-      palma.style.fontSize = (Math.random() * 30 + 30) + 'px';
-      document.body.appendChild(palma);
-      setTimeout(() => palma.remove(), 2000);
-    }, i * 80);
-  }
-}
-
-function mostrarFlash(letra) {
-  const el = document.getElementById('flashLetra');
-  el.textContent = letra;
-  el.style.color = CORES[letra]?.flash || "#f4845f";
-  el.style.textShadow = `0 4px 20px ${CORES[letra]?.flash || "rgba(0,0,0,0.2)"}40`;
-  el.className = 'flash-letra visivel';
-  setTimeout(() => { el.className = 'flash-letra saindo'; }, 250);
-  setTimeout(() => { el.className = 'flash-letra'; }, 500);
-}
-
-function renderizarNav() {
-  const nav = document.getElementById('navPalavras');
-  nav.innerHTML = '';
-  PALAVRAS.forEach((p, i) => {
-    const btn = document.createElement('button');
-    btn.className = 'nav-pill';
-    if (i === indexAtual) btn.classList.add('ativo');
-    if (completados.has(i)) btn.classList.add('completo');
-    btn.textContent = (completados.has(i) ? '✓ ' : '') + p.word;
-    btn.onclick = () => irParaPalavra(i);
-    nav.appendChild(btn);
-  });
-}
-
-function irParaPalavra(index) {
-  if (acertou) return;
-  indexAtual = index;
-  letrasColocadas = [];
-  acertou = false;
-  renderizarExercicio();
-  renderizarNav();
-  document.body.classList.remove('boas-vindas'); 
-}
-
-function mostrarBoasVindas() {
-  document.getElementById('navPalavras').classList.add('escondido');
-  document.body.classList.add('boas-vindas');
-  const stage = document.getElementById('stage');
-  
-  stage.innerHTML = `
-    <div class="welcome">
-      <div class="welcome-banner">
-        <img src="ilha.jpg" alt="Ilha">
-      </div>
-      <h2>Formando Palavrinhas com Vogais</h2>
-      <p>Veja a imagem, ouça o som e monte a palavrinha usando os blocos de vogais! Cada palavrinha é formada apenas por vogais: <strong>A, E, I, O, U</strong>.</p>
-      <img class="welcome-blocos" src="imagem_blocosaeiou.png" alt="Blocos A E I O U">
-      <button class="btn-comecar" onclick="iniciarJogo()">Começar a Aventura!</button>
-    </div>
-  `;
-}
-
-function iniciarJogo() {
-  document.body.classList.remove('boas-vindas');
-  indexAtual = 0;
-  letrasColocadas = [];
-  estrelas = 0;
-  acertou = false;
-  completados = new Set();
-  document.getElementById('estrelasCount').textContent = '0';
-  document.getElementById('navPalavras').classList.remove('escondido');
-  renderizarNav();
-  renderizarExercicio();
-  
-  setTimeout(() => tocar('inicio'), 500);
-}
-
-function renderizarExercicio() {
-  const palavra = PALAVRAS[indexAtual];
-  const progresso = ((completados.size) / PALAVRAS.length) * 100;
-  
-  let slotsHTML = '';
-  palavra.letters.forEach((letra, i) => {
-    const colocada = letrasColocadas[i];
-    let classes = 'slot';
-    if (colocada) {
-      classes += ' preenchido cor-' + colocada;
-    } else if (i === letrasColocadas.length) {
-      classes += ' proximo';
-    } else {
-      classes += ' vazio';
-    }
-    slotsHTML += `<div class="${classes}" id="slot-${i}">${colocada || '?'}</div>`;
-  });
-
-  let blocosHTML = '';
-  VOGAIS.forEach(v => {
-    const desab = acertou ? ' desabilitado' : '';
-    blocosHTML += `<button class="bloco-vogal bloco-${v}${desab}" onclick="clicarVogal('${v}')">${v}</button>`;
-  });
-
-  const stage = document.getElementById('stage');
-  stage.innerHTML = `
-    <div class="slide-in">
-      <div class="progresso-bar">
-        <span class="progresso-label">Palavra ${indexAtual + 1} de ${PALAVRAS.length}</span>
-        <div class="progresso-track">
-          <div class="progresso-fill" style="width: ${progresso}%"></div>
-        </div>
-      </div>
-      <div class="card-exercicio">
-        <div class="card-conteudo">
-          <p class="dica-texto">${palavra.hint}</p>
-          
-          <div class="img-placeholder">
-            <img src="${palavra.imagem}" alt="Imagem para o som ${palavra.word}">
-          </div>
-          
-          <button class="btn-ouvir" onclick="ouvirSomPalavra()">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><path d="M15.54 8.46a5 5 0 0 1 0 7.07"/><path d="M19.07 4.93a10 10 0 0 1 0 14.14"/></svg>
-            Ouvir o som
-          </button>
-          
-          <div class="slots-container" id="slotsContainer">${slotsHTML}</div>
-          
-          <div class="msg-acerto" id="msgAcerto">
-            <span>✨ Muito bem!</span>
-          </div>
-
-          <div class="blocos-container" id="blocosContainer">${blocosHTML}</div>
-          <p class="instrucao">Toque nos blocos de vogais para formar a palavra!</p>
-        </div>
-      </div>
-    </div>
-  `;
-
-  // --- LÓGICA DO ÁUDIO AUTOMÁTICO ---
-  // Cancela qualquer áudio automático pendente da tela anterior
-  if (autoPlayTimeout) clearTimeout(autoPlayTimeout);
-  
-  if (indexAtual === 0 && completados.size === 0) {
-    // Se for a primeira palavra do jogo, espera 4.5s para a frase de início terminar
-    autoPlayTimeout = setTimeout(() => ouvirSomPalavra(), 4500);
-  } else {
-    // Para as próximas palavras, toca automaticamente após 1 segundo na tela
-    autoPlayTimeout = setTimeout(() => ouvirSomPalavra(), 1000);
-  }
-}
-
-function clicarVogal(vogal) {
-  if (acertou) return;
-  const palavra = PALAVRAS[indexAtual];
-  const esperada = palavra.letters[letrasColocadas.length];
-  
-  mostrarFlash(vogal);
-  
-  if (vogal === esperada) {
-    letrasColocadas.push(vogal);
-    // Toca o áudio da vogal
-    tocar('vogal_' + vogal);
-    
-    const slot = document.getElementById('slot-' + (letrasColocadas.length - 1));
-    if (slot) {
-      slot.className = 'slot preenchido cor-' + vogal;
-      slot.textContent = vogal;
-    }
-    
-    const proxSlot = document.getElementById('slot-' + letrasColocadas.length);
-    if (proxSlot && proxSlot.classList.contains('vazio')) {
-      proxSlot.classList.remove('vazio');
-      proxSlot.classList.add('proximo');
-    }
-    
-    if (letrasColocadas.length === palavra.letters.length) {
-      acertou = true;
-      estrelas += 10;
-      document.getElementById('estrelasCount').textContent = estrelas;
-      completados.add(indexAtual);
-      renderizarNav();
-      
-      const msg = document.getElementById('msgAcerto');
-      if (msg) msg.classList.add('visivel');
-      
-      document.querySelectorAll('.bloco-vogal').forEach(b => b.classList.add('desabilitado'));
-      
-      // 1. Toca a palavra completa após terminar a última vogal (espera 800ms)
-      setTimeout(() => {
-        ouvirSomPalavra();
-      }, 800);
-      
-      // 2. Toca os aplausos e a mensagem de parabéns ("acerto.ogg")
-      setTimeout(() => {
-        tocarAplausos();
-        tocar('acerto');
-      }, 2200);
-      
-      // 3. Muda para a próxima palavra após toda a comemoração
-      setTimeout(() => {
-        acertou = false;
-        if (indexAtual + 1 < PALAVRAS.length) {
-          indexAtual++;
-          letrasColocadas = [];
-          renderizarNav();
-          renderizarExercicio(); // O áudio automático será chamado aqui dentro
-        } else {
-          mostrarParabens();
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>👸🤴 Reino das Vogais - Aprenda as Vogais</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rosa-princesa: #e91e8c;
+            --rosa-escuro: #9c1460;
+            --dourado-real: #d4a843;
+            --dourado-escuro: #b8860b;
+            --dourado-branco: #fff8f0;
         }
-      }, 5000); // 5 segundos no total de celebração
-    }
-  } else {
-    tocar('erro'); // Toca o áudio de erro
-    const slotAtual = document.getElementById('slot-' + letrasColocadas.length);
-    if (slotAtual) {
-      slotAtual.classList.add('shake');
-      setTimeout(() => slotAtual.classList.remove('shake'), 500);
-    }
-  }
-}
 
-function mostrarParabens() {
-  document.getElementById('navPalavras').classList.add('escondido');
-  const stage = document.getElementById('stage');
-  
-  stage.innerHTML = `
-    <div class="parabens">
-      <span class="trofeu">🏆</span>
-      <h2>Parabéns!</h2>
-      <p>Você formou todas as palavrinhas!</p>
-      <div class="estrelas-final">
-        <svg width="24" height="24" viewBox="0 0 24 24" fill="#f9a825" stroke="#f57f17" stroke-width="1.5"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-        ${estrelas} estrelas
-      </div>
-      <br><br>
-      <button class="btn-replay" onclick="iniciarJogo()">🔄 Jogar de novo</button>
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(180deg, #2d0a1e 0%, #1a0a1e 40%, #0d0418 100%);
+            color: var(--dourado-branco);
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(2px 2px at 15% 25%, #fff, transparent),
+                radial-gradient(2px 2px at 35% 55%, rgba(255,200,220,0.8), transparent),
+                radial-gradient(1px 1px at 55% 15%, #fff, transparent),
+                radial-gradient(2px 2px at 75% 45%, rgba(255,180,200,0.6), transparent),
+                radial-gradient(1px 1px at 85% 75%, #fff, transparent),
+                radial-gradient(2px 2px at 25% 85%, rgba(255,200,220,0.7), transparent),
+                radial-gradient(1px 1px at 65% 95%, #fff, transparent),
+                radial-gradient(2px 2px at 45% 35%, rgba(255,180,200,0.5), transparent),
+                radial-gradient(1px 1px at 95% 35%, #fff, transparent),
+                radial-gradient(2px 2px at 5% 65%, rgba(255,200,220,0.6), transparent);
+            background-size: 100% 100%;
+            animation: cintilarEstrelas 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes cintilarEstrelas {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .coracao-flutuante {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: flutuarCoracao linear infinite;
+            opacity: 0.4;
+        }
+        
+        @keyframes flutuarCoracao {
+            0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
+            15% { opacity: 0.6; }
+            85% { opacity: 0.6; }
+            100% { transform: translateY(-20vh) scale(1) rotate(20deg); opacity: 0; }
+        }
+
+        .header {
+            position: relative;
+            z-index: 50;
+            background: linear-gradient(180deg, rgba(45,10,30,0.95) 0%, rgba(26,10,30,0.8) 100%);
+            border-bottom: 2px solid var(--dourado-real);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-inner {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .header-botoes { display: flex; gap: 10px; align-items: center; }
+
+        .btn-fullscreen {
+            background: linear-gradient(135deg, #4a148c, #6a1b9a);
+            border: 2px solid var(--dourado-real);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(212, 168, 67, 0.3);
+            color: white;
+        }
+        
+        .btn-fullscreen:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(212, 168, 67, 0.5);
+            background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+        }
+        
+        .btn-fullscreen.ativo {
+            background: linear-gradient(135deg, var(--dourado-real), #b8860b);
+            box-shadow: 0 0 20px rgba(212, 168, 67, 0.6);
+        }
+
+        .btn-voltar-dourado {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--dourado-real), var(--dourado-escuro));
+            border: 2px solid #fff;
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            color: #1a0a2e;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(212, 168, 67, 0.4);
+            animation: brilhoDourado 1.5s ease-in-out infinite;
+        }
+        
+        .btn-voltar-dourado:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(212, 168, 67, 0.8);
+            background: linear-gradient(135deg, #e8c060, var(--dourado-real));
+        }
+        
+        @keyframes brilhoDourado {
+            0%, 100% { box-shadow: 0 0 15px rgba(212, 168, 67, 0.4); border-color: #fff; }
+            50% { box-shadow: 0 0 30px rgba(212, 168, 67, 0.8); border-color: #ffe6a3; }
+        }
+
+        .stage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 15px;
+            position: relative;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        .conteudo-central {
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        .banner-reinos {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid var(--dourado-real);
+            width: 85%;
+            max-width: 280px;
+            margin: 0 auto 15px;
+            aspect-ratio: 16/10;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(212, 168, 67, 0.2);
+            position: relative;
+            background: linear-gradient(135deg, #2d1b4e, #1a0a2e);
+        }
+        
+        .banner-reinos img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .banner-reinos::after {
+            content: "👑";
+            position: absolute;
+            bottom: -15px;
+            right: -10px;
+            font-size: 35px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .titulo-reinos {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: clamp(22px, 6vw, 30px);
+            color: var(--dourado-real);
+            text-shadow: 0 0 15px rgba(233, 30, 140, 0.5), 2px 2px 4px rgba(0,0,0,0.5);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        .subtitulo-magico {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(14px, 4vw, 18px);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-bottom: 25px;
+        }
+
+        .menu-container {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 20px;
+            width: 100%;
+            max-width: 380px;
+            margin: 0 auto;
+        }
+
+        .card-reino {
+            padding: 22px 18px;
+            border-radius: 20px;
+            border: none;
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: clamp(18px, 5vw, 22px);
+            color: #fff;
+            text-decoration: none;
+            text-align: center;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+            width: 100%;
+            min-height: 130px;
+        }
+        
+        .card-reino::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        
+        .card-reino:hover::before { opacity: 1; }
+        .card-reino:hover { transform: translateY(-6px) scale(1.02); }
+        .card-reino:active { transform: scale(0.98); }
+
+        .card-aprender {
+            background: linear-gradient(145deg, #e91e8c, #9c1460);
+            box-shadow: 0 8px 0 #7a0f4a, 0 0 20px rgba(233, 30, 140, 0.3);
+            border: 2px solid rgba(255, 200, 220, 0.3);
+        }
+        .card-aprender:hover { box-shadow: 0 12px 0 #7a0f4a, 0 0 40px rgba(233, 30, 140, 0.5); }
+
+        .card-palavrinhas {
+            background: linear-gradient(145deg, #d4a843, #b8860b);
+            box-shadow: 0 8px 0 #8b6914, 0 0 20px rgba(212, 168, 67, 0.3);
+            border: 2px solid rgba(255, 240, 200, 0.3);
+        }
+        .card-palavrinhas:hover { box-shadow: 0 12px 0 #8b6914, 0 0 40px rgba(212, 168, 67, 0.5); }
+
+        .emoji-reino {
+            font-size: 42px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
+            transition: transform 0.3s;
+        }
+        
+        .card-reino:hover .emoji-reino {
+            transform: scale(1.15) rotate(-5deg);
+        }
+        
+        .nome-reino {
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-size: clamp(16px, 4vw, 20px);
+        }
+        
+        .desc-reino {
+            font-family: 'Nunito', sans-serif;
+            font-size: 12px;
+            opacity: 0.9;
+            font-weight: 600;
+        }
+
+        .decoracao-castelo {
+            margin-top: 20px;
+            font-size: 18px;
+            opacity: 0.4;
+            letter-spacing: 8px;
+            text-align: center;
+        }
+
+        @media (max-width: 480px) {
+            .card-reino { padding: 18px 14px; min-height: 110px; }
+            .emoji-reino { font-size: 34px; }
+            .nome-reino { font-size: 16px; }
+            .desc-reino { font-size: 10px; }
+            .banner-reinos { max-width: 220px; }
+            .btn-voltar-dourado { padding: 6px 15px; font-size: 12px; }
+            .header-inner { padding: 10px 12px; }
+        }
+        
+        @media (max-height: 600px) {
+            .banner-reinos { max-width: 200px; margin-bottom: 8px; }
+            .menu-container { gap: 12px; }
+            .card-reino { padding: 14px 12px; min-height: 90px; }
+            .emoji-reino { font-size: 30px; }
+            .decoracao-castelo { margin-top: 10px; font-size: 14px; }
+            .subtitulo-magico { margin-bottom: 15px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div id="coracoes-container"></div>
+
+    <header class="header">
+        <div class="header-inner">
+            <a href="index.html" class="btn-voltar-dourado">← ✨ Voltar aos Reinos ✨</a>
+            <div class="header-botoes">
+                <button class="btn-fullscreen" id="btnFullscreen" title="Tela Cheia">⛶</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="stage">
+        <div class="conteudo-central">
+            <div class="banner-reinos">
+                <img src="ilha.jpg" alt="Reino das Vogais" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #e91e8c, #9c1460)'; this.parentElement.innerHTML += '<span style=\"font-size:48px;\">👸🤴</span>';">
+            </div>
+            
+            <h1 class="titulo-reinos">🏰 Reino das Vogais</h1>
+            <p class="subtitulo-magico">O reino das Princesas e Príncipes 👸🤴</p>
+            
+            <div class="menu-container">
+                <!-- Botão Aprender as Vogais -->
+                <a href="vogais_maiusculas.html" class="card-reino card-aprender">
+                    <span class="emoji-reino">📚👑</span>
+                    <span class="nome-reino">Aprender as Vogais</span>
+                    <span class="desc-reino">Maiúsculas, minúsculas, forma e cursiva</span>
+                </a>
+
+                <!-- Botão Formando Palavrinhas - link para palavras_com_vogais.html -->
+                <a href="palavras_com_vogais.html" class="card-reino card-palavrinhas">
+                    <span class="emoji-reino">💃🕺</span>
+                    <span class="nome-reino">Formando Palavrinhas</span>
+                    <span class="desc-reino">AO - EI - UI - Descubra as palavras mágicas!</span>
+                </a>
+            </div>
+            
+            <div class="decoracao-castelo">👑 💖 🏰 💖 👑</div>
+        </div>
     </div>
-  `;
-  tocarAplausos();
-  setTimeout(() => tocar('fim_jogo'), 500);
-}
 
-// INICIALIZAÇÃO
-mostrarBoasVindas();
-
-</script>
+    <script>
+        let somAtual = null;
+        
+        function tocarSom(arquivo) {
+            if (!arquivo) return;
+            try {
+                if (somAtual) {
+                    somAtual.pause();
+                    somAtual.currentTime = 0;
+                }
+                somAtual = new Audio(arquivo);
+                somAtual.play().catch(e => console.log('Áudio:', e));
+            } catch(e) { console.log('Erro no áudio:', e); }
+        }
+        
+        function configurarEfeitosCards() {
+            const cards = document.querySelectorAll('.card-reino');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    tocarSom('inicio.ogg');
+                });
+            });
+        }
+        
+        const FS_KEY = 'reinoFullscreen';
+        
+        function isFullscreen() {
+            return !!(document.fullscreenElement || document.webkitFullscreenElement);
+        }
+        
+        function enterFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
+            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+        }
+        
+        function exitFullscreen() {
+            if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        }
+        
+        function toggleFullscreen() {
+            if (isFullscreen()) {
+                exitFullscreen();
+                localStorage.setItem(FS_KEY, 'false');
+            } else {
+                enterFullscreen();
+                localStorage.setItem(FS_KEY, 'true');
+            }
+            atualizarIconeFullscreen();
+        }
+        
+        function atualizarIconeFullscreen() {
+            const btn = document.getElementById('btnFullscreen');
+            if (isFullscreen()) {
+                btn.innerHTML = '✖';
+                btn.classList.add('ativo');
+            } else {
+                btn.innerHTML = '⛶';
+                btn.classList.remove('ativo');
+            }
+        }
+        
+        function setupFullscreenListeners() {
+            const events = ['fullscreenchange', 'webkitfullscreenchange'];
+            events.forEach(event => {
+                document.addEventListener(event, () => {
+                    atualizarIconeFullscreen();
+                    if (!isFullscreen()) localStorage.setItem(FS_KEY, 'false');
+                });
+            });
+        }
+        
+        function restaurarFullscreen() {
+            const deveFullscreen = localStorage.getItem(FS_KEY) === 'true';
+            if (deveFullscreen && !isFullscreen()) {
+                setTimeout(() => enterFullscreen(), 100);
+            }
+            atualizarIconeFullscreen();
+        }
+        
+        function criarCoracoes() {
+            const container = document.getElementById('coracoes-container');
+            const simbolos = ['💖', '💕', '💗', '💝', '✨', '🌟', '👑'];
+            const cores = ['#e91e8c', '#ff80c0', '#d4a843', '#ff4081'];
+            
+            function adicionarCoracao() {
+                const c = document.createElement('div');
+                c.className = 'coracao-flutuante';
+                c.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                c.style.left = Math.random() * 100 + '%';
+                c.style.fontSize = (Math.random() * 14 + 12) + 'px';
+                c.style.color = cores[Math.floor(Math.random() * cores.length)];
+                c.style.animationDuration = (Math.random() * 6 + 5) + 's';
+                container.appendChild(c);
+                setTimeout(() => c.remove(), 11000);
+            }
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(adicionarCoracao, i * 400);
+            }
+            setInterval(adicionarCoracao, 3000);
+        }
+        
+        window.onload = function() {
+            criarCoracoes();
+            setupFullscreenListeners();
+            restaurarFullscreen();
+            configurarEfeitosCards();
+            tocarSom('inicio.ogg');
+        };
+    </script>
 </body>
 </html>
