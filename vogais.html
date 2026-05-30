@@ -2,38 +2,43 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
-    <title>👸🤴 Reino das Vogais - Princesas e Príncipes</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>👸🤴 Reino das Vogais - Aprenda as Vogais</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <style>
         :root {
             --rosa-princesa: #e91e8c;
             --rosa-escuro: #9c1460;
             --rosa-claro: #ff80c0;
             --dourado-real: #d4a843;
+            --dourado-escuro: #b8860b;
             --dourado-branco: #fff8f0;
             --noite-real: #1a0a1e;
+            --verde-jardim: #2d8e5f;
+            --coral: #f4845f;
+            --turquoise: #4dd0e1;
+            --lavender: #b39ddb;
+            --lime: #aed581;
+            --peach: #ffab91;
         }
 
-        [data-theme="dark"] {
-            --noite-real: #0d040f;
-            --dourado-branco: #f0e0d0;
-        }
-
-        * { margin: 0; padding: 0; box-sizing: border-box; transition: background 0.3s, color 0.3s; -webkit-tap-highlight-color: transparent; }
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
 
         body {
             font-family: 'Nunito', sans-serif;
             background: linear-gradient(180deg, #2d0a1e 0%, #1a0a1e 40%, #0d0418 100%);
             color: var(--dourado-branco);
-            min-height: 100vh;
-            overflow-x: hidden;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
             position: relative;
         }
 
-        /* Estrelas cintilantes no céu do reino */
+        /* Estrelas cintilantes */
         body::before {
             content: '';
             position: fixed;
@@ -60,7 +65,7 @@
             100% { opacity: 1; }
         }
 
-        /* Corações flutuantes mágicos */
+        /* Corações flutuantes */
         .coracao-flutuante {
             position: fixed;
             pointer-events: none;
@@ -69,6 +74,7 @@
             opacity: 0.4;
             filter: drop-shadow(0 0 5px rgba(233, 30, 140, 0.5));
         }
+        
         @keyframes flutuarCoracao {
             0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
             15% { opacity: 0.6; }
@@ -76,15 +82,15 @@
             100% { transform: translateY(-20vh) scale(1) rotate(20deg); opacity: 0; }
         }
 
-        /* Header real */
+        /* Header */
         .header {
-            position: sticky;
-            top: 0;
+            position: relative;
             z-index: 50;
             background: linear-gradient(180deg, rgba(45,10,30,0.95) 0%, rgba(26,10,30,0.8) 100%);
             border-bottom: 2px solid var(--dourado-real);
             backdrop-filter: blur(10px);
         }
+        
         .header-inner {
             max-width: 800px;
             margin: 0 auto;
@@ -98,7 +104,6 @@
 
         .header-botoes { display: flex; gap: 10px; align-items: center; }
 
-        /* Botão Fullscreen */
         .btn-fullscreen {
             background: linear-gradient(135deg, #4a148c, #6a1b9a);
             border: 2px solid var(--dourado-real);
@@ -112,107 +117,136 @@
             justify-content: center;
             transition: all 0.3s;
             box-shadow: 0 0 10px rgba(212, 168, 67, 0.3);
+            color: white;
         }
+        
         .btn-fullscreen:hover {
             transform: scale(1.1);
             box-shadow: 0 0 20px rgba(212, 168, 67, 0.5);
             background: linear-gradient(135deg, #6a1b9a, #8e24aa);
         }
+        
         .btn-fullscreen.ativo {
             background: linear-gradient(135deg, var(--dourado-real), #b8860b);
             box-shadow: 0 0 20px rgba(212, 168, 67, 0.6);
         }
 
-        .theme-toggle {
-            background: linear-gradient(135deg, var(--dourado-real), #b8860b);
-            border: 2px solid #fff;
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 20px;
-            box-shadow: 0 0 15px rgba(212, 168, 67, 0.4);
+        .btn-voltar-dourado {
             display: flex;
             align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        .theme-toggle:hover { transform: scale(1.1); box-shadow: 0 0 25px rgba(212, 168, 67, 0.6); }
-
-        .btn-voltar {
-            padding: 8px 16px;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--dourado-real), var(--dourado-escuro));
+            border: 2px solid #fff;
+            padding: 8px 20px;
             border-radius: 50px;
-            border: 2px solid var(--dourado-real);
+            cursor: pointer;
+            font-size: 14px;
             font-weight: 800;
-            background: rgba(212, 168, 67, 0.15);
-            color: var(--dourado-real);
-            text-decoration: none;
-            font-size: 13px;
             font-family: 'Nunito', sans-serif;
+            color: #1a0a2e;
+            text-decoration: none;
             transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(212, 168, 67, 0.4);
+            animation: brilhoDourado 1.5s ease-in-out infinite;
         }
-        .btn-voltar:hover {
-            background: rgba(212, 168, 67, 0.3);
-            box-shadow: 0 0 15px rgba(212, 168, 67, 0.3);
+        
+        .btn-voltar-dourado:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(212, 168, 67, 0.8);
+            background: linear-gradient(135deg, #e8c060, var(--dourado-real));
+        }
+        
+        @keyframes brilhoDourado {
+            0%, 100% { box-shadow: 0 0 15px rgba(212, 168, 67, 0.4); border-color: #fff; }
+            50% { box-shadow: 0 0 30px rgba(212, 168, 67, 0.8); border-color: #ffe6a3; }
         }
 
-        /* Stage principal */
+        /* Stage - centralizado sem rolagem */
         .stage {
-            max-width: 700px;
-            margin: 30px auto;
-            padding: 0 16px;
-            position: relative;
-            z-index: 10;
-        }
-        .welcome {
+            flex: 1;
             display: flex;
             flex-direction: column;
+            justify-content: center;
             align-items: center;
-            text-align: center;
-            gap: 25px;
-        }
-
-        /* Título real */
-        h2 {
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: clamp(26px, 7vw, 38px);
-            color: var(--dourado-real);
-            text-shadow:
-                0 0 15px rgba(233, 30, 140, 0.5),
-                2px 2px 4px rgba(0,0,0,0.5);
-            letter-spacing: 2px;
+            padding: 15px;
             position: relative;
+            z-index: 10;
+            overflow: hidden;
         }
-        h2::before, h2::after {
+
+        .conteudo-central {
+            max-width: 700px;
+            width: 100%;
+            margin: 0 auto;
+            text-align: center;
+        }
+
+        /* Banner */
+        .banner-reinos {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid var(--dourado-real);
+            width: 85%;
+            max-width: 280px;
+            margin: 0 auto 15px;
+            aspect-ratio: 16/10;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(212, 168, 67, 0.2);
+            position: relative;
+            background: linear-gradient(135deg, #2d1b4e, #1a0a2e);
+        }
+        
+        .banner-reinos img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        .banner-reinos::after {
             content: "👑";
-            font-size: 0.6em;
-            margin: 0 10px;
-            filter: drop-shadow(0 0 5px rgba(212, 168, 67, 0.5));
+            position: absolute;
+            bottom: -15px;
+            right: -10px;
+            font-size: 35px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
         }
 
-        .subtitulo-real {
+        /* Títulos */
+        .titulo-reinos {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: clamp(22px, 6vw, 30px);
+            color: var(--dourado-real);
+            text-shadow: 0 0 15px rgba(233, 30, 140, 0.5), 2px 2px 4px rgba(0,0,0,0.5);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+        
+        .subtitulo-magico {
             font-family: 'Dancing Script', cursive;
-            font-size: clamp(18px, 4vw, 24px);
-            color: rgba(255, 255, 255, 0.7);
-            margin-top: -15px;
+            font-size: clamp(14px, 4vw, 18px);
+            color: rgba(255, 255, 255, 0.8);
+            text-align: center;
+            margin-bottom: 25px;
         }
 
-        /* Container dos botões */
+        /* Container dos cards */
         .menu-container {
             display: flex;
             flex-direction: column;
+            align-items: center;
+            justify-content: center;
             gap: 20px;
             width: 100%;
             max-width: 380px;
+            margin: 0 auto;
         }
 
-        /* Cards reais */
-        .btn-submenu {
-            padding: 24px 18px;
+        /* Cards */
+        .card-reino {
+            padding: 22px 18px;
             border-radius: 20px;
             border: none;
             font-family: 'Cinzel Decorative', cursive;
-            font-size: clamp(18px, 5vw, 24px);
+            font-size: clamp(18px, 5vw, 22px);
             color: #fff;
             text-decoration: none;
             text-align: center;
@@ -220,207 +254,184 @@
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
             gap: 8px;
-            cursor: pointer;
             position: relative;
             overflow: hidden;
-            letter-spacing: 1px;
+            cursor: pointer;
+            width: 100%;
+            min-height: 130px;
         }
-
-        .btn-submenu::before {
+        
+        .card-reino::before {
             content: "";
             position: absolute;
-            top: -50%; left: -50%;
-            width: 200%; height: 200%;
-            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.15) 0%, transparent 70%);
             opacity: 0;
             transition: opacity 0.3s;
         }
-        .btn-submenu:hover::before { opacity: 1; }
+        
+        .card-reino:hover::before { opacity: 1; }
+        .card-reino:hover { transform: translateY(-6px) scale(1.02); }
+        .card-reino:active { transform: scale(0.98); }
 
-        .btn-submenu:hover {
-            transform: translateY(-6px) scale(1.03);
-        }
-        .btn-submenu:active { transform: scale(0.95); }
-
-        .btn-submenu span {
-            font-size: 14px;
-            font-family: 'Nunito', sans-serif;
-            opacity: 0.9;
-            font-weight: 700;
-            letter-spacing: 0;
-        }
-
-        /* Vogais Maiúsculas - O Castelo Real */
-        .btn-maiuscula {
+        /* Estilos específicos dos cards */
+        .card-aprender {
             background: linear-gradient(145deg, #e91e8c, #9c1460);
-            box-shadow:
-                0 6px 0 #7a0f4a,
-                0 0 20px rgba(233, 30, 140, 0.3),
-                inset 0 1px 0 rgba(255,255,255,0.2);
+            box-shadow: 0 8px 0 #7a0f4a, 0 0 20px rgba(233, 30, 140, 0.3);
             border: 2px solid rgba(255, 200, 220, 0.3);
         }
-        .btn-maiuscula:hover {
-            box-shadow:
-                0 12px 0 #7a0f4a,
-                0 0 40px rgba(233, 30, 140, 0.5),
-                inset 0 1px 0 rgba(255,255,255,0.3);
-        }
+        .card-aprender:hover { box-shadow: 0 12px 0 #7a0f4a, 0 0 40px rgba(233, 30, 140, 0.5); }
 
-        /* Vogais Minúsculas - O Jardim Real */
-        .btn-minuscula {
-            background: linear-gradient(145deg, #ff80c0, #e91e8c);
-            box-shadow:
-                0 6px 0 #9c1460,
-                0 0 20px rgba(255, 128, 192, 0.3),
-                inset 0 1px 0 rgba(255,255,255,0.2);
-            border: 2px solid rgba(255, 220, 240, 0.3);
-        }
-        .btn-minuscula:hover {
-            box-shadow:
-                0 12px 0 #9c1460,
-                0 0 40px rgba(255, 128, 192, 0.5),
-                inset 0 1px 0 rgba(255,255,255,0.3);
-        }
-
-        /* Palavrinhas - O Baile Real */
-        .btn-palavrinhas {
+        .card-palavrinhas {
             background: linear-gradient(145deg, #d4a843, #b8860b);
-            box-shadow:
-                0 6px 0 #8b6914,
-                0 0 20px rgba(212, 168, 67, 0.3),
-                inset 0 1px 0 rgba(255,255,255,0.2);
+            box-shadow: 0 8px 0 #8b6914, 0 0 20px rgba(212, 168, 67, 0.3);
             border: 2px solid rgba(255, 240, 200, 0.3);
         }
-        .btn-palavrinhas:hover {
-            box-shadow:
-                0 12px 0 #8b6914,
-                0 0 40px rgba(212, 168, 67, 0.5),
-                inset 0 1px 0 rgba(255,255,255,0.3);
-        }
+        .card-palavrinhas:hover { box-shadow: 0 12px 0 #8b6914, 0 0 40px rgba(212, 168, 67, 0.5); }
 
-        /* Emoji decorativo */
-        .emoji-real {
-            font-size: 32px;
-            margin-bottom: 5px;
-            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+        .emoji-reino {
+            font-size: 42px;
+            filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
             transition: transform 0.3s;
         }
-        .btn-submenu:hover .emoji-real {
-            transform: scale(1.2) rotate(-5deg);
+        
+        .card-reino:hover .emoji-reino {
+            transform: scale(1.15) rotate(-5deg);
+        }
+        
+        .nome-reino {
+            font-weight: 700;
+            letter-spacing: 1px;
+            font-size: clamp(16px, 4vw, 20px);
+        }
+        
+        .desc-reino {
+            font-family: 'Nunito', sans-serif;
+            font-size: 12px;
+            opacity: 0.9;
+            font-weight: 600;
         }
 
-        /* Decoração de castelo no rodapé */
+        /* Decoração */
         .decoracao-castelo {
-            margin-top: 30px;
-            font-size: 28px;
-            opacity: 0.5;
-            letter-spacing: 12px;
+            margin-top: 20px;
+            font-size: 18px;
+            opacity: 0.4;
+            letter-spacing: 8px;
             text-align: center;
         }
 
         /* Responsivo */
-        @media (max-width: 400px) {
-            h2 { font-size: 22px; }
-            h2::before, h2::after { margin: 0 5px; }
-            .btn-submenu { padding: 20px 14px; }
-            .emoji-real { font-size: 26px; }
+        @media (max-width: 480px) {
+            .card-reino { padding: 18px 14px; min-height: 110px; }
+            .emoji-reino { font-size: 34px; }
+            .nome-reino { font-size: 16px; }
+            .desc-reino { font-size: 10px; }
+            .banner-reinos { max-width: 220px; }
+            .btn-voltar-dourado { padding: 6px 15px; font-size: 12px; }
             .header-inner { padding: 10px 12px; }
         }
+        
+        @media (max-height: 600px) {
+            .banner-reinos { max-width: 200px; margin-bottom: 8px; }
+            .menu-container { gap: 12px; }
+            .card-reino { padding: 14px 12px; min-height: 90px; }
+            .emoji-reino { font-size: 30px; }
+            .decoracao-castelo { margin-top: 10px; font-size: 14px; }
+            .subtitulo-magico { margin-bottom: 15px; }
+        }
     </style>
-<base target="_blank">
 </head>
 <body>
 
-    <!-- Corações flutuantes (gerados via JS) -->
     <div id="coracoes-container"></div>
 
     <header class="header">
         <div class="header-inner">
-            <a href="index.html" class="btn-voltar">⬅ VOLTAR</a>
+            <a href="index.html" class="btn-voltar-dourado">← ✨ Voltar aos Reinos ✨</a>
             <div class="header-botoes">
-                <button class="btn-fullscreen" id="btnFullscreen" onclick="toggleFullscreen()" title="Tela Cheia">⛶</button>
-                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()" aria-label="Mudar para modo noite ou dia">☀️</button>
+                <button class="btn-fullscreen" id="btnFullscreen" title="Tela Cheia">⛶</button>
             </div>
         </div>
     </header>
 
     <div class="stage">
-        <div class="welcome">
-            <h2>Reino das Vogais</h2>
-            <p class="subtitulo-real">O reino das Princesas e Príncipes 👸🤴</p>
-
+        <div class="conteudo-central">
+            <div class="banner-reinos">
+                <img src="ilha.jpg" alt="Reino das Vogais" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #e91e8c, #9c1460)'; this.parentElement.innerHTML += '<span style=\"font-size:48px;\">👸🤴</span>';">
+            </div>
+            
+            <h1 class="titulo-reinos">🏰 Reino das Vogais</h1>
+            <p class="subtitulo-magico">O reino das Princesas e Príncipes 👸🤴</p>
+            
             <div class="menu-container">
-                <a href="vogais_maiusculas.html" class="btn-submenu btn-maiuscula"
-                   onmouseenter="tocarAudio('vogais_maiuscula.mp3')">
-                    <span class="emoji-real">🏰</span>
-                    A E I O U
-                    <span>Vogais Maiúsculas</span>
+                <!-- Botão Aprender as Vogais - com 4 modalidades internas -->
+                <a href="vogais_aprender.html" class="card-reino card-aprender">
+                    <span class="emoji-reino">📚👑</span>
+                    <span class="nome-reino">Aprender as Vogais</span>
+                    <span class="desc-reino">Maiúsculas, minúsculas, forma e cursiva</span>
                 </a>
 
-                <a href="vogais_minusculas.html" class="btn-submenu btn-minuscula"
-                   onmouseenter="tocarAudio('vogais_minusculas.mp3')">
-                    <span class="emoji-real">🌹</span>
-                    a e i o u
-                    <span>Vogais Minúsculas</span>
-                </a>
-
-                <a href="palavras_com_vogais.html" class="btn-submenu btn-palavrinhas"
-                   onmouseenter="tocarAudio('formando_palavrinhas.mp3')">
-                    <span class="emoji-real">💃🕺</span>
-                    AO - EI - UI
-                    <span>Formando Palavrinhas</span>
+                <!-- Botão Formando Palavrinhas -->
+                <a href="palavras_com_vogais.html" class="card-reino card-palavrinhas">
+                    <span class="emoji-reino">💃🕺</span>
+                    <span class="nome-reino">Formando Palavrinhas</span>
+                    <span class="desc-reino">AO - EI - UI - Descubra as palavras mágicas!</span>
                 </a>
             </div>
-
-            <div class="decoracao-castelo">
-                👑 🏰 🌹 💎 🏰 👑
-            </div>
+            
+            <div class="decoracao-castelo">👑 💖 🏰 💖 👑</div>
         </div>
     </div>
 
     <script>
-        // ========== FULLSCREEN API COM PERSISTÊNCIA ==========
-
-        // Chave do localStorage para lembrar estado fullscreen
-        const FS_KEY = 'reinoFullscreen';
-
-        // Detecta se está em fullscreen
-        function isFullscreen() {
-            return !!(document.fullscreenElement || 
-                      document.webkitFullscreenElement || 
-                      document.mozFullScreenElement || 
-                      document.msFullscreenElement);
+        let somAtual = null;
+        
+        function tocarSom(arquivo) {
+            if (!arquivo) return;
+            try {
+                if (somAtual) {
+                    somAtual.pause();
+                    somAtual.currentTime = 0;
+                }
+                somAtual = new Audio(arquivo);
+                somAtual.play().catch(e => console.log('Áudio:', e));
+            } catch(e) { console.log('Erro no áudio:', e); }
         }
-
-        // Entra em fullscreen
+        
+        // Efeito sonoro ao passar o mouse nos cards
+        function configurarEfeitosCards() {
+            const cards = document.querySelectorAll('.card-reino');
+            cards.forEach(card => {
+                card.addEventListener('mouseenter', () => {
+                    tocarSom('inicio.ogg');
+                });
+            });
+        }
+        
+        // Fullscreen
+        const FS_KEY = 'reinoFullscreen';
+        
+        function isFullscreen() {
+            return !!(document.fullscreenElement || document.webkitFullscreenElement);
+        }
+        
         function enterFullscreen() {
             const elem = document.documentElement;
-            if (elem.requestFullscreen) {
-                elem.requestFullscreen().catch(() => {});
-            } else if (elem.webkitRequestFullscreen) {
-                elem.webkitRequestFullscreen();
-            } else if (elem.mozRequestFullScreen) {
-                elem.mozRequestFullScreen();
-            } else if (elem.msRequestFullscreen) {
-                elem.msRequestFullscreen();
-            }
+            if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
+            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
         }
-
-        // Sai do fullscreen
+        
         function exitFullscreen() {
-            if (document.exitFullscreen) {
-                document.exitFullscreen().catch(() => {});
-            } else if (document.webkitExitFullscreen) {
-                document.webkitExitFullscreen();
-            } else if (document.mozCancelFullScreen) {
-                document.mozCancelFullScreen();
-            } else if (document.msExitFullscreen) {
-                document.msExitFullscreen();
-            }
+            if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
         }
-
-        // Alterna fullscreen
+        
         function toggleFullscreen() {
             if (isFullscreen()) {
                 exitFullscreen();
@@ -431,111 +442,43 @@
             }
             atualizarIconeFullscreen();
         }
-
-        // Atualiza ícone do botão
+        
         function atualizarIconeFullscreen() {
             const btn = document.getElementById('btnFullscreen');
             if (isFullscreen()) {
-                btn.innerHTML = '⛶';
+                btn.innerHTML = '✖';
                 btn.classList.add('ativo');
-                btn.title = 'Sair da Tela Cheia';
             } else {
                 btn.innerHTML = '⛶';
                 btn.classList.remove('ativo');
-                btn.title = 'Tela Cheia';
             }
         }
-
-        // Escuta mudanças no fullscreen (usuário aperta ESC, etc)
+        
         function setupFullscreenListeners() {
-            const events = ['fullscreenchange', 'webkitfullscreenchange', 'mozfullscreenchange', 'MSFullscreenChange'];
+            const events = ['fullscreenchange', 'webkitfullscreenchange'];
             events.forEach(event => {
                 document.addEventListener(event, () => {
                     atualizarIconeFullscreen();
-                    // Se saiu do fullscreen, atualiza localStorage
-                    if (!isFullscreen()) {
-                        localStorage.setItem(FS_KEY, 'false');
-                    }
+                    if (!isFullscreen()) localStorage.setItem(FS_KEY, 'false');
                 });
             });
         }
-
-        // Restaura fullscreen ao carregar a página
+        
         function restaurarFullscreen() {
             const deveFullscreen = localStorage.getItem(FS_KEY) === 'true';
             if (deveFullscreen && !isFullscreen()) {
-                // Pequeno delay para garantir que a página carregou
-                setTimeout(() => {
-                    enterFullscreen();
-                }, 100);
+                setTimeout(() => enterFullscreen(), 100);
             }
             atualizarIconeFullscreen();
         }
-
-        // ========== TEMA NOTURNO/DIURNO ==========
-
-        function toggleTheme() {
-            const body = document.body;
-            const btn = document.getElementById('themeToggle');
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                btn.innerHTML = '☀️';
-                localStorage.setItem('reinoTema', 'light');
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                btn.innerHTML = '🌙';
-                localStorage.setItem('reinoTema', 'dark');
-            }
-        }
-
-        function restaurarTema() {
-            const tema = localStorage.getItem('reinoTema');
-            const btn = document.getElementById('themeToggle');
-            if (tema === 'dark') {
-                document.body.setAttribute('data-theme', 'dark');
-                btn.innerHTML = '🌙';
-            } else {
-                document.body.removeAttribute('data-theme');
-                btn.innerHTML = '☀️';
-            }
-        }
-
-        // ========== ÁUDIO ==========
-
-        let somSubmenu;
-        function tocarAudio(arquivo) {
-            if (somSubmenu) {
-                somSubmenu.pause();
-                somSubmenu.currentTime = 0;
-            }
-            somSubmenu = new Audio(arquivo);
-            somSubmenu.play().catch(e => console.log("Áudio aguardando interação."));
-        }
-
-        // ========== CORAÇÕES FLUTUANTES ==========
-
+        
+        // Corações flutuantes
         function criarCoracoes() {
             const container = document.getElementById('coracoes-container');
-            const simbolos = ['💖', '💕', '💗', '💝', '✨', '🌟'];
+            const simbolos = ['💖', '💕', '💗', '💝', '✨', '🌟', '👑'];
             const cores = ['#e91e8c', '#ff80c0', '#d4a843', '#ff4081'];
-
-            for (let i = 0; i < 12; i++) {
-                setTimeout(() => {
-                    const c = document.createElement('div');
-                    c.className = 'coracao-flutuante';
-                    c.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
-                    c.style.left = Math.random() * 100 + '%';
-                    c.style.fontSize = (Math.random() * 14 + 12) + 'px';
-                    c.style.color = cores[Math.floor(Math.random() * cores.length)];
-                    c.style.animationDuration = (Math.random() * 6 + 5) + 's';
-                    c.style.animationDelay = (Math.random() * 4) + 's';
-                    container.appendChild(c);
-
-                    setTimeout(() => c.remove(), 11000);
-                }, i * 500);
-            }
-
-            setInterval(() => {
+            
+            function adicionarCoracao() {
                 const c = document.createElement('div');
                 c.className = 'coracao-flutuante';
                 c.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
@@ -545,18 +488,21 @@
                 c.style.animationDuration = (Math.random() * 6 + 5) + 's';
                 container.appendChild(c);
                 setTimeout(() => c.remove(), 11000);
-            }, 2500);
+            }
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(adicionarCoracao, i * 400);
+            }
+            setInterval(adicionarCoracao, 3000);
         }
-
-        // ========== INICIALIZAÇÃO ==========
-
+        
         window.onload = function() {
             criarCoracoes();
             setupFullscreenListeners();
             restaurarFullscreen();
-            restaurarTema();
+            configurarEfeitosCards();
+            tocarSom('inicio.ogg');
         };
     </script>
-
 </body>
 </html>
