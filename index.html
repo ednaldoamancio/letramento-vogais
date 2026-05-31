@@ -50,7 +50,7 @@
                 radial-gradient(1px 1px at 90% 80%, #fff, transparent),
                 radial-gradient(2px 2px at 20% 80%, rgba(255,220,150,0.7), transparent),
                 radial-gradient(1px 1px at 60% 90%, #fff, transparent),
-                radial-gradient(2px 2px at 80% 15%, rgba(255,200,100,0.5), transparent),
+                radial-gradient(2px 2px at 80% 15%, rgba(240,200,100,0.5), transparent),
                 radial-gradient(1px 1px at 40% 30%, #fff, transparent),
                 radial-gradient(2px 2px at 15% 50%, rgba(255,220,150,0.6), transparent);
             background-size: 100% 100%;
@@ -470,13 +470,13 @@
     </div>
 
     <script>
-        // ========== GERENCIAMENTO DE ÁUDIO (MESMA LÓGICA DA PÁGINA vogais_maiusculas.html) ==========
+        // ========== GERENCIAMENTO DE ÁUDIO ==========
         let somAtual = null;
-        let audioAtivado = false;      // Controla se o usuário já interagiu (via botão de música ou clique)
+        let audioAtivado = false;      // Controla se o usuário já interagiu
         let musicaFundo = null;
         let musicaAtiva = false;        // Estado do botão de música
 
-        // Função genérica para tocar qualquer som (só funciona após ativação)
+        // Função genérica para tocar os efeitos sonoros dos cards
         function tocarSom(arquivo) {
             if (!audioAtivado) return;
             if (!arquivo) return;
@@ -486,46 +486,74 @@
                     somAtual.currentTime = 0;
                 }
                 somAtual = new Audio(arquivo);
-                somAtual.play().catch(e => console.log('Áudio:', e));
+                somAtual.play().catch(e => console.log('Áudio bloqueado:', e));
             } catch(e) { console.log('Erro no áudio:', e); }
         }
 
-        // Função que ativa permanentemente os sons (chamada pelo primeiro clique ou pelo botão de música)
+        // Ativa permanentemente os sons e dispara a música de fundo automaticamente
         function ativarSons() {
             if (audioAtivado) return;
             audioAtivado = true;
-            // Dispara confetes como feedback visual (opcional)
-            confetti({ particleCount: 80, spread: 70, origin: { y: 0.5 }, colors: ['#d4a843', '#fff', '#e91e8c'] });
+            
+            // Instancia e inicia a música de fundo de forma automatizada após o toque inicial
+            iniciarMusicaAutomatica();
         }
 
-        // ========== MÚSICA DE FUNDO (comportamento idêntico ao da vogais_maiusculas.html) ==========
-        function alternarMusica() {
-            // Se os sons ainda não foram ativados, ativa primeiro
-            if (!audioAtivado) {
-                ativarSons();
-                // Aguarda um pouco e tenta novamente para iniciar a música
-                setTimeout(alternarMusica, 100);
-                return;
-            }
-            
-            const btn = document.getElementById('btnMusica');
+        // Função que configura e roda a música de fundo assim que liberado o autoplay
+        function iniciarMusicaAutomatica() {
             if (!musicaFundo) {
                 musicaFundo = new Audio('musica_fundo.ogg');
                 musicaFundo.loop = true;
-                musicaFundo.volume = 0.3;
+                musicaFundo.volume = 0.25; // Volume confortável para não atrapalhar a fala dos cards
             }
+            
+            // Só toca se ela já não estiver tocando
+            if (!musicaAtiva) {
+                musicaFundo.play()
+                    .then(() => {
+                        musicaAtiva = true;
+                        atualizarBotaoMusica();
+                    })
+                    .catch(e => console.log('Não foi possível tocar a música de fundo automaticamente:', e));
+            }
+        }
+
+        // Controla o clique manual do botão de ligar/desligar música
+        function alternarMusica() {
+            if (!audioAtivado) {
+                ativarSons();
+                return;
+            }
+            
+            if (!musicaFundo) {
+                musicaFundo = new Audio('musica_fundo.ogg');
+                musicaFundo.loop = true;
+                musicaFundo.volume = 0.25;
+            }
+
             if (musicaAtiva) {
                 musicaFundo.pause();
                 musicaAtiva = false;
-                btn.innerHTML = `🎵 MÚSICA OFF`;
-                btn.style.background = "rgba(212, 168, 67, 0.2)";
-                btn.style.color = "var(--ouro-real)";
             } else {
-                musicaFundo.play().catch(e => console.log('Música bloqueada pelo navegador.'));
+                musicaFundo.play().catch(e => console.log('Música bloqueada.'));
                 musicaAtiva = true;
+            }
+            atualizarBotaoMusica();
+        }
+
+        // Sincroniza o visual do botão no cabeçalho com o estado real da música
+        function atualizarBotaoMusica() {
+            const btn = document.getElementById('btnMusica');
+            if (!btn) return;
+            
+            if (musicaAtiva) {
                 btn.innerHTML = `🎵 MÚSICA ON`;
                 btn.style.background = "rgba(212, 168, 67, 0.5)";
                 btn.style.color = "#fff";
+            } else {
+                btn.innerHTML = `🎵 MÚSICA OFF`;
+                btn.style.background = "rgba(212, 168, 67, 0.2)";
+                btn.style.color = "var(--ouro-real)";
             }
         }
 
@@ -538,40 +566,35 @@
                 const urlDestino = card.getAttribute('data-href') || card.getAttribute('href');
                 const target = card.getAttribute('target') || '_self';
                 
-                // Remove o href original para controlar a navegação via JavaScript
                 card.removeAttribute('href');
                 card.style.cursor = 'pointer';
                 
-                // Evento de hover (mouse) - Toca o áudio descritivo
+                // Hover (mouse)
                 card.addEventListener('mouseenter', () => {
                     if (audioDescritivo) tocarSom(audioDescritivo);
                 });
                 
-                // Evento de toque (mobile) - Toca o áudio descritivo
+                // Toque (Mobile)
                 card.addEventListener('touchstart', (e) => {
                     if (audioDescritivo) tocarSom(audioDescritivo);
                 }, { passive: true });
                 
-                // Evento de clique - Toca som mágico e navega
+                // Clique do Card
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
                     
-                    // Se os sons ainda não foram ativados, ativa primeiro
-                    if (!audioAtivado) {
-                        ativarSons();
-                    }
+                    if (!audioAtivado) ativarSons();
                     
-                    // Toca o som mágico
                     tocarSom('som_magico.mp3');
                     
-                    // Aguarda um pequeno delay para o som começar e depois navega
+                    // Delay para curtir o som antes de ir para o reino escolhido
                     setTimeout(() => {
                         if (target === '_blank') {
                             window.open(urlDestino, '_blank', 'noopener');
                         } else {
                             window.location.href = urlDestino;
                         }
-                    }, 150);
+                    }, 250);
                 });
             });
         }
@@ -617,12 +640,10 @@
         // ========== PARTÍCULAS E CONFETES ==========
         function lancarFestaMagica() {
             confetti({
-                particleCount: 80,
-                spread: 100,
-                origin: { y: 0.5 },
-                colors: ['#d4a843', '#f0e68c', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'],
-                shapes: ['circle', 'square'],
-                scalar: 1.2
+                particleCount: 60,
+                spread: 90,
+                origin: { y: 0.6 },
+                colors: ['#d4a843', '#f0e68c', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e']
             });
         }
         
@@ -649,13 +670,12 @@
             setInterval(adicionarParticula, 2000);
         }
         
-        // ========== INICIALIZAÇÃO ==========
+        // ========== INICIALIZAÇÃO INTELLIGENT AUTOPLAY ==========
         window.onload = function() {
             criarParticulas();
             lancarFestaMagica();
             configurarCards();
             
-            // Configura os listeners dos botões da interface
             document.getElementById('btnMusica').onclick = alternarMusica;
             document.getElementById('fullscreenBtn').onclick = toggleFullScreen;
             document.getElementById('themeToggle').onclick = toggleTheme;
@@ -663,18 +683,18 @@
             document.addEventListener('fullscreenchange', updateFullscreenState);
             updateFullscreenState();
             
-            // 🔥 ATIVAÇÃO AUTOMÁTICA NO PRIMEIRO CLIQUE EM QUALQUER LUGAR DA PÁGINA
-            // Isso garante que, ao clicar em qualquer botão (ou até mesmo no fundo), os sons sejam ativados.
-            const ativarPrimeiraInteracao = () => {
-                if (!audioAtivado) {
-                    ativarSons();
-                }
-                document.removeEventListener('click', ativarPrimeiraInteracao);
-                document.removeEventListener('touchstart', ativarPrimeiraInteracao);
+            // O GATILHO MÁGICO: Escuta o primeiríssimo clique ou toque em qualquer lugar do body
+            const gerenciarPrimeiroClique = () => {
+                ativarSons();
+                // Limpa os listeners para não rodar essa função novamente à toa
+                document.body.removeEventListener('click', gerenciarPrimeiroClique);
+                document.body.removeEventListener('touchstart', gerenciarPrimeiroClique);
             };
-            document.addEventListener('click', ativarPrimeiraInteracao);
-            document.addEventListener('touchstart', ativarPrimeiraInteracao);
+            
+            document.body.addEventListener('click', gerenciarPrimeiroClique);
+            document.body.addEventListener('touchstart', gerenciarPrimeiroClique, { passive: true });
         };
     </script>
-</body>
+</body>11
+        
 </html>
