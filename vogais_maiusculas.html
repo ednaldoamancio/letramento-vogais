@@ -133,6 +133,31 @@
             box-shadow: 0 0 20px rgba(212, 168, 67, 0.6);
         }
 
+        .btn-musica {
+            background: linear-gradient(135deg, #2d8e5f, #1a5c3a);
+            border: 2px solid var(--dourado-real);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(212, 168, 67, 0.3);
+            color: white;
+        }
+        
+        .btn-musica:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(212, 168, 67, 0.5);
+        }
+        
+        .btn-musica.ativo {
+            background: linear-gradient(135deg, var(--dourado-real), #b8860b);
+        }
+
         .btn-voltar-dourado {
             display: flex;
             align-items: center;
@@ -202,7 +227,7 @@
             margin-bottom: 15px;
         }
 
-        /* Botões de modalidade (os 4 botões pequenos) */
+        /* Botões de modalidade */
         .modalidades-botoes {
             display: flex;
             justify-content: center;
@@ -494,6 +519,7 @@
         <div class="header-inner">
             <a href="vogais.html" class="btn-voltar-dourado">← ✨ Voltar ao Reino ✨</a>
             <div class="header-botoes">
+                <button class="btn-musica" id="btnMusica" title="Música de fundo">🎵</button>
                 <button class="btn-fullscreen" id="btnFullscreen" title="Tela Cheia">⛶</button>
             </div>
         </div>
@@ -506,10 +532,10 @@
             
             <!-- Botões de modalidade -->
             <div class="modalidades-botoes">
-                <button class="btn-modalidade" data-modal="maiuscula-forma">🏰 Maiúscula Forma</button>
-                <button class="btn-modalidade" data-modal="minuscula-forma">🌹 Minúscula Forma</button>
-                <button class="btn-modalidade" data-modal="maiuscula-cursiva">✨ Maiúscula Cursiva</button>
-                <button class="btn-modalidade" data-modal="minuscula-cursiva">🦋 Minúscula Cursiva</button>
+                <button class="btn-modalidade" data-modal="maiuscula-forma" data-audio="maiuscula_forma.mp3">🏰 Maiúscula Forma</button>
+                <button class="btn-modalidade" data-modal="minuscula-forma" data-audio="minuscula_forma.mp3">🌹 Minúscula Forma</button>
+                <button class="btn-modalidade" data-modal="maiuscula-cursiva" data-audio="maiuscula_cursiva.mp3">✨ Maiúscula Cursiva</button>
+                <button class="btn-modalidade" data-modal="minuscula-cursiva" data-audio="minuscula_cursiva.mp3">🦋 Minúscula Cursiva</button>
             </div>
             
             <div id="area-apresentacao">
@@ -545,6 +571,30 @@
     </div>
 
     <script>
+        // ========== MÚSICA DE FUNDO ==========
+        let musicaFundo = null;
+        let musicaAtiva = false;
+        
+        function toggleMusica() {
+            const btn = document.getElementById('btnMusica');
+            if (!musicaFundo) {
+                musicaFundo = new Audio('musica_fundo.ogg');
+                musicaFundo.loop = true;
+                musicaFundo.volume = 0.3;
+            }
+            if (musicaAtiva) {
+                musicaFundo.pause();
+                musicaAtiva = false;
+                btn.classList.remove('ativo');
+                btn.innerHTML = '🎵';
+            } else {
+                musicaFundo.play().catch(e => console.log('Música bloqueada pelo navegador.'));
+                musicaAtiva = true;
+                btn.classList.add('ativo');
+                btn.innerHTML = '🎵';
+            }
+        }
+        
         // ========== ESTADO DA MODALIDADE ==========
         let modalidadeAtual = 'maiuscula-forma';
         
@@ -573,14 +623,11 @@
         // Função para atualizar a fonte conforme modalidade
         function atualizarEstilosModalidade() {
             const body = document.body;
-            // Remove classes anteriores
             body.classList.remove('modal-maiuscula-forma', 'modal-minuscula-forma', 'modal-maiuscula-cursiva', 'modal-minuscula-cursiva');
             body.classList.add(`modal-${modalidadeAtual}`);
             
-            // Atualizar os textos dos botões conforme modalidade
             const botoesVogais = document.querySelectorAll('.bloco-vogal');
             const ehMaiuscula = modalidadeAtual === 'maiuscula-forma' || modalidadeAtual === 'maiuscula-cursiva';
-            const ehMinuscula = modalidadeAtual === 'minuscula-forma' || modalidadeAtual === 'minuscula-cursiva';
             
             botoesVogais.forEach(btn => {
                 const letraOriginal = btn.getAttribute('data-letra');
@@ -595,7 +642,6 @@
                 }
             });
             
-            // Resetar exibição
             const display = document.getElementById('display-letra');
             const imagemFigura = document.getElementById('imagem-figura');
             const player = document.getElementById('meuVideo');
@@ -606,7 +652,7 @@
             display.innerText = '✨';
         }
         
-        // Função para tocar vogal
+        // Função para tocar som (para qualquer áudio)
         let somAtual = null;
         
         function tocarSom(arquivo) {
@@ -621,13 +667,13 @@
             } catch(e) { console.log('Erro no áudio:', e); }
         }
         
+        // Tocar vogal completa (com vídeo e imagem)
         function tocarVogal(letra) {
             const display = document.getElementById('display-letra');
             const imagemFigura = document.getElementById('imagem-figura');
             const player = document.getElementById('meuVideo');
             const ehMaiuscula = modalidadeAtual === 'maiuscula-forma' || modalidadeAtual === 'maiuscula-cursiva';
             
-            // Escolher os dados corretos
             const dados = ehMaiuscula ? dadosVogais : dadosVogaisMinusculas;
             const letraKey = ehMaiuscula ? letra.toUpperCase() : letra.toLowerCase();
             const dadosLetra = dados[letraKey];
@@ -928,28 +974,29 @@
         
         // ========== CONFIGURAÇÃO ==========
         function configurarBotoes() {
-            // Botões das vogais
+            // Botões das vogais: click e mouseenter
             const botoesVogais = document.querySelectorAll('.bloco-vogal');
             botoesVogais.forEach(btn => {
                 btn.addEventListener('click', () => {
                     const letra = btn.getAttribute('data-letra');
                     tocarVogal(letra);
                 });
+                // Ao passar o mouse, toca o som da vogal (acessibilidade)
+                btn.addEventListener('mouseenter', () => {
+                    const som = btn.getAttribute('data-som');
+                    if (som) tocarSom(som);
+                });
             });
             
-            // Botões das modalidades
+            // Botões das modalidades: click e mouseenter
             const botoesModalidade = document.querySelectorAll('.btn-modalidade');
             botoesModalidade.forEach(btn => {
                 btn.addEventListener('click', () => {
-                    // Remove classe ativo de todos
                     botoesModalidade.forEach(b => b.classList.remove('ativo'));
                     btn.classList.add('ativo');
-                    
-                    // Atualiza modalidade
                     modalidadeAtual = btn.getAttribute('data-modal');
                     atualizarEstilosModalidade();
                     
-                    // Resetar exibição
                     const display = document.getElementById('display-letra');
                     const imagemFigura = document.getElementById('imagem-figura');
                     const player = document.getElementById('meuVideo');
@@ -961,18 +1008,22 @@
                     
                     tocarSom('inicio.ogg');
                 });
+                // Ao passar o mouse, toca o áudio descritivo da modalidade
+                btn.addEventListener('mouseenter', () => {
+                    const audioFile = btn.getAttribute('data-audio');
+                    if (audioFile) tocarSom(audioFile);
+                });
             });
             
             // Ativar primeira modalidade por padrão
             const primeiroBotao = document.querySelector('.btn-modalidade');
-            if (primeiroBotao) {
-                primeiroBotao.classList.add('ativo');
-            }
+            if (primeiroBotao) primeiroBotao.classList.add('ativo');
             
             document.getElementById('btnIniciar').addEventListener('click', iniciarApresentacao);
             document.getElementById('btnProxima').addEventListener('click', irParaJogo);
             document.getElementById('btnReiniciar').addEventListener('click', reiniciarJogo);
             document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
+            document.getElementById('btnMusica').addEventListener('click', toggleMusica);
         }
         
         window.onload = function() {
