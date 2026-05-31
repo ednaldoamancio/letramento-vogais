@@ -981,14 +981,13 @@
                     const letra = btn.getAttribute('data-letra');
                     tocarVogal(letra);
                 });
-                // Ao passar o mouse, toca o som da vogal (acessibilidade)
                 btn.addEventListener('mouseenter', () => {
                     const som = btn.getAttribute('data-som');
                     if (som) tocarSom(som);
                 });
             });
             
-            // Botões das modalidades: click e mouseenter
+            // Botões das modalidades: click e mouseenter (agora com áudio específico no click)
             const botoesModalidade = document.querySelectorAll('.btn-modalidade');
             botoesModalidade.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -1006,9 +1005,10 @@
                     display.style.display = 'block';
                     display.innerText = '✨';
                     
-                    tocarSom('inicio.ogg');
+                    // 🔥 Toca o áudio específico ao clicar
+                    const audioFile = btn.getAttribute('data-audio');
+                    if (audioFile) tocarSom(audioFile);
                 });
-                // Ao passar o mouse, toca o áudio descritivo da modalidade
                 btn.addEventListener('mouseenter', () => {
                     const audioFile = btn.getAttribute('data-audio');
                     if (audioFile) tocarSom(audioFile);
