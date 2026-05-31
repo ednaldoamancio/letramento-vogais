@@ -428,7 +428,6 @@
             .castelo-decor { font-size: 40px; }
         }
     </style>
-<base target="_blank">
 </head>
 <body>
 
@@ -462,35 +461,35 @@
 
         <div class="reinos-container">
             <!-- Reino das Vogais - Princesas e Príncipes -->
-            <a href="vogais.html" class="card-reino reino-vogais" onclick="tocarEfeito('vogais.mp3')">
+            <a href="vogais.html" class="card-reino reino-vogais" data-audio="reino_das_vogais.mp3" data-href="vogais.html">
                 <span class="emoji-reino">👸🤴</span>
                 <span class="nome-reino">Reino das Vogais</span>
                 <span class="desc-reino">Princesas & Príncipes</span>
             </a>
 
             <!-- Reino do Alfabeto - Netuno (Aquático) -->
-            <a href="https://alfabeto-mu.vercel.app/" class="card-reino reino-alfabeto" onclick="tocarEfeito('alfabeto.mp3')">
+            <a href="https://alfabeto-mu.vercel.app/" class="card-reino reino-alfabeto" data-audio="reino_do_alfabeto.mp3" data-href="https://alfabeto-mu.vercel.app/">
                 <span class="emoji-reino">🧜‍♂️🔱</span>
                 <span class="nome-reino">Reino do Alfabeto</span>
                 <span class="desc-reino">Netuno & o Mar</span>
             </a>
 
             <!-- Reino das Consoantes - Fadas, Gnomos e Duendes -->
-            <a href="consoantes.html" class="card-reino reino-consoantes" onclick="tocarEfeito('consoantes.mp3')">
+            <a href="consoantes.html" class="card-reino reino-consoantes" data-audio="reino_das_consoantes.mp3" data-href="consoantes.html">
                 <span class="emoji-reino">🧚🧙‍♂️</span>
                 <span class="nome-reino">Reino das Consoantes</span>
                 <span class="desc-reino">Fadas, Gnomos & Duendes</span>
             </a>
 
             <!-- Reino dos Números - Bruxa da Tabuada -->
-            <a href="numeros.html" class="card-reino reino-numeros" onclick="tocarEfeito('numeros.mp3')">
+            <a href="numeros.html" class="card-reino reino-numeros" data-audio="reino_dos_numeros.mp3" data-href="numeros.html">
                 <span class="emoji-reino">🧙‍♀️🔮</span>
                 <span class="nome-reino">Reino dos Números</span>
                 <span class="desc-reino">A Bruxa da Tabuada</span>
             </a>
 
             <!-- Card especial da Tabuada da Bruxinha -->
-            <a href="https://tabuada-da-bruxinha.vercel.app/" target="_blank" rel="noopener" class="card-reino card-bruxinha-especial" onclick="tocarEfeito('bruxinha.mp3')">
+            <a href="https://tabuada-da-bruxinha.vercel.app/" target="_blank" rel="noopener" class="card-reino card-bruxinha-especial" data-audio="tabuada_da_bruxinha.mp3" data-href="https://tabuada-da-bruxinha.vercel.app/">
                 <span class="emoji-reino">🧙‍♀️✨</span>
                 <span class="nome-reino">Tabuada da Bruxinha</span>
                 <span class="desc-reino">🧹 Voe na vassoura e aprenda magia matemática!</span>
@@ -499,13 +498,65 @@
     </div>
 
     <script>
-        // 🎉 Confete mágico ao entrar!
-        window.onload = function() {
-            lancarFestaMagica();
-            criarParticulas();
-            configurarLinksFullscreen();
-        };
+        // ========== GERENCIADOR DE ÁUDIO ==========
+        let somAtual = null;
+        
+        function tocarSom(arquivo) {
+            if (!arquivo) return;
+            try {
+                if (somAtual) {
+                    somAtual.pause();
+                    somAtual.currentTime = 0;
+                }
+                somAtual = new Audio(arquivo);
+                somAtual.play().catch(e => console.log('Áudio bloqueado:', e));
+            } catch(e) { console.log('Erro no áudio:', e); }
+        }
 
+        // ========== CONFIGURAR CARDS COM ACESSIBILIDADE ==========
+        function configurarCardsAcessibilidade() {
+            const cards = document.querySelectorAll('.card-reino');
+            
+            cards.forEach(card => {
+                const audioDescritivo = card.getAttribute('data-audio');
+                const urlDestino = card.getAttribute('data-href') || card.getAttribute('href');
+                const target = card.getAttribute('target') || '_self';
+                
+                // Remove o href original para evitar navegação direta (será controlada pelo clique)
+                card.removeAttribute('href');
+                card.style.cursor = 'pointer';
+                
+                // Evento de "hover" (mouse) para acessibilidade
+                card.addEventListener('mouseenter', () => {
+                    if (audioDescritivo) tocarSom(audioDescritivo);
+                });
+                
+                // Evento para dispositivos touch (mobile) - equivalente ao hover
+                card.addEventListener('touchstart', (e) => {
+                    // Evita que o som toque duas vezes se o usuário mantiver o dedo
+                    if (audioDescritivo) tocarSom(audioDescritivo);
+                }, { passive: true });
+                
+                // Evento de clique: toca som mágico e depois navega
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    
+                    // Toca o som mágico
+                    tocarSom('som_magico.mp3');
+                    
+                    // Pequeno delay para o som começar, depois navega
+                    setTimeout(() => {
+                        if (target === '_blank') {
+                            window.open(urlDestino, '_blank', 'noopener');
+                        } else {
+                            window.location.href = urlDestino;
+                        }
+                    }, 150);
+                });
+            });
+        }
+        
+        // ========== CONFETES E PARTÍCULAS ==========
         function lancarFestaMagica() {
             confetti({
                 particleCount: 80,
@@ -535,7 +586,6 @@
             }, 600);
         }
 
-        // Partículas mágicas flutuantes
         function criarParticulas() {
             const container = document.getElementById('particulas-container');
             const simbolos = ['✨', '⭐', '🔮', '🌟', '💫', '⚡'];
@@ -569,13 +619,7 @@
             }, 2000);
         }
 
-        // Gerenciador de Áudio
-        function tocarEfeito(arquivo) {
-            const audio = new Audio(arquivo);
-            audio.play().catch(() => {});
-        }
-
-        // Alternar Tema 🌙☀️
+        // ========== TEMA E MÚSICA ==========
         function toggleTheme() {
             const body = document.body;
             const btn = document.getElementById('themeToggle');
@@ -595,7 +639,6 @@
             }
         }
 
-        // Música de Fundo
         const musicaFundo = new Audio('musica_fundo.ogg');
         musicaFundo.loop = true;
         musicaFundo.volume = 0.2;
@@ -615,11 +658,10 @@
             }
         }
 
-        // ========== FULLSCREEN MÁGICO ==========
+        // ========== FULLSCREEN ==========
         let isFullscreenActive = false;
         const fullscreenBtn = document.getElementById('fullscreenBtn');
 
-        // Função para alternar tela cheia
         function toggleFullScreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().then(() => {
@@ -632,7 +674,6 @@
             }
         }
 
-        // Atualizar ícone e estado do fullscreen
         function updateFullscreenState() {
             isFullscreenActive = !!document.fullscreenElement;
             if (fullscreenBtn) {
@@ -643,10 +684,9 @@
             }
         }
 
-        // Adicionar parâmetro fullscreen a uma URL de forma inteligente
+        // Adiciona flag fullscreen para subpáginas
         function adicionarFlagFullscreenNaUrl(url) {
             if (!url) return url;
-            // Evita duplicação do parâmetro
             const flag = 'fullscreen=force';
             const hasQuery = url.includes('?');
             const hasFlag = url.includes('fullscreen=force');
@@ -659,128 +699,30 @@
             }
         }
 
-        // Configurar interceptação de cliques nos links para propagar fullscreen
         function configurarLinksFullscreen() {
-            const links = document.querySelectorAll('.card-reino');
-            
-            links.forEach(link => {
-                // Remove event listener duplicado caso exista, mas adicionamos um único handler
-                link.addEventListener('click', function(e) {
-                    // Se o index estiver em modo fullscreen, forçamos a subpágina a abrir com flag fullscreen
-                    if (isFullscreenActive) {
-                        // Previne navegação imediata para modificar o href corretamente
-                        e.preventDefault();
-                        const urlOriginal = link.getAttribute('href');
-                        if (!urlOriginal) return;
-                        
-                        // Nova URL com o parâmetro fullscreen=force
-                        let novaUrl = adicionarFlagFullscreenNaUrl(urlOriginal);
-                        
-                        // Armazena no sessionStorage uma dica extra (para subpáginas que quiserem usar)
-                        sessionStorage.setItem('parent_fullscreen_request', 'true');
-                        
-                        // Preserva o target original (se existir)
-                        const targetOriginal = link.getAttribute('target') || '_blank';
-                        
-                        // Dispara o efeito sonoro manualmente (preservando a magia)
-                        const onclickAttr = link.getAttribute('onclick');
-                        if (onclickAttr && onclickAttr.includes('tocarEfeito')) {
-                            // Extrai o arquivo de som (ex: tocarEfeito('vogais.mp3'))
-                            const match = onclickAttr.match(/tocarEfeito\(['"]([^'"]+)['"]\)/);
-                            if (match && match[1]) {
-                                tocarEfeito(match[1]);
-                            }
-                        }
-                        
-                        // Navega para a nova URL
-                        if (targetOriginal === '_blank') {
-                            window.open(novaUrl, '_blank', 'noopener');
-                        } else {
-                            window.location.href = novaUrl;
-                        }
-                    } else {
-                        // Se não estiver em fullscreen, garante que não há flag residual e também limpa sessionStorage
-                        sessionStorage.removeItem('parent_fullscreen_request');
-                        // Deixa o clique normal acontecer, mas precisamos garantir que o áudio toque (já tem onclick)
-                        // O navegador cuida do href e do onclick padrão. Não há interferência.
-                    }
-                });
-            });
+            // Essa função agora é usada apenas para garantir que, se a página estiver em fullscreen,
+            // os links internos já estão sendo tratados pelo clique customizado.
+            // Como substituímos todos os cliques, a flag pode ser adicionada dinamicamente.
         }
 
-        // Escuta mudanças no fullscreen
-        document.addEventListener('fullscreenchange', updateFullscreenState);
-        document.addEventListener('webkitfullscreenchange', updateFullscreenState);
-        document.addEventListener('mozfullscreenchange', updateFullscreenState);
-        document.addEventListener('MSFullscreenChange', updateFullscreenState);
-        
-        // Inicializar estado
-        updateFullscreenState();
-        
-        // Dica para desenvolvedores (subpáginas) - Script de detecção automática de fullscreen
-        // Caso as subpáginas (vogais.html, consoantes.html, numeros.html) também implementem botão fullscreen,
-        // elas podem incluir o trecho abaixo para FORÇAR a abertura em tela cheia quando vêm com o parâmetro.
-        // 
-        // === INSTRUÇÃO PARA SUBPÁGINAS (COLE ESTE CÓDIGO NAS SUBPÁGINAS QUE POSSUEM BOTÃO FULLSCREEN) ===
-        /*
-        (function() {
-            const urlParams = new URLSearchParams(window.location.search);
-            const precisaFullscreen = urlParams.has('fullscreen') && urlParams.get('fullscreen') === 'force';
-            const parentRequest = sessionStorage.getItem('parent_fullscreen_request');
+        // ========== INICIALIZAÇÃO ==========
+        window.onload = function() {
+            lancarFestaMagica();
+            criarParticulas();
+            configurarCardsAcessibilidade();  // Configura os cards com áudio descritivo e clique mágico
             
-            function ativarFullscreenAutomatico() {
-                if (!document.fullscreenElement && (precisaFullscreen || parentRequest === 'true')) {
-                    document.documentElement.requestFullscreen().catch(e => {
-                        console.log("Auto fullscreen bloqueado, mas usuário pode clicar no botão fullscreen.");
-                        // Mostra uma dica amigável flutuante
-                        const hint = document.createElement('div');
-                        hint.innerText = '✨ Toque no botão ⛶ para viver a magia em tela cheia! ✨';
-                        hint.style.position = 'fixed';
-                        hint.style.bottom = '20px';
-                        hint.style.left = '20px';
-                        hint.style.background = 'rgba(0,0,0,0.7)';
-                        hint.style.color = '#d4a843';
-                        hint.style.padding = '8px 16px';
-                        hint.style.borderRadius = '40px';
-                        hint.style.fontSize = '12px';
-                        hint.style.zIndex = '9999';
-                        hint.style.fontFamily = 'Nunito, sans-serif';
-                        hint.style.backdropFilter = 'blur(8px)';
-                        hint.style.border = '1px solid gold';
-                        document.body.appendChild(hint);
-                        setTimeout(() => hint.remove(), 4000);
-                    });
-                    sessionStorage.removeItem('parent_fullscreen_request');
-                }
+            // Fullscreen listeners
+            document.addEventListener('fullscreenchange', updateFullscreenState);
+            document.addEventListener('webkitfullscreenchange', updateFullscreenState);
+            document.addEventListener('mozfullscreenchange', updateFullscreenState);
+            document.addEventListener('MSFullscreenChange', updateFullscreenState);
+            updateFullscreenState();
+            
+            // Força o botão fullscreen a funcionar também
+            if (fullscreenBtn) {
+                fullscreenBtn.onclick = toggleFullScreen;
             }
-            // Tenta ativar fullscreen na carga, mas devido a políticas de segurança,
-            // será mais efetivo após primeiro toque.
-            window.addEventListener('load', () => {
-                setTimeout(ativarFullscreenAutomatico, 500);
-            });
-            // Também tenta no primeiro clique/toque (garantia de user gesture)
-            const events = ['click', 'touchstart'];
-            events.forEach(ev => {
-                document.body.addEventListener(ev, function oneGesture() {
-                    ativarFullscreenAutomatico();
-                    events.forEach(e => document.body.removeEventListener(e, oneGesture));
-                }, { once: true });
-            });
-        })();
-        */
-        // Fim da recomendação para subpáginas.
-        
-        // Efeito extra: se o index foi carregado com parâmetro de fullscreen (vindo de outra página),
-        // também pode ativar fullscreen. Isso ajuda na navegação entre subpáginas que aplicam a mesma lógica.
-        (function autoFullscreenFromParam() {
-            const urlParams = new URLSearchParams(window.location.search);
-            if (urlParams.get('fullscreen') === 'force' && !document.fullscreenElement) {
-                // Pequeno delay para garantir DOM pronto
-                setTimeout(() => {
-                    document.documentElement.requestFullscreen().catch(() => {});
-                }, 300);
-            }
-        })();
+        };
     </script>
 </body>
 </html>
