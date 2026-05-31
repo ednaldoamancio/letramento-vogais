@@ -11,7 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* Seu CSS permanece exatamente igual. Nenhuma alteração necessária aqui. */
+        /* Seu CSS permanece exatamente igual, sem alterações. */
         :root {
             --papel-pergaminho: #f5e6c8;
             --ouro-real: #d4a843;
@@ -470,15 +470,15 @@
     </div>
 
     <script>
-        // ========== GERENCIAMENTO DE ÁUDIO COM INÍCIO SILENCIOSO ==========
-        let audioAtivado = false;   // Controla se o usuário já interagiu
-        let somAtual = null;        // Para controlar o áudio que está tocando no momento
-        let musicaFundo = null;     // Referência para o objeto de áudio da música de fundo
-        let musicaAtiva = false;    // Estado do botão de música (se o usuário já ativou)
+        // ========== GERENCIAMENTO DE ÁUDIO (MESMA LÓGICA DA PÁGINA vogais_maiusculas.html) ==========
+        let somAtual = null;
+        let audioAtivado = false;      // Controla se o usuário já interagiu (via botão de música ou clique)
+        let musicaFundo = null;
+        let musicaAtiva = false;        // Estado do botão de música
 
-        // Função para tocar um som. Só funciona depois da primeira interação do usuário.
+        // Função genérica para tocar qualquer som (só funciona após ativação)
         function tocarSom(arquivo) {
-            if (!audioAtivado) return; // Sons bloqueados até a ativação
+            if (!audioAtivado) return;
             if (!arquivo) return;
             try {
                 if (somAtual) {
@@ -486,33 +486,50 @@
                     somAtual.currentTime = 0;
                 }
                 somAtual = new Audio(arquivo);
-                somAtual.play().catch(e => console.log('Erro no áudio:', e));
+                somAtual.play().catch(e => console.log('Áudio:', e));
             } catch(e) { console.log('Erro no áudio:', e); }
         }
 
-        // Função para ativar a música de fundo e todos os sons do site.
-        // É chamada no primeiro clique do usuário.
-        function ativarSonsPrimeiraVez() {
+        // Função que ativa permanentemente os sons (chamada pelo primeiro clique ou pelo botão de música)
+        function ativarSons() {
             if (audioAtivado) return;
             audioAtivado = true;
-            
-            // --- 1. Ativa a música de fundo ---
-            if (musicaFundo && musicaFundo.muted) {
-                // Se a música já foi criada (no onload) e está tocando silenciosamente, agora tiramos o mute.
-                musicaFundo.muted = false;
-                // Ajusta o volume de acordo com o estado do botão "MÚSICA ON/OFF"
-                musicaFundo.volume = musicaAtiva ? 0.2 : 0; // Se o botão estiver "ON", volume 0.2, senão, 0.
-                // Se o botão de música está "ON", garantimos que a música toque.
-                if (musicaAtiva && musicaFundo.paused) {
-                    musicaFundo.play().catch(e => console.log("Erro ao iniciar música:", e));
-                }
-            }
-            
-            // --- 2. Feedback visual mágico (confetes) para o usuário ---
-            lancarFestaMagica();
+            // Dispara confetes como feedback visual (opcional)
+            confetti({ particleCount: 80, spread: 70, origin: { y: 0.5 }, colors: ['#d4a843', '#fff', '#e91e8c'] });
         }
 
-        // ========== CONFIGURAR CARDS (mouseenter/touchstart/click) ==========
+        // ========== MÚSICA DE FUNDO (comportamento idêntico ao da vogais_maiusculas.html) ==========
+        function alternarMusica() {
+            // Se os sons ainda não foram ativados, ativa primeiro
+            if (!audioAtivado) {
+                ativarSons();
+                // Aguarda um pouco e tenta novamente para iniciar a música
+                setTimeout(alternarMusica, 100);
+                return;
+            }
+            
+            const btn = document.getElementById('btnMusica');
+            if (!musicaFundo) {
+                musicaFundo = new Audio('musica_fundo.ogg');
+                musicaFundo.loop = true;
+                musicaFundo.volume = 0.3;
+            }
+            if (musicaAtiva) {
+                musicaFundo.pause();
+                musicaAtiva = false;
+                btn.innerHTML = `🎵 MÚSICA OFF`;
+                btn.style.background = "rgba(212, 168, 67, 0.2)";
+                btn.style.color = "var(--ouro-real)";
+            } else {
+                musicaFundo.play().catch(e => console.log('Música bloqueada pelo navegador.'));
+                musicaAtiva = true;
+                btn.innerHTML = `🎵 MÚSICA ON`;
+                btn.style.background = "rgba(212, 168, 67, 0.5)";
+                btn.style.color = "#fff";
+            }
+        }
+
+        // ========== CONFIGURAR CARDS (ACESSIBILIDADE E NAVEGAÇÃO) ==========
         function configurarCards() {
             const cards = document.querySelectorAll('.card-reino');
             
@@ -525,23 +542,23 @@
                 card.removeAttribute('href');
                 card.style.cursor = 'pointer';
                 
-                // 1. Evento de "hover" (mouse) - Toca o áudio descritivo
+                // Evento de hover (mouse) - Toca o áudio descritivo
                 card.addEventListener('mouseenter', () => {
                     if (audioDescritivo) tocarSom(audioDescritivo);
                 });
                 
-                // 2. Evento de toque (mobile) - Toca o áudio descritivo
+                // Evento de toque (mobile) - Toca o áudio descritivo
                 card.addEventListener('touchstart', (e) => {
                     if (audioDescritivo) tocarSom(audioDescritivo);
                 }, { passive: true });
                 
-                // 3. Evento de clique - Toca som mágico e navega
+                // Evento de clique - Toca som mágico e navega
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
                     
-                    // Se os sons ainda não foram ativados, ativa primeiro.
+                    // Se os sons ainda não foram ativados, ativa primeiro
                     if (!audioAtivado) {
-                        ativarSonsPrimeiraVez();
+                        ativarSons();
                     }
                     
                     // Toca o som mágico
@@ -559,42 +576,7 @@
             });
         }
 
-        // ========== FUNÇÕES PARA CONTROLE DA MÚSICA DE FUNDO (BOTÃO) ==========
-        function alternarMusica() {
-            // Se os sons ainda não foram ativados, ativa primeiro.
-            if (!audioAtivado) {
-                ativarSonsPrimeiraVez();
-                // Aguarda um pouco e chama novamente a função
-                setTimeout(alternarMusica, 100);
-                return;
-            }
-            
-            const btn = document.getElementById('btnMusica');
-            if (!musicaFundo) {
-                // Isso não deveria acontecer, pois a música já foi criada no onload, mas por segurança...
-                musicaFundo = new Audio('musica_fundo.ogg');
-                musicaFundo.loop = true;
-                musicaFundo.volume = musicaAtiva ? 0.2 : 0;
-            }
-            
-            if (musicaAtiva) {
-                musicaFundo.pause();
-                musicaAtiva = false;
-                btn.innerHTML = `🎵 MÚSICA OFF`;
-                btn.style.background = "rgba(212, 168, 67, 0.2)";
-                btn.style.color = "var(--ouro-real)";
-            } else {
-                musicaFundo.play().catch(e => console.log("Música bloqueada:", e));
-                musicaAtiva = true;
-                btn.innerHTML = `🎵 MÚSICA ON`;
-                btn.style.background = "rgba(212, 168, 67, 0.5)";
-                btn.style.color = "#fff";
-                // Garante que o volume seja o correto se a música já estiver tocando silenciosamente
-                if (musicaFundo) musicaFundo.volume = 0.2;
-            }
-        }
-
-        // ========== TEMA (DIA/NOITE) ==========
+        // ========== TEMA DIA/NOITE ==========
         function toggleTheme() {
             const body = document.body;
             const btn = document.getElementById('themeToggle');
@@ -604,7 +586,6 @@
             } else {
                 body.setAttribute('data-theme', 'dark');
                 btn.innerHTML = '🌙';
-                // Efeito de confete ao mudar o tema (apenas se os sons já estiverem ativados)
                 if (audioAtivado) {
                     confetti({ particleCount: 30, spread: 50, origin: { y: 0.2 }, colors: ['#d4a843', '#fff'] });
                 }
@@ -615,7 +596,6 @@
         function toggleFullScreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().then(() => {
-                    // Efeito de confete ao entrar em tela cheia (apenas se os sons já estiverem ativados)
                     if (audioAtivado) confetti({ particleCount: 40, spread: 60, origin: { y: 0.2 }, colors: ['#d4a843', '#fff'] });
                 }).catch(err => console.warn(err));
             } else {
@@ -634,13 +614,13 @@
             }
         }
 
-        // ========== PARTÍCULAS E FESTA MÁGICA ==========
+        // ========== PARTÍCULAS E CONFETES ==========
         function lancarFestaMagica() {
             confetti({
-                particleCount: 100,
-                spread: 70,
+                particleCount: 80,
+                spread: 100,
                 origin: { y: 0.5 },
-                colors: ['#d4a843', '#fff', '#e91e8c', '#1e5f8e', '#2d8e5f'],
+                colors: ['#d4a843', '#f0e68c', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'],
                 shapes: ['circle', 'square'],
                 scalar: 1.2
             });
@@ -671,45 +651,29 @@
         
         // ========== INICIALIZAÇÃO ==========
         window.onload = function() {
-            // Cria e inicia a música de fundo SILENCIOSAMENTE (muted = true)
-            musicaFundo = new Audio('musica_fundo.ogg');
-            musicaFundo.loop = true;
-            musicaFundo.muted = true;    // ESSE É O TRUQUE! O navegador permite a reprodução automática.
-            musicaFundo.volume = 0;      // Volume zero, para garantir que não faça barulho.
-            musicaFundo.play().catch(e => console.log("Música de fundo iniciada silenciosamente:", e));
-            
-            // Inicializa as partículas e os cards
             criarParticulas();
+            lancarFestaMagica();
             configurarCards();
             
-            // Configura os listeners de evento para a primeira interação do usuário
-            // Agora, o primeiro clique em QUALQUER LUGAR da página ativa os sons.
-            const ativarPrimeiraInteracao = () => {
-                if (!audioAtivado) {
-                    ativarSonsPrimeiraVez();
-                }
-                // Remove os listeners após a primeira ativação
-                document.removeEventListener('click', ativarPrimeiraInteracao);
-                document.removeEventListener('touchstart', ativarPrimeiraInteracao);
-                document.removeEventListener('keydown', ativarPrimeiraInteracao);
-            };
-            document.addEventListener('click', ativarPrimeiraInteracao);
-            document.addEventListener('touchstart', ativarPrimeiraInteracao);
-            document.addEventListener('keydown', ativarPrimeiraInteracao);
-            
-            // Configura os botões da interface
+            // Configura os listeners dos botões da interface
             document.getElementById('btnMusica').onclick = alternarMusica;
             document.getElementById('fullscreenBtn').onclick = toggleFullScreen;
             document.getElementById('themeToggle').onclick = toggleTheme;
             
-            // Listener para atualizar o ícone do fullscreen
             document.addEventListener('fullscreenchange', updateFullscreenState);
             updateFullscreenState();
             
-            // Pequena festa de boas-vindas (sem som, apenas visual)
-            setTimeout(() => {
-                confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 }, colors: ['#d4a843', '#fff'] });
-            }, 500);
+            // 🔥 ATIVAÇÃO AUTOMÁTICA NO PRIMEIRO CLIQUE EM QUALQUER LUGAR DA PÁGINA
+            // Isso garante que, ao clicar em qualquer botão (ou até mesmo no fundo), os sons sejam ativados.
+            const ativarPrimeiraInteracao = () => {
+                if (!audioAtivado) {
+                    ativarSons();
+                }
+                document.removeEventListener('click', ativarPrimeiraInteracao);
+                document.removeEventListener('touchstart', ativarPrimeiraInteracao);
+            };
+            document.addEventListener('click', ativarPrimeiraInteracao);
+            document.addEventListener('touchstart', ativarPrimeiraInteracao);
         };
     </script>
 </body>
