@@ -11,6 +11,7 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
+        /* Seu CSS permanece exatamente igual. Nenhuma alteração necessária aqui. */
         :root {
             --papel-pergaminho: #f5e6c8;
             --ouro-real: #d4a843;
@@ -35,7 +36,6 @@
             position: relative;
         }
 
-        /* Estrelas cintilantes no céu noturno */
         body::before {
             content: '';
             position: fixed;
@@ -62,7 +62,6 @@
             100% { opacity: 1; }
         }
 
-        /* Lua mágica */
         .lua-magica {
             position: fixed;
             top: 20px;
@@ -99,7 +98,6 @@
             50% { box-shadow: 0 0 50px rgba(240, 230, 140, 0.7), 0 0 90px rgba(240, 230, 140, 0.4); }
         }
 
-        /* Castelo decorativo no topo */
         .castelo-decor {
             position: fixed;
             top: 0;
@@ -112,7 +110,6 @@
             pointer-events: none;
         }
 
-        /* Header real */
         .header { 
             position: relative; 
             z-index: 50; 
@@ -185,7 +182,6 @@
             text-shadow: 0 0 10px rgba(212, 168, 67, 0.5);
         }
 
-        /* Stage principal */
         .stage { 
             flex: 1; 
             display: flex; 
@@ -198,7 +194,6 @@
             overflow-y: auto;
         }
 
-        /* Banner do mapa dos reinos */
         .banner-reinos {
             border-radius: 20px;
             overflow: hidden;
@@ -245,7 +240,6 @@
             margin-bottom: 10px;
         }
 
-        /* Grid dos reinos */
         .reinos-container { 
             display: grid; 
             grid-template-columns: 1fr 1fr; 
@@ -254,7 +248,6 @@
             max-width: 420px;
         }
 
-        /* Card base dos reinos */
         .card-reino {
             padding: 18px 12px; 
             border-radius: 18px; 
@@ -315,7 +308,6 @@
             font-weight: 600;
         }
 
-        /* ===== REINO DAS VOGAIS - Princesas e Príncipes ===== */
         .reino-vogais {
             background: linear-gradient(145deg, #e91e8c, #9c1460);
             box-shadow: 
@@ -331,7 +323,6 @@
                 inset 0 1px 0 rgba(255,255,255,0.3);
         }
 
-        /* ===== REINO DO ALFABETO - Netuno (Aquático) ===== */
         .reino-alfabeto {
             background: linear-gradient(145deg, #1e5f8e, #0d3a5c);
             box-shadow: 
@@ -347,7 +338,6 @@
                 inset 0 1px 0 rgba(255,255,255,0.3);
         }
 
-        /* ===== REINO DAS CONSOANTES - Fadas, Gnomos e Duendes ===== */
         .reino-consoantes {
             background: linear-gradient(145deg, #2d8e5f, #1a5c3a);
             box-shadow: 
@@ -363,7 +353,6 @@
                 inset 0 1px 0 rgba(255,255,255,0.3);
         }
 
-        /* ===== REINO DOS NÚMEROS - Bruxa da Tabuada ===== */
         .reino-numeros {
             background: linear-gradient(145deg, #6b2d8e, #3d1a52);
             box-shadow: 
@@ -379,7 +368,6 @@
                 inset 0 1px 0 rgba(255,255,255,0.3);
         }
 
-        /* Card especial da Tabuada da Bruxinha - ocupa largura total */
         .card-bruxinha-especial {
             grid-column: 1 / -1;
             background: linear-gradient(145deg, #4a1a6e, #2d0a42);
@@ -404,7 +392,6 @@
             box-shadow: 0 12px 0 #1a0a2e, 0 0 40px rgba(212, 168, 67, 0.4);
         }
 
-        /* Partículas mágicas flutuantes */
         .particula {
             position: fixed;
             pointer-events: none;
@@ -419,7 +406,6 @@
             100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
         }
 
-        /* Responsivo */
         @media (max-width: 400px) {
             .reinos-container { gap: 10px; }
             .card-reino { padding: 14px 8px; min-height: 95px; }
@@ -431,21 +417,16 @@
 </head>
 <body>
 
-    <!-- Lua mágica -->
     <div class="lua-magica"></div>
-
-    <!-- Castelo decorativo -->
     <div class="castelo-decor">🏰</div>
-
-    <!-- Partículas mágicas (geradas via JS) -->
     <div id="particulas-container"></div>
 
     <header class="header">
         <div class="header-inner">
             <div class="header-botoes">
-                <button class="btn-musica" id="btnMusica" onclick="alternarMusica()">🎵 MÚSICA OFF</button>
-                <button class="btn-fullscreen" id="fullscreenBtn" onclick="toggleFullScreen()" aria-label="Tela cheia">⛶</button>
-                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️</button>
+                <button class="btn-musica" id="btnMusica">🎵 MÚSICA OFF</button>
+                <button class="btn-fullscreen" id="fullscreenBtn" aria-label="Tela cheia">⛶</button>
+                <button class="theme-toggle" id="themeToggle">☀️</button>
             </div>
             <span class="saudacao-real">👑 Olá, damas e cavalheiros!</span>
         </div>
@@ -460,35 +441,26 @@
         <p class="subtitulo-magico">Escolha seu reino e embarque em uma aventura mágica... ✨</p>
 
         <div class="reinos-container">
-            <!-- Reino das Vogais - Princesas e Príncipes -->
             <a href="vogais.html" class="card-reino reino-vogais" data-audio="reino_das_vogais.mp3" data-href="vogais.html">
                 <span class="emoji-reino">👸🤴</span>
                 <span class="nome-reino">Reino das Vogais</span>
                 <span class="desc-reino">Princesas & Príncipes</span>
             </a>
-
-            <!-- Reino do Alfabeto - Netuno (Aquático) -->
             <a href="https://alfabeto-mu.vercel.app/" class="card-reino reino-alfabeto" data-audio="reino_do_alfabeto.mp3" data-href="https://alfabeto-mu.vercel.app/">
                 <span class="emoji-reino">🧜‍♂️🔱</span>
                 <span class="nome-reino">Reino do Alfabeto</span>
                 <span class="desc-reino">Netuno & o Mar</span>
             </a>
-
-            <!-- Reino das Consoantes - Fadas, Gnomos e Duendes -->
             <a href="consoantes.html" class="card-reino reino-consoantes" data-audio="reino_das_consoantes.mp3" data-href="consoantes.html">
                 <span class="emoji-reino">🧚🧙‍♂️</span>
                 <span class="nome-reino">Reino das Consoantes</span>
                 <span class="desc-reino">Fadas, Gnomos & Duendes</span>
             </a>
-
-            <!-- Reino dos Números - Bruxa da Tabuada -->
             <a href="numeros.html" class="card-reino reino-numeros" data-audio="reino_dos_numeros.mp3" data-href="numeros.html">
                 <span class="emoji-reino">🧙‍♀️🔮</span>
                 <span class="nome-reino">Reino dos Números</span>
                 <span class="desc-reino">A Bruxa da Tabuada</span>
             </a>
-
-            <!-- Card especial da Tabuada da Bruxinha -->
             <a href="https://tabuada-da-bruxinha.vercel.app/" target="_blank" rel="noopener" class="card-reino card-bruxinha-especial" data-audio="tabuada_da_bruxinha.mp3" data-href="https://tabuada-da-bruxinha.vercel.app/">
                 <span class="emoji-reino">🧙‍♀️✨</span>
                 <span class="nome-reino">Tabuada da Bruxinha</span>
@@ -498,10 +470,15 @@
     </div>
 
     <script>
-        // ========== GERENCIADOR DE ÁUDIO ==========
-        let somAtual = null;
-        
+        // ========== GERENCIAMENTO DE ÁUDIO COM INÍCIO SILENCIOSO ==========
+        let audioAtivado = false;   // Controla se o usuário já interagiu
+        let somAtual = null;        // Para controlar o áudio que está tocando no momento
+        let musicaFundo = null;     // Referência para o objeto de áudio da música de fundo
+        let musicaAtiva = false;    // Estado do botão de música (se o usuário já ativou)
+
+        // Função para tocar um som. Só funciona depois da primeira interação do usuário.
         function tocarSom(arquivo) {
+            if (!audioAtivado) return; // Sons bloqueados até a ativação
             if (!arquivo) return;
             try {
                 if (somAtual) {
@@ -509,12 +486,34 @@
                     somAtual.currentTime = 0;
                 }
                 somAtual = new Audio(arquivo);
-                somAtual.play().catch(e => console.log('Áudio bloqueado:', e));
+                somAtual.play().catch(e => console.log('Erro no áudio:', e));
             } catch(e) { console.log('Erro no áudio:', e); }
         }
 
-        // ========== CONFIGURAR CARDS COM ACESSIBILIDADE ==========
-        function configurarCardsAcessibilidade() {
+        // Função para ativar a música de fundo e todos os sons do site.
+        // É chamada no primeiro clique do usuário.
+        function ativarSonsPrimeiraVez() {
+            if (audioAtivado) return;
+            audioAtivado = true;
+            
+            // --- 1. Ativa a música de fundo ---
+            if (musicaFundo && musicaFundo.muted) {
+                // Se a música já foi criada (no onload) e está tocando silenciosamente, agora tiramos o mute.
+                musicaFundo.muted = false;
+                // Ajusta o volume de acordo com o estado do botão "MÚSICA ON/OFF"
+                musicaFundo.volume = musicaAtiva ? 0.2 : 0; // Se o botão estiver "ON", volume 0.2, senão, 0.
+                // Se o botão de música está "ON", garantimos que a música toque.
+                if (musicaAtiva && musicaFundo.paused) {
+                    musicaFundo.play().catch(e => console.log("Erro ao iniciar música:", e));
+                }
+            }
+            
+            // --- 2. Feedback visual mágico (confetes) para o usuário ---
+            lancarFestaMagica();
+        }
+
+        // ========== CONFIGURAR CARDS (mouseenter/touchstart/click) ==========
+        function configurarCards() {
             const cards = document.querySelectorAll('.card-reino');
             
             cards.forEach(card => {
@@ -522,29 +521,33 @@
                 const urlDestino = card.getAttribute('data-href') || card.getAttribute('href');
                 const target = card.getAttribute('target') || '_self';
                 
-                // Remove o href original para evitar navegação direta (será controlada pelo clique)
+                // Remove o href original para controlar a navegação via JavaScript
                 card.removeAttribute('href');
                 card.style.cursor = 'pointer';
                 
-                // Evento de "hover" (mouse) para acessibilidade
+                // 1. Evento de "hover" (mouse) - Toca o áudio descritivo
                 card.addEventListener('mouseenter', () => {
                     if (audioDescritivo) tocarSom(audioDescritivo);
                 });
                 
-                // Evento para dispositivos touch (mobile) - equivalente ao hover
+                // 2. Evento de toque (mobile) - Toca o áudio descritivo
                 card.addEventListener('touchstart', (e) => {
-                    // Evita que o som toque duas vezes se o usuário mantiver o dedo
                     if (audioDescritivo) tocarSom(audioDescritivo);
                 }, { passive: true });
                 
-                // Evento de clique: toca som mágico e depois navega
+                // 3. Evento de clique - Toca som mágico e navega
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
+                    
+                    // Se os sons ainda não foram ativados, ativa primeiro.
+                    if (!audioAtivado) {
+                        ativarSonsPrimeiraVez();
+                    }
                     
                     // Toca o som mágico
                     tocarSom('som_magico.mp3');
                     
-                    // Pequeno delay para o som começar, depois navega
+                    // Aguarda um pequeno delay para o som começar e depois navega
                     setTimeout(() => {
                         if (target === '_blank') {
                             window.open(urlDestino, '_blank', 'noopener');
@@ -555,58 +558,100 @@
                 });
             });
         }
+
+        // ========== FUNÇÕES PARA CONTROLE DA MÚSICA DE FUNDO (BOTÃO) ==========
+        function alternarMusica() {
+            // Se os sons ainda não foram ativados, ativa primeiro.
+            if (!audioAtivado) {
+                ativarSonsPrimeiraVez();
+                // Aguarda um pouco e chama novamente a função
+                setTimeout(alternarMusica, 100);
+                return;
+            }
+            
+            const btn = document.getElementById('btnMusica');
+            if (!musicaFundo) {
+                // Isso não deveria acontecer, pois a música já foi criada no onload, mas por segurança...
+                musicaFundo = new Audio('musica_fundo.ogg');
+                musicaFundo.loop = true;
+                musicaFundo.volume = musicaAtiva ? 0.2 : 0;
+            }
+            
+            if (musicaAtiva) {
+                musicaFundo.pause();
+                musicaAtiva = false;
+                btn.innerHTML = `🎵 MÚSICA OFF`;
+                btn.style.background = "rgba(212, 168, 67, 0.2)";
+                btn.style.color = "var(--ouro-real)";
+            } else {
+                musicaFundo.play().catch(e => console.log("Música bloqueada:", e));
+                musicaAtiva = true;
+                btn.innerHTML = `🎵 MÚSICA ON`;
+                btn.style.background = "rgba(212, 168, 67, 0.5)";
+                btn.style.color = "#fff";
+                // Garante que o volume seja o correto se a música já estiver tocando silenciosamente
+                if (musicaFundo) musicaFundo.volume = 0.2;
+            }
+        }
+
+        // ========== TEMA (DIA/NOITE) ==========
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('themeToggle');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.innerHTML = '☀️';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.innerHTML = '🌙';
+                // Efeito de confete ao mudar o tema (apenas se os sons já estiverem ativados)
+                if (audioAtivado) {
+                    confetti({ particleCount: 30, spread: 50, origin: { y: 0.2 }, colors: ['#d4a843', '#fff'] });
+                }
+            }
+        }
+
+        // ========== FULLSCREEN ==========
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().then(() => {
+                    // Efeito de confete ao entrar em tela cheia (apenas se os sons já estiverem ativados)
+                    if (audioAtivado) confetti({ particleCount: 40, spread: 60, origin: { y: 0.2 }, colors: ['#d4a843', '#fff'] });
+                }).catch(err => console.warn(err));
+            } else {
+                document.exitFullscreen();
+            }
+        }
         
-        // ========== CONFETES E PARTÍCULAS ==========
+        function updateFullscreenState() {
+            const btn = document.getElementById('fullscreenBtn');
+            if (document.fullscreenElement) {
+                btn.innerHTML = '✖';
+                btn.style.background = 'linear-gradient(135deg, #e91e8c, #9c1460)';
+            } else {
+                btn.innerHTML = '⛶';
+                btn.style.background = 'linear-gradient(135deg, var(--azul-netuno), #0d3a5c)';
+            }
+        }
+
+        // ========== PARTÍCULAS E FESTA MÁGICA ==========
         function lancarFestaMagica() {
             confetti({
-                particleCount: 80,
-                spread: 100,
+                particleCount: 100,
+                spread: 70,
                 origin: { y: 0.5 },
-                colors: ['#d4a843', '#f0e68c', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'],
+                colors: ['#d4a843', '#fff', '#e91e8c', '#1e5f8e', '#2d8e5f'],
                 shapes: ['circle', 'square'],
                 scalar: 1.2
             });
-            setTimeout(() => {
-                confetti({
-                    particleCount: 50,
-                    spread: 80,
-                    origin: { y: 0.3, x: 0.2 },
-                    colors: ['#d4a843', '#fff', '#e91e8c'],
-                    gravity: 0.8
-                });
-            }, 300);
-            setTimeout(() => {
-                confetti({
-                    particleCount: 50,
-                    spread: 80,
-                    origin: { y: 0.3, x: 0.8 },
-                    colors: ['#d4a843', '#fff', '#1e5f8e'],
-                    gravity: 0.8
-                });
-            }, 600);
         }
-
+        
         function criarParticulas() {
             const container = document.getElementById('particulas-container');
             const simbolos = ['✨', '⭐', '🔮', '🌟', '💫', '⚡'];
             const cores = ['#d4a843', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'];
-
-            for (let i = 0; i < 15; i++) {
-                setTimeout(() => {
-                    const p = document.createElement('div');
-                    p.className = 'particula';
-                    p.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
-                    p.style.left = Math.random() * 100 + '%';
-                    p.style.fontSize = (Math.random() * 15 + 10) + 'px';
-                    p.style.color = cores[Math.floor(Math.random() * cores.length)];
-                    p.style.animationDuration = (Math.random() * 8 + 6) + 's';
-                    p.style.animationDelay = (Math.random() * 5) + 's';
-                    container.appendChild(p);
-                    setTimeout(() => p.remove(), 14000);
-                }, i * 400);
-            }
-
-            setInterval(() => {
+            
+            function adicionarParticula() {
                 const p = document.createElement('div');
                 p.className = 'particula';
                 p.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
@@ -616,112 +661,55 @@
                 p.style.animationDuration = (Math.random() * 8 + 6) + 's';
                 container.appendChild(p);
                 setTimeout(() => p.remove(), 14000);
-            }, 2000);
-        }
-
-        // ========== TEMA E MÚSICA ==========
-        function toggleTheme() {
-            const body = document.body;
-            const btn = document.getElementById('themeToggle');
-
-            if (body.getAttribute('data-theme') === 'dark') {
-                body.removeAttribute('data-theme');
-                btn.innerHTML = '☀️';
-            } else {
-                body.setAttribute('data-theme', 'dark');
-                btn.innerHTML = '🌙';
-                confetti({ 
-                    particleCount: 30, 
-                    spread: 50, 
-                    origin: { y: 0.2 },
-                    colors: ['#d4a843', '#fff']
-                });
             }
-        }
-
-        const musicaFundo = new Audio('musica_fundo.ogg');
-        musicaFundo.loop = true;
-        musicaFundo.volume = 0.2;
-
-        function alternarMusica() {
-            const btn = document.getElementById('btnMusica');
-            if (musicaFundo.paused) {
-                musicaFundo.play();
-                btn.innerHTML = `🎵 MÚSICA ON`;
-                btn.style.background = "rgba(212, 168, 67, 0.5)";
-                btn.style.color = "#fff";
-            } else {
-                musicaFundo.pause();
-                btn.innerHTML = `🎵 MÚSICA OFF`;
-                btn.style.background = "rgba(212, 168, 67, 0.2)";
-                btn.style.color = "var(--ouro-real)";
-            }
-        }
-
-        // ========== FULLSCREEN ==========
-        let isFullscreenActive = false;
-        const fullscreenBtn = document.getElementById('fullscreenBtn');
-
-        function toggleFullScreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().then(() => {
-                    confetti({ particleCount: 40, spread: 60, origin: { y: 0.2 }, colors: ['#d4a843', '#fff'] });
-                }).catch(err => {
-                    console.warn(`Erro ao entrar em tela cheia: ${err.message}`);
-                });
-            } else {
-                document.exitFullscreen();
-            }
-        }
-
-        function updateFullscreenState() {
-            isFullscreenActive = !!document.fullscreenElement;
-            if (fullscreenBtn) {
-                fullscreenBtn.innerHTML = isFullscreenActive ? '✖' : '⛶';
-                fullscreenBtn.style.background = isFullscreenActive ? 
-                    'linear-gradient(135deg, #e91e8c, #9c1460)' : 
-                    'linear-gradient(135deg, var(--azul-netuno), #0d3a5c)';
-            }
-        }
-
-        // Adiciona flag fullscreen para subpáginas
-        function adicionarFlagFullscreenNaUrl(url) {
-            if (!url) return url;
-            const flag = 'fullscreen=force';
-            const hasQuery = url.includes('?');
-            const hasFlag = url.includes('fullscreen=force');
-            if (hasFlag) return url;
             
-            if (hasQuery) {
-                return url + '&' + flag;
-            } else {
-                return url + '?' + flag;
+            for (let i = 0; i < 15; i++) {
+                setTimeout(adicionarParticula, i * 400);
             }
+            setInterval(adicionarParticula, 2000);
         }
-
-        function configurarLinksFullscreen() {
-            // Essa função agora é usada apenas para garantir que, se a página estiver em fullscreen,
-            // os links internos já estão sendo tratados pelo clique customizado.
-            // Como substituímos todos os cliques, a flag pode ser adicionada dinamicamente.
-        }
-
+        
         // ========== INICIALIZAÇÃO ==========
         window.onload = function() {
-            lancarFestaMagica();
-            criarParticulas();
-            configurarCardsAcessibilidade();  // Configura os cards com áudio descritivo e clique mágico
+            // Cria e inicia a música de fundo SILENCIOSAMENTE (muted = true)
+            musicaFundo = new Audio('musica_fundo.ogg');
+            musicaFundo.loop = true;
+            musicaFundo.muted = true;    // ESSE É O TRUQUE! O navegador permite a reprodução automática.
+            musicaFundo.volume = 0;      // Volume zero, para garantir que não faça barulho.
+            musicaFundo.play().catch(e => console.log("Música de fundo iniciada silenciosamente:", e));
             
-            // Fullscreen listeners
+            // Inicializa as partículas e os cards
+            criarParticulas();
+            configurarCards();
+            
+            // Configura os listeners de evento para a primeira interação do usuário
+            // Agora, o primeiro clique em QUALQUER LUGAR da página ativa os sons.
+            const ativarPrimeiraInteracao = () => {
+                if (!audioAtivado) {
+                    ativarSonsPrimeiraVez();
+                }
+                // Remove os listeners após a primeira ativação
+                document.removeEventListener('click', ativarPrimeiraInteracao);
+                document.removeEventListener('touchstart', ativarPrimeiraInteracao);
+                document.removeEventListener('keydown', ativarPrimeiraInteracao);
+            };
+            document.addEventListener('click', ativarPrimeiraInteracao);
+            document.addEventListener('touchstart', ativarPrimeiraInteracao);
+            document.addEventListener('keydown', ativarPrimeiraInteracao);
+            
+            // Configura os botões da interface
+            document.getElementById('btnMusica').onclick = alternarMusica;
+            document.getElementById('fullscreenBtn').onclick = toggleFullScreen;
+            document.getElementById('themeToggle').onclick = toggleTheme;
+            
+            // Listener para atualizar o ícone do fullscreen
             document.addEventListener('fullscreenchange', updateFullscreenState);
-            document.addEventListener('webkitfullscreenchange', updateFullscreenState);
-            document.addEventListener('mozfullscreenchange', updateFullscreenState);
-            document.addEventListener('MSFullscreenChange', updateFullscreenState);
             updateFullscreenState();
             
-            // Força o botão fullscreen a funcionar também
-            if (fullscreenBtn) {
-                fullscreenBtn.onclick = toggleFullScreen;
-            }
+            // Pequena festa de boas-vindas (sem som, apenas visual)
+            setTimeout(() => {
+                confetti({ particleCount: 30, spread: 50, origin: { y: 0.7 }, colors: ['#d4a843', '#fff'] });
+            }, 500);
         };
     </script>
 </body>
