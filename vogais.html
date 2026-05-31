@@ -11,17 +11,9 @@
         :root {
             --rosa-princesa: #e91e8c;
             --rosa-escuro: #9c1460;
-            --rosa-claro: #ff80c0;
             --dourado-real: #d4a843;
             --dourado-escuro: #b8860b;
             --dourado-branco: #fff8f0;
-            --noite-real: #1a0a1e;
-            --verde-jardim: #2d8e5f;
-            --coral: #f4845f;
-            --turquoise: #4dd0e1;
-            --lavender: #b39ddb;
-            --lime: #aed581;
-            --peach: #ffab91;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -38,7 +30,6 @@
             position: relative;
         }
 
-        /* Estrelas cintilantes */
         body::before {
             content: '';
             position: fixed;
@@ -65,7 +56,6 @@
             100% { opacity: 1; }
         }
 
-        /* Corações flutuantes */
         .coracao-flutuante {
             position: fixed;
             pointer-events: none;
@@ -82,7 +72,6 @@
             100% { transform: translateY(-20vh) scale(1) rotate(20deg); opacity: 0; }
         }
 
-        /* Header */
         .header {
             position: relative;
             z-index: 50;
@@ -131,6 +120,31 @@
             box-shadow: 0 0 20px rgba(212, 168, 67, 0.6);
         }
 
+        .btn-musica {
+            background: linear-gradient(135deg, #2d8e5f, #1a5c3a);
+            border: 2px solid var(--dourado-real);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(212, 168, 67, 0.3);
+            color: white;
+        }
+        
+        .btn-musica:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(212, 168, 67, 0.5);
+        }
+        
+        .btn-musica.ativo {
+            background: linear-gradient(135deg, var(--dourado-real), #b8860b);
+        }
+
         .btn-voltar-dourado {
             display: flex;
             align-items: center;
@@ -161,7 +175,6 @@
             50% { box-shadow: 0 0 30px rgba(212, 168, 67, 0.8); border-color: #ffe6a3; }
         }
 
-        /* Stage - centralizado sem rolagem */
         .stage {
             flex: 1;
             display: flex;
@@ -181,7 +194,6 @@
             text-align: center;
         }
 
-        /* Banner */
         .banner-reinos {
             border-radius: 20px;
             overflow: hidden;
@@ -210,7 +222,6 @@
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
         }
 
-        /* Títulos */
         .titulo-reinos {
             font-family: 'Cinzel Decorative', cursive;
             font-size: clamp(22px, 6vw, 30px);
@@ -228,7 +239,6 @@
             margin-bottom: 25px;
         }
 
-        /* Container dos cards */
         .menu-container {
             display: flex;
             flex-direction: column;
@@ -240,7 +250,6 @@
             margin: 0 auto;
         }
 
-        /* Cards */
         .card-reino {
             padding: 22px 18px;
             border-radius: 20px;
@@ -279,7 +288,6 @@
         .card-reino:hover { transform: translateY(-6px) scale(1.02); }
         .card-reino:active { transform: scale(0.98); }
 
-        /* Estilos específicos dos cards */
         .card-aprender {
             background: linear-gradient(145deg, #e91e8c, #9c1460);
             box-shadow: 0 8px 0 #7a0f4a, 0 0 20px rgba(233, 30, 140, 0.3);
@@ -317,7 +325,6 @@
             font-weight: 600;
         }
 
-        /* Decoração */
         .decoracao-castelo {
             margin-top: 20px;
             font-size: 18px;
@@ -326,7 +333,6 @@
             text-align: center;
         }
 
-        /* Responsivo */
         @media (max-width: 480px) {
             .card-reino { padding: 18px 14px; min-height: 110px; }
             .emoji-reino { font-size: 34px; }
@@ -355,6 +361,7 @@
         <div class="header-inner">
             <a href="index.html" class="btn-voltar-dourado">← ✨ Voltar aos Reinos ✨</a>
             <div class="header-botoes">
+                <button class="btn-musica" id="btnMusica" title="Música de fundo">🎵</button>
                 <button class="btn-fullscreen" id="btnFullscreen" title="Tela Cheia">⛶</button>
             </div>
         </div>
@@ -370,15 +377,15 @@
             <p class="subtitulo-magico">O reino das Princesas e Príncipes 👸🤴</p>
             
             <div class="menu-container">
-                <!-- Botão Aprender as Vogais - link corrigido para vogais_maiusculas.html -->
-                <a href="vogais_maiusculas.html" class="card-reino card-aprender">
+                <!-- Botão Aprender as Vogais -->
+                <a href="vogais_maiusculas.html" class="card-reino card-aprender" data-audio="aprender_as_vogais.mp3">
                     <span class="emoji-reino">📚👑</span>
                     <span class="nome-reino">Aprender as Vogais</span>
                     <span class="desc-reino">Maiúsculas, minúsculas, forma e cursiva</span>
                 </a>
 
                 <!-- Botão Formando Palavrinhas -->
-                <a href="palavras_com_vogais.html" class="card-reino card-palavrinhas">
+                <a href="palavras_com_vogais.html" class="card-reino card-palavrinhas" data-audio="formando_palavrinhas.mp3">
                     <span class="emoji-reino">💃🕺</span>
                     <span class="nome-reino">Formando Palavrinhas</span>
                     <span class="desc-reino">AO - EI - UI - Descubra as palavras mágicas!</span>
@@ -390,6 +397,31 @@
     </div>
 
     <script>
+        // ========== MÚSICA DE FUNDO ==========
+        let musicaFundo = null;
+        let musicaAtiva = false;
+        
+        function toggleMusica() {
+            const btn = document.getElementById('btnMusica');
+            if (!musicaFundo) {
+                musicaFundo = new Audio('musica_fundo.ogg');
+                musicaFundo.loop = true;
+                musicaFundo.volume = 0.3;
+            }
+            if (musicaAtiva) {
+                musicaFundo.pause();
+                musicaAtiva = false;
+                btn.classList.remove('ativo');
+                btn.innerHTML = '🎵';
+            } else {
+                musicaFundo.play().catch(e => console.log('Música bloqueada pelo navegador.'));
+                musicaAtiva = true;
+                btn.classList.add('ativo');
+                btn.innerHTML = '🎵';
+            }
+        }
+        
+        // ========== ÁUDIO DOS CARDS (apenas mouseenter) ==========
         let somAtual = null;
         
         function tocarSom(arquivo) {
@@ -404,17 +436,19 @@
             } catch(e) { console.log('Erro no áudio:', e); }
         }
         
-        // Efeito sonoro ao passar o mouse nos cards
         function configurarEfeitosCards() {
             const cards = document.querySelectorAll('.card-reino');
             cards.forEach(card => {
-                card.addEventListener('mouseenter', () => {
-                    tocarSom('inicio.ogg');
+                // Ao passar o mouse, toca o áudio descritivo do botão
+                card.addEventListener('mouseenter', (e) => {
+                    const audio = card.getAttribute('data-audio');
+                    if (audio) tocarSom(audio);
                 });
+                // Ao clicar, apenas redireciona (sem som adicional)
             });
         }
         
-        // Fullscreen
+        // ========== FULLSCREEN ==========
         const FS_KEY = 'reinoFullscreen';
         
         function isFullscreen() {
@@ -472,7 +506,7 @@
             atualizarIconeFullscreen();
         }
         
-        // Corações flutuantes
+        // ========== CORAÇÕES FLUTUANTES ==========
         function criarCoracoes() {
             const container = document.getElementById('coracoes-container');
             const simbolos = ['💖', '💕', '💗', '💝', '✨', '🌟', '👑'];
@@ -496,12 +530,18 @@
             setInterval(adicionarCoracao, 3000);
         }
         
+        // ========== INICIALIZAÇÃO ==========
         window.onload = function() {
             criarCoracoes();
             setupFullscreenListeners();
             restaurarFullscreen();
             configurarEfeitosCards();
-            tocarSom('inicio.ogg');
+            
+            // Conecta o botão fullscreen (garantia)
+            document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
+            document.getElementById('btnMusica').addEventListener('click', toggleMusica);
+            
+            // Nenhum áudio automático no carregamento
         };
     </script>
 </body>
