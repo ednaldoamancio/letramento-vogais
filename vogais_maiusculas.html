@@ -133,31 +133,6 @@
             box-shadow: 0 0 20px rgba(212, 168, 67, 0.6);
         }
 
-        .btn-musica {
-            background: linear-gradient(135deg, #2d8e5f, #1a5c3a);
-            border: 2px solid var(--dourado-real);
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 18px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-            box-shadow: 0 0 10px rgba(212, 168, 67, 0.3);
-            color: white;
-        }
-        
-        .btn-musica:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(212, 168, 67, 0.5);
-        }
-        
-        .btn-musica.ativo {
-            background: linear-gradient(135deg, var(--dourado-real), #b8860b);
-        }
-
         .btn-voltar-dourado {
             display: flex;
             align-items: center;
@@ -519,7 +494,6 @@
         <div class="header-inner">
             <a href="vogais.html" class="btn-voltar-dourado">← ✨ Voltar ao Reino ✨</a>
             <div class="header-botoes">
-                <button class="btn-musica" id="btnMusica" title="Música de fundo">🎵</button>
                 <button class="btn-fullscreen" id="btnFullscreen" title="Tela Cheia">⛶</button>
             </div>
         </div>
@@ -530,7 +504,6 @@
             <h1 class="titulo-reino">🏰 Aprenda as Vogais</h1>
             <p class="subtitulo-real">Escolha o estilo mágico das letras ✨</p>
             
-            <!-- Botões de modalidade -->
             <div class="modalidades-botoes">
                 <button class="btn-modalidade" data-modal="maiuscula-forma" data-audio="maiuscula_forma.mp3">🏰 Maiúscula Forma</button>
                 <button class="btn-modalidade" data-modal="minuscula-forma" data-audio="minuscula_forma.mp3">🌹 Minúscula Forma</button>
@@ -571,30 +544,6 @@
     </div>
 
     <script>
-        // ========== MÚSICA DE FUNDO ==========
-        let musicaFundo = null;
-        let musicaAtiva = false;
-        
-        function toggleMusica() {
-            const btn = document.getElementById('btnMusica');
-            if (!musicaFundo) {
-                musicaFundo = new Audio('musica_fundo.ogg');
-                musicaFundo.loop = true;
-                musicaFundo.volume = 0.3;
-            }
-            if (musicaAtiva) {
-                musicaFundo.pause();
-                musicaAtiva = false;
-                btn.classList.remove('ativo');
-                btn.innerHTML = '🎵';
-            } else {
-                musicaFundo.play().catch(e => console.log('Música bloqueada pelo navegador.'));
-                musicaAtiva = true;
-                btn.classList.add('ativo');
-                btn.innerHTML = '🎵';
-            }
-        }
-        
         // ========== ESTADO DA MODALIDADE ==========
         let modalidadeAtual = 'maiuscula-forma';
         
@@ -987,7 +936,7 @@
                 });
             });
             
-            // Botões das modalidades: click e mouseenter (agora com áudio específico no click)
+            // Botões das modalidades: click e mouseenter
             const botoesModalidade = document.querySelectorAll('.btn-modalidade');
             botoesModalidade.forEach(btn => {
                 btn.addEventListener('click', () => {
@@ -1005,7 +954,6 @@
                     display.style.display = 'block';
                     display.innerText = '✨';
                     
-                    // 🔥 Toca o áudio específico ao clicar
                     const audioFile = btn.getAttribute('data-audio');
                     if (audioFile) tocarSom(audioFile);
                 });
@@ -1023,7 +971,6 @@
             document.getElementById('btnProxima').addEventListener('click', irParaJogo);
             document.getElementById('btnReiniciar').addEventListener('click', reiniciarJogo);
             document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
-            document.getElementById('btnMusica').addEventListener('click', toggleMusica);
         }
         
         window.onload = function() {
