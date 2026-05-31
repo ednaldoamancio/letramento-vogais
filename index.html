@@ -470,7 +470,7 @@
     </div>
 
     <script>
-        // ========== GERENCIAMENTO DE ÁUDIO ==========
+        // ========== GERENCIAMENTO DE ÁUDIO E INTERAÇÃO ==========
         let somAtual = null;
         let audioAtivado = false;      // Controla se o usuário já interagiu
         let musicaFundo = null;
@@ -490,38 +490,43 @@
             } catch(e) { console.log('Erro no áudio:', e); }
         }
 
-        // Ativa permanentemente os sons e dispara a música de fundo automaticamente
-        function ativarSons() {
-            if (audioAtivado) return;
-            audioAtivado = true;
+        // NOVO RECURSO: Ativa os sons, inicia a música e força a tela cheia no primeiro clique
+        function ativarSonsETelaCheia() {
+            // 1. Ativa o áudio e solta a música de fundo
+            if (!audioAtivado) {
+                audioAtivado = true;
+                iniciarMusicaAutomatica();
+            }
             
-            // Instancia e inicia a música de fundo de forma automatizada após o toque inicial
-            iniciarMusicaAutomatica();
+            // 2. Força a expansão para Tela Cheia (Fullscreen)
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen()
+                    .catch(err => console.log("A tela cheia automática foi barrada pelo sistema ou recusada:", err));
+            }
         }
 
-        // Função que configura e roda a música de fundo assim que liberado o autoplay
+        // Função que configura e roda a música de fundo
         function iniciarMusicaAutomatica() {
             if (!musicaFundo) {
                 musicaFundo = new Audio('musica_fundo.ogg');
                 musicaFundo.loop = true;
-                musicaFundo.volume = 0.25; // Volume confortável para não atrapalhar a fala dos cards
+                musicaFundo.volume = 0.25; // Volume suave para não atrapalhar a fala dos cards
             }
             
-            // Só toca se ela já não estiver tocando
             if (!musicaAtiva) {
                 musicaFundo.play()
                     .then(() => {
                         musicaAtiva = true;
                         atualizarBotaoMusica();
                     })
-                    .catch(e => console.log('Não foi possível tocar a música de fundo automaticamente:', e));
+                    .catch(e => console.log('Música de fundo barrada pelo navegador:', e));
             }
         }
 
         // Controla o clique manual do botão de ligar/desligar música
         function alternarMusica() {
             if (!audioAtivado) {
-                ativarSons();
+                ativarSonsETelaCheia();
                 return;
             }
             
@@ -541,7 +546,7 @@
             atualizarBotaoMusica();
         }
 
-        // Sincroniza o visual do botão no cabeçalho com o estado real da música
+        // Sincroniza o visual do botão no cabeçalho
         function atualizarBotaoMusica() {
             const btn = document.getElementById('btnMusica');
             if (!btn) return;
@@ -583,7 +588,8 @@
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
                     
-                    if (!audioAtivado) ativarSons();
+                    // Garante a ativação caso o clique ocorra direto sobre um card
+                    ativarSonsETelaCheia();
                     
                     tocarSom('som_magico.mp3');
                     
@@ -615,7 +621,7 @@
             }
         }
 
-        // ========== FULLSCREEN ==========
+        // ========== FULLSCREEN MANUAL ==========
         function toggleFullScreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().then(() => {
@@ -670,7 +676,7 @@
             setInterval(adicionarParticula, 2000);
         }
         
-        // ========== INICIALIZAÇÃO INTELLIGENT AUTOPLAY ==========
+        // ========== INICIALIZAÇÃO ==========
         window.onload = function() {
             criarParticulas();
             lancarFestaMagica();
@@ -683,18 +689,17 @@
             document.addEventListener('fullscreenchange', updateFullscreenState);
             updateFullscreenState();
             
-            // O GATILHO MÁGICO: Escuta o primeiríssimo clique ou toque em qualquer lugar do body
-            const gerenciarPrimeiroClique = () => {
-                ativarSons();
-                // Limpa os listeners para não rodar essa função novamente à toa
-                document.body.removeEventListener('click', gerenciarPrimeiroClique);
-                document.body.removeEventListener('touchstart', gerenciarPrimeiroClique);
+            // O GATILHO TOTAL: No primeiríssimo clique ou toque na tela, liga os motores do som e abre a Tela Cheia!
+            const gerenciarPrimeiraInteracao = () => {
+                ativarSonsETelaCheia();
+                // Limpa os escutadores para rodar apenas uma vez na inicialização
+                document.body.removeEventListener('click', gerenciarPrimeiraInteracao);
+                document.body.removeEventListener('touchstart', gerenciarPrimeiraInteracao);
             };
             
-            document.body.addEventListener('click', gerenciarPrimeiroClique);
-            document.body.addEventListener('touchstart', gerenciarPrimeiroClique, { passive: true });
+            document.body.addEventListener('click', gerenciarPrimeiraInteracao);
+            document.body.addEventListener('touchstart', gerenciarPrimeiraInteracao, { passive: true });
         };
     </script>
-</body>11
-        
+</body>
 </html>
