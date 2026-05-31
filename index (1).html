@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0f2a">
+    <title>EdHumanas - Jogos Educativos</title>
+    
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', 'Comic Neue', 'Comic Sans MS', Tahoma, sans-serif;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #0a0f2a 0%, #0a1a3a 50%, #0a0f2a 100%);
+            color: white;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        #bg-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: -2;
+            opacity: 0.4;
+            filter: brightness(0.7);
+        }
+
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,20,50,0.6), rgba(0,0,20,0.85));
+            z-index: -1;
+        }
+
+        .container {
+            max-width: 1300px;
+            margin: 0 auto;
+            padding: 20px;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .header {
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 0.8s ease;
+        }
+
+        .header h1 {
+            font-size: 2.2rem;
+            background: linear-gradient(135deg, #ffd700, #ff8c00, #ff6f00);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            text-shadow: 0 0 20px rgba(255,140,0,0.3);
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            font-size: 0.95rem;
+            color: #aaddff;
+        }
+
+        @media (min-width: 768px) {
+            .header h1 { font-size: 3rem; }
+            .header p { font-size: 1.1rem; }
+        }
+
+        .subtitle {
+            text-align: center;
+            margin: 20px 0 10px;
+            font-size: 1.2rem;
+            color: #ffd966;
+            border-bottom: 2px solid rgba(255,215,0,0.3);
+            display: inline-block;
+            padding-bottom: 5px;
+        }
+
+        .games-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 20px;
+            width: 100%;
+            max-width: 1100px;
+            margin: 20px auto;
+        }
+
+        .game-card {
+            background: rgba(10, 25, 45, 0.85);
+            backdrop-filter: blur(10px);
+            border-radius: 25px;
+            padding: 20px 15px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border: 2px solid rgba(255, 215, 0, 0.3);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .game-card::before {
+            content: "";
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255,215,0,0.08), transparent);
+            transform: rotate(45deg);
+            transition: all 0.5s ease;
+            opacity: 0;
+        }
+
+        .game-card:hover {
+            transform: translateY(-5px);
+            border-color: rgba(255, 215, 0, 0.8);
+            box-shadow: 0 15px 35px rgba(0,0,0,0.4);
+        }
+
+        .game-card:hover::before { opacity: 1; }
+        .game-card:active { transform: translateY(-2px) scale(0.98); }
+
+        .game-icon { font-size: 3.5rem; margin-bottom: 12px; display: inline-block; }
+        .game-card h3 { font-size: 1.2rem; margin-bottom: 8px; color: #ffd966; }
+        .game-card p { font-size: 0.8rem; color: #bbddff; line-height: 1.4; }
+
+        .game-badge {
+            display: inline-block;
+            margin-top: 12px;
+            padding: 4px 10px;
+            background: rgba(255,140,0,0.3);
+            border-radius: 20px;
+            font-size: 0.65rem;
+            color: #ffb347;
+            border: 1px solid rgba(255,140,0,0.5);
+        }
+
+        @media (min-width: 768px) {
+            .game-icon { font-size: 4rem; }
+            .game-card h3 { font-size: 1.4rem; }
+            .game-card p { font-size: 0.9rem; }
+            .game-badge { font-size: 0.7rem; }
+        }
+
+        .game-card.pesca { background: linear-gradient(135deg, rgba(30, 60, 90, 0.9), rgba(20, 40, 70, 0.9)); border-color: #ffd700; }
+        .game-card.pesca .game-icon { animation: float 3s ease-in-out infinite; }
+
+        .game-card.chuva { background: linear-gradient(135deg, rgba(60, 40, 80, 0.9), rgba(40, 30, 60, 0.9)); border-color: #7c4dff; }
+        .game-card.memoria { background: linear-gradient(135deg, rgba(40, 70, 60, 0.9), rgba(30, 50, 40, 0.9)); border-color: #4caf50; }
+        .game-card.forca { background: linear-gradient(135deg, rgba(80, 40, 40, 0.9), rgba(60, 30, 30, 0.9)); border-color: #f44336; }
+
+        .section {
+            width: 100%;
+            margin: 20px 0;
+        }
+
+        .section-title {
+            font-size: 1.3rem;
+            color: #ffd966;
+            text-align: center;
+            margin: 30px 0 15px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(255,215,0,0.4);
+            display: inline-block;
+            width: auto;
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+
+        .audio-btn {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: rgba(0,0,0,0.6);
+            border: 2px solid #ffd700;
+            border-radius: 50%;
+            width: 50px;
+            height: 50px;
+            font-size: 24px;
+            cursor: pointer;
+            backdrop-filter: blur(4px);
+            transition: all 0.3s;
+            z-index: 100;
+            color: white;
+        }
+
+        .audio-btn:hover { transform: scale(1.05); background: rgba(0,0,0,0.8); }
+
+        .footer {
+            margin-top: 40px;
+            text-align: center;
+            font-size: 0.7rem;
+            color: #6688aa;
+        }
+
+        @media (min-width: 768px) {
+            .footer { margin-top: 50px; font-size: 0.8rem; }
+        }
+
+        .bubble {
+            position: fixed;
+            bottom: -50px;
+            background: radial-gradient(circle, rgba(100,200,255,0.25), rgba(50,100,150,0.08));
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 0;
+            animation: rise linear infinite;
+        }
+
+        @keyframes rise {
+            to { transform: translateY(-120vh); opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+
+<video autoplay loop muted playsinline id="bg-video">
+    <source src="video_mar.mp4" type="video/mp4">
+</video>
+
+<audio id="bg-audio" src="som_fundo_do_mar.mp3" loop></audio>
+
+<div class="container">
+    <div class="header">
+        <h1>🐠 EdHumanas 🐠</h1>
+        <p>Plataforma de Jogos Educativos • Aprenda brincando!</p>
+    </div>
+
+    <!-- SEÇÃO PESCA EDUCACIONAL -->
+    <div class="section">
+        <div style="text-align: center;">
+            <span class="section-title">🎣 PESCA EDUCACIONAL 🎣</span>
+        </div>
+        <div class="games-grid">
+            <div class="game-card pesca" onclick="navegar('index_pesca.html')">
+                <div class="game-icon">🎮🐟</div>
+                <h3>Central da Pesca</h3>
+                <p>Todos os jogos de pesca em um só lugar! Alfabeto, sílabas e sílabas complexas.</p>
+                <div class="game-badge">📚 3 jogos • Menu interativo</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- SEÇÃO JOGOS INDIVIDUAIS -->
+    <div class="section">
+        <div style="text-align: center;">
+            <span class="section-title">🎮 JOGOS INDIVIDUAIS 🎮</span>
+        </div>
+        <div class="games-grid">
+            <div class="game-card" onclick="navegar('alfabeto.html')">
+                <div class="game-icon">🔤📖</div>
+                <h3>Alfabeto</h3>
+                <p>Aprenda todas as letras do alfabeto com imagens e sons!</p>
+                <div class="game-badge">🔤 26 letras • Pronúncia</div>
+            </div>
+
+            <div class="game-card chuva" onclick="navegar('chuva_de_letras.html')">
+                <div class="game-icon">☔🔤</div>
+                <h3>Chuva de Letras</h3>
+                <p>Letras caindo do céu! Clique nas letras corretas para formar palavras.</p>
+                <div class="game-badge">🌧️ Letras • Raciocínio</div>
+            </div>
+
+            <div class="game-card chuva" onclick="navegar('chuvinha_de_letras.html')">
+                <div class="game-icon">💧🔤</div>
+                <h3>Chuvinha de Letras</h3>
+                <p>Versão mais leve da chuva de letras. Perfeito para iniciantes!</p>
+                <div class="game-badge">🌦️ Letras • Fácil</div>
+            </div>
+
+            <div class="game-card memoria" onclick="navegar('jogo_da_memoria.html')">
+                <div class="game-icon">🧠🃏</div>
+                <h3>Jogo da Memória</h3>
+                <p>Encontre os pares e exercite sua memória com temas educativos!</p>
+                <div class="game-badge">🎴 Memória • Concentração</div>
+            </div>
+
+            <div class="game-card forca" onclick="navegar('forca.html')">
+                <div class="game-icon">🪢📝</div>
+                <h3>Jogo da Forca</h3>
+                <p>Descubra a palavra secreta antes de completar a forca!</p>
+                <div class="game-badge">🔤 Palavras • Vocabulário</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="footer">
+        <p>🌊 Clique em qualquer jogo para começar • Divirta-se aprendendo! 🌊</p>
+    </div>
+</div>
+
+<button class="audio-btn" id="audioToggle" onclick="toggleAudio()">🔊</button>
+
+<script>
+    let audioEnabled = false;
+    const bgAudio = document.getElementById("bg-audio");
+    const audioBtn = document.getElementById("audioToggle");
+
+    function toggleAudio() {
+        audioEnabled = !audioEnabled;
+        audioBtn.innerText = audioEnabled ? "🔊" : "🔇";
+        if (audioEnabled) {
+            bgAudio.play().catch(e => console.log("Autoplay bloqueado"));
+        } else {
+            bgAudio.pause();
+        }
+    }
+
+    function navegar(url) {
+        window.location.href = url;
+    }
+
+    function criarBolhas() {
+        for(let i = 0; i < 20; i++) {
+            setTimeout(() => {
+                const bolha = document.createElement("div");
+                bolha.className = "bubble";
+                const tamanho = Math.random() * 30 + 6;
+                bolha.style.width = tamanho + "px";
+                bolha.style.height = tamanho + "px";
+                bolha.style.left = Math.random() * 100 + "%";
+                bolha.style.animationDuration = Math.random() * 5 + 3 + "s";
+                bolha.style.animationDelay = Math.random() * 5 + "s";
+                document.body.appendChild(bolha);
+                setTimeout(() => bolha.remove(), 10000);
+            }, i * 150);
+        }
+    }
+
+    let vozDesbloqueada = false;
+    const desbloquearAudio = () => {
+        if (!vozDesbloqueada) {
+            vozDesbloqueada = true;
+            if (audioEnabled) bgAudio.play().catch(e=>{});
+            document.removeEventListener('touchstart', desbloquearAudio);
+            document.removeEventListener('click', desbloquearAudio);
+        }
+    };
+    document.addEventListener('touchstart', desbloquearAudio, { once: true });
+    document.addEventListener('click', desbloquearAudio, { once: true });
+
+    window.onload = () => {
+        criarBolhas();
+        setInterval(criarBolhas, 8000);
+    };
+</script>
+</body>
+</html>

@@ -7,7 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
     <style>
         :root {
             --papel-pergaminho: #f5e6c8;
@@ -19,7 +21,9 @@
             --marrom-antigo: #5d3a1a;
             --branco-perola: #fff8f0;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
         body {
             font-family: 'Nunito', sans-serif;
             background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #1a0a2e 100%);
@@ -30,6 +34,8 @@
             flex-direction: column;
             position: relative;
         }
+
+        /* Estrelas cintilantes no céu noturno */
         body::before {
             content: '';
             position: fixed;
@@ -50,94 +56,397 @@
             background-size: 100% 100%;
             animation: cintilar 3s ease-in-out infinite alternate;
         }
-        @keyframes cintilar { 0% { opacity: 0.6; } 100% { opacity: 1; } }
-        
+
+        @keyframes cintilar {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        /* Lua mágica */
         .lua-magica {
             position: fixed;
-            top: 20px; right: 30px;
-            width: 70px; height: 70px;
+            top: 20px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
             background: radial-gradient(circle at 35% 35%, #fff8e7, #f0e68c);
             border-radius: 50%;
-            box-shadow: 0 0 30px rgba(240, 230, 140, 0.5), 0 0 60px rgba(240, 230, 140, 0.3), inset -10px -10px 20px rgba(200, 180, 100, 0.3);
+            box-shadow: 
+                0 0 30px rgba(240, 230, 140, 0.5),
+                0 0 60px rgba(240, 230, 140, 0.3),
+                inset -10px -10px 20px rgba(200, 180, 100, 0.3);
             z-index: 2;
             animation: luaBrilho 4s ease-in-out infinite;
         }
-        .lua-magica::before { content: ""; position: absolute; top: 12px; left: 18px; width: 10px; height: 10px; background: rgba(180, 160, 100, 0.25); border-radius: 50%; }
-        .lua-magica::after { content: ""; position: absolute; top: 30px; left: 40px; width: 6px; height: 6px; background: rgba(180, 160, 100, 0.2); border-radius: 50%; }
-        @keyframes luaBrilho { 0%, 100% { box-shadow: 0 0 30px rgba(240, 230, 140, 0.5), 0 0 60px rgba(240, 230, 140, 0.3); } 50% { box-shadow: 0 0 50px rgba(240, 230, 140, 0.7), 0 0 90px rgba(240, 230, 140, 0.4); } }
-        
-        .castelo-decor { position: fixed; top: 0; left: 50%; transform: translateX(-50%); font-size: 60px; z-index: 1; opacity: 0.15; filter: drop-shadow(0 0 10px rgba(212, 168, 67, 0.3)); pointer-events: none; }
-        
-        .header { position: relative; z-index: 50; padding: 12px 16px; background: linear-gradient(180deg, rgba(26,10,46,0.9) 0%, rgba(26,10,46,0.6) 100%); border-bottom: 2px solid var(--ouro-real); backdrop-filter: blur(8px); }
-        .header-inner { max-width: 800px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between; }
+        .lua-magica::before {
+            content: "";
+            position: absolute;
+            top: 12px; left: 18px;
+            width: 10px; height: 10px;
+            background: rgba(180, 160, 100, 0.25);
+            border-radius: 50%;
+        }
+        .lua-magica::after {
+            content: "";
+            position: absolute;
+            top: 30px; left: 40px;
+            width: 6px; height: 6px;
+            background: rgba(180, 160, 100, 0.2);
+            border-radius: 50%;
+        }
+        @keyframes luaBrilho {
+            0%, 100% { box-shadow: 0 0 30px rgba(240, 230, 140, 0.5), 0 0 60px rgba(240, 230, 140, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(240, 230, 140, 0.7), 0 0 90px rgba(240, 230, 140, 0.4); }
+        }
+
+        /* Castelo decorativo no topo */
+        .castelo-decor {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 60px;
+            z-index: 1;
+            opacity: 0.15;
+            filter: drop-shadow(0 0 10px rgba(212, 168, 67, 0.3));
+            pointer-events: none;
+        }
+
+        /* Header real */
+        .header { 
+            position: relative; 
+            z-index: 50; 
+            padding: 12px 16px; 
+            background: linear-gradient(180deg, rgba(26,10,46,0.9) 0%, rgba(26,10,46,0.6) 100%);
+            border-bottom: 2px solid var(--ouro-real);
+            backdrop-filter: blur(8px);
+        }
+        .header-inner { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+        }
+
         .header-botoes { display: flex; gap: 10px; align-items: center; }
-        
-        .btn-fullscreen { background: linear-gradient(135deg, var(--azul-netuno), #0d3a5c); border: 2px solid #fff; width: 42px; height: 42px; border-radius: 50%; cursor: pointer; font-size: 20px; box-shadow: 0 0 15px rgba(30, 95, 142, 0.4); transition: all 0.3s; display: flex; align-items: center; justify-content: center; color: white; }
-        .btn-fullscreen:hover { transform: scale(1.1); box-shadow: 0 0 25px rgba(30, 95, 142, 0.7); }
-        
-        .btn-musica { padding: 8px 14px; border-radius: 50px; border: 2px solid var(--ouro-real); font-weight: 800; background: rgba(212, 168, 67, 0.2); color: var(--ouro-real); cursor: pointer; font-size: 12px; font-family: 'Nunito', sans-serif; transition: all 0.3s; }
+
+        .theme-toggle { 
+            background: linear-gradient(135deg, var(--ouro-real), #b8860b); 
+            border: 2px solid #fff; 
+            width: 42px; 
+            height: 42px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            font-size: 20px; 
+            box-shadow: 0 0 15px rgba(212, 168, 67, 0.4);
+            transition: all 0.3s;
+        }
+        .theme-toggle:hover { transform: scale(1.1); box-shadow: 0 0 25px rgba(212, 168, 67, 0.6); }
+
+        .btn-fullscreen {
+            background: linear-gradient(135deg, var(--azul-netuno), #0d3a5c);
+            border: 2px solid #fff;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 0 15px rgba(30, 95, 142, 0.4);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-fullscreen:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(30, 95, 142, 0.7);
+        }
+
+        .btn-musica { 
+            padding: 8px 14px; 
+            border-radius: 50px; 
+            border: 2px solid var(--ouro-real); 
+            font-weight: 800; 
+            background: rgba(212, 168, 67, 0.2); 
+            color: var(--ouro-real); 
+            cursor: pointer; 
+            font-size: 12px;
+            font-family: 'Nunito', sans-serif;
+            transition: all 0.3s;
+        }
         .btn-musica:hover { background: rgba(212, 168, 67, 0.4); box-shadow: 0 0 15px rgba(212, 168, 67, 0.3); }
-        
-        .saudacao-real { font-family: 'Cinzel Decorative', cursive; font-size: 16px; font-weight: 700; color: var(--ouro-real); text-shadow: 0 0 10px rgba(212, 168, 67, 0.5); }
-        
-        .stage { flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 15px; z-index: 10; gap: 15px; overflow-y: auto; }
-        
-        .banner-reinos { border-radius: 20px; overflow: hidden; border: 3px solid var(--ouro-real); width: 85%; max-width: 280px; aspect-ratio: 16/10; box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(212, 168, 67, 0.2); position: relative; background: linear-gradient(135deg, #2d1b4e, #1a0a2e); display: flex; align-items: center; justify-content: center; }
-        .banner-reinos img { width: 100%; height: 100%; object-fit: cover; filter: brightness(0.8) saturate(1.2); }
-        .banner-reinos::after { content: "🗺️"; position: absolute; bottom: -15px; right: -10px; font-size: 35px; filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5)); }
-        .fallback-banner { font-size: 48px; text-align: center; padding: 20px; }
-        
-        .titulo-reinos { font-family: 'Cinzel Decorative', cursive; font-size: clamp(20px, 5vw, 28px); color: var(--ouro-real); text-shadow: 0 0 10px rgba(212, 168, 67, 0.6), 2px 2px 4px rgba(0,0,0,0.5); text-align: center; margin: 5px 0; }
-        .subtitulo-magico { font-family: 'Dancing Script', cursive; font-size: clamp(16px, 4vw, 22px); color: rgba(255, 255, 255, 0.7); text-align: center; margin-bottom: 10px; }
-        
-        .reinos-container { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; width: 100%; max-width: 420px; }
-        
-        .card-reino { padding: 18px 12px; border-radius: 18px; border: none; font-family: 'Cinzel Decorative', cursive; font-size: clamp(13px, 3.5vw, 16px); color: #fff; text-decoration: none; text-align: center; display: flex; flex-direction: column; align-items: center; justify-content: center; transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1); line-height: 1.3; position: relative; overflow: hidden; min-height: 110px; cursor: pointer; }
-        .card-reino::before { content: ""; position: absolute; top: -50%; left: -50%; width: 200%; height: 200%; background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%); opacity: 0; transition: opacity 0.3s; }
+
+        .saudacao-real {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--ouro-real);
+            text-shadow: 0 0 10px rgba(212, 168, 67, 0.5);
+        }
+
+        /* Stage principal */
+        .stage { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 15px; 
+            z-index: 10;
+            gap: 15px;
+            overflow-y: auto;
+        }
+
+        /* Banner do mapa dos reinos */
+        .banner-reinos {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid var(--ouro-real);
+            width: 85%;
+            max-width: 280px;
+            aspect-ratio: 16/10;
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.4),
+                0 0 20px rgba(212, 168, 67, 0.2);
+            position: relative;
+        }
+        .banner-reinos img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            filter: brightness(0.8) saturate(1.2);
+        }
+        .banner-reinos::after {
+            content: "🗺️";
+            position: absolute;
+            bottom: -15px;
+            right: -10px;
+            font-size: 35px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .titulo-reinos {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: clamp(20px, 5vw, 28px);
+            color: var(--ouro-real);
+            text-shadow: 
+                0 0 10px rgba(212, 168, 67, 0.6),
+                2px 2px 4px rgba(0,0,0,0.5);
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .subtitulo-magico {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(16px, 4vw, 22px);
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        /* Grid dos reinos */
+        .reinos-container { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 14px; 
+            width: 100%; 
+            max-width: 420px;
+        }
+
+        /* Card base dos reinos */
+        .card-reino {
+            padding: 18px 12px; 
+            border-radius: 18px; 
+            border: none; 
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: clamp(13px, 3.5vw, 16px); 
+            color: #fff; 
+            text-decoration: none; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1.3;
+            position: relative;
+            overflow: hidden;
+            min-height: 110px;
+        }
+
+        .card-reino::before {
+            content: "";
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
         .card-reino:hover::before { opacity: 1; }
+
         .card-reino:active { transform: scale(0.95); }
-        .card-reino:hover { transform: translateY(-6px) scale(1.03); box-shadow: 0 15px 30px rgba(0,0,0,0.4); }
-        
-        .emoji-reino { font-size: 32px; margin-bottom: 8px; filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4)); transition: transform 0.3s; }
-        .card-reino:hover .emoji-reino { transform: scale(1.2) rotate(-5deg); }
-        .nome-reino { font-weight: 700; letter-spacing: 1px; margin-bottom: 4px; }
-        .desc-reino { font-family: 'Nunito', sans-serif; font-size: 10px; opacity: 0.85; font-weight: 600; }
-        
-        .reino-vogais { background: linear-gradient(145deg, #e91e8c, #9c1460); box-shadow: 0 6px 0 #7a0f4a, 0 0 20px rgba(233, 30, 140, 0.3), inset 0 1px 0 rgba(255,255,255,0.2); border: 2px solid rgba(255, 200, 220, 0.3); }
-        .reino-vogais:hover { box-shadow: 0 12px 0 #7a0f4a, 0 0 40px rgba(233, 30, 140, 0.5), inset 0 1px 0 rgba(255,255,255,0.3); }
-        
-        .reino-alfabeto { background: linear-gradient(145deg, #1e5f8e, #0d3a5c); box-shadow: 0 6px 0 #0a2d47, 0 0 20px rgba(30, 95, 142, 0.3), inset 0 1px 0 rgba(255,255,255,0.2); border: 2px solid rgba(100, 200, 255, 0.3); }
-        .reino-alfabeto:hover { box-shadow: 0 12px 0 #0a2d47, 0 0 40px rgba(30, 95, 142, 0.5), inset 0 1px 0 rgba(255,255,255,0.3); }
-        
-        .reino-consoantes { background: linear-gradient(145deg, #2d8e5f, #1a5c3a); box-shadow: 0 6px 0 #124529, 0 0 20px rgba(45, 142, 95, 0.3), inset 0 1px 0 rgba(255,255,255,0.2); border: 2px solid rgba(150, 255, 180, 0.3); }
-        .reino-consoantes:hover { box-shadow: 0 12px 0 #124529, 0 0 40px rgba(45, 142, 95, 0.5), inset 0 1px 0 rgba(255,255,255,0.3); }
-        
-        .reino-numeros { background: linear-gradient(145deg, #6b2d8e, #3d1a52); box-shadow: 0 6px 0 #2a1238, 0 0 20px rgba(107, 45, 142, 0.3), inset 0 1px 0 rgba(255,255,255,0.2); border: 2px solid rgba(200, 150, 255, 0.3); }
-        .reino-numeros:hover { box-shadow: 0 12px 0 #2a1238, 0 0 40px rgba(107, 45, 142, 0.5), inset 0 1px 0 rgba(255,255,255,0.3); }
-        
-        .card-bruxinha-especial { grid-column: 1 / -1; background: linear-gradient(145deg, #4a1a6e, #2d0a42); border: 2px solid var(--ouro-real); position: relative; }
-        .card-bruxinha-especial::after { content: "🧹"; position: absolute; top: -12px; right: 25px; font-size: 28px; animation: flutuarVassoura 2s ease-in-out infinite; filter: drop-shadow(0 0 8px rgba(212, 168, 67, 0.5)); }
-        @keyframes flutuarVassoura { 0%, 100% { transform: translateY(0) rotate(-8deg); } 50% { transform: translateY(-8px) rotate(8deg); } }
+        .card-reino:hover { 
+            transform: translateY(-6px) scale(1.03); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .emoji-reino { 
+            font-size: 32px; 
+            margin-bottom: 8px;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+            transition: transform 0.3s;
+        }
+        .card-reino:hover .emoji-reino {
+            transform: scale(1.2) rotate(-5deg);
+        }
+
+        .nome-reino {
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .desc-reino {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10px;
+            opacity: 0.85;
+            font-weight: 600;
+        }
+
+        /* ===== REINO DAS VOGAIS - Princesas e Príncipes ===== */
+        .reino-vogais {
+            background: linear-gradient(145deg, #e91e8c, #9c1460);
+            box-shadow: 
+                0 6px 0 #7a0f4a,
+                0 0 20px rgba(233, 30, 140, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            border: 2px solid rgba(255, 200, 220, 0.3);
+        }
+        .reino-vogais:hover {
+            box-shadow: 
+                0 12px 0 #7a0f4a,
+                0 0 40px rgba(233, 30, 140, 0.5),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        /* ===== REINO DO ALFABETO - Netuno (Aquático) ===== */
+        .reino-alfabeto {
+            background: linear-gradient(145deg, #1e5f8e, #0d3a5c);
+            box-shadow: 
+                0 6px 0 #0a2d47,
+                0 0 20px rgba(30, 95, 142, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            border: 2px solid rgba(100, 200, 255, 0.3);
+        }
+        .reino-alfabeto:hover {
+            box-shadow: 
+                0 12px 0 #0a2d47,
+                0 0 40px rgba(30, 95, 142, 0.5),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        /* ===== REINO DAS CONSOANTES - Fadas, Gnomos e Duendes ===== */
+        .reino-consoantes {
+            background: linear-gradient(145deg, #2d8e5f, #1a5c3a);
+            box-shadow: 
+                0 6px 0 #124529,
+                0 0 20px rgba(45, 142, 95, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            border: 2px solid rgba(150, 255, 180, 0.3);
+        }
+        .reino-consoantes:hover {
+            box-shadow: 
+                0 12px 0 #124529,
+                0 0 40px rgba(45, 142, 95, 0.5),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        /* ===== REINO DOS NÚMEROS - Bruxa da Tabuada ===== */
+        .reino-numeros {
+            background: linear-gradient(145deg, #6b2d8e, #3d1a52);
+            box-shadow: 
+                0 6px 0 #2a1238,
+                0 0 20px rgba(107, 45, 142, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            border: 2px solid rgba(200, 150, 255, 0.3);
+        }
+        .reino-numeros:hover {
+            box-shadow: 
+                0 12px 0 #2a1238,
+                0 0 40px rgba(107, 45, 142, 0.5),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        /* Card especial da Tabuada da Bruxinha - ocupa largura total */
+        .card-bruxinha-especial {
+            grid-column: 1 / -1;
+            background: linear-gradient(145deg, #4a1a6e, #2d0a42);
+            border: 2px solid var(--ouro-real);
+            position: relative;
+        }
+        .card-bruxinha-especial::after {
+            content: "🧹";
+            position: absolute;
+            top: -12px;
+            right: 25px;
+            font-size: 28px;
+            animation: flutuarVassoura 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 8px rgba(212, 168, 67, 0.5));
+        }
+        @keyframes flutuarVassoura {
+            0%, 100% { transform: translateY(0) rotate(-8deg); }
+            50% { transform: translateY(-8px) rotate(8deg); }
+        }
         .card-bruxinha-especial .emoji-reino { font-size: 38px; }
-        .card-bruxinha-especial:hover { box-shadow: 0 12px 0 #1a0a2e, 0 0 40px rgba(212, 168, 67, 0.4); }
-        
-        .particula { position: fixed; pointer-events: none; z-index: 1; animation: flutuarParticula linear infinite; opacity: 0.6; }
-        @keyframes flutuarParticula { 0% { transform: translateY(100vh) rotate(0deg); opacity: 0; } 10% { opacity: 0.8; }  90% { opacity: 0.8; } 100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; } }
-        
-        @media (max-width: 400px) { .reinos-container { gap: 10px; } .card-reino { padding: 14px 8px; min-height: 95px; } .emoji-reino { font-size: 26px; } .lua-magica { width: 50px; height: 50px; top: 10px; right: 15px; } .castelo-decor { font-size: 40px; } }
+        .card-bruxinha-especial:hover {
+            box-shadow: 0 12px 0 #1a0a2e, 0 0 40px rgba(212, 168, 67, 0.4);
+        }
+
+        /* Partículas mágicas flutuantes */
+        .particula {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: flutuarParticula linear infinite;
+            opacity: 0.6;
+        }
+        @keyframes flutuarParticula {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+        }
+
+        /* Responsivo */
+        @media (max-width: 400px) {
+            .reinos-container { gap: 10px; }
+            .card-reino { padding: 14px 8px; min-height: 95px; }
+            .emoji-reino { font-size: 26px; }
+            .lua-magica { width: 50px; height: 50px; top: 10px; right: 15px; }
+            .castelo-decor { font-size: 40px; }
+        }
     </style>
+<base target="_blank">
 </head>
 <body>
 
+    <!-- Lua mágica -->
     <div class="lua-magica"></div>
+
+    <!-- Castelo decorativo -->
     <div class="castelo-decor">🏰</div>
+
+    <!-- Partículas mágicas (geradas via JS) -->
     <div id="particulas-container"></div>
-    
+
     <header class="header">
         <div class="header-inner">
             <div class="header-botoes">
-                <button class="btn-musica" id="btnMusica">🎵 MÚSICA OFF</button>
-                <button class="btn-fullscreen" id="fullscreenBtn" aria-label="Tela cheia">⛶</button>
+                <button class="btn-musica" id="btnMusica" onclick="alternarMusica()">🎵 MÚSICA OFF</button>
+                <button class="btn-fullscreen" id="fullscreenBtn" onclick="toggleFullScreen()" aria-label="Tela cheia">⛶</button>
+                <button class="theme-toggle" id="themeToggle" onclick="toggleTheme()">☀️</button>
             </div>
             <span class="saudacao-real">👑 Olá, damas e cavalheiros!</span>
         </div>
@@ -145,37 +454,43 @@
 
     <div class="stage">
         <div class="banner-reinos">
-            <img src="ilha.jpg" alt="Mapa dos Reinos Encantados" onerror="this.style.display='none'; this.parentElement.innerHTML += '<div class=\'fallback-banner\'>🗺️🏰✨</div>';">
+            <img src="ilha.jpg" alt="Mapa dos Reinos Encantados">
         </div>
+
         <h2 class="titulo-reinos">🏰 Reinos Encantados</h2>
         <p class="subtitulo-magico">Escolha seu reino e embarque em uma aventura mágica... ✨</p>
-        
+
         <div class="reinos-container">
-            <a href="vogais.html" class="card-reino reino-vogais" data-sound="vogais.mp3">
+            <!-- Reino das Vogais - Princesas e Príncipes -->
+            <a href="vogais.html" class="card-reino reino-vogais" onclick="tocarEfeito('vogais.mp3')">
                 <span class="emoji-reino">👸🤴</span>
                 <span class="nome-reino">Reino das Vogais</span>
                 <span class="desc-reino">Princesas & Príncipes</span>
             </a>
 
-            <a href="https://alfabeto-mu.vercel.app/" class="card-reino reino-alfabeto" data-sound="alfabeto.mp3" target="_blank" rel="noopener">
+            <!-- Reino do Alfabeto - Netuno (Aquático) -->
+            <a href="https://alfabeto-mu.vercel.app/" class="card-reino reino-alfabeto" onclick="tocarEfeito('alfabeto.mp3')">
                 <span class="emoji-reino">🧜‍♂️🔱</span>
                 <span class="nome-reino">Reino do Alfabeto</span>
                 <span class="desc-reino">Netuno & o Mar</span>
             </a>
 
-            <a href="consoantes.html" class="card-reino reino-consoantes" data-sound="consoantes.mp3">
+            <!-- Reino das Consoantes - Fadas, Gnomos e Duendes -->
+            <a href="consoantes.html" class="card-reino reino-consoantes" onclick="tocarEfeito('consoantes.mp3')">
                 <span class="emoji-reino">🧚🧙‍♂️</span>
                 <span class="nome-reino">Reino das Consoantes</span>
                 <span class="desc-reino">Fadas, Gnomos & Duendes</span>
             </a>
 
-            <a href="numeros.html" class="card-reino reino-numeros" data-sound="numeros.mp3">
+            <!-- Reino dos Números - Bruxa da Tabuada -->
+            <a href="numeros.html" class="card-reino reino-numeros" onclick="tocarEfeito('numeros.mp3')">
                 <span class="emoji-reino">🧙‍♀️🔮</span>
                 <span class="nome-reino">Reino dos Números</span>
                 <span class="desc-reino">A Bruxa da Tabuada</span>
             </a>
 
-            <a href="https://tabuada-da-bruxinha.vercel.app/" class="card-reino card-bruxinha-especial" data-sound="bruxinha.mp3" target="_blank" rel="noopener">
+            <!-- Card especial da Tabuada da Bruxinha -->
+            <a href="https://tabuada-da-bruxinha.vercel.app/" target="_blank" rel="noopener" class="card-reino card-bruxinha-especial" onclick="tocarEfeito('bruxinha.mp3')">
                 <span class="emoji-reino">🧙‍♀️✨</span>
                 <span class="nome-reino">Tabuada da Bruxinha</span>
                 <span class="desc-reino">🧹 Voe na vassoura e aprenda magia matemática!</span>
@@ -184,101 +499,64 @@
     </div>
 
     <script>
-        // Configuração de áudio
-        let musicaFundo = null;
-        let musicaInicializada = false;
-
-        function initMusica() {
-            if (!musicaInicializada) {
-                musicaFundo = new Audio('musica_fundo.ogg');
-                musicaFundo.loop = true;
-                musicaFundo.volume = 0.2;
-                musicaInicializada = true;
-            }
-            return musicaFundo;
-        }
-
-        function tocarEfeito(arquivo) {
-            if (!arquivo) return;
-            const audio = new Audio(arquivo);
-            audio.play().catch(e => console.log('Áudio não pôde ser reproduzido:', e));
-        }
-
-        // Função principal de navegação unificada
-        function navegarParaReino(event) {
-            const link = event.currentTarget;
-            const url = link.getAttribute('href');
-            const som = link.getAttribute('data-sound');
-            const target = link.getAttribute('target') || '_self';
-            
-            if (!url) return;
-            
-            event.preventDefault();
-            
-            if (som) {
-                tocarEfeito(som);
-            }
-            
-            // Pequeno delay para o som ter chance de iniciar
-            setTimeout(() => {
-                if (target === '_blank') {
-                    window.open(url, '_blank', 'noopener');
-                } else {
-                    window.location.href = adicionarFlagFullscreenNaUrl(url);
-                }
-            }, 50);
-        }
-
-        // Força fullscreen nas páginas de destino
-        function adicionarFlagFullscreenNaUrl(url) {
-            if (!url) return url;
-            if (url.startsWith('http')) return url;
-            const flag = 'fullscreen=force';
-            return url.includes('?') ? `${url}&${flag}` : `${url}?${flag}`;
-        }
-
+        // 🎉 Confete mágico ao entrar!
         window.onload = function() {
             lancarFestaMagica();
             criarParticulas();
-            configurarCards();
-            configurarBotoes();
+            configurarLinksFullscreen();
         };
-        
-        function configurarBotoes() {
-            // Configurar botão de música
-            const btnMusica = document.getElementById('btnMusica');
-            if (btnMusica) {
-                btnMusica.addEventListener('click', alternarMusica);
-            }
-            
-            // Configurar botão de fullscreen
-            const btnFullscreen = document.getElementById('fullscreenBtn');
-            if (btnFullscreen) {
-                btnFullscreen.addEventListener('click', toggleFullScreen);
-            }
-        }
 
         function lancarFestaMagica() {
-            if (typeof confetti !== 'undefined') {
+            confetti({
+                particleCount: 80,
+                spread: 100,
+                origin: { y: 0.5 },
+                colors: ['#d4a843', '#f0e68c', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'],
+                shapes: ['circle', 'square'],
+                scalar: 1.2
+            });
+            setTimeout(() => {
                 confetti({
-                    particleCount: 80,
-                    spread: 100,
-                    origin: { y: 0.5 },
-                    colors: ['#d4a843', '#f0e68c', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'],
-                    shapes: ['circle', 'square'],
-                    scalar: 1.2
+                    particleCount: 50,
+                    spread: 80,
+                    origin: { y: 0.3, x: 0.2 },
+                    colors: ['#d4a843', '#fff', '#e91e8c'],
+                    gravity: 0.8
                 });
-            }
+            }, 300);
+            setTimeout(() => {
+                confetti({
+                    particleCount: 50,
+                    spread: 80,
+                    origin: { y: 0.3, x: 0.8 },
+                    colors: ['#d4a843', '#fff', '#1e5f8e'],
+                    gravity: 0.8
+                });
+            }, 600);
         }
 
+        // Partículas mágicas flutuantes
         function criarParticulas() {
             const container = document.getElementById('particulas-container');
-            if (!container) return;
-            
             const simbolos = ['✨', '⭐', '🔮', '🌟', '💫', '⚡'];
             const cores = ['#d4a843', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'];
 
-            function criarParticula() {
+            for (let i = 0; i < 15; i++) {
+                setTimeout(() => {
+                    const p = document.createElement('div');
+                    p.className = 'particula';
+                    p.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                    p.style.left = Math.random() * 100 + '%';
+                    p.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                    p.style.color = cores[Math.floor(Math.random() * cores.length)];
+                    p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+                    p.style.animationDelay = (Math.random() * 5) + 's';
+                    container.appendChild(p);
+                    setTimeout(() => p.remove(), 14000);
+                }, i * 400);
+            }
+
+            setInterval(() => {
                 const p = document.createElement('div');
                 p.className = 'particula';
                 p.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
@@ -288,70 +566,221 @@
                 p.style.animationDuration = (Math.random() * 8 + 6) + 's';
                 container.appendChild(p);
                 setTimeout(() => p.remove(), 14000);
-            }
-
-            for (let i = 0; i < 15; i++) {
-                setTimeout(criarParticula, i * 400);
-            }
-            
-            setInterval(criarParticula, 3000);
+            }, 2000);
         }
 
-        function configurarCards() {
-            const cards = document.querySelectorAll('.card-reino');
-            cards.forEach(card => {
-                card.addEventListener('click', navegarParaReino);
-            });
+        // Gerenciador de Áudio
+        function tocarEfeito(arquivo) {
+            const audio = new Audio(arquivo);
+            audio.play().catch(() => {});
         }
 
-        // Função para alternar música
-        function alternarMusica(event) {
-            if(event) event.stopPropagation();
-            
-            const musica = initMusica();
-            const btn = document.getElementById('btnMusica');
-            
-            if (musica.paused) {
-                musica.play().catch(e => {
-                    console.log('Não foi possível tocar música:', e);
+        // Alternar Tema 🌙☀️
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('themeToggle');
+
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.innerHTML = '☀️';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.innerHTML = '🌙';
+                confetti({ 
+                    particleCount: 30, 
+                    spread: 50, 
+                    origin: { y: 0.2 },
+                    colors: ['#d4a843', '#fff']
                 });
+            }
+        }
+
+        // Música de Fundo
+        const musicaFundo = new Audio('musica_fundo.ogg');
+        musicaFundo.loop = true;
+        musicaFundo.volume = 0.2;
+
+        function alternarMusica() {
+            const btn = document.getElementById('btnMusica');
+            if (musicaFundo.paused) {
+                musicaFundo.play();
                 btn.innerHTML = `🎵 MÚSICA ON`;
                 btn.style.background = "rgba(212, 168, 67, 0.5)";
                 btn.style.color = "#fff";
             } else {
-                musica.pause();
+                musicaFundo.pause();
                 btn.innerHTML = `🎵 MÚSICA OFF`;
                 btn.style.background = "rgba(212, 168, 67, 0.2)";
                 btn.style.color = "var(--ouro-real)";
             }
         }
 
+        // ========== FULLSCREEN MÁGICO ==========
+        let isFullscreenActive = false;
+        const fullscreenBtn = document.getElementById('fullscreenBtn');
+
         // Função para alternar tela cheia
-        function toggleFullScreen(event) {
-            if(event) event.stopPropagation();
-            
+        function toggleFullScreen() {
             if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(e => {
-                    console.log('Erro ao entrar em tela cheia:', e);
+                document.documentElement.requestFullscreen().then(() => {
+                    confetti({ particleCount: 40, spread: 60, origin: { y: 0.2 }, colors: ['#d4a843', '#fff'] });
+                }).catch(err => {
+                    console.warn(`Erro ao entrar em tela cheia: ${err.message}`);
                 });
             } else {
-                document.exitFullscreen().catch(e => {
-                    console.log('Erro ao sair da tela cheia:', e);
-                });
+                document.exitFullscreen();
             }
         }
 
+        // Atualizar ícone e estado do fullscreen
         function updateFullscreenState() {
-            const fullscreenBtn = document.getElementById('fullscreenBtn');
+            isFullscreenActive = !!document.fullscreenElement;
             if (fullscreenBtn) {
-                const isFullscreen = !!document.fullscreenElement;
-                fullscreenBtn.innerHTML = isFullscreen ? '✖' : '⛶';
-                fullscreenBtn.style.background = isFullscreen ? '#9c1460' : 'linear-gradient(135deg, var(--azul-netuno), #0d3a5c)';
+                fullscreenBtn.innerHTML = isFullscreenActive ? '✖' : '⛶';
+                fullscreenBtn.style.background = isFullscreenActive ? 
+                    'linear-gradient(135deg, #e91e8c, #9c1460)' : 
+                    'linear-gradient(135deg, var(--azul-netuno), #0d3a5c)';
             }
         }
-        
+
+        // Adicionar parâmetro fullscreen a uma URL de forma inteligente
+        function adicionarFlagFullscreenNaUrl(url) {
+            if (!url) return url;
+            // Evita duplicação do parâmetro
+            const flag = 'fullscreen=force';
+            const hasQuery = url.includes('?');
+            const hasFlag = url.includes('fullscreen=force');
+            if (hasFlag) return url;
+            
+            if (hasQuery) {
+                return url + '&' + flag;
+            } else {
+                return url + '?' + flag;
+            }
+        }
+
+        // Configurar interceptação de cliques nos links para propagar fullscreen
+        function configurarLinksFullscreen() {
+            const links = document.querySelectorAll('.card-reino');
+            
+            links.forEach(link => {
+                // Remove event listener duplicado caso exista, mas adicionamos um único handler
+                link.addEventListener('click', function(e) {
+                    // Se o index estiver em modo fullscreen, forçamos a subpágina a abrir com flag fullscreen
+                    if (isFullscreenActive) {
+                        // Previne navegação imediata para modificar o href corretamente
+                        e.preventDefault();
+                        const urlOriginal = link.getAttribute('href');
+                        if (!urlOriginal) return;
+                        
+                        // Nova URL com o parâmetro fullscreen=force
+                        let novaUrl = adicionarFlagFullscreenNaUrl(urlOriginal);
+                        
+                        // Armazena no sessionStorage uma dica extra (para subpáginas que quiserem usar)
+                        sessionStorage.setItem('parent_fullscreen_request', 'true');
+                        
+                        // Preserva o target original (se existir)
+                        const targetOriginal = link.getAttribute('target') || '_blank';
+                        
+                        // Dispara o efeito sonoro manualmente (preservando a magia)
+                        const onclickAttr = link.getAttribute('onclick');
+                        if (onclickAttr && onclickAttr.includes('tocarEfeito')) {
+                            // Extrai o arquivo de som (ex: tocarEfeito('vogais.mp3'))
+                            const match = onclickAttr.match(/tocarEfeito\(['"]([^'"]+)['"]\)/);
+                            if (match && match[1]) {
+                                tocarEfeito(match[1]);
+                            }
+                        }
+                        
+                        // Navega para a nova URL
+                        if (targetOriginal === '_blank') {
+                            window.open(novaUrl, '_blank', 'noopener');
+                        } else {
+                            window.location.href = novaUrl;
+                        }
+                    } else {
+                        // Se não estiver em fullscreen, garante que não há flag residual e também limpa sessionStorage
+                        sessionStorage.removeItem('parent_fullscreen_request');
+                        // Deixa o clique normal acontecer, mas precisamos garantir que o áudio toque (já tem onclick)
+                        // O navegador cuida do href e do onclick padrão. Não há interferência.
+                    }
+                });
+            });
+        }
+
+        // Escuta mudanças no fullscreen
         document.addEventListener('fullscreenchange', updateFullscreenState);
+        document.addEventListener('webkitfullscreenchange', updateFullscreenState);
+        document.addEventListener('mozfullscreenchange', updateFullscreenState);
+        document.addEventListener('MSFullscreenChange', updateFullscreenState);
+        
+        // Inicializar estado
         updateFullscreenState();
+        
+        // Dica para desenvolvedores (subpáginas) - Script de detecção automática de fullscreen
+        // Caso as subpáginas (vogais.html, consoantes.html, numeros.html) também implementem botão fullscreen,
+        // elas podem incluir o trecho abaixo para FORÇAR a abertura em tela cheia quando vêm com o parâmetro.
+        // 
+        // === INSTRUÇÃO PARA SUBPÁGINAS (COLE ESTE CÓDIGO NAS SUBPÁGINAS QUE POSSUEM BOTÃO FULLSCREEN) ===
+        /*
+        (function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const precisaFullscreen = urlParams.has('fullscreen') && urlParams.get('fullscreen') === 'force';
+            const parentRequest = sessionStorage.getItem('parent_fullscreen_request');
+            
+            function ativarFullscreenAutomatico() {
+                if (!document.fullscreenElement && (precisaFullscreen || parentRequest === 'true')) {
+                    document.documentElement.requestFullscreen().catch(e => {
+                        console.log("Auto fullscreen bloqueado, mas usuário pode clicar no botão fullscreen.");
+                        // Mostra uma dica amigável flutuante
+                        const hint = document.createElement('div');
+                        hint.innerText = '✨ Toque no botão ⛶ para viver a magia em tela cheia! ✨';
+                        hint.style.position = 'fixed';
+                        hint.style.bottom = '20px';
+                        hint.style.left = '20px';
+                        hint.style.background = 'rgba(0,0,0,0.7)';
+                        hint.style.color = '#d4a843';
+                        hint.style.padding = '8px 16px';
+                        hint.style.borderRadius = '40px';
+                        hint.style.fontSize = '12px';
+                        hint.style.zIndex = '9999';
+                        hint.style.fontFamily = 'Nunito, sans-serif';
+                        hint.style.backdropFilter = 'blur(8px)';
+                        hint.style.border = '1px solid gold';
+                        document.body.appendChild(hint);
+                        setTimeout(() => hint.remove(), 4000);
+                    });
+                    sessionStorage.removeItem('parent_fullscreen_request');
+                }
+            }
+            // Tenta ativar fullscreen na carga, mas devido a políticas de segurança,
+            // será mais efetivo após primeiro toque.
+            window.addEventListener('load', () => {
+                setTimeout(ativarFullscreenAutomatico, 500);
+            });
+            // Também tenta no primeiro clique/toque (garantia de user gesture)
+            const events = ['click', 'touchstart'];
+            events.forEach(ev => {
+                document.body.addEventListener(ev, function oneGesture() {
+                    ativarFullscreenAutomatico();
+                    events.forEach(e => document.body.removeEventListener(e, oneGesture));
+                }, { once: true });
+            });
+        })();
+        */
+        // Fim da recomendação para subpáginas.
+        
+        // Efeito extra: se o index foi carregado com parâmetro de fullscreen (vindo de outra página),
+        // também pode ativar fullscreen. Isso ajuda na navegação entre subpáginas que aplicam a mesma lógica.
+        (function autoFullscreenFromParam() {
+            const urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('fullscreen') === 'force' && !document.fullscreenElement) {
+                // Pequeno delay para garantir DOM pronto
+                setTimeout(() => {
+                    document.documentElement.requestFullscreen().catch(() => {});
+                }, 300);
+            }
+        })();
     </script>
 </body>
 </html>

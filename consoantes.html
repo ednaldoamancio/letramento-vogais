@@ -3,19 +3,24 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>🌿 Reino das Consoantes · Sílabas Complexas 🧚‍♀️</title>
+    <title>🌿 Reino das Consoantes · Fadas, Gnomos & Duendes ✨</title>
+    <!-- Fonte Playwrite Brasil para o modo manual -->
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+BR:wght@100..400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            user-select: none;
+        }
 
         body {
             min-height: 100vh;
-            background: linear-gradient(145deg, #184a26 0%, #266b38 50%, #0e3017 100%);
+            background: linear-gradient(145deg, #1a4d2a 0%, #0e3820 40%, #0a2a18 100%);
             font-family: 'Nunito', sans-serif;
             display: flex;
-            flex-direction: column; 
             align-items: center;
             justify-content: center;
             padding: 20px;
@@ -23,492 +28,627 @@
             overflow-x: hidden;
         }
 
-        .figura-flutuante {
+        /* decoração floresta encantada */
+        body::before {
+            content: "🧚‍♀️🍄🌿";
             position: fixed;
+            bottom: 10px;
+            left: 10px;
+            font-size: 55px;
+            opacity: 0.15;
             pointer-events: none;
             z-index: 0;
-            opacity: 0.25;
-            animation: flutuarMagia ease-in-out infinite alternate;
-            filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.3));
         }
+
+        body::after {
+            content: "🧙‍♂️🍂✨";
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            font-size: 65px;
+            opacity: 0.15;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .flutuante {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            font-size: 28px;
+            animation: flutuarMagia 14s infinite ease-in-out;
+            filter: drop-shadow(0 0 6px gold);
+        }
+
         @keyframes flutuarMagia {
-            0% { transform: translateY(0px) rotate(0deg) scale(1); }
-            100% { transform: translateY(-30px) rotate(15deg) scale(1.1); }
+            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
+            50% { transform: translate(20px, -25px) rotate(12deg); opacity: 0.9; }
+            100% { transform: translate(-5px, -10px) rotate(5deg); opacity: 0.3; }
         }
 
-        .game-container { 
-            max-width: 950px; 
-            width: 100%; 
-            background: rgba(30,20,45,0.65); 
-            backdrop-filter: blur(12px); 
-            border-radius: 64px; 
-            padding: 20px 24px 35px; 
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,200,0.3); 
-            border: 2px solid #ffdd99; 
-            position: relative; 
-            z-index: 10; 
+        .game-container {
+            max-width: 850px;
+            width: 100%;
+            background: rgba(30, 20, 45, 0.65);
+            backdrop-filter: blur(12px);
+            border-radius: 64px;
+            padding: 20px 24px 35px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,200,0.3);
+            border: 2px solid #ffdd99;
+            position: relative;
+            z-index: 10;
         }
 
-        .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
-        .btn-acao { background: linear-gradient(135deg, #ffecb3, #ffd966); border: none; font-family: 'Nunito', sans-serif; font-weight: bold; padding: 8px 16px; border-radius: 40px; font-size: 0.9rem; cursor: pointer; transition: 0.1s; box-shadow: 0 3px 0 #a0662c; display: inline-flex; align-items: center; gap: 6px; }
+        .top-bar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+        .btn-acao {
+            background: linear-gradient(135deg, #ffecb3, #ffd966);
+            border: none;
+            font-family: 'Nunito', sans-serif;
+            font-weight: bold;
+            padding: 8px 16px;
+            border-radius: 40px;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: 0.1s;
+            box-shadow: 0 3px 0 #a0662c;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
         .btn-acao:active { transform: translateY(2px); box-shadow: 0 1px 0 #a0662c; }
         .btn-voltar { background: linear-gradient(135deg, #a7d489, #6f9e3f); color: #2c2b1f; }
         .btn-fullscreen { background: linear-gradient(135deg, #6ec8e0, #2c8faa); }
         .btn-musica { background: linear-gradient(135deg, #d9b48b, #b87c4a); }
 
-        .modos-escrita { display: flex; flex-wrap: wrap; justify-content: center; gap: 12px; margin-bottom: 20px; background: rgba(0,0,0,0.3); padding: 10px 12px; border-radius: 60px; }
-        .modo-btn { background: rgba(255,245,200,0.3); border: 2px solid #ffcd7e; border-radius: 40px; padding: 6px 16px; font-family: 'Nunito', sans-serif; font-weight: bold; font-size: 0.8rem; color: #fff2c4; cursor: pointer; transition: 0.1s; backdrop-filter: blur(4px); }
-        .modo-btn.ativo { background: #ffd966; border-color: #fff; color: #2c1a2e; box-shadow: 0 0 8px #ffea9e; }
-        .modo-btn:active { transform: scale(0.96); }
+        .header-magico {
+            text-align: center;
+            margin-bottom: 15px;
+        }
+        .titulo {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 1.7rem;
+            background: linear-gradient(135deg, #f9e7b3, #ffcf7a);
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+        }
+        .subtitulo {
+            font-family: 'Dancing Script', cursive;
+            color: #e2f0c4;
+            font-size: 1rem;
+        }
 
-        .header-magico { text-align: center; margin-bottom: 15px; }
-        .titulo { font-family: 'Cinzel Decorative', cursive; font-size: 1.7rem; background: linear-gradient(135deg, #f9e7b3, #ffcf7a); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-flex; align-items: center; gap: 12px; }
-        .subtitulo { font-family: 'Dancing Script', cursive; color: #e2f0c4; font-size: 1rem; }
+        .question-area {
+            background: rgba(20, 15, 35, 0.7);
+            border-radius: 50px;
+            padding: 25px 15px;
+            margin: 15px 0;
+            border: 1px solid #ffdd88;
+            text-align: center;
+        }
+        .imagem-dica {
+            font-size: 85px;
+            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.3));
+            margin-bottom: 15px;
+            background: rgba(255,245,200,0.2);
+            display: inline-block;
+            border-radius: 80px;
+            padding: 8px 25px;
+        }
+        .palavra-incompleta {
+            font-size: 2.5rem;
+            font-weight: 800;
+            letter-spacing: 12px;
+            background: #fff0cc;
+            display: inline-block;
+            padding: 12px 28px;
+            border-radius: 70px;
+            color: #2c1a3a;
+            font-family: 'Cinzel Decorative', monospace;
+            box-shadow: inset 0 0 0 2px #ffbc6e, 0 8px 18px black;
+        }
+        .dica-texto {
+            margin-top: 18px;
+            font-size: 0.95rem;
+            color: #ffe6aa;
+            background: rgba(0,0,0,0.4);
+            display: inline-block;
+            padding: 6px 18px;
+            border-radius: 40px;
+        }
 
-        .question-area { background: rgba(20,15,35,0.7); border-radius: 50px; padding: 25px 15px; margin: 15px 0; border: 1px solid #ffdd88; text-align: center; }
-        .imagem-dica { font-size: 85px; filter: drop-shadow(0 8px 12px rgba(0,0,0,0.3)); margin-bottom: 15px; background: rgba(255,245,200,0.2); display: inline-block; border-radius: 80px; padding: 8px 25px; }
-        .palavra-incompleta { font-size: 2.2rem; font-weight: 800; letter-spacing: 10px; background: #fff0cc; display: inline-block; padding: 12px 28px; border-radius: 70px; color: #2c1a3a; box-shadow: inset 0 0 0 2px #ffbc6e, 0 8px 18px black; transition: all 0.2s; }
-        .dica-texto { margin-top: 18px; font-size: 0.95rem; color: #ffe6aa; background: rgba(0,0,0,0.4); display: inline-block; padding: 6px 18px; border-radius: 40px; }
-
-        .opcoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 14px; margin: 25px 0 15px; }
-        .btn-consoante { background: linear-gradient(145deg, #ffecb3, #ffd966); border: none; width: 70px; height: 70px; border-radius: 50%; font-size: 2rem; font-weight: bold; cursor: pointer; transition: 0.1s; box-shadow: 0 6px 0 #a0662c; }
+        /* Opções de consoantes (minúsculas) */
+        .opcoes {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 14px;
+            margin: 25px 0 15px;
+        }
+        .btn-consoante {
+            background: linear-gradient(145deg, #ffecb3, #ffd966);
+            border: none;
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            font-size: 2rem;
+            font-weight: bold;
+            font-family: 'Cinzel Decorative', monospace;
+            color: #3a2a1f;
+            cursor: pointer;
+            transition: 0.1s;
+            box-shadow: 0 6px 0 #a0662c;
+            text-transform: lowercase;
+        }
         .btn-consoante:active { transform: translateY(4px); box-shadow: 0 2px 0 #a0662c; }
 
-        /* Controles de Navegação de Palavras */
-        .controles-navegacao { display: flex; justify-content: center; gap: 20px; margin: 15px 0; }
-        .btn-nav { background: linear-gradient(135deg, #eed8a1, #cfa052); color: #2c1a2e; font-weight: bold; padding: 10px 22px; border-radius: 40px; border: 1px solid #ffdd99; box-shadow: 0 4px 0 #7c541a; font-family: 'Nunito', sans-serif; font-size: 0.95rem; cursor: pointer; transition: 0.1s; display: inline-flex; align-items: center; gap: 8px; }
-        .btn-nav:active { transform: translateY(2px); box-shadow: 0 2px 0 #7c541a; }
+        /* Modo manual com fonte Playwrite Brasil */
+        .manual-area {
+            margin: 15px auto 5px;
+            text-align: center;
+        }
+        .manual-input {
+            font-family: 'Playwrite BR', cursive;
+            font-size: 2rem;
+            width: 100px;
+            text-align: center;
+            padding: 8px;
+            border-radius: 60px;
+            border: 3px solid #ffcd7e;
+            background: #fff9e8;
+            color: #2c1a3a;
+            font-weight: bold;
+            text-transform: lowercase;
+            outline: none;
+        }
+        .manual-label {
+            font-size: 0.85rem;
+            color: #ffeaac;
+            display: block;
+            margin-bottom: 5px;
+        }
 
-        .manual-area { margin: 15px auto 5px; text-align: center; }
-        .manual-input { font-size: 2rem; width: 100px; text-align: center; padding: 8px; border-radius: 60px; border: 3px solid #ffcd7e; background: #fff9e8; color: #2c1a3a; font-weight: bold; outline: none; }
-        .manual-label { font-size: 0.85rem; color: #ffeaac; display: block; margin-bottom: 5px; }
-
-        .feedback { font-size: 1rem; text-align: center; margin: 15px 0 10px; min-height: 55px; background: rgba(0,0,0,0.5); border-radius: 80px; padding: 8px; color: #ffefb9; }
-
-        .score-area { display: flex; justify-content: space-between; align-items: center; margin: 10px 5px 0; flex-wrap: wrap; gap: 10px; }
-        .pontos { background: #ffcf8a; padding: 5px 15px; border-radius: 40px; color: #2c1a2e; font-weight: bold; }
-        .reset-btn { background: linear-gradient(135deg, #b5651e, #8b4513); border: none; font-family: 'Nunito', sans-serif; font-weight: bold; padding: 8px 18px; border-radius: 50px; font-size: 0.9rem; color: white; cursor: pointer; box-shadow: 0 4px 0 #4a2a0a; transition: 0.1s; }
+        .feedback {
+            font-size: 1rem;
+            text-align: center;
+            margin: 15px 0 10px;
+            min-height: 55px;
+            background: rgba(0,0,0,0.5);
+            border-radius: 80px;
+            padding: 8px;
+            color: #ffefb9;
+        }
+        .score-area {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin: 10px 5px 0;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .pontos {
+            background: #ffcf8a;
+            padding: 5px 15px;
+            border-radius: 40px;
+            color: #2c1a2e;
+            font-weight: bold;
+        }
+        .reset-btn {
+            background: linear-gradient(135deg, #b5651e, #8b4513);
+            border: none;
+            font-family: 'Nunito', sans-serif;
+            font-weight: bold;
+            padding: 8px 18px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            color: white;
+            cursor: pointer;
+            box-shadow: 0 4px 0 #4a2a0a;
+            transition: 0.1s;
+        }
         .reset-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #4a2a0a; }
-
-        .tela-final { text-align: center; padding: 40px 20px; display: none; }
-        .tela-final h2 { font-family: 'Cinzel Decorative', cursive; font-size: 2.5rem; color: #ffd966; margin-bottom: 15px; text-shadow: 0 4px 10px rgba(0,0,0,0.5); }
-        .tela-final p { font-size: 1.3rem; color: #fff; margin-bottom: 25px; font-weight: 600; }
-        .trofeu { font-size: 100px; margin-bottom: 20px; filter: drop-shadow(0 0 15px gold); animation: pulsarTrofeu 1.5s infinite alternate ease-in-out; }
-        @keyframes pulsarTrofeu { 0% { transform: scale(1); } 100% { transform: scale(1.15); } }
-
-        footer { width: 100%; font-size: 0.85rem; font-weight: bold; text-align: center; margin-top: 25px; color: #a4e5ab; z-index: 10; position: relative; }
-
-        @media (max-width: 550px) { .palavra-incompleta { font-size: 1.4rem; letter-spacing: 5px; padding: 8px 12px; } .btn-consoante { width: 55px; height: 55px; font-size: 1.5rem; } .manual-input { font-size: 1.5rem; width: 80px; } .top-bar { justify-content: center; } .modos-escrita { gap: 6px; } .modo-btn { font-size: 0.7rem; padding: 4px 10px; } .tela-final h2 { font-size: 1.8rem; } .btn-nav { padding: 8px 16px; font-size: 0.85rem; } }
-
+        footer {
+            font-size: 0.7rem;
+            text-align: center;
+            margin-top: 20px;
+            color: #b9d2a5;
+        }
+        @media (max-width: 550px) {
+            .palavra-incompleta { font-size: 1.5rem; letter-spacing: 6px; padding: 8px 12px; }
+            .btn-consoante { width: 55px; height: 55px; font-size: 1.5rem; }
+            .manual-input { font-size: 1.5rem; width: 80px; }
+            .top-bar { justify-content: center; }
+        }
         .acertou-glow { animation: brilho 0.6s ease-out; }
-        @keyframes brilho { 0% { text-shadow: 0 0 0 gold; } 50% { text-shadow: 0 0 20px #ffdd77, 0 0 30px #ffaa33; } 100% { text-shadow: 0 0 0 gold; } }
-        .desabilitado { pointer-events: none; opacity: 0.6; }
+        @keyframes brilho {
+            0% { text-shadow: 0 0 0 gold; }
+            50% { text-shadow: 0 0 20px #ffdd77, 0 0 30px #ffaa33; }
+            100% { text-shadow: 0 0 0 gold; }
+        }
+        .desabilitado {
+            pointer-events: none;
+            opacity: 0.6;
+        }
     </style>
 </head>
 <body>
 
-<div class="figura-flutuante" style="top: 10%; left: 5%; font-size: 45px; animation-duration: 8s;">🌿</div>
-<div class="figura-flutuante" style="top: 75%; left: 10%; font-size: 55px; animation-duration: 12s; animation-delay: 2s;">🧚‍♀️</div>
-<div class="figura-flutuante" style="top: 20%; right: 8%; font-size: 50px; animation-duration: 10s; animation-delay: 1s;">✨</div>
-<div class="figura-flutuante" style="top: 80%; right: 15%; font-size: 60px; animation-duration: 14s; animation-delay: 3s;">🍄</div>
-<div class="figura-flutuante" style="top: 45%; left: 85%; font-size: 40px; animation-duration: 9s; animation-delay: 0.5s;">🍃</div>
-<div class="figura-flutuante" style="top: 50%; left: 3%; font-size: 35px; animation-duration: 11s; animation-delay: 1.5s;">🪄</div>
-
 <div class="game-container">
-    <div id="conteudoJogo">
-        <div class="top-bar">
-            <button class="btn-acao btn-voltar" id="btnVoltar">🏠 Tela Inicial</button>
-            <div style="display: flex; gap: 10px;">
-                <button class="btn-acao btn-fullscreen" id="btnFullscreen">⛶ Tela Cheia</button>
-                <button class="btn-acao btn-musica" id="btnMusica">🔇 Som</button>
-            </div>
-        </div>
-
-        <div class="header-magico">
-            <h1 class="titulo">🧚‍♀️ Reino das Consoantes 🌿</h1>
-            <p class="subtitulo">A magia para treinar encontros e sílabas complexas!</p>
-        </div>
-
-        <div class="modos-escrita">
-            <button class="modo-btn ativo" data-modo="MAIUSCULA">LETRA DE FORMA</button>
-            <button class="modo-btn" data-modo="minuscula">letra minúscula</button>
-            <button class="modo-btn" style="font-family: 'Dancing Script', cursive; font-size: 1rem;" data-modo="cursiva">Letra Cursiva</button>
-        </div>
-
-        <div class="question-area">
-            <div class="imagem-dica" id="imagemArea">🌟</div>
-            <div id="palavraArea" class="palavra-incompleta">_ _ _</div>
-            <div class="dica-texto" id="dicaTexto">Dica: ???</div>
-        </div>
-
-        <div id="opcoesArea" class="opcoes"></div>
-
-        <div class="controles-navegacao">
-            <button class="btn-nav" id="btnAnterior">⬅️ Anterior</button>
-            <button class="btn-nav" id="btnProxima">Próxima ➡️</button>
-        </div>
-
-        <div id="manualAreaContainer" class="manual-area" style="display: none;">
-            <label for="manualInput" class="manual-label">Qual consoante está faltando? Pressione a tecla!</label>
-            <input type="text" id="manualInput" class="manual-input" maxlength="1" autocomplete="off" autocorrect="off" spellcheck="false" inputmode="none">
-        </div>
-
-        <div id="feedback" class="feedback">Escolha a consoante correta!</div>
-
-        <div class="score-area">
-            <div class="pontos" id="scoreDisplay">Palavras Concluídas: 0 / 50</div>
-            <button class="reset-btn" id="btnRestart">🔄 Recomeçar</button>
+    <div class="top-bar">
+        <button class="btn-acao btn-voltar" id="btnVoltar">🏠 Tela Inicial</button>
+        <div style="display: flex; gap: 10px;">
+            <button class="btn-acao btn-fullscreen" id="btnFullscreen">⛶ Tela Cheia</button>
+            <button class="btn-acao btn-musica" id="btnMusica">🎵 Música OFF</button>
         </div>
     </div>
 
-    <div id="telaFinal" class="tela-final">
-        <div class="trofeu">🏆</div>
-        <h2>Grande Final Fantástico!</h2>
-        <p id="mensagemFinal">Parabéns! Você concluiu com maestria o desafio das 50 palavras mágicas!</p>
-        <button class="btn-acao" id="btnJogarNovamente" style="font-size: 1.2rem; padding: 12px 30px;">🧚‍♀️ Jogar de Novo ✨</button>
+    <div class="header-magico">
+        <div class="titulo">
+            <span>🧚‍♀️✨</span> Reino das Consoantes <span>🧙‍♂️🍄</span>
+        </div>
+        <div class="subtitulo">Clique na consoante minúscula ou digite a letra que falta!</div>
     </div>
+
+    <div class="question-area">
+        <div class="imagem-dica" id="imagemDica">🍄</div>
+        <div class="palavra-incompleta" id="palavraDisplay">_ _ _</div>
+        <div class="dica-texto" id="dicaTexto">✨ Qual consoante está faltando? ✨</div>
+    </div>
+
+    <!-- Botões das consoantes (minúsculas) -->
+    <div class="opcoes" id="opcoesContainer"></div>
+
+    <!-- Modo manual com fonte especial -->
+    <div class="manual-area">
+        <div class="manual-label">✍️ Ou digite a consoante aqui (modo manual):</div>
+        <input type="text" class="manual-input" id="manualInput" maxlength="1" placeholder="?" autocomplete="off" spellcheck="false">
+    </div>
+
+    <div class="feedback" id="feedbackMsg">🌟 Escolha uma letra ou digite a consoante que falta!</div>
+
+    <div class="score-area">
+        <div class="pontos">🏆 Pontos: <span id="pontuacao">0</span></div>
+        <div class="pontos">🧙 Palavra: <span id="nivelAtual">1</span> / <span id="totalPerguntas">0</span></div>
+        <button class="reset-btn" id="resetBtn">🔄 Novo Jogo</button>
+    </div>
+    <footer>🌼 Ao acertar, a palavra se completa e avançamos automaticamente! 🌼</footer>
 </div>
 
-<footer><p>Jogo do EdHumanas • Alfabetização Divertida</p></footer>
-
-<audio id="musicaFundo" loop>
-    <source src="https://cdn.pixabay.com/download/audio/2022/10/14/audio_3473950b7f.mp3?filename=fantasy-forest-120539.mp3" type="audio/mpeg">
-</audio>
-<audio id="somAcerto">
-    <source src="https://cdn.pixabay.com/download/audio/2021/08/04/audio_0625c1539c.mp3?filename=success-1-6297.mp3" type="audio/mpeg">
-</audio>
-
 <script>
-const bancoPerguntas = [
-    { imagem: "🧚", palavra: "FADA", lacunaIdx: 2, consoante: "d", dica: "A criatura mágica que tem asinhas." },
-    { imagem: "🍄", palavra: "GNOMO", lacunaIdx: 0, consoante: "g", dica: "Vive no jardim e usa um gorro vermelho." },
-    { imagem: "🧙‍♂️", palavra: "MAGO", lacunaIdx: 2, consoante: "g", dica: "Aquele que faz feitiços." },
-    { imagem: "🐉", palavra: "DRAGÃO", lacunaIdx: 1, consoante: "r", pronuncia: "dragão", dica: "Solta fogo pela boca e voa." },
-    { imagem: "🧝‍♂️", palavra: "ELFO", lacunaIdx: 1, consoante: "l", dica: "Ser das florestas com orelhas pontudas." },
-    { imagem: "🗡️", palavra: "ESPADA", lacunaIdx: 1, consoante: "s", dica: "Arma usada pelos cavaleiros." },
-    { imagem: "🪄", palavra: "VARINHA", lacunaIdx: 2, consoante: "r", dica: "Feitiços saem da ponta dela." },
-    { imagem: "👸", palavra: "PRINCESA", lacunaIdx: 4, consoante: "c", dica: "A filha do rei." },
-    { imagem: "🐸", palavra: "SAPO", lacunaIdx: 2, consoante: "p", dica: "O animal que pode virar príncipe." },
-    { imagem: "🦄", palavra: "UNICÓRNIO", lacunaIdx: 3, consoante: "c", pronuncia: "unicórnio", dica: "Cavalo mágico com um chifre na testa." },
-    { imagem: "✨", palavra: "FADINHA", lacunaIdx: 2, consoante: "d", dica: "Uma fada bem pequenininha." },
-    { imagem: "🍀", palavra: "DUENDE", lacunaIdx: 0, consoante: "d", dica: "Guardião do pote de ouro." },
-    { imagem: "🏰", palavra: "CASTELO", lacunaIdx: 2, consoante: "s", dica: "Lugar onde vive o rei." },
-    { imagem: "📜", palavra: "PERGAMINHO", lacunaIdx: 3, consoante: "g", dica: "Onde o mago escreve suas receitas." },
-    { imagem: "📖", palavra: "CONTO", lacunaIdx: 2, consoante: "n", dica: "Uma história de fadas." },
-    { imagem: "🌟", palavra: "ENCANTADO", lacunaIdx: 2, consoante: "c", dica: "Algo que tem magia." },
-    { imagem: "🌳", palavra: "BOSQUE", lacunaIdx: 2, consoante: "s", dica: "Uma floresta menor." },
-    { imagem: "👑", palavra: "REINO", lacunaIdx: 0, consoante: "r", dica: "As terras comandadas por um rei." },
-    { imagem: "🌲", palavra: "FLORESTA", lacunaIdx: 1, consoante: "l", dica: "Lugar com muitas árvores mágicas." },
-    { imagem: "🧸", palavra: "BRINQUEDO", lacunaIdx: 3, consoante: "n", dica: "Crianças brincam com eles." },
-    { imagem: "🪶", palavra: "PLUMA", lacunaIdx: 1, consoante: "l", dica: "Uma pena bem leve." },
-    { imagem: "🍇", palavra: "UVA", lacunaIdx: 1, consoante: "v", dica: "Fruta em cacho." },
-    { imagem: "⚡", palavra: "TREMOR", lacunaIdx: 3, consoante: "m", dica: "Quando a terra treme." },
-    { imagem: "🚲", palavra: "TRICICLO", lacunaIdx: 3, consoante: "c", pronuncia: "triciclo", dica: "Bicicleta com 3 rodas." },
-    { imagem: "🥖", palavra: "PÃO", lacunaIdx: 0, consoante: "p", pronuncia: "pão", dica: "Comida deliciosa feita na padaria." },
-    { imagem: "🌸", palavra: "FLOR", lacunaIdx: 1, consoante: "l", dica: "Planta muito perfumada." },
-    { imagem: "⛰️", palavra: "MONTE", lacunaIdx: 2, consoante: "n", dica: "Parece uma montanha, mas é menor." },
-    { imagem: "🌩️", palavra: "TROVÃO", lacunaIdx: 3, consoante: "v", pronuncia: "trovão", dica: "O barulho que o raio faz." },
-    { imagem: "🦁", palavra: "LEÃO", lacunaIdx: 0, consoante: "l", pronuncia: "leão", dica: "O rei dos animais." },
-    { imagem: "🐢", palavra: "TARTARUGA", lacunaIdx: 5, consoante: "r", dica: "Animal que anda bem devagar." },
-    { imagem: "🧴", palavra: "CREME", lacunaIdx: 1, consoante: "r", dica: "Produto macio para passar na pele." },
-    { imagem: "🍎", palavra: "MAÇÃ", lacunaIdx: 2, consoante: "ç", pronuncia: "massã", dica: "A fruta da Branca de Neve." },
-    { imagem: "🐺", palavra: "LOBO", lacunaIdx: 2, consoante: "b", dica: "Animal selvagem." },
-    { imagem: "🌙", palavra: "LUA", lacunaIdx: 0, consoante: "l", dica: "Clareia o céu de noite." },
-    { imagem: "🐘", palavra: "ELEFANTE", lacunaIdx: 3, consoante: "f", dica: "Animal com uma tromba comprida." },
-    { imagem: "🦷", palavra: "DENTE", lacunaIdx: 2, consoante: "n", dica: "Usado para mastigar a comida." },
-    { imagem: "🐻", warning: "evitar erros", palavra: "URSO", lacunaIdx: 2, consoante: "s", dica: "Animal grande e peludo." },
-    { imagem: "🎋", palavra: "BAMBU", lacunaIdx: 2, consoante: "m", dica: "Planta alta que os pandas adoram comer." },
-    { imagem: "🥁", palavra: "TAMBOR", lacunaIdx: 2, consoante: "m", dica: "Instrumento musical de percussão." },
-    { imagem: "🕊️", palavra: "POMBA", lacunaIdx: 2, consoante: "m", dica: "Ave símbolo da paz." },
-    { imagem: "💡", palavra: "LÂMPADA", lacunaIdx: 2, consoante: "m", dica: "Objeto que ilumina o ambiente." },
-    { imagem: "⏱️", palavra: "TEMPO", lacunaIdx: 2, consoante: "m", dica: "O relógio marca o..." },
-    { imagem: "🧯", palavra: "BOMBEIRO", lacunaIdx: 2, consoante: "m", dica: "Profissional que apaga incêndios." },
-    { imagem: "🎶", palavra: "CANTO", lacunaIdx: 2, consoante: "n", dica: "Música feita com a voz." },
-    { imagem: "🌍", palavra: "MUNDO", lacunaIdx: 2, consoante: "n", dica: "O planeta Terra onde vivemos." },
-    { imagem: "🪮", palavra: "PENTE", lacunaIdx: 2, consoante: "n", dica: "Usado para arrumar o cabelo." },
-    { imagem: "🎨", palavra: "TINTA", lacunaIdx: 2, consoante: "n", dica: "Líquido colorido usado para pintar." },
-    { imagem: "🏦", palavra: "BANCO", lacunaIdx: 2, consoante: "n", dica: "Assento de praça ou lugar que guarda dinheiro." },
-    { imagem: "💃", palavra: "DANÇA", lacunaIdx: 2, consoante: "n", pronuncia: "dança", dica: "Arte de movimentar o corpo no ritmo." },
-    { imagem: "🌉", palavra: "PONTE", lacunaIdx: 2, consoante: "n", dica: "Construção que atravessa um rio." }
-];
+    // ==================== PERGUNTAS CORRIGIDAS ====================
+    // FADA agora é FA_A (índice 2)
+    const perguntas = [
+        { imagem: "🧚", palavra: "FADA", lacunaIdx: 2, consoante: "d", dica: "Ela voa com asas brilhantes" },
+        { imagem: "🍄", palavra: "GNOMO", lacunaIdx: 0, consoante: "g", dica: "Pequeno ser que vive em cogumelos" },
+        { imagem: "🧙", palavra: "MAGO", lacunaIdx: 2, consoante: "g", dica: "Usa varinha e lança feitiços" },
+        { imagem: "🐉", palavra: "DRAGAO", lacunaIdx: 1, consoante: "r", dica: "Criatura alada que cospe fogo" },
+        { imagem: "🧝", palavra: "ELFO", lacunaIdx: 1, consoante: "l", dica: "Ser imortal das florestas" },
+        { imagem: "🗡️", palavra: "ESPADA", lacunaIdx: 1, consoante: "s", dica: "Arma dos cavaleiros (falta consoante)" },
+        { imagem: "🪄", palavra: "VARINHA", lacunaIdx: 2, consoante: "r", dica: "Objeto mágico que conjura magia" },
+        { imagem: "👑", palavra: "PRINCESA", lacunaIdx: 4, consoante: "c", dica: "Realeza dos reinos encantados" },
+        { imagem: "🐸", palavra: "SAPO", lacunaIdx: 2, consoante: "p", dica: "Pode se transformar em príncipe" },
+        { imagem: "🦄", palavra: "UNICORNIO", lacunaIdx: 3, consoante: "c", dica: "Cavalo mágico com chifre" },
+        { imagem: "🧚‍♀️", palavra: "FADINHA", lacunaIdx: 2, consoante: "d", dica: "Pequena fada que concede desejos" },
+        { imagem: "🍃", palavra: "DUENDE", lacunaIdx: 0, consoante: "d", dica: "Travesso e guardião da natureza" },
+        { imagem: "🏰", palavra: "CASTELO", lacunaIdx: 2, consoante: "s", dica: "Moradia de reis e rainhas" },
+        { imagem: "📜", palavra: "PERGAMINHO", lacunaIdx: 3, consoante: "g", dica: "Rolo antigo com feitiços" },
+        { imagem: "📖", palavra: "CONTO", lacunaIdx: 2, consoante: "n", dica: "História encantada do bosque" },
+        { imagem: "✨", palavra: "ENCANTADO", lacunaIdx: 2, consoante: "c", dica: "Cheio de magia e mistério" },
+        { imagem: "🌳", palavra: "BOSQUE", lacunaIdx: 2, consoante: "s", dica: "Floresta onde vivem os duendes" },
+        { imagem: "👑", palavra: "REINO", lacunaIdx: 3, consoante: "n", dica: "Terra governada por um rei ou rainha" },
+        { imagem: "🌲", palavra: "FLORESTA", lacunaIdx: 1, consoante: "l", dica: "Lar das fadas e gnomos" },
+        { imagem: "🚗", palavra: "CARROAGEM", lacunaIdx: 6, consoante: "g", dica: "Veículo puxado por cavalos mágicos" },
+        { imagem: "🐊", palavra: "CROCODILO", lacunaIdx: 5, consoante: "d", dica: "Reptil feroz do pântano encantado" },
+        { imagem: "🐦", palavra: "PASSAROS", lacunaIdx: 2, consoante: "s", dica: "Aves que cantam no bosque" },
+        { imagem: "🌸", palavra: "FLORES", lacunaIdx: 1, consoante: "l", dica: "Coloridas e perfumadas, enfeitam o jardim" },
+        { imagem: "🪟", palavra: "JANELA", lacunaIdx: 2, consoante: "n", dica: "Por onde entra a luz do reino" },
+        { imagem: "🤴", palavra: "PRINCIPE", lacunaIdx: 4, consoante: "c", dica: "Futuro rei do reino" },
+        { imagem: "👑", palavra: "REI", lacunaIdx: 0, consoante: "r", dica: "Monarca que governa" },
+        { imagem: "👸", palavra: "RAINHA", lacunaIdx: 3, consoante: "n", dica: "Esposa do rei, cheia de sabedoria" },
+        { imagem: "⚜️", palavra: "CORTE", lacunaIdx: 2, consoante: "r", dica: "Lugar onde a realeza se reúne" }
+    ];
 
-let filaPerguntas = [];
-let indiceFila = 0; // Nova variável para controlar o índice atual sem destruir a fila
-let perguntaAtual; 
-let acertosSequenciais = 0; 
-let respondida = false;
-let modoTexto = 'MAIUSCULA'; 
-let tipoEntrada = 'botoes';
-let synth = window.speechSynthesis; 
-let falando = false;
-let somAtivo = false; 
-let intervaloConfetti;
-let temporizadorAvanco; // Variável para controlar o avanço automático sem sobreposição
-const audMusica = document.getElementById('musicaFundo');
-audMusica.volume = 0.3;
+    let indiceAtual = 0;
+    let pontuacao = 0;
+    let aguardandoTransicao = false;   // impede múltiplas respostas enquanto aguarda avanço
+    let timeoutProximo = null;
+    let totalPerguntas = perguntas.length;
 
-function tentarAtivarFullscreen() {
-    if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen().catch(() => {});
-        document.getElementById('btnFullscreen').textContent = "⛶ Sair";
-    }
-}
+    // Elementos DOM
+    const imagemDica = document.getElementById('imagemDica');
+    const palavraDisplay = document.getElementById('palavraDisplay');
+    const dicaTexto = document.getElementById('dicaTexto');
+    const opcoesContainer = document.getElementById('opcoesContainer');
+    const feedbackMsg = document.getElementById('feedbackMsg');
+    const pontuacaoSpan = document.getElementById('pontuacao');
+    const nivelSpan = document.getElementById('nivelAtual');
+    const totalSpan = document.getElementById('totalPerguntas');
+    const resetBtn = document.getElementById('resetBtn');
+    const manualInput = document.getElementById('manualInput');
+    totalSpan.innerText = totalPerguntas;
 
-function iniciarJornada() {
-    clearInterval(intervaloConfetti);
-    clearTimeout(temporizadorAvanco);
-    acertosSequenciais = 0;
-    indiceFila = 0;
-    filaPerguntas = [...bancoPerguntas].sort(() => 0.5 - Math.random());
+    // Conjunto de consoantes únicas (minúsculas)
+    const todasConsoantes = [...new Set(perguntas.map(p => p.consoante))].sort();
 
-    document.getElementById('conteudoJogo').style.display = "block";
-    document.getElementById('telaFinal').style.display = "none";
-    document.getElementById('scoreDisplay').textContent = `Palavras Concluídas: ${acertosSequenciais} / 50`;
-
-    carregarPergunta();
-}
-
-function carregarPergunta() {
-    if (acertosSequenciais >= 50 || indiceFila >= filaPerguntas.length) {
-        exibirGrandeFinal();
-        return;
+    // Função para exibir palavra com lacuna (underscore)
+    function exibirPalavraComLacuna(palavra, idxLacuna) {
+        let resultado = "";
+        for (let i = 0; i < palavra.length; i++) {
+            if (i === idxLacuna) {
+                resultado += "_ ";
+            } else {
+                resultado += palavra[i] + " ";
+            }
+        }
+        return resultado.trim();
     }
 
-    respondida = false;
-    document.getElementById('opcoesArea').classList.remove('desabilitado');
-    document.getElementById('manualInput').value = "";
-    document.getElementById('manualInput').disabled = false;
-    document.getElementById('palavraArea').classList.remove('acertou-glow');
-
-    perguntaAtual = filaPerguntas[indiceFila];
-
-    document.getElementById('imagemArea').textContent = perguntaAtual.imagem;
-    document.getElementById('dicaTexto').textContent = "Dica: " + perguntaAtual.dica;
-    document.getElementById('feedback').textContent = "Escolha a consoante correta!";
-    document.getElementById('feedback').style.color = "#ffefb9";
-
-    preencherLacunaVisual('_');
-    gerarOpcoes();
-}
-
-function preencherLacunaVisual(letraLacuna) {
-    let parts = perguntaAtual.palavra.split('');
-    parts[perguntaAtual.lacunaIdx] = letraLacuna;
-    let textoMostrar = parts.join('');
-
-    if (modoTexto === 'minuscula') textoMostrar = textoMostrar.toLowerCase();
-    else if (modoTexto === 'cursiva') { textoMostrar = textoMostrar.toLowerCase(); document.getElementById('palavraArea').style.fontFamily = "'Dancing Script', cursive"; }
-    else { textoMostrar = textoMostrar.toUpperCase(); document.getElementById('palavraArea').style.fontFamily = "'Nunito', sans-serif"; }
-
-    if (modoTexto !== 'cursiva') document.getElementById('palavraArea').style.fontFamily = "'Nunito', sans-serif";
-    document.getElementById('palavraArea').textContent = textoMostrar;
-}
-
-function formatarBotao(letra) {
-    if (modoTexto === 'MAIUSCULA') return letra.toUpperCase();
-    return letra.toLowerCase();
-}
-
-function gerarOpcoes() {
-    if (tipoEntrada !== 'botoes') return;
-    const opcoesArea = document.getElementById('opcoesArea');
-    opcoesArea.innerHTML = '';
-
-    const todasConsoantes = [...new Set(bancoPerguntas.map(p => p.consoante))].sort();
-
-    let misturadas = todasConsoantes.filter(c => c !== perguntaAtual.consoante);
-    misturadas = misturadas.sort(() => 0.5 - Math.random()).slice(0, 5);
-    misturadas.push(perguntaAtual.consoante);
-    misturadas.sort(() => 0.5 - Math.random());
-
-    misturadas.forEach(c => {
-        let btn = document.createElement('button');
-        btn.className = 'btn-consoante';
-        btn.textContent = formatarBotao(c);
-        if (modoTexto === 'cursiva') btn.style.fontFamily = "'Dancing Script', cursive";
-
-        btn.onclick = () => { if (!respondida) checarResposta(c); };
-        opcoesArea.appendChild(btn);
-    });
-}
-
-function checarResposta(letraSelecionada) {
-    if (respondida) return;
-    respondida = true;
-    document.getElementById('opcoesArea').classList.add('desabilitado');
-    document.getElementById('manualInput').disabled = true;
-    
-    const letraNorm = letraSelecionada.toLowerCase();
-    
-    if (letraNorm === perguntaAtual.consoante) {
-        processarAcerto();
-    } else {
-        processarErro(letraSelecionada);
-    }
-}
-
-function processarAcerto() {
-    acertosSequenciais++;
-    document.getElementById('scoreDisplay').textContent = `Palavras Concluídas: ${acertosSequenciais} / 50`;
-    document.getElementById('feedback').textContent = "✨ Correto! Parabéns! ✨";
-    document.getElementById('feedback').style.color = "#aaffaa";
-
-    preencherLacunaVisual(perguntaAtual.consoante);
-    document.getElementById('palavraArea').classList.add('acertou-glow');
-
-    if (somAtivo) {
-        document.getElementById('somAcerto').currentTime = 0;
-        document.getElementById('somAcerto').play().catch(()=>{});
+    // Função para preencher a lacuna visualmente (após acerto)
+    function preencherLacunaVisual(palavra, idxLacuna, letra) {
+        let resultado = "";
+        for (let i = 0; i < palavra.length; i++) {
+            if (i === idxLacuna) {
+                resultado += letra + " ";
+            } else {
+                resultado += palavra[i] + " ";
+            }
+        }
+        return resultado.trim();
     }
 
-    falarPalavra(perguntaAtual);
-    confetti({ particleCount: 40, spread: 60, origin: { y: 0.6 } });
-    
-    // Avanço automático configurado de forma limpa
-    temporizadorAvanco = setTimeout(() => {
-        indiceFila++;
-        carregarPergunta();
-    }, 2500);
-}
-
-function processarErro(letraSelecionada) {
-    document.getElementById('feedback').textContent = `Ops! A letra '${formatarBotao(letraSelecionada)}' não é a correta. Tente de novo!`;
-    document.getElementById('feedback').style.color = "#ffaaaa";
-
-    falarLetra(letraSelecionada);
-
-    // Reinsere a pergunta errada mais adiante para reforço pedagógico
-    if (indiceFila + 3 < filaPerguntas.length) {
-        filaPerguntas.splice(indiceFila + 3, 0, perguntaAtual);
-    } else {
-        filaPerguntas.push(perguntaAtual);
+    // Fala a palavra completa
+    function falarPalavra(palavra) {
+        if (!window.speechSynthesis) return;
+        const utterance = new SpeechSynthesisUtterance(palavra.toLowerCase());
+        utterance.lang = 'pt-BR';
+        utterance.rate = 0.8;
+        utterance.pitch = 1.1;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
     }
 
-    temporizadorAvanco = setTimeout(() => {
-        indiceFila++;
-        carregarPergunta();
-    }, 2500);
-}
-
-function exibirGrandeFinal() {
-    document.getElementById('conteudoJogo').style.display = "none";
-    document.getElementById('telaFinal').style.display = "block";
-
-    if (synth) {
-        if (falando) synth.cancel();
-        const ut = new SpeechSynthesisUtterance("Parabéns! Você completou o Reino das Consoantes!");
-        ut.lang = 'pt-BR';
-        synth.speak(ut);
+    // Avançar para próxima palavra automaticamente após delay
+    function agendarProximaPalavra() {
+        if (timeoutProximo) clearTimeout(timeoutProximo);
+        timeoutProximo = setTimeout(() => {
+            if (indiceAtual < totalPerguntas - 1) {
+                indiceAtual++;
+                carregarPergunta();
+            } else if (indiceAtual === totalPerguntas - 1) {
+                indiceAtual++; // mostra tela de fim
+                carregarPergunta();
+            } else {
+                // fim do jogo: não faz nada, mas reset pode ser usado
+            }
+            aguardandoTransicao = false;
+            timeoutProximo = null;
+        }, 1500);
     }
 
-    intervaloConfetti = setInterval(() => {
-        confetti({ particleCount: 30, angle: 60, spread: 55, origin: { x: 0 } });
-        confetti({ particleCount: 30, angle: 120, spread: 55, origin: { x: 1 } });
-    }, 750);
-}
+    // Processar resposta correta
+    function processarAcerto(consoanteCorreta, perguntaObj) {
+        if (aguardandoTransicao) return;
+        aguardandoTransicao = true;
+        pontuacao += 10;
+        pontuacaoSpan.innerText = pontuacao;
+        // Mostrar palavra completa visualmente
+        const palavraCompletaVis = preencherLacunaVisual(perguntaObj.palavra, perguntaObj.lacunaIdx, consoanteCorreta);
+        palavraDisplay.innerText = palavraCompletaVis;
+        feedbackMsg.innerHTML = `✨✨ Acertou! A consoante "${consoanteCorreta}" completa "${perguntaObj.palavra}"! +10 pontos ✨✨`;
+        falarPalavra(perguntaObj.palavra);
+        palavraDisplay.classList.add('acertou-glow');
+        setTimeout(() => palavraDisplay.classList.remove('acertou-glow'), 600);
+        confetti({ particleCount: 80, spread: 55, origin: { y: 0.5 }, colors: ['#ffd966', '#b0e57c', '#ffb347'] });
+        // Desabilitar inputs
+        desabilitarControles(true);
+        agendarProximaPalavra();
+    }
 
-function falarPalavra(q) {
-    if (!synth) return;
-    if (falando) synth.cancel();
-    const texto = q.pronuncia || q.palavra;
-    const utterance = new SpeechSynthesisUtterance(texto.toLowerCase());
-    utterance.lang = 'pt-BR';
-    utterance.rate = 0.8;
-    utterance.pitch = 1.1;
-    falando = true;
-    utterance.onend = utterance.onerror = () => { falando = false; };
-    synth.speak(utterance);
-}
+    function processarErro(consoanteCorreta, perguntaObj) {
+        if (aguardandoTransicao) return;
+        aguardandoTransicao = true;
+        feedbackMsg.innerHTML = `❌ Que pena! A consoante mágica era "${consoanteCorreta}". Vamos praticar! ❌`;
+        // Mostrar a palavra correta por um instante? (opcional, mas ajuda)
+        const palavraCorretaVis = preencherLacunaVisual(perguntaObj.palavra, perguntaObj.lacunaIdx, consoanteCorreta);
+        palavraDisplay.innerText = palavraCorretaVis;
+        falarPalavra(perguntaObj.palavra);
+        confetti({ particleCount: 15, spread: 30, origin: { y: 0.7 }, colors: ['#c0c0c0'], startVelocity: 5 });
+        desabilitarControles(true);
+        agendarProximaPalavra();
+    }
 
-function hablarLetra(l) {}
-function falarLetra(l) {
-    if (!synth) return;
-    if (falando) synth.cancel();
-    const mapa = { 'b':'bê','c':'cê','ç':'cê cedilha','d':'dê','f':'éfe','g':'gê','l':'éle','m':'ême','n':'êne','p':'pê','r':'érre','s':'ésse','v':'vê' };
-    const som = mapa[l.toLowerCase()] || l;
-    const ut = new SpeechSynthesisUtterance(som);
-    ut.lang = 'pt-BR';
-    ut.rate = 0.9;
-    falando = true;
-    ut.onend = ut.onerror = () => { falando = false; };
-    synth.speak(ut);
-}
+    // Desabilitar/habilitar botões e input manual durante animação
+    function desabilitarControles(desabilitar) {
+        const botoes = document.querySelectorAll('.btn-consoante');
+        botoes.forEach(btn => {
+            if (desabilitar) btn.disabled = true;
+            else btn.disabled = false;
+        });
+        if (desabilitar) manualInput.disabled = true;
+        else manualInput.disabled = false;
+    }
 
-// Ouvintes globais de tela cheia
-document.addEventListener('click', tentarAtivarFullscreen, { once: false });
-document.addEventListener('keydown', tentarAtivarFullscreen, { once: false });
-
-document.querySelectorAll('.modo-btn').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-        document.querySelectorAll('.modo-btn').forEach(b => b.classList.remove('ativo'));
-        e.target.classList.add('ativo');
-        modoTexto = e.target.getAttribute('data-modo');
-        preencherLacunaVisual('_');
-        gerarOpcoes();
-        if (tipoEntrada === 'teclado') document.getElementById('manualInput').focus();
-    });
-});
-
-document.getElementById('manualInput').addEventListener('input', (e) => {
-    let val = e.target.value;
-    if (val.length > 0) {
-        let ultima = val.slice(-1);
-        if (/[a-zç]/i.test(ultima)) {
-            checarResposta(ultima);
+    // Verificar resposta (usada tanto pelos botões quanto pelo input manual)
+    function verificarResposta(letraDigitada) {
+        if (aguardandoTransicao) return;
+        if (indiceAtual >= totalPerguntas) return;
+        const perguntaAtual = perguntas[indiceAtual];
+        const letraNormalizada = letraDigitada.toLowerCase().trim();
+        if (letraNormalizada === "") return;
+        const correta = perguntaAtual.consoante;
+        if (letraNormalizada === correta) {
+            processarAcerto(correta, perguntaAtual);
         } else {
-            e.target.value = "";
+            processarErro(correta, perguntaAtual);
+        }
+        // Limpar campo manual após resposta
+        manualInput.value = "";
+    }
+
+    // Criar os botões de consoante (minúsculas)
+    function gerarBotoesConsoantes(perguntaObj) {
+        const opcoes = [perguntaObj.consoante];
+        const outras = todasConsoantes.filter(c => c !== perguntaObj.consoante);
+        const outrasEmbaralhadas = [...outras].sort(() => Math.random() - 0.5);
+        const adicionar = outrasEmbaralhadas.slice(0, 4);
+        opcoes.push(...adicionar);
+        const opcoesFinais = opcoes.sort(() => Math.random() - 0.5);
+        
+        opcoesContainer.innerHTML = "";
+        opcoesFinais.forEach(letra => {
+            const btn = document.createElement('button');
+            btn.innerText = letra;
+            btn.classList.add('btn-consoante');
+            btn.addEventListener('click', () => verificarResposta(letra));
+            opcoesContainer.appendChild(btn);
+        });
+    }
+
+    function carregarPergunta() {
+        // Limpar timeouts pendentes
+        if (timeoutProximo) {
+            clearTimeout(timeoutProximo);
+            timeoutProximo = null;
+        }
+        aguardandoTransicao = false;
+        
+        if (indiceAtual >= totalPerguntas) {
+            // Fim do jogo
+            feedbackMsg.innerHTML = "🎉✨ PARABÉNS! Você completou todo o reino mágico! ✨🎉<br>🧚‍♀️ Fadas, gnomos e duendes te agradecem! 🧙‍♂️";
+            palavraDisplay.innerText = "FIM!";
+            imagemDica.innerText = "🏆✨";
+            dicaTexto.innerText = "Clique em 'Novo Jogo' para mais magia!";
+            opcoesContainer.innerHTML = "";
+            manualInput.disabled = true;
+            desabilitarControles(true);
+            confetti({ particleCount: 300, spread: 110, origin: { y: 0.6 }, colors: ['#ffd966', '#82c91e', '#ffb347'] });
+            return;
+        }
+        
+        const q = perguntas[indiceAtual];
+        imagemDica.innerText = q.imagem;
+        dicaTexto.innerText = "✨ " + q.dica + " ✨";
+        palavraDisplay.innerText = exibirPalavraComLacuna(q.palavra, q.lacunaIdx);
+        gerarBotoesConsoantes(q);
+        nivelSpan.innerText = indiceAtual + 1;
+        feedbackMsg.innerHTML = "🍄 Escolha uma consoante ou digite a letra que falta!";
+        manualInput.disabled = false;
+        manualInput.value = "";
+        manualInput.focus();
+        desabilitarControles(false);
+    }
+
+    function resetarJogo() {
+        if (timeoutProximo) clearTimeout(timeoutProximo);
+        indiceAtual = 0;
+        pontuacao = 0;
+        pontuacaoSpan.innerText = "0";
+        aguardandoTransicao = false;
+        carregarPergunta();
+        feedbackMsg.innerHTML = "✨ Novo ciclo de magia! Ajude as criaturas! ✨";
+        confetti({ particleCount: 40, spread: 45, origin: { y: 0.8 }, colors: ['#ffea8c', '#96e6b3'] });
+    }
+
+    resetBtn.addEventListener('click', resetarJogo);
+    manualInput.addEventListener('input', (e) => {
+        let val = e.target.value;
+        if (val.length > 0) {
+            const ultimaLetra = val[val.length-1].toLowerCase();
+            if (/[a-z]/.test(ultimaLetra)) {
+                verificarResposta(ultimaLetra);
+            }
+            manualInput.value = "";
+        }
+    });
+
+    // Fullscreen
+    const btnFull = document.getElementById('btnFullscreen');
+    function toggleFullscreen() {
+        if (!document.fullscreenElement) {
+            document.documentElement.requestFullscreen();
+            btnFull.innerHTML = '✖ Sair Tela';
+        } else {
+            document.exitFullscreen();
+            btnFull.innerHTML = '⛶ Tela Cheia';
         }
     }
-});
+    document.addEventListener('fullscreenchange', () => {
+        btnFull.innerHTML = document.fullscreenElement ? '✖ Sair Tela' : '⛶ Tela Cheia';
+    });
+    btnFull.addEventListener('click', toggleFullscreen);
 
-document.getElementById('btnMusica').addEventListener('click', function(e) {
-    e.stopPropagation(); 
-    somAtivo = !somAtivo;
-    if (somAtivo) { this.textContent = "🔊 Som"; this.style.background = "linear-gradient(135deg, #a7d489, #6f9e3f)"; audMusica.play().catch(()=>{}); }
-    else { this.textContent = "🔇 Som"; this.style.background = ""; audMusica.pause(); }
-});
+    // Voltar para tela inicial
+    const btnVoltar = document.getElementById('btnVoltar');
+    btnVoltar.addEventListener('click', () => {
+        window.location.href = 'https://ilha-das-vogais.vercel.app/';
+    });
 
-document.getElementById('btnFullscreen').addEventListener('click', function(e) {
-    e.stopPropagation(); 
-    if (!document.fullscreenElement) { document.documentElement.requestFullscreen().catch(err=>{}); this.textContent = "⛶ Sair"; }
-    else { document.exitFullscreen(); this.textContent = "⛶ Tela Cheia"; }
-});
-
-// CORREÇÃO DEFINITIVA: Único escopo para o redirecionamento imediato e sem banner
-document.getElementById('btnVoltar').addEventListener('click', (e) => {
-    e.stopPropagation();
-    window.location.href = "https://ilha-das-vogais.vercel.app/";
-});
-
-// Ações dos novos botões Manuais (Avançar e Retroceder)
-document.getElementById('btnAnterior').addEventListener('click', (e) => {
-    e.stopPropagation();
-    clearTimeout(temporizadorAvanco); // Cancela o timer automático pendente para evitar pulos duplos
-    if (indiceFila > 0) {
-        indiceFila--;
-        carregarPergunta();
+    // Música ambiente (floresta suave)
+    const musicaFundo = new Audio();
+    musicaFundo.src = 'musica_fundo.mp3';
+    musicaFundo.loop = true;
+    musicaFundo.volume = 0.2;
+    let musicaAtiva = false;
+    const btnMusica = document.getElementById('btnMusica');
+    function toggleMusica() {
+        if (!musicaAtiva) {
+            musicaFundo.play().then(() => {
+                musicaAtiva = true;
+                btnMusica.innerHTML = '🎵 Música ON';
+                btnMusica.style.background = "linear-gradient(135deg, #c8e6a0, #8bc34a)";
+            }).catch(() => {
+                musicaAtiva = false;
+                btnMusica.innerHTML = '🔇 Música OFF';
+            });
+        } else {
+            musicaFundo.pause();
+            musicaAtiva = false;
+            btnMusica.innerHTML = '🔇 Música OFF';
+            btnMusica.style.background = "linear-gradient(135deg, #d9b48b, #b87c4a)";
+        }
     }
-});
+    btnMusica.addEventListener('click', toggleMusica);
+    const ativarMusicaNaInteracao = () => {
+        if (!musicaAtiva && musicaFundo.paused) {
+            musicaFundo.play().catch(()=>{}).then(() => {
+                musicaAtiva = true;
+                btnMusica.innerHTML = '🎵 Música ON';
+                btnMusica.style.background = "linear-gradient(135deg, #c8e6a0, #8bc34a)";
+            });
+        }
+        document.removeEventListener('click', ativarMusicaNaInteracao);
+        document.removeEventListener('touchstart', ativarMusicaNaInteracao);
+    };
+    document.addEventListener('click', ativarMusicaNaInteracao);
+    document.addEventListener('touchstart', ativarMusicaNaInteracao);
 
-document.getElementById('btnProxima').addEventListener('click', (e) => {
-    e.stopPropagation();
-    clearTimeout(temporizadorAvanco); // Cancela o timer automático pendente para evitar pulos duplos
-    if (indiceFila < filaPerguntas.length - 1) {
-        indiceFila++;
-        carregarPergunta();
+    // Elementos flutuantes
+    function criarFlutuantes() {
+        const simbolos = ['🧚‍♀️', '🧙‍♂️', '🍄', '🌿', '✨', '🐞', '🦋', '🍂', '🔮'];
+        setInterval(() => {
+            const el = document.createElement('div');
+            el.className = 'flutuante';
+            el.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+            el.style.fontSize = (Math.random() * 28 + 20) + 'px';
+            el.style.left = Math.random() * 100 + '%';
+            el.style.top = '-30px';
+            el.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            document.body.appendChild(el);
+            setTimeout(() => el.remove(), 13000);
+        }, 4200);
     }
-});
-
-document.getElementById('btnRestart').addEventListener('click', (e) => { e.stopPropagation(); if(confirm("Deseja recomeçar a jornada do início?")) iniciarJornada(); });
-document.getElementById('btnJogarNovamente').addEventListener('click', (e) => { e.stopPropagation(); iniciarJornada(); });
-
-document.addEventListener('keydown', (e) => {
-    if (respondida) return;
-    if (e.key === "Backspace") return;
-    if (/[a-zç]/i.test(e.key) && e.key.length === 1) { checarResposta(e.key); }
-});
-
-window.onload = () => { iniciarJornada(); };
+    criarFlutuantes();
+    carregarPergunta();
 </script>
 </body>
 </html>
