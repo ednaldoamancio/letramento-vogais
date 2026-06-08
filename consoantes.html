@@ -3,19 +3,15 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>🌿 Reino das Consoantes · Fadas, Gnomos & Duendes ✨</title>
-    <!-- Fonte Playwrite Brasil para o modo manual -->
+    <title>🌿 Reino das Consoantes · Aventuras Ortográficas ✨</title>
+    
     <link href="https://fonts.googleapis.com/css2?family=Playwrite+BR:wght@100..400&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    
     <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            user-select: none;
-        }
-
+        * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        
         body {
             min-height: 100vh;
             background: linear-gradient(145deg, #1a4d2a 0%, #0e3820 40%, #0a2a18 100%);
@@ -26,554 +22,538 @@
             padding: 20px;
             position: relative;
             overflow-x: hidden;
+            transition: background 1s ease;
         }
 
-        /* decoração floresta encantada */
-        body::before {
-            content: "🧚‍♀️🍄🌿";
-            position: fixed;
-            bottom: 10px;
-            left: 10px;
-            font-size: 55px;
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: 0;
+        .bg-emoji { position: fixed; font-size: 60px; opacity: 0.15; pointer-events: none; z-index: 0; transition: all 0.5s; }
+        #bg-emoji-esq { bottom: 10px; left: 10px; }
+        #bg-emoji-dir { top: 20px; right: 20px; }
+
+        .flutuante { position: fixed; pointer-events: none; z-index: 1; font-size: 28px; animation: flutuarMagia 14s infinite ease-in-out; filter: drop-shadow(0 0 6px gold); }
+        @keyframes flutuarMagia { 0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; } 50% { transform: translate(20px, -25px) rotate(12deg); opacity: 0.9; } 100% { transform: translate(-5px, -10px) rotate(5deg); opacity: 0.3; } }
+
+        .container-principal {
+            max-width: 850px; width: 100%; background: rgba(30, 20, 45, 0.75); backdrop-filter: blur(12px); border-radius: 40px; padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,200,0.3); border: 2px solid #ffdd99; position: relative; z-index: 10;
         }
 
-        body::after {
-            content: "🧙‍♂️🍂✨";
-            position: fixed;
-            top: 20px;
-            right: 20px;
-            font-size: 65px;
-            opacity: 0.15;
-            pointer-events: none;
-            z-index: 0;
-        }
+        .tela { display: none; animation: fadeIn 0.5s ease-in-out; }
+        .tela.ativa { display: block; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
 
-        .flutuante {
-            position: fixed;
-            pointer-events: none;
-            z-index: 1;
-            font-size: 28px;
-            animation: flutuarMagia 14s infinite ease-in-out;
-            filter: drop-shadow(0 0 6px gold);
-        }
+        .menu-titulo { text-align: center; font-family: 'Cinzel Decorative', cursive; color: #ffdd99; font-size: 2.2rem; margin-bottom: 10px; text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
+        .menu-subtitulo { text-align: center; color: #e2f0c4; font-family: 'Dancing Script', cursive; font-size: 1.5rem; margin-bottom: 30px; }
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
+        .card-aventura { background: rgba(255, 255, 255, 0.1); border: 2px solid transparent; border-radius: 20px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 10px; }
+        .card-aventura:hover { background: rgba(255, 255, 255, 0.2); border-color: #ffdd99; transform: translateY(-5px); }
+        .card-icone { font-size: 3rem; }
+        .card-titulo { font-weight: bold; color: #fff; font-size: 1.2rem; }
+        .card-desc { color: #ccc; font-size: 0.9rem; }
 
-        @keyframes flutuarMagia {
-            0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; }
-            50% { transform: translate(20px, -25px) rotate(12deg); opacity: 0.9; }
-            100% { transform: translate(-5px, -10px) rotate(5deg); opacity: 0.3; }
-        }
+        .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        .btn-geral { background: linear-gradient(135deg, #ffecb3, #ffd966); border: none; font-family: 'Nunito', sans-serif; font-weight: bold; padding: 8px 16px; border-radius: 40px; font-size: 0.9rem; cursor: pointer; transition: 0.1s; box-shadow: 0 3px 0 #a0662c; display: inline-flex; align-items: center; gap: 6px; color: #2c1a3a; }
+        .btn-geral:active { transform: translateY(2px); box-shadow: 0 1px 0 #a0662c; }
+        .btn-voltar { background: linear-gradient(135deg, #ff9a9e, #fecfef); color: #333; }
 
-        .game-container {
-            max-width: 850px;
-            width: 100%;
-            background: rgba(30, 20, 45, 0.65);
-            backdrop-filter: blur(12px);
-            border-radius: 64px;
-            padding: 20px 24px 35px;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,200,0.3);
-            border: 2px solid #ffdd99;
-            position: relative;
-            z-index: 10;
-        }
+        .header-magico { text-align: center; margin-bottom: 15px; }
+        .titulo { font-family: 'Cinzel Decorative', cursive; font-size: 1.7rem; color: #ffcf7a; display: inline-flex; align-items: center; gap: 12px; }
 
-        .top-bar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            gap: 12px;
-            margin-bottom: 20px;
-            flex-wrap: wrap;
-        }
-        .btn-acao {
-            background: linear-gradient(135deg, #ffecb3, #ffd966);
-            border: none;
-            font-family: 'Nunito', sans-serif;
-            font-weight: bold;
-            padding: 8px 16px;
-            border-radius: 40px;
-            font-size: 0.9rem;
-            cursor: pointer;
-            transition: 0.1s;
-            box-shadow: 0 3px 0 #a0662c;
-            display: inline-flex;
-            align-items: center;
-            gap: 6px;
-        }
-        .btn-acao:active { transform: translateY(2px); box-shadow: 0 1px 0 #a0662c; }
-        .btn-voltar { background: linear-gradient(135deg, #a7d489, #6f9e3f); color: #2c2b1f; }
-        .btn-fullscreen { background: linear-gradient(135deg, #6ec8e0, #2c8faa); }
-        .btn-musica { background: linear-gradient(135deg, #d9b48b, #b87c4a); }
+        .question-area { background: rgba(0, 0, 0, 0.4); border-radius: 40px; padding: 25px 15px; margin: 15px 0; border: 1px solid rgba(255,255,255,0.2); text-align: center; }
+        .imagem-dica { font-size: 70px; margin-bottom: 10px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
+        
+        .palavra-incompleta { font-size: 2.2rem; font-weight: 800; letter-spacing: 8px; background: #fff0cc; display: inline-block; padding: 12px 28px; border-radius: 50px; color: #2c1a3a; font-family: 'Cinzel Decorative', monospace; box-shadow: inset 0 0 0 2px #ffbc6e, 0 8px 18px rgba(0,0,0,0.6); }
+        .dica-texto { margin-top: 15px; font-size: 0.95rem; color: #ffe6aa; background: rgba(0,0,0,0.6); display: inline-block; padding: 8px 20px; border-radius: 40px; }
 
-        .header-magico {
-            text-align: center;
-            margin-bottom: 15px;
-        }
-        .titulo {
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: 1.7rem;
-            background: linear-gradient(135deg, #f9e7b3, #ffcf7a);
-            -webkit-background-clip: text;
-            background-clip: text;
-            color: transparent;
-            display: inline-flex;
-            align-items: center;
-            gap: 12px;
-        }
-        .subtitulo {
-            font-family: 'Dancing Script', cursive;
-            color: #e2f0c4;
-            font-size: 1rem;
-        }
+        .opcoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 25px 0 15px; }
+        .btn-opcao { background: linear-gradient(145deg, #ffffff, #e6e6e6); border: none; width: auto; min-width: 80px; height: 60px; padding: 0 20px; border-radius: 30px; font-size: 1.8rem; font-weight: bold; font-family: 'Cinzel Decorative', monospace; color: #111; cursor: pointer; transition: 0.1s; box-shadow: 0 6px 0 #999; text-transform: lowercase; }
+        .btn-opcao:active { transform: translateY(4px); box-shadow: 0 2px 0 #999; }
 
-        .question-area {
-            background: rgba(20, 15, 35, 0.7);
-            border-radius: 50px;
-            padding: 25px 15px;
-            margin: 15px 0;
-            border: 1px solid #ffdd88;
-            text-align: center;
-        }
-        .imagem-dica {
-            font-size: 85px;
-            filter: drop-shadow(0 8px 12px rgba(0,0,0,0.3));
-            margin-bottom: 15px;
-            background: rgba(255,245,200,0.2);
-            display: inline-block;
-            border-radius: 80px;
-            padding: 8px 25px;
-        }
-        .palavra-incompleta {
-            font-size: 2.5rem;
-            font-weight: 800;
-            letter-spacing: 12px;
-            background: #fff0cc;
-            display: inline-block;
-            padding: 12px 28px;
-            border-radius: 70px;
-            color: #2c1a3a;
-            font-family: 'Cinzel Decorative', monospace;
-            box-shadow: inset 0 0 0 2px #ffbc6e, 0 8px 18px black;
-        }
-        .dica-texto {
-            margin-top: 18px;
-            font-size: 0.95rem;
-            color: #ffe6aa;
-            background: rgba(0,0,0,0.4);
-            display: inline-block;
-            padding: 6px 18px;
-            border-radius: 40px;
-        }
+        .manual-area { margin: 15px auto 5px; text-align: center; }
+        .manual-input { font-family: 'Playwrite BR', cursive; font-size: 1.8rem; width: 110px; text-align: center; padding: 5px; border-radius: 40px; border: 3px solid #ffcd7e; background: #fff9e8; color: #2c1a3a; font-weight: bold; text-transform: lowercase; outline: none; }
+        .manual-label { font-size: 0.85rem; color: #ffeaac; display: block; margin-bottom: 5px; }
 
-        /* Opções de consoantes (minúsculas) */
-        .opcoes {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            gap: 14px;
-            margin: 25px 0 15px;
-        }
-        .btn-consoante {
-            background: linear-gradient(145deg, #ffecb3, #ffd966);
-            border: none;
-            width: 70px;
-            height: 70px;
-            border-radius: 50%;
-            font-size: 2rem;
-            font-weight: bold;
-            font-family: 'Cinzel Decorative', monospace;
-            color: #3a2a1f;
-            cursor: pointer;
-            transition: 0.1s;
-            box-shadow: 0 6px 0 #a0662c;
-            text-transform: lowercase;
-        }
-        .btn-consoante:active { transform: translateY(4px); box-shadow: 0 2px 0 #a0662c; }
+        .feedback { font-size: 1.1rem; text-align: center; margin: 15px 0; min-height: 55px; background: rgba(0,0,0,0.6); border-radius: 40px; padding: 12px; color: #ffefb9; }
 
-        /* Modo manual com fonte Playwrite Brasil */
-        .manual-area {
-            margin: 15px auto 5px;
-            text-align: center;
-        }
-        .manual-input {
-            font-family: 'Playwrite BR', cursive;
-            font-size: 2rem;
-            width: 100px;
-            text-align: center;
-            padding: 8px;
-            border-radius: 60px;
-            border: 3px solid #ffcd7e;
-            background: #fff9e8;
-            color: #2c1a3a;
-            font-weight: bold;
-            text-transform: lowercase;
-            outline: none;
-        }
-        .manual-label {
-            font-size: 0.85rem;
-            color: #ffeaac;
-            display: block;
-            margin-bottom: 5px;
-        }
+        .score-area { display: flex; justify-content: space-around; align-items: center; margin-top: 10px; flex-wrap: wrap; gap: 10px; }
+        .pontos { background: #ffcf8a; padding: 5px 15px; border-radius: 40px; color: #2c1a2e; font-weight: bold; }
 
-        .feedback {
-            font-size: 1rem;
-            text-align: center;
-            margin: 15px 0 10px;
-            min-height: 55px;
-            background: rgba(0,0,0,0.5);
-            border-radius: 80px;
-            padding: 8px;
-            color: #ffefb9;
-        }
-        .score-area {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin: 10px 5px 0;
-            flex-wrap: wrap;
-            gap: 10px;
-        }
-        .pontos {
-            background: #ffcf8a;
-            padding: 5px 15px;
-            border-radius: 40px;
-            color: #2c1a2e;
-            font-weight: bold;
-        }
-        .reset-btn {
-            background: linear-gradient(135deg, #b5651e, #8b4513);
-            border: none;
-            font-family: 'Nunito', sans-serif;
-            font-weight: bold;
-            padding: 8px 18px;
-            border-radius: 50px;
-            font-size: 0.9rem;
-            color: white;
-            cursor: pointer;
-            box-shadow: 0 4px 0 #4a2a0a;
-            transition: 0.1s;
-        }
-        .reset-btn:active { transform: translateY(2px); box-shadow: 0 2px 0 #4a2a0a; }
-        footer {
-            font-size: 0.7rem;
-            text-align: center;
-            margin-top: 20px;
-            color: #b9d2a5;
-        }
-        @media (max-width: 550px) {
-            .palavra-incompleta { font-size: 1.5rem; letter-spacing: 6px; padding: 8px 12px; }
-            .btn-consoante { width: 55px; height: 55px; font-size: 1.5rem; }
-            .manual-input { font-size: 1.5rem; width: 80px; }
-            .top-bar { justify-content: center; }
+        @media (max-width: 600px) {
+            .palavra-incompleta { font-size: 1.5rem; letter-spacing: 4px; padding: 10px 15px; }
+            .btn-opcao { font-size: 1.5rem; min-width: 60px; height: 50px; }
+            .menu-titulo { font-size: 1.8rem; }
         }
         .acertou-glow { animation: brilho 0.6s ease-out; }
-        @keyframes brilho {
-            0% { text-shadow: 0 0 0 gold; }
-            50% { text-shadow: 0 0 20px #ffdd77, 0 0 30px #ffaa33; }
-            100% { text-shadow: 0 0 0 gold; }
-        }
-        .desabilitado {
-            pointer-events: none;
-            opacity: 0.6;
-        }
+        @keyframes brilho { 0% { text-shadow: 0 0 0 gold; } 50% { text-shadow: 0 0 20px #ffdd77, 0 0 30px #ffaa33; } 100% { text-shadow: 0 0 0 gold; } }
     </style>
 </head>
 <body>
 
-<div class="game-container">
-    <div class="top-bar">
-        <button class="btn-acao btn-voltar" id="btnVoltar">🏠 Tela Inicial</button>
-        <div style="display: flex; gap: 10px;">
-            <button class="btn-acao btn-fullscreen" id="btnFullscreen">⛶ Tela Cheia</button>
-            <button class="btn-acao btn-musica" id="btnMusica">🎵 Música OFF</button>
+    <div id="bg-emoji-esq" class="bg-emoji">🧚‍♀️</div>
+    <div id="bg-emoji-dir" class="bg-emoji">🧙‍♂️</div>
+
+    <div class="container-principal">
+        
+        <div id="telaMenu" class="tela ativa">
+            <h1 class="menu-titulo">✨ Reino das Consoantes ✨</h1>
+            <p class="menu-subtitulo">Escolha sua aventura ortográfica</p>
+            
+            <div class="menu-grid">
+                <div class="card-aventura" onclick="iniciarAventura('mn')">
+                    <div class="card-icone">🏴‍☠️</div>
+                    <div class="card-titulo">Tesouro do M e N</div>
+                    <div class="card-desc">Uso de M antes de P e B.</div>
+                </div>
+                <div class="card-aventura" onclick="iniciarAventura('ssc')">
+                    <div class="card-icone">🚀</div>
+                    <div class="card-titulo">Espaço Sideral</div>
+                    <div class="card-desc">Descubra quando usar SS ou Ç.</div>
+                </div>
+                <div class="card-aventura" onclick="iniciarAventura('rrr')">
+                    <div class="card-icone">🦁</div>
+                    <div class="card-titulo">Safári Animal</div>
+                    <div class="card-desc">O R fraco e o RR forte.</div>
+                </div>
+                <div class="card-aventura" onclick="iniciarAventura('sz')">
+                    <div class="card-icone">🐋</div>
+                    <div class="card-titulo">Mergulho S e Z</div>
+                    <div class="card-desc">Palavras com final em S ou Z.</div>
+                </div>
+            </div>
+        </div>
+
+        <div id="telaJogo" class="tela">
+            <div class="top-bar">
+                <button class="btn-geral btn-voltar" onclick="voltarAoMenu()">⬅ Trocar Aventura</button>
+                <button class="btn-geral" id="btnFullscreen">⛶ Tela Cheia</button>
+            </div>
+
+            <div class="header-magico">
+                <div class="titulo" id="tituloJogo">🧚‍♀️ Aventura ✨</div>
+            </div>
+
+            <div class="question-area">
+                <div class="imagem-dica" id="imagemDica">🍄</div>
+                <div class="palavra-incompleta" id="palavraDisplay">_ _ _</div>
+                <div class="dica-texto" id="dicaTexto">✨ Qual letra está faltando? ✨</div>
+            </div>
+
+            <div class="opcoes" id="opcoesContainer"></div>
+
+            <div class="manual-area">
+                <div class="manual-label">✍️ Ou digite a resposta aqui:</div>
+                <input type="text" class="manual-input" id="manualInput" maxlength="2" placeholder="?" autocomplete="off" spellcheck="false" inputmode="none">
+            </div>
+
+            <div class="feedback" id="feedbackMsg">🌟 Escolha uma opção ou digite a resposta!</div>
+
+            <div class="score-area">
+                <div class="pontos">🏆 Pontos: <span id="pontuacao">0</span></div>
+                <div class="pontos">🎯 Palavra: <span id="nivelAtual">1</span> / <span id="totalPerguntas">10</span></div>
+            </div>
         </div>
     </div>
-
-    <div class="header-magico">
-        <div class="titulo">
-            <span>🧚‍♀️✨</span> Reino das Consoantes <span>🧙‍♂️🍄</span>
-        </div>
-        <div class="subtitulo">Clique na consoante minúscula ou digite a letra que falta!</div>
-    </div>
-
-    <div class="question-area">
-        <div class="imagem-dica" id="imagemDica">🍄</div>
-        <div class="palavra-incompleta" id="palavraDisplay">_ _ _</div>
-        <div class="dica-texto" id="dicaTexto">✨ Qual consoante está faltando? ✨</div>
-    </div>
-
-    <!-- Botões das consoantes (minúsculas) -->
-    <div class="opcoes" id="opcoesContainer"></div>
-
-    <!-- Modo manual com fonte especial -->
-    <div class="manual-area">
-        <div class="manual-label">✍️ Ou digite a consoante aqui (modo manual):</div>
-        <input type="text" class="manual-input" id="manualInput" maxlength="1" placeholder="?" autocomplete="off" spellcheck="false">
-    </div>
-
-    <div class="feedback" id="feedbackMsg">🌟 Escolha uma letra ou digite a consoante que falta!</div>
-
-    <div class="score-area">
-        <div class="pontos">🏆 Pontos: <span id="pontuacao">0</span></div>
-        <div class="pontos">🧙 Palavra: <span id="nivelAtual">1</span> / <span id="totalPerguntas">0</span></div>
-        <button class="reset-btn" id="resetBtn">🔄 Novo Jogo</button>
-    </div>
-    <footer>🌼 Ao acertar, a palavra se completa e avançamos automaticamente! 🌼</footer>
-</div>
 
 <script>
-    // ==================== PERGUNTAS CORRIGIDAS ====================
-    // FADA agora é FA_A (índice 2)
-    const perguntas = [
-        { imagem: "🧚", palavra: "FADA", lacunaIdx: 2, consoante: "d", dica: "Ela voa com asas brilhantes" },
-        { imagem: "🍄", palavra: "GNOMO", lacunaIdx: 0, consoante: "g", dica: "Pequeno ser que vive em cogumelos" },
-        { imagem: "🧙", palavra: "MAGO", lacunaIdx: 2, consoante: "g", dica: "Usa varinha e lança feitiços" },
-        { imagem: "🐉", palavra: "DRAGAO", lacunaIdx: 1, consoante: "r", dica: "Criatura alada que cospe fogo" },
-        { imagem: "🧝", palavra: "ELFO", lacunaIdx: 1, consoante: "l", dica: "Ser imortal das florestas" },
-        { imagem: "🗡️", palavra: "ESPADA", lacunaIdx: 1, consoante: "s", dica: "Arma dos cavaleiros (falta consoante)" },
-        { imagem: "🪄", palavra: "VARINHA", lacunaIdx: 2, consoante: "r", dica: "Objeto mágico que conjura magia" },
-        { imagem: "👑", palavra: "PRINCESA", lacunaIdx: 4, consoante: "c", dica: "Realeza dos reinos encantados" },
-        { imagem: "🐸", palavra: "SAPO", lacunaIdx: 2, consoante: "p", dica: "Pode se transformar em príncipe" },
-        { imagem: "🦄", palavra: "UNICORNIO", lacunaIdx: 3, consoante: "c", dica: "Cavalo mágico com chifre" },
-        { imagem: "🧚‍♀️", palavra: "FADINHA", lacunaIdx: 2, consoante: "d", dica: "Pequena fada que concede desejos" },
-        { imagem: "🍃", palavra: "DUENDE", lacunaIdx: 0, consoante: "d", dica: "Travesso e guardião da natureza" },
-        { imagem: "🏰", palavra: "CASTELO", lacunaIdx: 2, consoante: "s", dica: "Moradia de reis e rainhas" },
-        { imagem: "📜", palavra: "PERGAMINHO", lacunaIdx: 3, consoante: "g", dica: "Rolo antigo com feitiços" },
-        { imagem: "📖", palavra: "CONTO", lacunaIdx: 2, consoante: "n", dica: "História encantada do bosque" },
-        { imagem: "✨", palavra: "ENCANTADO", lacunaIdx: 2, consoante: "c", dica: "Cheio de magia e mistério" },
-        { imagem: "🌳", palavra: "BOSQUE", lacunaIdx: 2, consoante: "s", dica: "Floresta onde vivem os duendes" },
-        { imagem: "👑", palavra: "REINO", lacunaIdx: 3, consoante: "n", dica: "Terra governada por um rei ou rainha" },
-        { imagem: "🌲", palavra: "FLORESTA", lacunaIdx: 1, consoante: "l", dica: "Lar das fadas e gnomos" },
-        { imagem: "🚗", palavra: "CARROAGEM", lacunaIdx: 6, consoante: "g", dica: "Veículo puxado por cavalos mágicos" },
-        { imagem: "🐊", palavra: "CROCODILO", lacunaIdx: 5, consoante: "d", dica: "Reptil feroz do pântano encantado" },
-        { imagem: "🐦", palavra: "PASSAROS", lacunaIdx: 2, consoante: "s", dica: "Aves que cantam no bosque" },
-        { imagem: "🌸", palavra: "FLORES", lacunaIdx: 1, consoante: "l", dica: "Coloridas e perfumadas, enfeitam o jardim" },
-        { imagem: "🪟", palavra: "JANELA", lacunaIdx: 2, consoante: "n", dica: "Por onde entra a luz do reino" },
-        { imagem: "🤴", palavra: "PRINCIPE", lacunaIdx: 4, consoante: "c", dica: "Futuro rei do reino" },
-        { imagem: "👑", palavra: "REI", lacunaIdx: 0, consoante: "r", dica: "Monarca que governa" },
-        { imagem: "👸", palavra: "RAINHA", lacunaIdx: 3, consoante: "n", dica: "Esposa do rei, cheia de sabedoria" },
-        { imagem: "⚜️", palavra: "CORTE", lacunaIdx: 2, consoante: "r", dica: "Lugar onde a realeza se reúne" }
-    ];
+    // Construtor auxiliar para diminuir o tamanho visual do código
+    const q = (i, p, l, r, o, d) => ({ imagem: i, palavra_completa: p, lacuna: l, resposta: r, opcoes: o, dica: d });
 
+    // --- BANCO DE DADOS DAS AVENTURAS (50 palavras cada) ---
+    const bancoAventuras = {
+        mn: {
+            titulo: "🏴‍☠️ Tesouro do M e N 🦜",
+            corFundo: "linear-gradient(145deg, #0d2138 0%, #154360 40%, #0a1724 100%)",
+            emojis: ["⚓", "💎", "🏴‍☠️", "🗺️", "🦜", "🪙"],
+            perguntas: [
+                q("🥁","TAMBOR","TA_BOR","m",["m","n"],"Antes de P e B, usamos a letra..."),
+                q("🪑","BANCO","BA_CO","n",["m","n"],"Antes de C, não usamos o M!"),
+                q("🕊️","POMBA","PO_BA","m",["m","n"],"Olha a letra B ali! Quem vem antes?"),
+                q("🏕️","CAMPO","CA_PO","m",["m","n"],"Lembre da regra do P e B."),
+                q("🪮","PENTE","PE_TE","n",["m","n"],"Antes da letra T, qual usamos?"),
+                q("🚒","BOMBEIRO","BO_BEIRO","m",["m","n"],"Lembre da regra do P e B."),
+                q("🥧","EMPADA","E_PADA","m",["m","n"],"Olha o P ali!"),
+                q("🧹","LIMPEZA","LI_PEZA","m",["m","n"],"M antes de P e B!"),
+                q("🥋","CINTURA","CI_TURA","n",["m","n"],"Antes de T usamos o..."),
+                q("🎤","CANTO","CA_TO","n",["m","n"],"Antes de T usamos o N."),
+                q("🤕","TOMBO","TO_BO","m",["m","n"],"Atenção ao B!"),
+                q("🛒","COMPRA","CO_PRA","m",["m","n"],"Atenção ao P!"),
+                q("🌍","MUNDO","MU_DO","n",["m","n"],"Antes de D usamos N."),
+                q("🧣","MANTA","MA_TA","n",["m","n"],"Antes de T, usamos o..."),
+                q("💃","SAMBA","SA_BA","m",["m","n"],"Antes do B!"),
+                q("⏱️","TEMPO","TE_PO","m",["m","n"],"Antes de P é M!"),
+                q("💡","LÂMPADA","LÂ_PADA","m",["m","n"],"Olha o P ali."),
+                q("🦷","DENTE","DE_TE","n",["m","n"],"Antes de T usamos o N."),
+                q("🌉","PONTE","PO_TE","n",["m","n"],"Pense bem antes do T."),
+                q("🐆","ONÇA","O_ÇA","n",["m","n"],"Antes do Ç, usamos..."),
+                q("👤","SOMBRA","SO_BRA","m",["m","n"],"Antes de B usamos M."),
+                q("🎋","BAMBU","BA_BU","m",["m","n"],"Atenção ao B!"),
+                q("📥","CAÇAMBA","CAÇA_BA","m",["m","n"],"Antes de B, quem vem?"),
+                q("🔏","CARIMBO","CARI_BO","m",["m","n"],"Atenção ao B."),
+                q("☮️","SÍMBOLO","SÍ_BOLO","m",["m","n"],"Antes de B..."),
+                q("🧟","ZUMBI","ZU_BI","m",["m","n"],"Lembre do B!"),
+                q("💎","BRINCO","BRI_CO","n",["m","n"],"Antes de C, usamos N."),
+                q("🧾","CONTA","CO_TA","n",["m","n"],"Antes do T."),
+                q("🩰","DANÇA","DA_ÇA","n",["m","n"],"Antes do Ç usamos N."),
+                q("⛲","FONTE","FO_TE","n",["m","n"],"Antes do T!"),
+                q("🪝","GANCHO","GA_CHO","n",["m","n"],"Antes de CH usamos N."),
+                q("🏹","ÍNDIO","Í_DIO","n",["m","n"],"Antes do D!"),
+                q("🥪","LANCHE","LA_CHE","n",["m","n"],"Antes de CH, usamos N."),
+                q("🥭","MANGA","MA_GA","n",["m","n"],"Antes de G."),
+                q("💧","PINGO","PI_GO","n",["m","n"],"Antes de G usamos N."),
+                q("📅","QUINTA","QUI_TA","n",["m","n"],"Antes do T."),
+                q("😴","RONCO","RO_CO","n",["m","n"],"Antes de C."),
+                q("😇","SANTO","SA_TO","n",["m","n"],"Antes do T."),
+                q("🎨","TINTA","TI_TA","n",["m","n"],"Antes do T."),
+                q("🌬️","VENTO","VE_TO","n",["m","n"],"Antes do T."),
+                q("🧴","XAMPU","XA_PU","m",["m","n"],"Atenção ao P!"),
+                q("😡","ZANGADO","ZA_GADO","n",["m","n"],"Antes de G."),
+                q("💣","BOMBA","BO_BA","m",["m","n"],"Antes de B."),
+                q("🚚","TOMBADO","TO_BADO","m",["m","n"],"Atenção ao B."),
+                q("👥","COMPANHIA","CO_PANHIA","m",["m","n"],"Antes de P."),
+                q("⚽","EMPATE","E_PATE","m",["m","n"],"Antes de P usamos M."),
+                q("👑","IMPERADOR","I_PERADOR","m",["m","n"],"Atenção ao P!"),
+                q("👼","ANJO","A_JO","n",["m","n"],"Antes do J."),
+                q("🎸","BANDA","BA_DA","n",["m","n"],"Antes de D."),
+                q("🐼","PANDA","PA_DA","n",["m","n"],"Antes de D usamos N.")
+            ]
+        },
+        ssc: {
+            titulo: "🚀 Espaço Sideral (SS/Ç) 👽",
+            corFundo: "linear-gradient(145deg, #1b0a2a 0%, #2e0854 40%, #000000 100%)",
+            emojis: ["⭐", "🚀", "🛸", "🪐", "👽", "☄️"],
+            perguntas: [
+                q("🍎","MAÇÃ","MA_Ã","ç",["ss","ç"],"Tem som de S, mas vem antes de A com til."),
+                q("🦴","OSSO","O_O","ss",["ss","ç"],"No meio de vogais, para ter som forte."),
+                q("🤡","PALHAÇO","PALHA_O","ç",["ss","ç"],"Termina com O, qual usar?"),
+                q("🍑","PÊSSEGO","PÊ_EGO","ss",["ss","ç"],"Duas letras iguais juntinhas!"),
+                q("👠","CALÇADO","CAL_ADO","ç",["ss","ç"],"Depois da consoante L."),
+                q("🍗","ASSADO","A_ADO","ss",["ss","ç"],"Duas consoantes iguais entre vogais."),
+                q("🍝","MASSA","MA_A","ss",["ss","ç"],"No meio de duas vogais."),
+                q("🚶","PASSEIO","PA_EIO","ss",["ss","ç"],"Entre as vogais A e E."),
+                q("🐦","PÁSSARO","PÁ_ARO","ss",["ss","ç"],"Para ter som forte de S entre vogais."),
+                q("🧹","VASSOURA","VA_OURA","ss",["ss","ç"],"No meio de duas vogais."),
+                q("🧂","AÇÚCAR","A_ÚCAR","ç",["ss","ç"],"Antes do U usamos o..."),
+                q("🐴","CARROÇA","CARRO_A","ç",["ss","ç"],"Termina com A."),
+                q("👦","CAÇULA","CA_ULA","ç",["ss","ç"],"Antes do U."),
+                q("❤️","CORAÇÃO","CORA_ÃO","ç",["ss","ç"],"Terminação comum de palavras fortes."),
+                q("🍽️","LOUÇA","LOU_A","ç",["ss","ç"],"Após o U, usamos..."),
+                q("👨","MOÇO","MO_O","ç",["ss","ç"],"Som de S antes da vogal O."),
+                q("🕳️","POÇO","PO_O","ç",["ss","ç"],"Fundo de onde sai água."),
+                q("🌽","ROÇA","RO_A","ç",["ss","ç"],"Lugar no campo."),
+                q("🍷","TAÇA","TA_A","ç",["ss","ç"],"Antes do A."),
+                q("🫂","ABRAÇO","ABRA_O","ç",["ss","ç"],"Antes da vogal O."),
+                q("⚖️","BALANÇA","BALAN_A","ç",["ss","ç"],"Depois de N."),
+                q("👶","BERÇO","BER_O","ç",["ss","ç"],"Depois de consoante R."),
+                q("🤕","CABEÇA","CABE_A","ç",["ss","ç"],"Antes do A."),
+                q("🏹","CAÇADOR","CA_ADOR","ç",["ss","ç"],"Antes do A."),
+                q("🩰","DANÇA","DAN_A","ç",["ss","ç"],"Depois de N."),
+                q("🌌","ESPAÇO","ESPA_O","ç",["ss","ç"],"Antes do O."),
+                q("💪","FORÇA","FOR_A","ç",["ss","ç"],"Depois de R."),
+                q("🎀","LAÇO","LA_O","ç",["ss","ç"],"Antes do O."),
+                q("🧩","PEDAÇO","PEDA_O","ç",["ss","ç"],"Antes do O."),
+                q("⛲","PRAÇA","PRA_A","ç",["ss","ç"],"Antes do A."),
+                q("💲","PREÇO","PRE_O","ç",["ss","ç"],"Antes do O."),
+                q("🐕","RAÇA","RA_A","ç",["ss","ç"],"Antes do A."),
+                q("🛠️","SERVIÇO","SERVI_O","ç",["ss","ç"],"Antes do O."),
+                q("🖍️","TRAÇO","TRA_O","ç",["ss","ç"],"Antes do O."),
+                q("📝","ASSINAR","A_INAR","ss",["ss","ç"],"Entre vogais."),
+                q("👻","ASSUSTAR","A_USTAR","ss",["ss","ç"],"Entre vogais."),
+                q("🧭","BÚSSOLA","BÚ_OLA","ss",["ss","ç"],"Entre vogais."),
+                q("🌼","CÁSSIA","CÁ_IA","ss",["ss","ç"],"Entre vogais."),
+                q("📏","ESPESSO","ESPE_O","ss",["ss","ç"],"Entre vogais."),
+                q("🦖","FÓSSIL","FÓ_IL","ss",["ss","ç"],"Entre vogais."),
+                q("🐘","GROSSO","GRO_O","ss",["ss","ç"],"Entre vogais."),
+                q("⛪","MISSA","MI_A","ss",["ss","ç"],"Entre vogais."),
+                q("🤝","NOSSO","NO_O","ss",["ss","ç"],"Entre vogais."),
+                q("👣","PASSO","PA_O","ss",["ss","ç"],"Entre vogais."),
+                q("🧍","PESSOA","PE_OA","ss",["ss","ç"],"Entre vogais."),
+                q("👍","POSSO","PO_O","ss",["ss","ç"],"Entre vogais."),
+                q("👩‍🏫","PROFESSOR","PROFE_OR","ss",["ss","ç"],"Entre vogais."),
+                q("🤧","TOSSE","TO_E","ss",["ss","ç"],"Entre vogais."),
+                q("🛌","TRAVESSEIRO","TRAVE_EIRO","ss",["ss","ç"],"Entre vogais."),
+                q("😙","ASSOBIO","A_OBIO","ss",["ss","ç"],"Entre vogais.")
+            ]
+        },
+        rrr: {
+            titulo: "🦁 Safári Animal (R/RR) 🌿",
+            corFundo: "linear-gradient(145deg, #3d2b1f 0%, #4a5d23 40%, #1c280e 100%)",
+            emojis: ["🦁", "🌿", "🐍", "🦓", "🐒", "🐘"],
+            perguntas: [
+                q("🚗","CARRO","CA_O","rr",["r","rr"],"Fale alto! Arranha a garganta bem forte!"),
+                q("🕷️","ARANHA","A_ANHA","r",["r","rr"],"Fale alto! A língua tremeu no céu da boca?"),
+                q("🐶","CACHORRO","CACHO_O","rr",["r","rr"],"Som forte no meio de duas vogais."),
+                q("🪳","BARATA","BA_ATA","r",["r","rr"],"Pronuncie devagar... tremeu a língua!"),
+                q("🐄","BEZERRO","BEZE_O","rr",["r","rr"],"Som forte arranhado no final!"),
+                q("🦜","ARARA","A_ARA","r",["r","rr"],"A língua treme duas vezes!"),
+                q("⛺","BARRACA","BA_ACA","rr",["r","rr"],"Som forte que arranha!"),
+                q("✏️","BORRACHA","BO_ACHA","rr",["r","rr"],"Som arranhado forte."),
+                q("🐴","BURRO","BU_O","rr",["r","rr"],"Arranha na garganta!"),
+                q("🙂","CARA","CA_A","r",["r","rr"],"Língua treme rápida."),
+                q("👨‍🦲","CARECA","CA_ECA","r",["r","rr"],"Língua treme."),
+                q("🚛","CARRETA","CA_ETA","rr",["r","rr"],"Som forte e arranhado!"),
+                q("👑","COROA","CO_OA","r",["r","rr"],"A língua treme levemente."),
+                q("🏃","CORRIDA","CO_IDA","rr",["r","rr"],"Arranha a garganta!"),
+                q("🔧","FERRAMENTA","FE_AMENTA","rr",["r","rr"],"Som forte no meio."),
+                q("⚓","FERRO","FE_O","rr",["r","rr"],"Som forte final!"),
+                q("🍾","GARRAFA","GA_AFA","rr",["r","rr"],"Som forte que arranha."),
+                q("🦒","GIRAFA","GI_AFA","r",["r","rr"],"Treme a língua!"),
+                q("🐊","JACARÉ","JACA_É","r",["r","rr"],"Língua treme no final."),
+                q("🍝","MACARRÃO","MACA_ÃO","rr",["r","rr"],"Bem forte!"),
+                q("🦆","MARRECO","MA_ECO","rr",["r","rr"],"Arranha a garganta."),
+                q("🧱","MURO","MU_O","r",["r","rr"],"Língua treme no final."),
+                q("⚠️","PERIGO","PE_IGO","r",["r","rr"],"Treme a língua!"),
+                q("🏴‍☠️","PIRATA","PI_ATA","r",["r","rr"],"Treme no meio."),
+                q("🪚","SERROTE","SE_OTE","rr",["r","rr"],"Bem forte e arranhado."),
+                q("🗼","TORRE","TO_E","rr",["r","rr"],"Som arranhado."),
+                q("🦅","URUBU","U_UBU","r",["r","rr"],"Treme a língua."),
+                q("🥄","XAROPE","XA_OPE","r",["r","rr"],"Treme a língua."),
+                q("🫐","AMORA","AMO_A","r",["r","rr"],"Treme no final."),
+                q("🏺","BARRO","BA_O","rr",["r","rr"],"Arranha a garganta."),
+                q("🪟","BEIRADA","BEI_ADA","r",["r","rr"],"Treme a língua."),
+                q("🕳️","BURACO","BU_ACO","r",["r","rr"],"Treme no meio."),
+                q("🏎️","CARRINHO","CA_INHO","rr",["r","rr"],"Arranha forte!"),
+                q("🏜️","CERRADO","CE_ADO","rr",["r","rr"],"Som forte e arranhado."),
+                q("🦉","CORUJA","CO_UJA","r",["r","rr"],"Língua treme."),
+                q("🍲","FAROFA","FA_OFA","r",["r","rr"],"Treme no meio."),
+                q("🚘","GARAGEM","GA_AGEM","r",["r","rr"],"Treme a língua."),
+                q("🧣","GORRO","GO_O","rr",["r","rr"],"Bem forte!"),
+                q("🏺","JARRA","JA_A","rr",["r","rr"],"Som arranhado."),
+                q("🦜","LOURO","LOU_O","r",["r","rr"],"Treme a língua."),
+                q("🟤","MARROM","MA_OM","rr",["r","rr"],"Arranha forte!"),
+                q("⛰️","MORRO","MO_O","rr",["r","rr"],"Arranha a garganta."),
+                q("🥣","PENEIRA","PENEI_A","r",["r","rr"],"Treme no final."),
+                q("🆘","SOCORRO","SOCO_O","rr",["r","rr"],"Fale alto, som forte!"),
+                q("🌍","TERRA","TE_A","rr",["r","rr"],"Som forte e arranhado."),
+                q("🐸","PERERECA","PE_E_ECA","r",["r","rr"],"Treme tudo! (Use apenas R)"),
+                q("🦸","ZORRO","ZO_O","rr",["r","rr"],"Arranha a garganta."),
+                q("🪑","CADEIRA","CADEI_A","r",["r","rr"],"Treme no final."),
+                q("🪵","MADEIRA","MADEI_A","r",["r","rr"],"Treme no final."),
+                q("🐂","TOURO","TOU_O","r",["r","rr"],"Treme a língua.")
+            ]
+        },
+        sz: {
+            titulo: "🐋 Mergulho (S/Z Final) 🌊",
+            corFundo: "linear-gradient(145deg, #001f3f 0%, #0074D9 40%, #001f3f 100%)",
+            emojis: ["🐟", "🌊", "🦈", "🐙", "🐚", "🦀"],
+            perguntas: [
+                q("✏️","LÁPIS","LÁPI_","s",["s","z"],"Item de material escolar."),
+                q("😊","FELIZ","FELI_","z",["s","z"],"Quando estamos muito contentes."),
+                q("🚌","ÔNIBUS","ÔNIBU_","s",["s","z"],"Veículo grande de passageiros."),
+                q("⛲","CHAFARIZ","CHAFARI_","z",["s","z"],"Onde a água jorra na praça."),
+                q("🔟","DEZ","DE_","z",["s","z"],"O número depois do nove."),
+                q("🌳","RAIZ","RAI_","z",["s","z"],"Parte da planta que fica na terra."),
+                q("💡","LUZ","LU_","z",["s","z"],"O contrário de escuridão."),
+                q("🌰","NOZ","NO_","z",["s","z"],"Semente dura que os esquilos comem."),
+                q("🗣️","VOZ","VO_","z",["s","z"],"O som que sai da nossa boca."),
+                q("🖍️","GIZ","GI_","z",["s","z"],"Usado para escrever na lousa."),
+                q("🕊️","PAZ","PA_","z",["s","z"],"Harmonia e tranquilidade."),
+                q("👃","NARIZ","NARI_","z",["s","z"],"Usamos para sentir os cheiros."),
+                q("🦤","AVESTRUZ","AVESTRU_","z",["s","z"],"A maior ave do mundo."),
+                q("🍚","ARROZ","ARRO_","z",["s","z"],"Comida branquinha servida com feijão."),
+                q("🧥","CAPUZ","CAPU_","z",["s","z"],"Cobre a cabeça nos casacos."),
+                q("🩹","CICATRIZ","CICATRI_","z",["s","z"],"Marca que fica depois do machucado."),
+                q("✝️","CRUZ","CRU_","z",["s","z"],"Símbolo com duas linhas que se cruzam."),
+                q("♟️","XADREZ","XADRE_","z",["s","z"],"Jogo de tabuleiro com rei e rainha."),
+                q("🐆","VELOZ","VELO_","z",["s","z"],"Muito rápido."),
+                q("🦁","FEROZ","FERO_","z",["s","z"],"Animal bravo e selvagem."),
+                q("⚖️","JUIZ","JUI_","z",["s","z"],"Aquele que decide as regras no jogo."),
+                q("👦","RAPAZ","RAPA_","z",["s","z"],"Menino jovem."),
+                q("🪶","PERDIZ","PERDI_","z",["s","z"],"Um tipo de ave."),
+                q("🧑‍🎓","APRENDIZ","APRENDI_","z",["s","z"],"Aquele que está aprendendo."),
+                q("🎭","ATRIZ","ATRI_","z",["s","z"],"Mulher que atua em filmes."),
+                q("🏢","MATRIZ","MATRI_","z",["s","z"],"A sede principal de uma empresa."),
+                q("🖌️","VERNIZ","VERNI_","z",["s","z"],"Líquido que dá brilho na madeira."),
+                q("🦅","ALBATROZ","ALBATRO_","z",["s","z"],"Grande ave marinha."),
+                q("🫣","TIMIDEZ","TIMIDE_","z",["s","z"],"Vergonha."),
+                q("📅","MÊS","MÊ_","s",["s","z"],"Tem cerca de 30 dias."),
+                q("3️⃣","TRÊS","TRÊ_","s",["s","z"],"O número depois do dois."),
+                q("👋","ADEUS","ADEU_","s",["s","z"],"Palavra usada para se despedir."),
+                q("🕒","DEPOIS","DEPOI_","s",["s","z"],"O contrário de antes."),
+                q("🇬🇧","INGLÊS","INGLÊ_","s",["s","z"],"Idioma falado na Inglaterra."),
+                q("🇯🇵","JAPONÊS","JAPONÊ_","s",["s","z"],"Quem nasce no Japão."),
+                q("🇵🇹","PORTUGUÊS","PORTUGUÊ_","s",["s","z"],"Idioma que nós falamos."),
+                q("🔙","ATRÁS","ATRÁ_","s",["s","z"],"O contrário de na frente."),
+                q("🦠","VÍRUS","VÍRU_","s",["s","z"],"Causa resfriados."),
+                q("🎁","BÔNUS","BÔNU_","s",["s","z"],"Um prêmio extra."),
+                q("🌴","OÁSIS","OÁSI_","s",["s","z"],"Lugar com água no deserto."),
+                q("⚓","CAIS","CAI_","s",["s","z"],"Onde os navios param."),
+                q("🇧🇷","PAÍS","PAÍ_","s",["s","z"],"O Brasil é um lindo..."),
+                q("🧩","SIMPLES","SIMPLE_","s",["s","z"],"O contrário de complicado."),
+                q("👟","TÊNIS","TÊNI_","s",["s","z"],"Calçado esportivo."),
+                q("☕","PIRES","PIRE_","s",["s","z"],"Pratinho que fica embaixo da xícara."),
+                q("🪻","LILÁS","LILÁ_","s",["s","z"],"Um tom de roxo claro."),
+                q("🍍","ANANÁS","ANANÁ_","s",["s","z"],"Outro nome para o abacaxi."),
+                q("💨","GÁS","GÁ_","s",["s","z"],"Usamos para cozinhar no fogão."),
+                q("⛩️","CHINÊS","CHINÊ_","s",["s","z"],"Quem nasce na China."),
+                q("🇫🇷","FRANCÊS","FRANCÊ_","s",["s","z"],"Quem nasce na França.")
+            ]
+        }
+    };
+
+    // --- VARIÁVEIS DE ESTADO ---
+    let aventuraAtual = null;
+    let perguntasDaRodada = [];
     let indiceAtual = 0;
     let pontuacao = 0;
-    let aguardandoTransicao = false;   // impede múltiplas respostas enquanto aguarda avanço
+    let aguardandoTransicao = false;
     let timeoutProximo = null;
-    let totalPerguntas = perguntas.length;
 
-    // Elementos DOM
+    // --- ELEMENTOS DOM ---
+    const telaMenu = document.getElementById('telaMenu');
+    const telaJogo = document.getElementById('telaJogo');
+    const tituloJogo = document.getElementById('tituloJogo');
     const imagemDica = document.getElementById('imagemDica');
     const palavraDisplay = document.getElementById('palavraDisplay');
     const dicaTexto = document.getElementById('dicaTexto');
     const opcoesContainer = document.getElementById('opcoesContainer');
+    const manualInput = document.getElementById('manualInput');
     const feedbackMsg = document.getElementById('feedbackMsg');
     const pontuacaoSpan = document.getElementById('pontuacao');
     const nivelSpan = document.getElementById('nivelAtual');
     const totalSpan = document.getElementById('totalPerguntas');
-    const resetBtn = document.getElementById('resetBtn');
-    const manualInput = document.getElementById('manualInput');
-    totalSpan.innerText = totalPerguntas;
+    const bgEsq = document.getElementById('bg-emoji-esq');
+    const bgDir = document.getElementById('bg-emoji-dir');
 
-    // Conjunto de consoantes únicas (minúsculas)
-    const todasConsoantes = [...new Set(perguntas.map(p => p.consoante))].sort();
-
-    // Função para exibir palavra com lacuna (underscore)
-    function exibirPalavraComLacuna(palavra, idxLacuna) {
-        let resultado = "";
-        for (let i = 0; i < palavra.length; i++) {
-            if (i === idxLacuna) {
-                resultado += "_ ";
-            } else {
-                resultado += palavra[i] + " ";
-            }
-        }
-        return resultado.trim();
-    }
-
-    // Função para preencher a lacuna visualmente (após acerto)
-    function preencherLacunaVisual(palavra, idxLacuna, letra) {
-        let resultado = "";
-        for (let i = 0; i < palavra.length; i++) {
-            if (i === idxLacuna) {
-                resultado += letra + " ";
-            } else {
-                resultado += palavra[i] + " ";
-            }
-        }
-        return resultado.trim();
-    }
-
-    // Fala a palavra completa
-    function falarPalavra(palavra) {
-        if (!window.speechSynthesis) return;
-        const utterance = new SpeechSynthesisUtterance(palavra.toLowerCase());
-        utterance.lang = 'pt-BR';
-        utterance.rate = 0.8;
-        utterance.pitch = 1.1;
-        window.speechSynthesis.cancel();
-        window.speechSynthesis.speak(utterance);
-    }
-
-    // Avançar para próxima palavra automaticamente após delay
-    function agendarProximaPalavra() {
-        if (timeoutProximo) clearTimeout(timeoutProximo);
-        timeoutProximo = setTimeout(() => {
-            if (indiceAtual < totalPerguntas - 1) {
-                indiceAtual++;
-                carregarPergunta();
-            } else if (indiceAtual === totalPerguntas - 1) {
-                indiceAtual++; // mostra tela de fim
-                carregarPergunta();
-            } else {
-                // fim do jogo: não faz nada, mas reset pode ser usado
-            }
-            aguardandoTransicao = false;
-            timeoutProximo = null;
-        }, 1500);
-    }
-
-    // Processar resposta correta
-    function processarAcerto(consoanteCorreta, perguntaObj) {
-        if (aguardandoTransicao) return;
-        aguardandoTransicao = true;
-        pontuacao += 10;
-        pontuacaoSpan.innerText = pontuacao;
-        // Mostrar palavra completa visualmente
-        const palavraCompletaVis = preencherLacunaVisual(perguntaObj.palavra, perguntaObj.lacunaIdx, consoanteCorreta);
-        palavraDisplay.innerText = palavraCompletaVis;
-        feedbackMsg.innerHTML = `✨✨ Acertou! A consoante "${consoanteCorreta}" completa "${perguntaObj.palavra}"! +10 pontos ✨✨`;
-        falarPalavra(perguntaObj.palavra);
-        palavraDisplay.classList.add('acertou-glow');
-        setTimeout(() => palavraDisplay.classList.remove('acertou-glow'), 600);
-        confetti({ particleCount: 80, spread: 55, origin: { y: 0.5 }, colors: ['#ffd966', '#b0e57c', '#ffb347'] });
-        // Desabilitar inputs
-        desabilitarControles(true);
-        agendarProximaPalavra();
-    }
-
-    function processarErro(consoanteCorreta, perguntaObj) {
-        if (aguardandoTransicao) return;
-        aguardandoTransicao = true;
-        feedbackMsg.innerHTML = `❌ Que pena! A consoante mágica era "${consoanteCorreta}". Vamos praticar! ❌`;
-        // Mostrar a palavra correta por um instante? (opcional, mas ajuda)
-        const palavraCorretaVis = preencherLacunaVisual(perguntaObj.palavra, perguntaObj.lacunaIdx, consoanteCorreta);
-        palavraDisplay.innerText = palavraCorretaVis;
-        falarPalavra(perguntaObj.palavra);
-        confetti({ particleCount: 15, spread: 30, origin: { y: 0.7 }, colors: ['#c0c0c0'], startVelocity: 5 });
-        desabilitarControles(true);
-        agendarProximaPalavra();
-    }
-
-    // Desabilitar/habilitar botões e input manual durante animação
-    function desabilitarControles(desabilitar) {
-        const botoes = document.querySelectorAll('.btn-consoante');
-        botoes.forEach(btn => {
-            if (desabilitar) btn.disabled = true;
-            else btn.disabled = false;
-        });
-        if (desabilitar) manualInput.disabled = true;
-        else manualInput.disabled = false;
-    }
-
-    // Verificar resposta (usada tanto pelos botões quanto pelo input manual)
-    function verificarResposta(letraDigitada) {
-        if (aguardandoTransicao) return;
-        if (indiceAtual >= totalPerguntas) return;
-        const perguntaAtual = perguntas[indiceAtual];
-        const letraNormalizada = letraDigitada.toLowerCase().trim();
-        if (letraNormalizada === "") return;
-        const correta = perguntaAtual.consoante;
-        if (letraNormalizada === correta) {
-            processarAcerto(correta, perguntaAtual);
-        } else {
-            processarErro(correta, perguntaAtual);
-        }
-        // Limpar campo manual após resposta
-        manualInput.value = "";
-    }
-
-    // Criar os botões de consoante (minúsculas)
-    function gerarBotoesConsoantes(perguntaObj) {
-        const opcoes = [perguntaObj.consoante];
-        const outras = todasConsoantes.filter(c => c !== perguntaObj.consoante);
-        const outrasEmbaralhadas = [...outras].sort(() => Math.random() - 0.5);
-        const adicionar = outrasEmbaralhadas.slice(0, 4);
-        opcoes.push(...adicionar);
-        const opcoesFinais = opcoes.sort(() => Math.random() - 0.5);
+    // --- FUNÇÕES DE NAVEGAÇÃO E RODADA ---
+    function iniciarAventura(chave) {
+        aventuraAtual = bancoAventuras[chave];
         
+        // Se for a primeira vez, ou acabaram as palavras do saco, reseta as 50 opções
+        if (!aventuraAtual.naoJogadas || aventuraAtual.naoJogadas.length < 10) {
+            aventuraAtual.naoJogadas = [...aventuraAtual.perguntas];
+        }
+
+        // Embaralha o saco de palavras
+        aventuraAtual.naoJogadas.sort(() => Math.random() - 0.5);
+        
+        // Retira 10 palavras exclusivas para esta rodada e as remove do "saco"
+        perguntasDaRodada = aventuraAtual.naoJogadas.splice(0, 10);
+
+        indiceAtual = 0;
+        pontuacao = 0;
+        pontuacaoSpan.innerText = pontuacao;
+        totalSpan.innerText = perguntasDaRodada.length; // Sempre será 10
+        
+        tituloJogo.innerHTML = aventuraAtual.titulo;
+        document.body.style.background = aventuraAtual.corFundo;
+        bgEsq.innerText = aventuraAtual.emojis[0];
+        bgDir.innerText = aventuraAtual.emojis[1];
+        
+        telaMenu.classList.remove('ativa');
+        telaJogo.classList.add('ativa');
+        
+        carregarPergunta();
+        criarFlutuantesDinâmicos();
+    }
+
+    function voltarAoMenu() {
+        if (timeoutProximo) clearTimeout(timeoutProximo);
+        telaJogo.classList.remove('ativa');
+        telaMenu.classList.add('ativa');
+        document.body.style.background = "linear-gradient(145deg, #1a4d2a 0%, #0e3820 40%, #0a2a18 100%)";
+        bgEsq.innerText = "🧚‍♀️";
+        bgDir.innerText = "🧙‍♂️";
+    }
+
+    // --- LÓGICA DO JOGO ---
+    function carregarPergunta() {
+        if (indiceAtual >= perguntasDaRodada.length) {
+            feedbackMsg.innerHTML = "🎉 PARABÉNS! Você completou esta rodada! 🎉";
+            palavraDisplay.innerText = "FIM!";
+            imagemDica.innerText = "🏆";
+            dicaTexto.innerText = "Volte ao menu para jogar de novo com palavras diferentes!";
+            opcoesContainer.innerHTML = "";
+            manualInput.disabled = true;
+            confetti({ particleCount: 300, spread: 110, origin: { y: 0.6 } });
+            return;
+        }
+
+        aguardandoTransicao = false;
+        const q = perguntasDaRodada[indiceAtual];
+        
+        imagemDica.innerText = q.imagem;
+        dicaTexto.innerText = "✨ " + q.dica + " ✨";
+        palavraDisplay.innerText = q.lacuna.split('').join(' ');
+        
+        gerarBotoesOpcoes(q);
+        
+        nivelSpan.innerText = indiceAtual + 1;
+        feedbackMsg.innerHTML = "🌟 Qual opção completa a palavra corretamente?";
+        
+        manualInput.disabled = false;
+        manualInput.value = "";
+        
+        if (!('ontouchstart' in window) && navigator.maxTouchPoints === 0) {
+            manualInput.focus();
+        }
+    }
+
+    function gerarBotoesOpcoes(pergunta) {
         opcoesContainer.innerHTML = "";
-        opcoesFinais.forEach(letra => {
+        pergunta.opcoes.forEach(opcao => {
             const btn = document.createElement('button');
-            btn.innerText = letra;
-            btn.classList.add('btn-consoante');
-            btn.addEventListener('click', () => verificarResposta(letra));
+            btn.innerText = opcao;
+            btn.className = 'btn-opcao';
+            btn.onclick = () => verificarResposta(opcao);
             opcoesContainer.appendChild(btn);
         });
     }
 
-    function carregarPergunta() {
-        // Limpar timeouts pendentes
-        if (timeoutProximo) {
-            clearTimeout(timeoutProximo);
-            timeoutProximo = null;
-        }
-        aguardandoTransicao = false;
+    function verificarResposta(tentativa) {
+        if (aguardandoTransicao || indiceAtual >= perguntasDaRodada.length) return;
         
-        if (indiceAtual >= totalPerguntas) {
-            // Fim do jogo
-            feedbackMsg.innerHTML = "🎉✨ PARABÉNS! Você completou todo o reino mágico! ✨🎉<br>🧚‍♀️ Fadas, gnomos e duendes te agradecem! 🧙‍♂️";
-            palavraDisplay.innerText = "FIM!";
-            imagemDica.innerText = "🏆✨";
-            dicaTexto.innerText = "Clique em 'Novo Jogo' para mais magia!";
-            opcoesContainer.innerHTML = "";
-            manualInput.disabled = true;
-            desabilitarControles(true);
-            confetti({ particleCount: 300, spread: 110, origin: { y: 0.6 }, colors: ['#ffd966', '#82c91e', '#ffb347'] });
-            return;
+        const q = perguntasDaRodada[indiceAtual];
+        const normalizada = tentativa.toLowerCase().trim();
+        if (normalizada === "") return;
+
+        aguardandoTransicao = true;
+        manualInput.disabled = true;
+        document.querySelectorAll('.btn-opcao').forEach(b => b.disabled = true);
+
+        if (normalizada === q.resposta) {
+            pontuacao += 10;
+            pontuacaoSpan.innerText = pontuacao;
+            palavraDisplay.innerText = q.palavra_completa.split('').join(' ');
+            feedbackMsg.innerHTML = `✨ Excelente! É escrito com "${q.resposta.toUpperCase()}"! ✨`;
+            palavraDisplay.classList.add('acertou-glow');
+            setTimeout(() => palavraDisplay.classList.remove('acertou-glow'), 600);
+            confetti({ particleCount: 80, spread: 60, origin: { y: 0.5 } });
+            falarPalavra(q.palavra_completa);
+        } else {
+            palavraDisplay.innerText = q.palavra_completa.split('').join(' ');
+            feedbackMsg.innerHTML = `❌ Ops! A forma correta usa "${q.resposta.toUpperCase()}". Vamos prestar atenção na próxima!`;
+            falarPalavra(q.palavra_completa);
         }
-        
-        const q = perguntas[indiceAtual];
-        imagemDica.innerText = q.imagem;
-        dicaTexto.innerText = "✨ " + q.dica + " ✨";
-        palavraDisplay.innerText = exibirPalavraComLacuna(q.palavra, q.lacunaIdx);
-        gerarBotoesConsoantes(q);
-        nivelSpan.innerText = indiceAtual + 1;
-        feedbackMsg.innerHTML = "🍄 Escolha uma consoante ou digite a letra que falta!";
-        manualInput.disabled = false;
-        manualInput.value = "";
-        manualInput.focus();
-        desabilitarControles(false);
+
+        timeoutProximo = setTimeout(() => {
+            indiceAtual++;
+            carregarPergunta();
+        }, 2500);
     }
 
-    function resetarJogo() {
-        if (timeoutProximo) clearTimeout(timeoutProximo);
-        indiceAtual = 0;
-        pontuacao = 0;
-        pontuacaoSpan.innerText = "0";
-        aguardandoTransicao = false;
-        carregarPergunta();
-        feedbackMsg.innerHTML = "✨ Novo ciclo de magia! Ajude as criaturas! ✨";
-        confetti({ particleCount: 40, spread: 45, origin: { y: 0.8 }, colors: ['#ffea8c', '#96e6b3'] });
-    }
-
-    resetBtn.addEventListener('click', resetarJogo);
     manualInput.addEventListener('input', (e) => {
-        let val = e.target.value;
-        if (val.length > 0) {
-            const ultimaLetra = val[val.length-1].toLowerCase();
-            if (/[a-z]/.test(ultimaLetra)) {
-                verificarResposta(ultimaLetra);
+        let val = e.target.value.toLowerCase().trim();
+        if (indiceAtual < perguntasDaRodada.length) {
+            const q = perguntasDaRodada[indiceAtual];
+            if (q.resposta.length === val.length) {
+                verificarResposta(val);
             }
-            manualInput.value = "";
         }
     });
+    
+    manualInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') verificarResposta(manualInput.value);
+    });
 
-    // Fullscreen
+    function falarPalavra(palavra) {
+        if (!window.speechSynthesis) return;
+        const utterance = new SpeechSynthesisUtterance(palavra.toLowerCase());
+        utterance.lang = 'pt-BR';
+        utterance.rate = 0.85;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(utterance);
+    }
+
     const btnFull = document.getElementById('btnFullscreen');
-    function toggleFullscreen() {
+    btnFull.addEventListener('click', () => {
         if (!document.fullscreenElement) {
             document.documentElement.requestFullscreen();
             btnFull.innerHTML = '✖ Sair Tela';
@@ -581,74 +561,27 @@
             document.exitFullscreen();
             btnFull.innerHTML = '⛶ Tela Cheia';
         }
-    }
-    document.addEventListener('fullscreenchange', () => {
-        btnFull.innerHTML = document.fullscreenElement ? '✖ Sair Tela' : '⛶ Tela Cheia';
-    });
-    btnFull.addEventListener('click', toggleFullscreen);
-
-    // Voltar para tela inicial
-    const btnVoltar = document.getElementById('btnVoltar');
-    btnVoltar.addEventListener('click', () => {
-        window.location.href = 'https://ilha-das-vogais.vercel.app/';
     });
 
-    // Música ambiente (floresta suave)
-    const musicaFundo = new Audio();
-    musicaFundo.src = 'musica_fundo.mp3';
-    musicaFundo.loop = true;
-    musicaFundo.volume = 0.2;
-    let musicaAtiva = false;
-    const btnMusica = document.getElementById('btnMusica');
-    function toggleMusica() {
-        if (!musicaAtiva) {
-            musicaFundo.play().then(() => {
-                musicaAtiva = true;
-                btnMusica.innerHTML = '🎵 Música ON';
-                btnMusica.style.background = "linear-gradient(135deg, #c8e6a0, #8bc34a)";
-            }).catch(() => {
-                musicaAtiva = false;
-                btnMusica.innerHTML = '🔇 Música OFF';
-            });
-        } else {
-            musicaFundo.pause();
-            musicaAtiva = false;
-            btnMusica.innerHTML = '🔇 Música OFF';
-            btnMusica.style.background = "linear-gradient(135deg, #d9b48b, #b87c4a)";
-        }
-    }
-    btnMusica.addEventListener('click', toggleMusica);
-    const ativarMusicaNaInteracao = () => {
-        if (!musicaAtiva && musicaFundo.paused) {
-            musicaFundo.play().catch(()=>{}).then(() => {
-                musicaAtiva = true;
-                btnMusica.innerHTML = '🎵 Música ON';
-                btnMusica.style.background = "linear-gradient(135deg, #c8e6a0, #8bc34a)";
-            });
-        }
-        document.removeEventListener('click', ativarMusicaNaInteracao);
-        document.removeEventListener('touchstart', ativarMusicaNaInteracao);
-    };
-    document.addEventListener('click', ativarMusicaNaInteracao);
-    document.addEventListener('touchstart', ativarMusicaNaInteracao);
+    let intervaloFlutuantes;
+    function criarFlutuantesDinâmicos() {
+        if (intervaloFlutuantes) clearInterval(intervaloFlutuantes);
+        document.querySelectorAll('.flutuante').forEach(el => el.remove());
 
-    // Elementos flutuantes
-    function criarFlutuantes() {
-        const simbolos = ['🧚‍♀️', '🧙‍♂️', '🍄', '🌿', '✨', '🐞', '🦋', '🍂', '🔮'];
-        setInterval(() => {
+        intervaloFlutuantes = setInterval(() => {
+            if (!aventuraAtual) return;
+            const simbs = aventuraAtual.emojis;
             const el = document.createElement('div');
             el.className = 'flutuante';
-            el.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
-            el.style.fontSize = (Math.random() * 28 + 20) + 'px';
+            el.innerText = simbs[Math.floor(Math.random() * simbs.length)];
+            el.style.fontSize = (Math.random() * 25 + 20) + 'px';
             el.style.left = Math.random() * 100 + '%';
-            el.style.top = '-30px';
-            el.style.animationDuration = (Math.random() * 10 + 8) + 's';
+            el.style.top = '-40px';
+            el.style.animationDuration = (Math.random() * 8 + 8) + 's';
             document.body.appendChild(el);
-            setTimeout(() => el.remove(), 13000);
-        }, 4200);
+            setTimeout(() => el.remove(), 12000);
+        }, 3000);
     }
-    criarFlutuantes();
-    carregarPergunta();
 </script>
 </body>
 </html>
