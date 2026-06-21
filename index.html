@@ -11,7 +11,6 @@
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
-        /* Seu CSS permanece exatamente igual, sem alterações. */
         :root {
             --papel-pergaminho: #f5e6c8;
             --ouro-real: #d4a843;
@@ -21,6 +20,7 @@
             --verde-fada: #2d8e5f;
             --marrom-antigo: #5d3a1a;
             --branco-perola: #fff8f0;
+            --livro-rosa: #FF6B6B;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -368,28 +368,20 @@
                 inset 0 1px 0 rgba(255,255,255,0.3);
         }
 
-        .card-bruxinha-especial {
-            grid-column: 1 / -1;
-            background: linear-gradient(145deg, #4a1a6e, #2d0a42);
-            border: 2px solid var(--ouro-real);
-            position: relative;
+        /* NOVO CARD: REINO DA LEITURA */
+        .reino-leitura {
+            background: linear-gradient(145deg, var(--livro-rosa), #e05555);
+            box-shadow: 
+                0 6px 0 #cc4444,
+                0 0 20px rgba(255,107,107,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
         }
-        .card-bruxinha-especial::after {
-            content: "🧹";
-            position: absolute;
-            top: -12px;
-            right: 25px;
-            font-size: 28px;
-            animation: flutuarVassoura 2s ease-in-out infinite;
-            filter: drop-shadow(0 0 8px rgba(212, 168, 67, 0.5));
-        }
-        @keyframes flutuarVassoura {
-            0%, 100% { transform: translateY(0) rotate(-8deg); }
-            50% { transform: translateY(-8px) rotate(8deg); }
-        }
-        .card-bruxinha-especial .emoji-reino { font-size: 38px; }
-        .card-bruxinha-especial:hover {
-            box-shadow: 0 12px 0 #1a0a2e, 0 0 40px rgba(212, 168, 67, 0.4);
+        .reino-leitura:hover {
+            box-shadow: 
+                0 12px 0 #cc4444,
+                0 0 40px rgba(255,107,107,0.5),
+                inset 0 1px 0 rgba(255,255,255,0.3);
         }
 
         .particula {
@@ -441,30 +433,39 @@
         <p class="subtitulo-magico">Escolha seu reino e embarque em uma aventura mágica... ✨</p>
 
         <div class="reinos-container">
+            <!-- Reino das Vogais -->
             <a href="vogais.html" class="card-reino reino-vogais" data-audio="reino_das_vogais.mp3" data-href="vogais.html">
                 <span class="emoji-reino">👸🤴</span>
                 <span class="nome-reino">Reino das Vogais</span>
                 <span class="desc-reino">Princesas & Príncipes</span>
             </a>
+
+            <!-- Reino do Alfabeto -->
             <a href="https://alfabeto-mu.vercel.app/" class="card-reino reino-alfabeto" data-audio="reino_do_alfabeto.mp3" data-href="https://alfabeto-mu.vercel.app/">
                 <span class="emoji-reino">🧜‍♂️🔱</span>
                 <span class="nome-reino">Reino do Alfabeto</span>
                 <span class="desc-reino">Netuno & o Mar</span>
             </a>
+
+            <!-- Reino das Consoantes -->
             <a href="consoantes.html" class="card-reino reino-consoantes" data-audio="reino_das_consoantes.mp3" data-href="consoantes.html">
                 <span class="emoji-reino">🧚🧙‍♂️</span>
                 <span class="nome-reino">Reino das Consoantes</span>
                 <span class="desc-reino">Fadas, Gnomos & Duendes</span>
             </a>
+
+            <!-- Reino dos Números -->
             <a href="numeros.html" class="card-reino reino-numeros" data-audio="reino_dos_numeros.mp3" data-href="numeros.html">
                 <span class="emoji-reino">🧙‍♀️🔮</span>
                 <span class="nome-reino">Reino dos Números</span>
                 <span class="desc-reino">A Bruxa da Tabuada</span>
             </a>
-            <a href="https://tabuada-da-bruxinha.vercel.app/" target="_blank" rel="noopener" class="card-reino card-bruxinha-especial" data-audio="tabuada_da_bruxinha.mp3" data-href="https://tabuada-da-bruxinha.vercel.app/">
-                <span class="emoji-reino">🧙‍♀️✨</span>
-                <span class="nome-reino">Tabuada da Bruxinha</span>
-                <span class="desc-reino">🧹 Voe na vassoura e aprenda magia matemática!</span>
+
+            <!-- NOVO: Reino da Leitura (substitui a Tabuada da Bruxinha) -->
+            <a href="estante_livros.html" class="card-reino reino-leitura" data-audio="reino_da_leitura.mp3" data-href="estante_livros.html">
+                <span class="emoji-reino">📚🌟</span>
+                <span class="nome-reino">Reino da Leitura</span>
+                <span class="desc-reino">Estante mágica com livros do Storybook!</span>
             </a>
         </div>
     </div>
@@ -472,11 +473,10 @@
     <script>
         // ========== GERENCIAMENTO DE ÁUDIO E INTERAÇÃO ==========
         let somAtual = null;
-        let audioAtivado = false;      // Controla se o usuário já interagiu
+        let audioAtivado = false;
         let musicaFundo = null;
-        let musicaAtiva = false;        // Estado do botão de música
+        let musicaAtiva = false;
 
-        // Função genérica para tocar os efeitos sonoros dos cards
         function tocarSom(arquivo) {
             if (!audioAtivado) return;
             if (!arquivo) return;
@@ -490,27 +490,23 @@
             } catch(e) { console.log('Erro no áudio:', e); }
         }
 
-        // NOVO RECURSO: Ativa os sons, inicia a música e força a tela cheia no primeiro clique
         function ativarSonsETelaCheia() {
-            // 1. Ativa o áudio e solta a música de fundo
             if (!audioAtivado) {
                 audioAtivado = true;
                 iniciarMusicaAutomatica();
             }
             
-            // 2. Força a expansão para Tela Cheia (Fullscreen)
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen()
                     .catch(err => console.log("A tela cheia automática foi barrada pelo sistema ou recusada:", err));
             }
         }
 
-        // Função que configura e roda a música de fundo
         function iniciarMusicaAutomatica() {
             if (!musicaFundo) {
                 musicaFundo = new Audio('musica_fundo.ogg');
                 musicaFundo.loop = true;
-                musicaFundo.volume = 0.25; // Volume suave para não atrapalhar a fala dos cards
+                musicaFundo.volume = 0.25;
             }
             
             if (!musicaAtiva) {
@@ -523,7 +519,6 @@
             }
         }
 
-        // Controla o clique manual do botão de ligar/desligar música
         function alternarMusica() {
             if (!audioAtivado) {
                 ativarSonsETelaCheia();
@@ -546,7 +541,6 @@
             atualizarBotaoMusica();
         }
 
-        // Sincroniza o visual do botão no cabeçalho
         function atualizarBotaoMusica() {
             const btn = document.getElementById('btnMusica');
             if (!btn) return;
@@ -562,7 +556,7 @@
             }
         }
 
-        // ========== CONFIGURAR CARDS (ACESSIBILIDADE E NAVEGAÇÃO) ==========
+        // ========== CONFIGURAR CARDS ==========
         function configurarCards() {
             const cards = document.querySelectorAll('.card-reino');
             
@@ -574,26 +568,19 @@
                 card.removeAttribute('href');
                 card.style.cursor = 'pointer';
                 
-                // Hover (mouse)
                 card.addEventListener('mouseenter', () => {
                     if (audioDescritivo) tocarSom(audioDescritivo);
                 });
                 
-                // Toque (Mobile)
                 card.addEventListener('touchstart', (e) => {
                     if (audioDescritivo) tocarSom(audioDescritivo);
                 }, { passive: true });
                 
-                // Clique do Card
                 card.addEventListener('click', (e) => {
                     e.preventDefault();
-                    
-                    // Garante a ativação caso o clique ocorra direto sobre um card
                     ativarSonsETelaCheia();
-                    
                     tocarSom('som_magico.mp3');
                     
-                    // Delay para curtir o som antes de ir para o reino escolhido
                     setTimeout(() => {
                         if (target === '_blank') {
                             window.open(urlDestino, '_blank', 'noopener');
@@ -649,14 +636,14 @@
                 particleCount: 60,
                 spread: 90,
                 origin: { y: 0.6 },
-                colors: ['#d4a843', '#f0e68c', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e']
+                colors: ['#d4a843', '#f0e68c', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e', '#FF6B6B']
             });
         }
         
         function criarParticulas() {
             const container = document.getElementById('particulas-container');
-            const simbolos = ['✨', '⭐', '🔮', '🌟', '💫', '⚡'];
-            const cores = ['#d4a843', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e'];
+            const simbolos = ['✨', '⭐', '🔮', '🌟', '💫', '⚡', '📚'];
+            const cores = ['#d4a843', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e', '#FF6B6B'];
             
             function adicionarParticula() {
                 const p = document.createElement('div');
@@ -689,10 +676,8 @@
             document.addEventListener('fullscreenchange', updateFullscreenState);
             updateFullscreenState();
             
-            // O GATILHO TOTAL: No primeiríssimo clique ou toque na tela, liga os motores do som e abre a Tela Cheia!
             const gerenciarPrimeiraInteracao = () => {
                 ativarSonsETelaCheia();
-                // Limpa os escutadores para rodar apenas uma vez na inicialização
                 document.body.removeEventListener('click', gerenciarPrimeiraInteracao);
                 document.body.removeEventListener('touchstart', gerenciarPrimeiraInteracao);
             };
