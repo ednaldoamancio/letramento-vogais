@@ -14,6 +14,8 @@
             --laranja-halloween: #ff6b35;
             --marrom-antigo: #5d3a1a;
             --branco-perola: #fff8f0;
+            --verde-dragao: #2d8e5f;
+            --verde-escuro: #1a5c3a;
         }
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
         
@@ -144,6 +146,31 @@
             0%, 100% { box-shadow: 0 0 15px rgba(212, 168, 67, 0.4); border-color: #fff; }
             50% { box-shadow: 0 0 30px rgba(212, 168, 67, 0.8); border-color: #ffe6a3; }
         }
+
+        /* Botão Dragãozinho da Matemática (NOVO) */
+        .btn-dragao {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--verde-dragao), var(--verde-escuro));
+            border: 2px solid var(--ouro-real);
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            color: #fff;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(45,142,95,0.4);
+        }
+        
+        .btn-dragao:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(45,142,95,0.7);
+            background: linear-gradient(135deg, #3fae74, #2d8e5f);
+        }
         
         .saudacao-real {
             font-family: 'Cinzel Decorative', cursive;
@@ -273,7 +300,37 @@
             text-align: center;
         }
         
-        /* Card especial da Bruxinha */
+        /* Card especial do Dragãozinho da Matemática (NOVO) */
+        .card-dragao {
+            background: linear-gradient(145deg, #1a3a2a, #0d1f16);
+            border-color: var(--verde-dragao) !important;
+            grid-column: 1 / -1;
+            position: relative;
+        }
+        
+        .card-dragao::after {
+            content: "🐉";
+            position: absolute;
+            top: -15px;
+            right: 20px;
+            font-size: 42px;
+            animation: flutuarDragao 2s ease-in-out infinite;
+            filter: drop-shadow(0 0 10px rgba(45,142,95,0.5));
+        }
+        
+        @keyframes flutuarDragao {
+            0%, 100% { transform: translateY(0) rotate(-5deg); }
+            50% { transform: translateY(-10px) rotate(5deg); }
+        }
+        
+        .card-dragao:hover {
+            box-shadow: 0 15px 0 rgba(0,0,0,0.4), 0 0 40px rgba(45,142,95,0.4) !important;
+        }
+        
+        .card-dragao .icon { font-size: 60px; }
+        .card-dragao .card-title { color: var(--verde-dragao); }
+        
+        /* Card especial da Bruxinha (mantido) */
         .card-bruxinha {
             background: linear-gradient(145deg, #2d0a31, #1a0520);
             border-color: #e0aaff !important;
@@ -350,7 +407,17 @@
             .card-title { font-size: 18px; }
             .lua-magica { width: 50px; height: 50px; top: 10px; right: 15px; }
             .btn-voltar-dourado { padding: 6px 15px; font-size: 12px; }
+            .btn-dragao { padding: 6px 15px; font-size: 12px; }
             .saudacao-real { font-size: 12px; }
+        }
+        
+        @media (max-width: 480px) {
+            .card-dragao::after,
+            .card-bruxinha::after {
+                font-size: 32px;
+                top: -10px;
+                right: 10px;
+            }
         }
     </style>
 </head>
@@ -390,6 +457,9 @@
                 <a href="index.html" class="btn-voltar-dourado">
                     ← ✨ Voltar aos Reinos ✨
                 </a>
+                <a href="https://dragaozinho-da-matematica.vercel.app/index.html" target="_blank" class="btn-dragao">
+                    🐉 Dragãozinho da Matemática ✨
+                </a>
             </div>
             <span class="saudacao-real">🎃 Reino dos Números 🧙‍♀️</span>
         </div>
@@ -418,7 +488,14 @@
                 <div class="card-desc">Arraste os itens para formar o número pedido!</div>
             </a>
             
-            <!-- Card especial da Tabuada da Bruxinha -->
+            <!-- Card especial do Dragãozinho da Matemática (NOVO) -->
+            <a href="https://dragaozinho-da-matematica.vercel.app/index.html" target="_blank" rel="noopener" class="card-aula card-dragao">
+                <div class="icon">🐉✨</div>
+                <div class="card-title">Dragãozinho da Matemática</div>
+                <div class="card-desc">🐲 Aprenda a contar com o dragãozinho! Aventuras numéricas pelo reino dos dragões!</div>
+            </a>
+            
+            <!-- Card especial da Tabuada da Bruxinha (mantido) -->
             <a href="https://tabuada-da-bruxinha.vercel.app/" target="_blank" rel="noopener" class="card-aula card-bruxinha">
                 <div class="icon">🧙‍♀️✨</div>
                 <div class="card-title">Tabuada da Bruxinha</div>
@@ -427,7 +504,7 @@
         </div>
         
         <div class="decoracao-rodape">
-            🎃 🦇 🕷️ 👻 🧙‍♀️ 🎃 🦇 🕷️ 👻
+            🎃 🦇 🕷️ 👻 🧙‍♀️ 🐉 🎃 🦇 🕷️ 👻
         </div>
     </div>
     
@@ -437,8 +514,8 @@
             const container = document.getElementById('particulas-container');
             if (!container) return;
             
-            const simbolos = ['✨', '⭐', '🔮', '🌟', '💫', '🎃', '🦇', '👻'];
-            const cores = ['#d4a843', '#ff6b35', '#9d4edd', '#2ec4b6', '#e0aaff'];
+            const simbolos = ['✨', '⭐', '🔮', '🌟', '💫', '🎃', '🦇', '👻', '🐉'];
+            const cores = ['#d4a843', '#ff6b35', '#9d4edd', '#2ec4b6', '#e0aaff', '#2d8e5f'];
             
             function criarParticula() {
                 const p = document.createElement('div');
@@ -472,7 +549,7 @@
                     particleCount: 40,
                     spread: 70,
                     origin: { y: 0.6 },
-                    colors: ['#d4a843', '#ff6b35', '#9d4edd', '#2ec4b6'],
+                    colors: ['#d4a843', '#ff6b35', '#9d4edd', '#2ec4b6', '#2d8e5f'],
                     scalar: 0.8
                 });
             }
