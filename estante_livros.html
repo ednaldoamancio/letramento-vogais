@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <title>🏰 Reinos Encantados - Jornada das Letras</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <style>
+        :root {
+            --papel-pergaminho: #f5e6c8;
+            --ouro-real: #d4a843;
+            --roxo-magia: #6b2d8e;
+            --rosa-princesa: #e91e8c;
+            --azul-netuno: #1e5f8e;
+            --verde-fada: #2d8e5f;
+            --marrom-antigo: #5d3a1a;
+            --branco-perola: #fff8f0;
+            --livro-rosa: #FF6B6B;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(135deg, #1a0a2e 0%, #2d1b4e 50%, #1a0a2e 100%);
+            color: var(--branco-perola);
+            height: 100vh; height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background: 
+                radial-gradient(2px 2px at 10% 20%, #fff, transparent),
+                radial-gradient(2px 2px at 30% 60%, rgba(255,220,150,0.8), transparent),
+                radial-gradient(1px 1px at 50% 10%, #fff, transparent),
+                radial-gradient(2px 2px at 70% 40%, rgba(255,200,100,0.6), transparent),
+                radial-gradient(1px 1px at 90% 80%, #fff, transparent),
+                radial-gradient(2px 2px at 20% 80%, rgba(255,220,150,0.7), transparent),
+                radial-gradient(1px 1px at 60% 90%, #fff, transparent),
+                radial-gradient(2px 2px at 80% 15%, rgba(240,200,100,0.5), transparent),
+                radial-gradient(1px 1px at 40% 30%, #fff, transparent),
+                radial-gradient(2px 2px at 15% 50%, rgba(255,220,150,0.6), transparent);
+            background-size: 100% 100%;
+            animation: cintilar 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes cintilar {
+            0% { opacity: 0.6; }
+            100% { opacity: 1; }
+        }
+
+        .lua-magica {
+            position: fixed;
+            top: 20px;
+            right: 30px;
+            width: 70px;
+            height: 70px;
+            background: radial-gradient(circle at 35% 35%, #fff8e7, #f0e68c);
+            border-radius: 50%;
+            box-shadow: 
+                0 0 30px rgba(240, 230, 140, 0.5),
+                0 0 60px rgba(240, 230, 140, 0.3),
+                inset -10px -10px 20px rgba(200, 180, 100, 0.3);
+            z-index: 2;
+            animation: luaBrilho 4s ease-in-out infinite;
+        }
+        .lua-magica::before {
+            content: "";
+            position: absolute;
+            top: 12px; left: 18px;
+            width: 10px; height: 10px;
+            background: rgba(180, 160, 100, 0.25);
+            border-radius: 50%;
+        }
+        .lua-magica::after {
+            content: "";
+            position: absolute;
+            top: 30px; left: 40px;
+            width: 6px; height: 6px;
+            background: rgba(180, 160, 100, 0.2);
+            border-radius: 50%;
+        }
+        @keyframes luaBrilho {
+            0%, 100% { box-shadow: 0 0 30px rgba(240, 230, 140, 0.5), 0 0 60px rgba(240, 230, 140, 0.3); }
+            50% { box-shadow: 0 0 50px rgba(240, 230, 140, 0.7), 0 0 90px rgba(240, 230, 140, 0.4); }
+        }
+
+        .castelo-decor {
+            position: fixed;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            font-size: 60px;
+            z-index: 1;
+            opacity: 0.15;
+            filter: drop-shadow(0 0 10px rgba(212, 168, 67, 0.3));
+            pointer-events: none;
+        }
+
+        .header { 
+            position: relative; 
+            z-index: 50; 
+            padding: 12px 16px; 
+            background: linear-gradient(180deg, rgba(26,10,46,0.9) 0%, rgba(26,10,46,0.6) 100%);
+            border-bottom: 2px solid var(--ouro-real);
+            backdrop-filter: blur(8px);
+        }
+        .header-inner { 
+            max-width: 800px; 
+            margin: 0 auto; 
+            display: flex; 
+            align-items: center; 
+            justify-content: space-between; 
+        }
+
+        .header-botoes { display: flex; gap: 10px; align-items: center; }
+
+        .theme-toggle { 
+            background: linear-gradient(135deg, var(--ouro-real), #b8860b); 
+            border: 2px solid #fff; 
+            width: 42px; 
+            height: 42px; 
+            border-radius: 50%; 
+            cursor: pointer; 
+            font-size: 20px; 
+            box-shadow: 0 0 15px rgba(212, 168, 67, 0.4);
+            transition: all 0.3s;
+        }
+        .theme-toggle:hover { transform: scale(1.1); box-shadow: 0 0 25px rgba(212, 168, 67, 0.6); }
+
+        .btn-fullscreen {
+            background: linear-gradient(135deg, var(--azul-netuno), #0d3a5c);
+            border: 2px solid #fff;
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            box-shadow: 0 0 15px rgba(30, 95, 142, 0.4);
+            transition: all 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .btn-fullscreen:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 25px rgba(30, 95, 142, 0.7);
+        }
+
+        .btn-musica { 
+            padding: 8px 14px; 
+            border-radius: 50px; 
+            border: 2px solid var(--ouro-real); 
+            font-weight: 800; 
+            background: rgba(212, 168, 67, 0.2); 
+            color: var(--ouro-real); 
+            cursor: pointer; 
+            font-size: 12px;
+            font-family: 'Nunito', sans-serif;
+            transition: all 0.3s;
+        }
+        .btn-musica:hover { background: rgba(212, 168, 67, 0.4); box-shadow: 0 0 15px rgba(212, 168, 67, 0.3); }
+
+        .saudacao-real {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--ouro-real);
+            text-shadow: 0 0 10px rgba(212, 168, 67, 0.5);
+        }
+
+        .stage { 
+            flex: 1; 
+            display: flex; 
+            flex-direction: column; 
+            justify-content: center; 
+            align-items: center; 
+            padding: 15px; 
+            z-index: 10;
+            gap: 15px;
+            overflow-y: auto;
+        }
+
+        .banner-reinos {
+            border-radius: 20px;
+            overflow: hidden;
+            border: 3px solid var(--ouro-real);
+            width: 85%;
+            max-width: 280px;
+            aspect-ratio: 16/10;
+            box-shadow: 
+                0 10px 30px rgba(0,0,0,0.4),
+                0 0 20px rgba(212, 168, 67, 0.2);
+            position: relative;
+        }
+        .banner-reinos img { 
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            filter: brightness(0.8) saturate(1.2);
+        }
+        .banner-reinos::after {
+            content: "🗺️";
+            position: absolute;
+            bottom: -15px;
+            right: -10px;
+            font-size: 35px;
+            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
+        }
+
+        .titulo-reinos {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: clamp(20px, 5vw, 28px);
+            color: var(--ouro-real);
+            text-shadow: 
+                0 0 10px rgba(212, 168, 67, 0.6),
+                2px 2px 4px rgba(0,0,0,0.5);
+            text-align: center;
+            margin: 5px 0;
+        }
+
+        .subtitulo-magico {
+            font-family: 'Dancing Script', cursive;
+            font-size: clamp(16px, 4vw, 22px);
+            color: rgba(255, 255, 255, 0.7);
+            text-align: center;
+            margin-bottom: 10px;
+        }
+
+        .reinos-container { 
+            display: grid; 
+            grid-template-columns: 1fr 1fr; 
+            gap: 14px; 
+            width: 100%; 
+            max-width: 420px;
+        }
+
+        .card-reino {
+            padding: 18px 12px; 
+            border-radius: 18px; 
+            border: none; 
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: clamp(13px, 3.5vw, 16px); 
+            color: #fff; 
+            text-decoration: none; 
+            text-align: center;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+            line-height: 1.3;
+            position: relative;
+            overflow: hidden;
+            min-height: 110px;
+        }
+
+        .card-reino::before {
+            content: "";
+            position: absolute;
+            top: -50%; left: -50%;
+            width: 200%; height: 200%;
+            background: radial-gradient(circle, rgba(255,255,255,0.1) 0%, transparent 70%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .card-reino:hover::before { opacity: 1; }
+
+        .card-reino:active { transform: scale(0.95); }
+        .card-reino:hover { 
+            transform: translateY(-6px) scale(1.03); 
+            box-shadow: 0 15px 30px rgba(0,0,0,0.4);
+        }
+
+        .emoji-reino { 
+            font-size: 32px; 
+            margin-bottom: 8px;
+            filter: drop-shadow(0 3px 6px rgba(0,0,0,0.4));
+            transition: transform 0.3s;
+        }
+        .card-reino:hover .emoji-reino {
+            transform: scale(1.2) rotate(-5deg);
+        }
+
+        .nome-reino {
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 4px;
+        }
+
+        .desc-reino {
+            font-family: 'Nunito', sans-serif;
+            font-size: 10px;
+            opacity: 0.85;
+            font-weight: 600;
+        }
+
+        .reino-vogais {
+            background: linear-gradient(145deg, #e91e8c, #9c1460);
+            box-shadow: 
+                0 6px 0 #7a0f4a,
+                0 0 20px rgba(233, 30, 140, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            border: 2px solid rgba(255, 200, 220, 0.3);
+        }
+        .reino-vogais:hover {
+            box-shadow: 
+                0 12px 0 #7a0f4a,
+                0 0 40px rgba(233, 30, 140, 0.5),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .reino-alfabeto {
+            background: linear-gradient(145deg, #1e5f8e, #0d3a5c);
+            box-shadow: 
+                0 6px 0 #0a2d47,
+                0 0 20px rgba(30, 95, 142, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            border: 2px solid rgba(100, 200, 255, 0.3);
+        }
+        .reino-alfabeto:hover {
+            box-shadow: 
+                0 12px 0 #0a2d47,
+                0 0 40px rgba(30, 95, 142, 0.5),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .reino-consoantes {
+            background: linear-gradient(145deg, #2d8e5f, #1a5c3a);
+            box-shadow: 
+                0 6px 0 #124529,
+                0 0 20px rgba(45, 142, 95, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            border: 2px solid rgba(150, 255, 180, 0.3);
+        }
+        .reino-consoantes:hover {
+            box-shadow: 
+                0 12px 0 #124529,
+                0 0 40px rgba(45, 142, 95, 0.5),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .reino-numeros {
+            background: linear-gradient(145deg, #6b2d8e, #3d1a52);
+            box-shadow: 
+                0 6px 0 #2a1238,
+                0 0 20px rgba(107, 45, 142, 0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            border: 2px solid rgba(200, 150, 255, 0.3);
+        }
+        .reino-numeros:hover {
+            box-shadow: 
+                0 12px 0 #2a1238,
+                0 0 40px rgba(107, 45, 142, 0.5),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        /* NOVO CARD: REINO DA LEITURA */
+        .reino-leitura {
+            background: linear-gradient(145deg, var(--livro-rosa), #e05555);
+            box-shadow: 
+                0 6px 0 #cc4444,
+                0 0 20px rgba(255,107,107,0.3),
+                inset 0 1px 0 rgba(255,255,255,0.2);
+            border: 2px solid rgba(255, 255, 255, 0.3);
+        }
+        .reino-leitura:hover {
+            box-shadow: 
+                0 12px 0 #cc4444,
+                0 0 40px rgba(255,107,107,0.5),
+                inset 0 1px 0 rgba(255,255,255,0.3);
+        }
+
+        .particula {
+            position: fixed;
+            pointer-events: none;
+            z-index: 1;
+            animation: flutuarParticula linear infinite;
+            opacity: 0.6;
+        }
+        @keyframes flutuarParticula {
+            0% { transform: translateY(100vh) rotate(0deg); opacity: 0; }
+            10% { opacity: 0.8; }
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-20vh) rotate(360deg); opacity: 0; }
+        }
+
+        @media (max-width: 400px) {
+            .reinos-container { gap: 10px; }
+            .card-reino { padding: 14px 8px; min-height: 95px; }
+            .emoji-reino { font-size: 26px; }
+            .lua-magica { width: 50px; height: 50px; top: 10px; right: 15px; }
+            .castelo-decor { font-size: 40px; }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="lua-magica"></div>
+    <div class="castelo-decor">🏰</div>
+    <div id="particulas-container"></div>
+
+    <header class="header">
+        <div class="header-inner">
+            <div class="header-botoes">
+                <button class="btn-musica" id="btnMusica">🎵 MÚSICA OFF</button>
+                <button class="btn-fullscreen" id="fullscreenBtn" aria-label="Tela cheia">⛶</button>
+                <button class="theme-toggle" id="themeToggle">☀️</button>
+            </div>
+            <span class="saudacao-real">👑 Olá, damas e cavalheiros!</span>
+        </div>
+    </header>
+
+    <div class="stage">
+        <div class="banner-reinos">
+            <img src="ilha.jpg" alt="Mapa dos Reinos Encantados">
+        </div>
+
+        <h2 class="titulo-reinos">🏰 Reinos Encantados</h2>
+        <p class="subtitulo-magico">Escolha seu reino e embarque em uma aventura mágica... ✨</p>
+
+        <div class="reinos-container">
+            <!-- Reino das Vogais -->
+            <a href="vogais.html" class="card-reino reino-vogais" data-audio="reino_das_vogais.mp3" data-href="vogais.html">
+                <span class="emoji-reino">👸🤴</span>
+                <span class="nome-reino">Reino das Vogais</span>
+                <span class="desc-reino">Princesas & Príncipes</span>
+            </a>
+
+            <!-- Reino do Alfabeto -->
+            <a href="https://alfabeto-mu.vercel.app/" class="card-reino reino-alfabeto" data-audio="reino_do_alfabeto.mp3" data-href="https://alfabeto-mu.vercel.app/">
+                <span class="emoji-reino">🧜‍♂️🔱</span>
+                <span class="nome-reino">Reino do Alfabeto</span>
+                <span class="desc-reino">Netuno & o Mar</span>
+            </a>
+
+            <!-- Reino das Consoantes -->
+            <a href="consoantes.html" class="card-reino reino-consoantes" data-audio="reino_das_consoantes.mp3" data-href="consoantes.html">
+                <span class="emoji-reino">🧚🧙‍♂️</span>
+                <span class="nome-reino">Reino das Consoantes</span>
+                <span class="desc-reino">Fadas, Gnomos & Duendes</span>
+            </a>
+
+            <!-- Reino dos Números -->
+            <a href="numeros.html" class="card-reino reino-numeros" data-audio="reino_dos_numeros.mp3" data-href="numeros.html">
+                <span class="emoji-reino">🧙‍♀️🔮</span>
+                <span class="nome-reino">Reino dos Números</span>
+                <span class="desc-reino">A Bruxa da Tabuada</span>
+            </a>
+
+            <!-- NOVO: Reino da Leitura (substitui a Tabuada da Bruxinha) -->
+            <a href="estante_livros.html" class="card-reino reino-leitura" data-audio="reino_da_leitura.mp3" data-href="estante_livros.html">
+                <span class="emoji-reino">📚🌟</span>
+                <span class="nome-reino">Reino da Leitura</span>
+                <span class="desc-reino">Estante mágica com livros do Storybook!</span>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // ========== GERENCIAMENTO DE ÁUDIO E INTERAÇÃO ==========
+        let somAtual = null;
+        let audioAtivado = false;
+        let musicaFundo = null;
+        let musicaAtiva = false;
+
+        function tocarSom(arquivo) {
+            if (!audioAtivado) return;
+            if (!arquivo) return;
+            try {
+                if (somAtual) {
+                    somAtual.pause();
+                    somAtual.currentTime = 0;
+                }
+                somAtual = new Audio(arquivo);
+                somAtual.play().catch(e => console.log('Áudio bloqueado:', e));
+            } catch(e) { console.log('Erro no áudio:', e); }
+        }
+
+        function ativarSonsETelaCheia() {
+            if (!audioAtivado) {
+                audioAtivado = true;
+                iniciarMusicaAutomatica();
+            }
+            
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen()
+                    .catch(err => console.log("A tela cheia automática foi barrada pelo sistema ou recusada:", err));
+            }
+        }
+
+        function iniciarMusicaAutomatica() {
+            if (!musicaFundo) {
+                musicaFundo = new Audio('musica_fundo.ogg');
+                musicaFundo.loop = true;
+                musicaFundo.volume = 0.25;
+            }
+            
+            if (!musicaAtiva) {
+                musicaFundo.play()
+                    .then(() => {
+                        musicaAtiva = true;
+                        atualizarBotaoMusica();
+                    })
+                    .catch(e => console.log('Música de fundo barrada pelo navegador:', e));
+            }
+        }
+
+        function alternarMusica() {
+            if (!audioAtivado) {
+                ativarSonsETelaCheia();
+                return;
+            }
+            
+            if (!musicaFundo) {
+                musicaFundo = new Audio('musica_fundo.ogg');
+                musicaFundo.loop = true;
+                musicaFundo.volume = 0.25;
+            }
+
+            if (musicaAtiva) {
+                musicaFundo.pause();
+                musicaAtiva = false;
+            } else {
+                musicaFundo.play().catch(e => console.log('Música bloqueada.'));
+                musicaAtiva = true;
+            }
+            atualizarBotaoMusica();
+        }
+
+        function atualizarBotaoMusica() {
+            const btn = document.getElementById('btnMusica');
+            if (!btn) return;
+            
+            if (musicaAtiva) {
+                btn.innerHTML = `🎵 MÚSICA ON`;
+                btn.style.background = "rgba(212, 168, 67, 0.5)";
+                btn.style.color = "#fff";
+            } else {
+                btn.innerHTML = `🎵 MÚSICA OFF`;
+                btn.style.background = "rgba(212, 168, 67, 0.2)";
+                btn.style.color = "var(--ouro-real)";
+            }
+        }
+
+        // ========== CONFIGURAR CARDS ==========
+        function configurarCards() {
+            const cards = document.querySelectorAll('.card-reino');
+            
+            cards.forEach(card => {
+                const audioDescritivo = card.getAttribute('data-audio');
+                const urlDestino = card.getAttribute('data-href') || card.getAttribute('href');
+                const target = card.getAttribute('target') || '_self';
+                
+                card.removeAttribute('href');
+                card.style.cursor = 'pointer';
+                
+                card.addEventListener('mouseenter', () => {
+                    if (audioDescritivo) tocarSom(audioDescritivo);
+                });
+                
+                card.addEventListener('touchstart', (e) => {
+                    if (audioDescritivo) tocarSom(audioDescritivo);
+                }, { passive: true });
+                
+                card.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    ativarSonsETelaCheia();
+                    tocarSom('som_magico.mp3');
+                    
+                    setTimeout(() => {
+                        if (target === '_blank') {
+                            window.open(urlDestino, '_blank', 'noopener');
+                        } else {
+                            window.location.href = urlDestino;
+                        }
+                    }, 250);
+                });
+            });
+        }
+
+        // ========== TEMA DIA/NOITE ==========
+        function toggleTheme() {
+            const body = document.body;
+            const btn = document.getElementById('themeToggle');
+            if (body.getAttribute('data-theme') === 'dark') {
+                body.removeAttribute('data-theme');
+                btn.innerHTML = '☀️';
+            } else {
+                body.setAttribute('data-theme', 'dark');
+                btn.innerHTML = '🌙';
+                if (audioAtivado) {
+                    confetti({ particleCount: 30, spread: 50, origin: { y: 0.2 }, colors: ['#d4a843', '#fff'] });
+                }
+            }
+        }
+
+        // ========== FULLSCREEN MANUAL ==========
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().then(() => {
+                    if (audioAtivado) confetti({ particleCount: 40, spread: 60, origin: { y: 0.2 }, colors: ['#d4a843', '#fff'] });
+                }).catch(err => console.warn(err));
+            } else {
+                document.exitFullscreen();
+            }
+        }
+        
+        function updateFullscreenState() {
+            const btn = document.getElementById('fullscreenBtn');
+            if (document.fullscreenElement) {
+                btn.innerHTML = '✖';
+                btn.style.background = 'linear-gradient(135deg, #e91e8c, #9c1460)';
+            } else {
+                btn.innerHTML = '⛶';
+                btn.style.background = 'linear-gradient(135deg, var(--azul-netuno), #0d3a5c)';
+            }
+        }
+
+        // ========== PARTÍCULAS E CONFETES ==========
+        function lancarFestaMagica() {
+            confetti({
+                particleCount: 60,
+                spread: 90,
+                origin: { y: 0.6 },
+                colors: ['#d4a843', '#f0e68c', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e', '#FF6B6B']
+            });
+        }
+        
+        function criarParticulas() {
+            const container = document.getElementById('particulas-container');
+            const simbolos = ['✨', '⭐', '🔮', '🌟', '💫', '⚡', '📚'];
+            const cores = ['#d4a843', '#e91e8c', '#1e5f8e', '#2d8e5f', '#6b2d8e', '#FF6B6B'];
+            
+            function adicionarParticula() {
+                const p = document.createElement('div');
+                p.className = 'particula';
+                p.innerText = simbolos[Math.floor(Math.random() * simbolos.length)];
+                p.style.left = Math.random() * 100 + '%';
+                p.style.fontSize = (Math.random() * 15 + 10) + 'px';
+                p.style.color = cores[Math.floor(Math.random() * cores.length)];
+                p.style.animationDuration = (Math.random() * 8 + 6) + 's';
+                container.appendChild(p);
+                setTimeout(() => p.remove(), 14000);
+            }
+            
+            for (let i = 0; i < 15; i++) {
+                setTimeout(adicionarParticula, i * 400);
+            }
+            setInterval(adicionarParticula, 2000);
+        }
+        
+        // ========== INICIALIZAÇÃO ==========
+        window.onload = function() {
+            criarParticulas();
+            lancarFestaMagica();
+            configurarCards();
+            
+            document.getElementById('btnMusica').onclick = alternarMusica;
+            document.getElementById('fullscreenBtn').onclick = toggleFullScreen;
+            document.getElementById('themeToggle').onclick = toggleTheme;
+            
+            document.addEventListener('fullscreenchange', updateFullscreenState);
+            updateFullscreenState();
+            
+            const gerenciarPrimeiraInteracao = () => {
+                ativarSonsETelaCheia();
+                document.body.removeEventListener('click', gerenciarPrimeiraInteracao);
+                document.body.removeEventListener('touchstart', gerenciarPrimeiraInteracao);
+            };
+            
+            document.body.addEventListener('click', gerenciarPrimeiraInteracao);
+            document.body.addEventListener('touchstart', gerenciarPrimeiraInteracao, { passive: true });
+        };
+    </script>
+</body>
+</html>
