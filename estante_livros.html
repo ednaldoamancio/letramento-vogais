@@ -22,16 +22,6 @@
             --fogo: #ff6b35;
             --tesouro: #f5c64a;
             --tesouro-escuro: #b9852f;
-            --livro-rosa: #FF6B6B;
-            --livro-azul: #4D96FF;
-            --livro-verde: #6BCB77;
-            --livro-rosa-claro: #FFA1A1;
-            --livro-roxo: #9B5DE5;
-            --livro-rosa-escuro: #F15BB5;
-            --livro-ciano: #00BBF9;
-            --livro-turquesa: #00F5D4;
-            --livro-amarelo: #FFB703;
-            --livro-laranja: #FB8500;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
@@ -40,11 +30,12 @@
             font-family: 'Nunito', sans-serif;
             background: linear-gradient(180deg, var(--noite-top) 0%, var(--noite-mid) 55%, var(--noite-bottom) 100%);
             color: var(--dourado-branco);
-            min-height: 100vh;
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
             display: flex;
             flex-direction: column;
             position: relative;
-            overflow: hidden;
         }
 
         /* Estrelas cintilantes */
@@ -201,27 +192,28 @@
             flex-direction: column;
             position: relative;
             z-index: 10;
-            overflow-y: auto;
-            overflow-x: hidden;
-            padding: 20px;
+            padding: 15px 20px 5px 20px;
+            overflow: hidden;
         }
 
         /* Títulos */
         .titulo-reino {
             font-family: 'Cinzel Decorative', cursive;
-            font-size: clamp(28px, 6vw, 42px);
+            font-size: clamp(24px, 5vw, 36px);
             color: var(--ouro-real);
             text-shadow: 0 0 15px rgba(245,198,74,0.5), 2px 2px 4px rgba(0,0,0,0.5);
             text-align: center;
             margin-bottom: 5px;
+            flex-shrink: 0;
         }
         
         .subtitulo-magico {
             font-family: 'Dancing Script', cursive;
-            font-size: clamp(18px, 4vw, 24px);
+            font-size: clamp(14px, 3vw, 20px);
             color: rgba(255, 255, 255, 0.8);
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 12px;
+            flex-shrink: 0;
         }
 
         /* Banner */
@@ -230,8 +222,8 @@
             overflow: hidden;
             border: 3px solid var(--ouro-real);
             width: 85%;
-            max-width: 320px;
-            margin: 0 auto 20px;
+            max-width: 280px;
+            margin: 0 auto 12px;
             aspect-ratio: 16/10;
             box-shadow: 0 10px 30px rgba(0,0,0,0.4), 0 0 20px rgba(212, 168, 67, 0.2);
             position: relative;
@@ -239,10 +231,11 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 0;
         }
         
         .banner-leitura .emoji-banner {
-            font-size: 72px;
+            font-size: 56px;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
         }
         
@@ -251,31 +244,113 @@
             position: absolute;
             bottom: -15px;
             right: -10px;
-            font-size: 35px;
+            font-size: 30px;
             filter: drop-shadow(0 2px 4px rgba(0,0,0,0.5));
         }
 
-        /* Estante de Livros */
+        /* ===== CARROSSEL DE LIVROS ===== */
+        .carousel-wrapper {
+            flex: 1;
+            position: relative;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            min-height: 0;
+            overflow: hidden;
+        }
+
+        /* Botões de navegação */
+        .nav-btn {
+            flex-shrink: 0;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: 2px solid var(--ouro-real);
+            background: rgba(10,15,36,0.85);
+            backdrop-filter: blur(8px);
+            color: var(--ouro-real);
+            font-size: 22px;
+            cursor: pointer;
+            transition: all 0.3s;
+            z-index: 20;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 15px rgba(212,168,67,0.3);
+        }
+
+        .nav-btn:hover {
+            transform: scale(1.1);
+            background: rgba(212,168,67,0.3);
+            box-shadow: 0 0 25px rgba(212,168,67,0.5);
+        }
+
+        .nav-btn:active {
+            transform: scale(0.9);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.3;
+            cursor: not-allowed;
+            transform: none !important;
+        }
+
+        /* Container dos livros (scroll horizontal) */
+        .shelf-scroll {
+            flex: 1;
+            overflow-x: auto;
+            overflow-y: hidden;
+            scroll-behavior: smooth;
+            display: flex;
+            gap: 20px;
+            padding: 10px 5px;
+            min-height: 0;
+            scroll-snap-type: x mandatory;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .shelf-scroll::-webkit-scrollbar {
+            height: 6px;
+        }
+
+        .shelf-scroll::-webkit-scrollbar-track {
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+        }
+
+        .shelf-scroll::-webkit-scrollbar-thumb {
+            background: var(--ouro-real);
+            border-radius: 10px;
+        }
+
+        .shelf-scroll::-webkit-scrollbar-thumb:hover {
+            background: var(--ouro-escuro);
+        }
+
+        /* Estante (background fixo) */
         .shelf {
+            flex-shrink: 0;
+            width: 100%;
             background: linear-gradient(to bottom, #d2a679, var(--ouro-escuro));
-            border-bottom: 16px solid var(--ouro-escuro);
+            border-bottom: 14px solid var(--ouro-escuro);
             border-radius: 8px;
             box-shadow: 0 10px 20px rgba(0,0,0,0.4);
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-            gap: 25px;
-            padding: 25px 25px 8px 25px;
-            margin-bottom: 40px;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            padding: 20px 20px 8px 20px;
+            min-height: 200px;
             position: relative;
+            scroll-snap-align: start;
         }
 
         .shelf::after {
             content: '';
             position: absolute;
-            bottom: -28px;
+            bottom: -22px;
             left: 5%;
             width: 90%;
-            height: 12px;
+            height: 10px;
             background: rgba(0, 0, 0, 0.3);
             border-radius: 50%;
             filter: blur(5px);
@@ -288,24 +363,25 @@
             flex-direction: column;
             justify-content: space-between;
             align-items: center;
-            height: 210px;
+            height: 170px;
             border-radius: 5px 8px 8px 5px;
-            padding: 15px 10px;
+            padding: 12px 8px;
             text-align: center;
             text-decoration: none;
             color: white;
             font-weight: bold;
-            font-size: 0.85rem;
+            font-size: 0.75rem;
             transition: all 0.3s ease;
             box-shadow: -5px 5px 10px rgba(0,0,0,0.3), inset 4px 0 6px rgba(255,255,255,0.2);
-            border-left: 5px solid rgba(0,0,0,0.15);
+            border-left: 4px solid rgba(0,0,0,0.15);
             cursor: pointer;
             position: relative;
             transform-origin: bottom center;
+            min-width: 0;
         }
 
         .book-spine:hover {
-            transform: translateY(-15px) scale(1.05) rotate(-2deg);
+            transform: translateY(-12px) scale(1.04) rotate(-2deg);
             box-shadow: -8px 15px 25px rgba(0,0,0,0.4);
             z-index: 10;
             border-color: var(--ouro-real);
@@ -317,23 +393,23 @@
 
         .book-title {
             display: -webkit-box;
-            -webkit-line-clamp: 5;
+            -webkit-line-clamp: 4;
             -webkit-box-orient: vertical;
             overflow: hidden;
             text-overflow: ellipsis;
             line-height: 1.2;
             text-transform: uppercase;
-            font-size: 0.85rem;
+            font-size: 0.7rem;
             text-shadow: 1px 1px 3px rgba(0,0,0,0.5);
             font-family: 'Nunito', sans-serif;
             font-weight: 800;
         }
 
         .book-author {
-            font-size: 0.7rem;
+            font-size: 0.6rem;
             opacity: 0.9;
             background: rgba(0,0,0,0.2);
-            padding: 3px 8px;
+            padding: 2px 6px;
             border-radius: 4px;
             width: 90%;
             white-space: nowrap;
@@ -354,55 +430,79 @@
         .color-9 { background: linear-gradient(145deg, #FFB703, #d49a02); }
         .color-10 { background: linear-gradient(145deg, #FB8500, #cc6e00); }
 
+        /* Indicador de páginas */
+        .page-indicator {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            padding: 8px 0;
+            flex-shrink: 0;
+        }
+
+        .dot {
+            width: 12px;
+            height: 12px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.2);
+            border: 1px solid rgba(212,168,67,0.3);
+            transition: all 0.3s;
+            cursor: pointer;
+        }
+
+        .dot.active {
+            background: var(--ouro-real);
+            border-color: #fff;
+            transform: scale(1.2);
+            box-shadow: 0 0 15px rgba(212,168,67,0.5);
+        }
+
+        .dot:hover {
+            transform: scale(1.1);
+        }
+
         /* Decoração */
         .decoracao {
             text-align: center;
-            margin-top: 20px;
-            font-size: 24px;
-            opacity: 0.4;
-            letter-spacing: 12px;
+            font-size: 16px;
+            opacity: 0.3;
+            letter-spacing: 8px;
+            flex-shrink: 0;
         }
 
         /* Responsivo */
         @media (max-width: 768px) {
             .shelf {
-                grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+                grid-template-columns: repeat(4, 1fr);
                 gap: 15px;
-                padding: 20px 15px 5px 15px;
+                padding: 15px 15px 6px 15px;
+                min-height: 160px;
             }
-            .book-spine { height: 180px; }
-            .book-title { font-size: 0.75rem; }
-            .book-author { font-size: 0.6rem; }
-            .banner-leitura .emoji-banner { font-size: 54px; }
-            .banner-leitura { max-width: 250px; }
+            .book-spine { height: 150px; }
+            .book-title { font-size: 0.65rem; }
+            .book-author { font-size: 0.55rem; }
+            .nav-btn { width: 36px; height: 36px; font-size: 18px; }
+            .banner-leitura { max-width: 220px; }
+            .banner-leitura .emoji-banner { font-size: 42px; }
         }
 
         @media (max-width: 480px) {
             .shelf {
-                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+                grid-template-columns: repeat(3, 1fr);
                 gap: 12px;
-                padding: 15px 12px 5px 12px;
+                padding: 12px 12px 5px 12px;
+                min-height: 130px;
             }
-            .book-spine { height: 150px; padding: 12px 8px; }
-            .book-title { font-size: 0.65rem; }
-            .book-author { font-size: 0.55rem; }
-            .titulo-reino { font-size: 24px; }
-            .subtitulo-magico { font-size: 16px; }
-            .btn-voltar-dourado { padding: 6px 14px; font-size: 12px; }
-        }
-
-        .container::-webkit-scrollbar {
-            width: 4px;
-        }
-        
-        .container::-webkit-scrollbar-track {
-            background: rgba(255,255,255,0.1);
-            border-radius: 10px;
-        }
-        
-        .container::-webkit-scrollbar-thumb {
-            background: var(--ouro-real);
-            border-radius: 10px;
+            .book-spine { height: 120px; padding: 10px 6px; }
+            .book-title { font-size: 0.55rem; }
+            .book-author { font-size: 0.5rem; padding: 1px 4px; }
+            .container { padding: 10px 10px 3px 10px; }
+            .titulo-reino { font-size: 20px; }
+            .subtitulo-magico { font-size: 12px; margin-bottom: 8px; }
+            .nav-btn { width: 30px; height: 30px; font-size: 14px; }
+            .banner-leitura { max-width: 180px; }
+            .banner-leitura .emoji-banner { font-size: 32px; }
+            .dot { width: 8px; height: 8px; }
+            .decoracao { font-size: 12px; letter-spacing: 4px; }
         }
     </style>
 </head>
@@ -426,96 +526,186 @@
         </div>
         
         <h1 class="titulo-reino">📚 Reino da Leitura</h1>
-        <p class="subtitulo-magico">Estante mágica com livros criados no Storybook! 🌟</p>
+        <p class="subtitulo-magico">Estante mágica com livros do Storybook! 🌟</p>
 
-        <!-- PRATELEIRA 1 -->
-        <div class="shelf">
-            <a href="https://gemini.google.com/share/342f33f40cf9" target="_blank" class="book-spine color-1" data-audio="livro_1.mp3">
-                <div class="book-title">Dyogo e o Jogo da Amizade</div>
-                <div class="book-author">Storybook</div>
-            </a>
-            <a href="https://gemini.google.com/share/13a8b8c55eea" target="_blank" class="book-spine color-2" data-audio="livro_2.mp3">
-                <div class="book-title">Princesa Liora</div>
-                <div class="book-author">Hingrid</div>
-            </a>
-            <a href="https://gemini.google.com/share/b56dc78f3500" target="_blank" class="book-spine color-3" data-audio="livro_3.mp3">
-                <div class="book-title">As Sereias e o Peixe Palhaço</div>
-                <div class="book-author">Laura</div>
-            </a>
-            <a href="https://gemini.google.com/share/8d58730a669e" target="_blank" class="book-spine color-4" data-audio="livro_4.mp3">
-                <div class="book-title">Giovanna e a Sopa da Sabedoria</div>
-                <div class="book-author">Storybook</div>
-            </a>
-            <a href="https://gemini.google.com/share/c2aaf0eff3f6" target="_blank" class="book-spine color-5" data-audio="livro_5.mp3">
-                <div class="book-title">Pietro, o Craque Leitor</div>
-                <div class="book-author">Storybook</div>
-            </a>
-            <a href="https://gemini.google.com/share/215147ed5227" target="_blank" class="book-spine color-6" data-audio="livro_6.mp3">
-                <div class="book-title">Os 4 Porquinhos</div>
-                <div class="book-author">Giovanna</div>
-            </a>
+        <!-- CARROSSEL -->
+        <div class="carousel-wrapper">
+            <button class="nav-btn" id="prevBtn" aria-label="Livros anteriores">◀</button>
+            
+            <div class="shelf-scroll" id="shelfScroll">
+                <!-- PRATELEIRA 1 -->
+                <div class="shelf" data-shelf="0">
+                    <a href="https://gemini.google.com/share/342f33f40cf9" target="_blank" class="book-spine color-1" data-audio="livro_1.mp3">
+                        <div class="book-title">Dyogo e o Jogo da Amizade</div>
+                        <div class="book-author">Storybook</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/13a8b8c55eea" target="_blank" class="book-spine color-2" data-audio="livro_2.mp3">
+                        <div class="book-title">Princesa Liora</div>
+                        <div class="book-author">Hingrid</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/b56dc78f3500" target="_blank" class="book-spine color-3" data-audio="livro_3.mp3">
+                        <div class="book-title">As Sereias e o Peixe Palhaço</div>
+                        <div class="book-author">Laura</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/8d58730a669e" target="_blank" class="book-spine color-4" data-audio="livro_4.mp3">
+                        <div class="book-title">Giovanna e a Sopa da Sabedoria</div>
+                        <div class="book-author">Storybook</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/c2aaf0eff3f6" target="_blank" class="book-spine color-5" data-audio="livro_5.mp3">
+                        <div class="book-title">Pietro, o Craque Leitor</div>
+                        <div class="book-author">Storybook</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/215147ed5227" target="_blank" class="book-spine color-6" data-audio="livro_6.mp3">
+                        <div class="book-title">Os 4 Porquinhos</div>
+                        <div class="book-author">Giovanna</div>
+                    </a>
+                </div>
+
+                <!-- PRATELEIRA 2 -->
+                <div class="shelf" data-shelf="1">
+                    <a href="https://gemini.google.com/share/08c96b93dce4" target="_blank" class="book-spine color-7" data-audio="livro_7.mp3">
+                        <div class="book-title">A Grande Fuga</div>
+                        <div class="book-author">Ednaldo</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/be5c031a6966" target="_blank" class="book-spine color-8" data-audio="livro_8.mp3">
+                        <div class="book-title">A Boneca Aurora</div>
+                        <div class="book-author">Ednaldo</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/36727271e8aa" target="_blank" class="book-spine color-9" data-audio="livro_9.mp3">
+                        <div class="book-title">O Desafio da União</div>
+                        <div class="book-author">Ednaldo</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/fa5bb0ec8c16" target="_blank" class="book-spine color-10" data-audio="livro_10.mp3">
+                        <div class="book-title">Joãozinho e Maria</div>
+                        <div class="book-author">Adap. Laura Mirian</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/785e10af194c" target="_blank" class="book-spine color-1" data-audio="livro_11.mp3">
+                        <div class="book-title">O Pão de Gengibre</div>
+                        <div class="book-author">Storybook</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/7e2e2769e9ac" target="_blank" class="book-spine color-2" data-audio="livro_12.mp3">
+                        <div class="book-title">A Semente da Coragem</div>
+                        <div class="book-author">Pietro Gabriel</div>
+                    </a>
+                </div>
+
+                <!-- PRATELEIRA 3 -->
+                <div class="shelf" data-shelf="2">
+                    <a href="https://gemini.google.com/share/990e39c7a68b" target="_blank" class="book-spine color-3" data-audio="livro_13.mp3">
+                        <div class="book-title">A Princesa e o Príncipe</div>
+                        <div class="book-author">Mirella</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/1c4dd6b9ef7c" target="_blank" class="book-spine color-4" data-audio="livro_14.mp3">
+                        <div class="book-title">Os Três Porquinhos</div>
+                        <div class="book-author">Adap. Ednaldo</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/bb81b8ba584b" target="_blank" class="book-spine color-5" data-audio="livro_15.mp3">
+                        <div class="book-title">A Serpente Arco-Íris</div>
+                        <div class="book-author">Mito Aborígene</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/7eddb04cd450" target="_blank" class="book-spine color-6" data-audio="livro_16.mp3">
+                        <div class="book-title">O Menino e o Cacho de Banana</div>
+                        <div class="book-author">Adap. Ednaldo</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/c45f362f88e1" target="_blank" class="book-spine color-7" data-audio="livro_17.mp3">
+                        <div class="book-title">A Viagem de Ravi ao Zoológico</div>
+                        <div class="book-author">Storybook</div>
+                    </a>
+                    <a href="https://gemini.google.com/share/ecfdeb67e122" target="_blank" class="book-spine color-8" data-audio="livro_18.mp3">
+                        <div class="book-title">Os Sons da Fazenda</div>
+                        <div class="book-author">Storybook</div>
+                    </a>
+                </div>
+            </div>
+
+            <button class="nav-btn" id="nextBtn" aria-label="Próximos livros">▶</button>
         </div>
 
-        <!-- PRATELEIRA 2 -->
-        <div class="shelf">
-            <a href="https://gemini.google.com/share/08c96b93dce4" target="_blank" class="book-spine color-7" data-audio="livro_7.mp3">
-                <div class="book-title">A Grande Fuga</div>
-                <div class="book-author">Ednaldo</div>
-            </a>
-            <a href="https://gemini.google.com/share/be5c031a6966" target="_blank" class="book-spine color-8" data-audio="livro_8.mp3">
-                <div class="book-title">A Boneca Aurora</div>
-                <div class="book-author">Ednaldo</div>
-            </a>
-            <a href="https://gemini.google.com/share/36727271e8aa" target="_blank" class="book-spine color-9" data-audio="livro_9.mp3">
-                <div class="book-title">O Desafio da União</div>
-                <div class="book-author">Ednaldo</div>
-            </a>
-            <a href="https://gemini.google.com/share/fa5bb0ec8c16" target="_blank" class="book-spine color-10" data-audio="livro_10.mp3">
-                <div class="book-title">Joãozinho e Maria</div>
-                <div class="book-author">Adap. Laura Mirian</div>
-            </a>
-            <a href="https://gemini.google.com/share/785e10af194c" target="_blank" class="book-spine color-1" data-audio="livro_11.mp3">
-                <div class="book-title">O Pão de Gengibre</div>
-                <div class="book-author">Storybook</div>
-            </a>
-            <a href="https://gemini.google.com/share/7e2e2769e9ac" target="_blank" class="book-spine color-2" data-audio="livro_12.mp3">
-                <div class="book-title">A Semente da Coragem</div>
-                <div class="book-author">Pietro Gabriel</div>
-            </a>
-        </div>
-
-        <!-- PRATELEIRA 3 -->
-        <div class="shelf">
-            <a href="https://gemini.google.com/share/990e39c7a68b" target="_blank" class="book-spine color-3" data-audio="livro_13.mp3">
-                <div class="book-title">A Princesa e o Príncipe</div>
-                <div class="book-author">Mirella</div>
-            </a>
-            <a href="https://gemini.google.com/share/1c4dd6b9ef7c" target="_blank" class="book-spine color-4" data-audio="livro_14.mp3">
-                <div class="book-title">Os Três Porquinhos</div>
-                <div class="book-author">Adap. Ednaldo</div>
-            </a>
-            <a href="https://gemini.google.com/share/bb81b8ba584b" target="_blank" class="book-spine color-5" data-audio="livro_15.mp3">
-                <div class="book-title">A Serpente Arco-Íris</div>
-                <div class="book-author">Mito Aborígene</div>
-            </a>
-            <a href="https://gemini.google.com/share/7eddb04cd450" target="_blank" class="book-spine color-6" data-audio="livro_16.mp3">
-                <div class="book-title">O Menino e o Cacho de Banana</div>
-                <div class="book-author">Adap. Ednaldo</div>
-            </a>
-            <a href="https://gemini.google.com/share/c45f362f88e1" target="_blank" class="book-spine color-7" data-audio="livro_17.mp3">
-                <div class="book-title">A Viagem de Ravi ao Zoológico</div>
-                <div class="book-author">Storybook</div>
-            </a>
-            <a href="https://gemini.google.com/share/ecfdeb67e122" target="_blank" class="book-spine color-8" data-audio="livro_18.mp3">
-                <div class="book-title">Os Sons da Fazenda</div>
-                <div class="book-author">Storybook</div>
-            </a>
-        </div>
+        <!-- Indicador de páginas -->
+        <div class="page-indicator" id="pageIndicator"></div>
 
         <div class="decoracao">📚 ✨ 🌟 🏰 📖 🌙</div>
     </div>
 
     <script>
+        // ========== CARROSSEL ==========
+        const scrollContainer = document.getElementById('shelfScroll');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const indicator = document.getElementById('pageIndicator');
+        let currentPage = 0;
+        let totalPages = 0;
+
+        function updateCarousel() {
+            const shelves = document.querySelectorAll('.shelf');
+            totalPages = shelves.length;
+            
+            if (totalPages === 0) return;
+
+            // Atualiza indicador
+            indicator.innerHTML = '';
+            for (let i = 0; i < totalPages; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot' + (i === currentPage ? ' active' : '');
+                dot.dataset.index = i;
+                dot.addEventListener('click', () => goToPage(i));
+                indicator.appendChild(dot);
+            }
+
+            // Scroll para a página atual
+            const targetScroll = currentPage * scrollContainer.clientWidth;
+            scrollContainer.scrollTo({ left: targetScroll, behavior: 'smooth' });
+
+            // Atualiza botões
+            prevBtn.disabled = currentPage === 0;
+            nextBtn.disabled = currentPage >= totalPages - 1;
+        }
+
+        function goToPage(page) {
+            if (page < 0 || page >= totalPages) return;
+            currentPage = page;
+            updateCarousel();
+            // Efeito sonoro ao mudar de página
+            tocarSom('virar_pagina.mp3');
+        }
+
+        function nextPage() {
+            if (currentPage < totalPages - 1) {
+                goToPage(currentPage + 1);
+            }
+        }
+
+        function prevPage() {
+            if (currentPage > 0) {
+                goToPage(currentPage - 1);
+            }
+        }
+
+        // Detecta scroll manual (para manter o indicador sincronizado)
+        scrollContainer.addEventListener('scroll', () => {
+            const pageWidth = scrollContainer.clientWidth;
+            if (pageWidth === 0) return;
+            const newPage = Math.round(scrollContainer.scrollLeft / pageWidth);
+            if (newPage !== currentPage && newPage < totalPages) {
+                currentPage = newPage;
+                // Atualiza indicador sem recarregar tudo
+                document.querySelectorAll('.dot').forEach((dot, i) => {
+                    dot.classList.toggle('active', i === currentPage);
+                });
+                prevBtn.disabled = currentPage === 0;
+                nextBtn.disabled = currentPage >= totalPages - 1;
+            }
+        });
+
+        // Recalcula ao redimensionar
+        let resizeTimeout;
+        window.addEventListener('resize', () => {
+            clearTimeout(resizeTimeout);
+            resizeTimeout = setTimeout(() => {
+                updateCarousel();
+            }, 200);
+        });
+
         // ========== MÚSICA DE FUNDO ==========
         let musicaFundo = null;
         let musicaAtiva = false;
@@ -538,7 +728,12 @@
         function ativarSons() {
             if (audioAtivado) return;
             audioAtivado = true;
-            confetti({ particleCount: 80, spread: 70, origin: { y: 0.5 }, colors: ['#d4a843', '#fff', '#ff6b35', '#4D96FF'] });
+            confetti({ 
+                particleCount: 80, 
+                spread: 70, 
+                origin: { y: 0.5 }, 
+                colors: ['#d4a843', '#fff', '#ff6b35', '#4D96FF', '#9B5DE5'] 
+            });
         }
         
         function toggleMusica() {
@@ -574,21 +769,17 @@
             livros.forEach(livro => {
                 const audioDescritivo = livro.getAttribute('data-audio');
                 
-                // Hover (mouse) - áudio descritivo
                 livro.addEventListener('mouseenter', () => {
                     if (audioDescritivo) tocarSom(audioDescritivo);
                 });
                 
-                // Toque (mobile) - áudio descritivo
                 livro.addEventListener('touchstart', (e) => {
                     if (audioDescritivo) tocarSom(audioDescritivo);
                 }, { passive: true });
                 
-                // Clique - já tem o link nativo, mas adiciona efeito sonoro
                 livro.addEventListener('click', (e) => {
                     if (!audioAtivado) ativarSons();
                     tocarSom('clique_magico.mp3');
-                    // O link já redireciona
                 });
             });
         }
@@ -618,7 +809,12 @@
             } else {
                 enterFullscreen();
                 localStorage.setItem(FS_KEY, 'true');
-                if (audioAtivado) confetti({ particleCount: 40, spread: 60, origin: { y: 0.2 }, colors: ['#d4a843', '#fff', '#4D96FF'] });
+                if (audioAtivado) confetti({ 
+                    particleCount: 40, 
+                    spread: 60, 
+                    origin: { y: 0.2 }, 
+                    colors: ['#d4a843', '#fff', '#4D96FF'] 
+                });
             }
             atualizarIconeFullscreen();
         }
@@ -663,7 +859,7 @@
                 c.className = 'elemento-flutuante';
                 c.innerText = elementos[Math.floor(Math.random() * elementos.length)];
                 c.style.left = Math.random() * 100 + '%';
-                c.style.fontSize = (Math.random() * 20 + 14) + 'px';
+                c.style.fontSize = (Math.random() * 18 + 12) + 'px';
                 c.style.color = cores[Math.floor(Math.random() * cores.length)];
                 c.style.animationDuration = (Math.random() * 7 + 5) + 's';
                 container.appendChild(c);
@@ -700,6 +896,18 @@
             
             document.getElementById('btnMusica').addEventListener('click', toggleMusica);
             document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
+            
+            prevBtn.addEventListener('click', prevPage);
+            nextBtn.addEventListener('click', nextPage);
+            
+            // Teclado
+            document.addEventListener('keydown', (e) => {
+                if (e.key === 'ArrowLeft') prevPage();
+                if (e.key === 'ArrowRight') nextPage();
+            });
+            
+            // Atualiza carrossel após carregar
+            setTimeout(updateCarousel, 100);
             
             // Ativa sons no primeiro clique
             const ativarPrimeiraInteracao = () => {
