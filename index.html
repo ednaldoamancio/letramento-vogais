@@ -3,11 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no">
+    <meta name="theme-color" content="#1a0a2e">
     <title>🏰 Reinos Encantados - Jornada das Letras</title>
+    
+    <!-- Configurações do App e Favicon -->
+    <link rel="icon" type="image/png" href="favicon.png">
+    <link rel="apple-touch-icon" href="favicon.png">
+    <link rel="manifest" href="manifest.json">
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 
     <style>
@@ -368,7 +374,6 @@
                 inset 0 1px 0 rgba(255,255,255,0.3);
         }
 
-        /* NOVO CARD: REINO DA LEITURA */
         .reino-leitura {
             background: linear-gradient(145deg, var(--livro-rosa), #e05555);
             box-shadow: 
@@ -433,35 +438,30 @@
         <p class="subtitulo-magico">Escolha seu reino e embarque em uma aventura mágica... ✨</p>
 
         <div class="reinos-container">
-            <!-- Reino das Vogais -->
             <a href="vogais.html" class="card-reino reino-vogais" data-audio="reino_das_vogais.mp3" data-href="vogais.html">
                 <span class="emoji-reino">👸🤴</span>
                 <span class="nome-reino">Reino das Vogais</span>
                 <span class="desc-reino">Princesas & Príncipes</span>
             </a>
 
-            <!-- Reino do Alfabeto -->
             <a href="https://alfabeto-mu.vercel.app/" class="card-reino reino-alfabeto" data-audio="reino_do_alfabeto.mp3" data-href="https://alfabeto-mu.vercel.app/">
                 <span class="emoji-reino">🧜‍♂️🔱</span>
                 <span class="nome-reino">Reino do Alfabeto</span>
                 <span class="desc-reino">Netuno & o Mar</span>
             </a>
 
-            <!-- Reino das Consoantes -->
             <a href="consoantes.html" class="card-reino reino-consoantes" data-audio="reino_das_consoantes.mp3" data-href="consoantes.html">
                 <span class="emoji-reino">🧚🧙‍♂️</span>
                 <span class="nome-reino">Reino das Consoantes</span>
                 <span class="desc-reino">Fadas, Gnomos & Duendes</span>
             </a>
 
-            <!-- Reino dos Números -->
             <a href="numeros.html" class="card-reino reino-numeros" data-audio="reino_dos_numeros.mp3" data-href="numeros.html">
                 <span class="emoji-reino">🧙‍♀️🔮</span>
                 <span class="nome-reino">Reino dos Números</span>
                 <span class="desc-reino">A Bruxa da Tabuada</span>
             </a>
 
-            <!-- NOVO: Reino da Leitura (substitui a Tabuada da Bruxinha) -->
             <a href="estante_livros.html" class="card-reino reino-leitura" data-audio="reino_da_leitura.mp3" data-href="estante_livros.html">
                 <span class="emoji-reino">📚🌟</span>
                 <span class="nome-reino">Reino da Leitura</span>
@@ -471,7 +471,15 @@
     </div>
 
     <script>
-        // ========== GERENCIAMENTO DE ÁUDIO E INTERAÇÃO ==========
+        // Registro do Service Worker (Necessário para PWA/Instalação)
+        if ('serviceWorker' in navigator) {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('./sw.js')
+                    .then(reg => console.log('Service Worker registrado com sucesso!', reg))
+                    .catch(err => console.error('Erro ao registrar Service Worker', err));
+            });
+        }
+
         let somAtual = null;
         let audioAtivado = false;
         let musicaFundo = null;
@@ -556,7 +564,6 @@
             }
         }
 
-        // ========== CONFIGURAR CARDS ==========
         function configurarCards() {
             const cards = document.querySelectorAll('.card-reino');
             
@@ -592,7 +599,6 @@
             });
         }
 
-        // ========== TEMA DIA/NOITE ==========
         function toggleTheme() {
             const body = document.body;
             const btn = document.getElementById('themeToggle');
@@ -608,7 +614,6 @@
             }
         }
 
-        // ========== FULLSCREEN MANUAL ==========
         function toggleFullScreen() {
             if (!document.fullscreenElement) {
                 document.documentElement.requestFullscreen().then(() => {
@@ -630,7 +635,6 @@
             }
         }
 
-        // ========== PARTÍCULAS E CONFETES ==========
         function lancarFestaMagica() {
             confetti({
                 particleCount: 60,
@@ -663,7 +667,6 @@
             setInterval(adicionarParticula, 2000);
         }
         
-        // ========== INICIALIZAÇÃO ==========
         window.onload = function() {
             criarParticulas();
             lancarFestaMagica();
