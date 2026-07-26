@@ -3,15 +3,17 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>🌿 Reino das Consoantes · Aventuras Ortográficas ✨</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playwrite+BR:wght@100..400&display=swap" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    <title>🎒 Escola das Consoantes · Aventuras Ortográficas ✨</title>
+    <!-- Novas fontes divertidas e arredondadas para crianças -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Nunito:wght@400;700;800&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; user-select: none; }
+        
         body {
             min-height: 100vh;
-            background: linear-gradient(145deg, #1a4d2a 0%, #0e3820 40%, #0a2a18 100%);
+            /* Fundo alegre e ensolarado */
+            background: linear-gradient(145deg, #FFF9C4 0%, #FFCC80 100%);
             font-family: 'Nunito', sans-serif;
             display: flex;
             align-items: center;
@@ -21,71 +23,267 @@
             overflow-x: hidden;
             transition: background 1s ease;
         }
-        .bg-emoji { position: fixed; font-size: 60px; opacity: 0.15; pointer-events: none; z-index: 0; transition: all 0.5s; }
-        #bg-emoji-esq { bottom: 10px; left: 10px; }
-        #bg-emoji-dir { top: 20px; right: 20px; }
-        .flutuante { position: fixed; pointer-events: none; z-index: 1; font-size: 28px; animation: flutuarMagia 14s infinite ease-in-out; filter: drop-shadow(0 0 6px gold); }
-        @keyframes flutuarMagia { 0% { transform: translate(0, 0) rotate(0deg); opacity: 0.3; } 50% { transform: translate(20px, -25px) rotate(12deg); opacity: 0.9; } 100% { transform: translate(-5px, -10px) rotate(5deg); opacity: 0.3; } }
-        .container-principal {
-            max-width: 850px; width: 100%; background: rgba(30, 20, 45, 0.75); backdrop-filter: blur(12px); border-radius: 40px; padding: 30px; box-shadow: 0 20px 40px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,200,0.3); border: 2px solid #ffdd99; position: relative; z-index: 10;
+        
+        .bg-emoji { position: fixed; font-size: 70px; opacity: 0.3; pointer-events: none; z-index: 0; transition: all 0.5s; filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1)); }
+        #bg-emoji-esq { bottom: 15px; left: 15px; }
+        #bg-emoji-dir { top: 25px; right: 25px; }
+        
+        .flutuante { position: fixed; pointer-events: none; z-index: 1; font-size: 32px; animation: flutuarBrinquedo 10s infinite ease-in-out; filter: drop-shadow(0 4px 5px rgba(0,0,0,0.15)); }
+        @keyframes flutuarBrinquedo { 
+            0% { transform: translateY(0) rotate(0deg) scale(0.9); opacity: 0; } 
+            10% { opacity: 0.8; }
+            50% { transform: translateY(-40px) rotate(15deg) scale(1.1); } 
+            90% { opacity: 0.8; }
+            100% { transform: translateY(-80px) rotate(-10deg) scale(0.9); opacity: 0; } 
         }
-        .tela { display: none; animation: fadeIn 0.5s ease-in-out; }
+        
+        .container-principal {
+            max-width: 850px; 
+            width: 100%; 
+            background: #ffffff; /* Fundo limpo como caderno */
+            border-radius: 35px; 
+            padding: 30px; 
+            /* Sombra arredondada estilo Cartoon */
+            box-shadow: 0 15px 0px rgba(0, 0, 0, 0.1), 0 20px 40px rgba(0,0,0,0.1); 
+            border: 6px solid #FF9800; /* Borda grossa e colorida */
+            position: relative; 
+            z-index: 10;
+        }
+        
+        .tela { display: none; animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275); }
         .tela.ativa { display: block; }
-        @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 20px; flex-wrap: wrap; }
+        
+        @keyframes popIn { 
+            from { opacity: 0; transform: scale(0.9) translateY(20px); } 
+            to { opacity: 1; transform: scale(1) translateY(0); } 
+        }
+        
+        .top-bar { display: flex; justify-content: space-between; align-items: center; gap: 12px; margin-bottom: 25px; flex-wrap: wrap; }
         .botoes-nav { display: flex; gap: 10px; flex-wrap: wrap; }
         .controles-direita { display: flex; gap: 10px; flex-wrap: wrap; }
-        .btn-geral { background: linear-gradient(135deg, #ffecb3, #ffd966); border: none; font-family: 'Nunito', sans-serif; font-weight: bold; padding: 8px 16px; border-radius: 40px; font-size: 0.9rem; cursor: pointer; transition: 0.1s; box-shadow: 0 3px 0 #a0662c; display: inline-flex; align-items: center; gap: 6px; color: #2c1a3a; text-decoration: none; }
-        .btn-geral:active { transform: translateY(2px); box-shadow: 0 1px 0 #a0662c; }
-        .btn-voltar { background: linear-gradient(135deg, #a7d489, #6f9e3f); color: #2c2b1f; }
-        .btn-link-extra { background: linear-gradient(135deg, #fce4ec, #f48fb1); color: #2c1a3a; }
-        .btn-acao-jogo { background: linear-gradient(135deg, #ff9a9e, #fecfef); color: #333; }
-        .btn-fullscreen { background: linear-gradient(135deg, #6ec8e0, #2c8faa); color: white; box-shadow: 0 3px 0 #195b6d; }
-        .btn-musica { background: linear-gradient(135deg, #d9b48b, #b87c4a); color: white; box-shadow: 0 3px 0 #7a4f2c; }
-        .menu-titulo { text-align: center; font-family: 'Cinzel Decorative', cursive; color: #ffdd99; font-size: 2.2rem; margin-bottom: 10px; text-shadow: 0 4px 10px rgba(0,0,0,0.8); }
-        .menu-subtitulo { text-align: center; color: #e2f0c4; font-family: 'Dancing Script', cursive; font-size: 1.5rem; margin-bottom: 30px; }
-        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 20px; }
-        .card-aventura { background: rgba(255, 255, 255, 0.1); border: 2px solid transparent; border-radius: 20px; padding: 20px; text-align: center; cursor: pointer; transition: 0.3s; display: flex; flex-direction: column; align-items: center; gap: 10px; }
-        .card-aventura:hover { background: rgba(255, 255, 255, 0.2); border-color: #ffdd99; transform: translateY(-5px); }
-        .card-icone { font-size: 3rem; }
-        .card-titulo { font-weight: bold; color: #fff; font-size: 1.2rem; }
-        .card-desc { color: #ccc; font-size: 0.9rem; }
-        .header-magico { text-align: center; margin-bottom: 15px; }
-        .titulo { font-family: 'Cinzel Decorative', cursive; font-size: 1.7rem; color: #ffcf7a; display: inline-flex; align-items: center; gap: 12px; }
-        .question-area { background: rgba(0, 0, 0, 0.4); border-radius: 40px; padding: 25px 15px; margin: 15px 0; border: 1px solid rgba(255,255,255,0.2); text-align: center; }
-        .imagem-dica { font-size: 70px; margin-bottom: 10px; filter: drop-shadow(0 5px 10px rgba(0,0,0,0.5)); }
-        .palavra-incompleta { font-size: 2.2rem; font-weight: 800; letter-spacing: 8px; background: #fff0cc; display: inline-block; padding: 12px 28px; border-radius: 50px; color: #2c1a3a; font-family: 'Cinzel Decorative', monospace; box-shadow: inset 0 0 0 2px #ffbc6e, 0 8px 18px rgba(0,0,0,0.6); }
-        .dica-texto { margin-top: 15px; font-size: 0.95rem; color: #ffe6aa; background: rgba(0,0,0,0.6); display: inline-block; padding: 8px 20px; border-radius: 40px; }
-        .opcoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 15px; margin: 25px 0 15px; }
-        .btn-opcao { background: linear-gradient(145deg, #ffffff, #e6e6e6); border: none; width: auto; min-width: 80px; height: 60px; padding: 0 20px; border-radius: 30px; font-size: 1.8rem; font-weight: bold; font-family: 'Cinzel Decorative', monospace; color: #111; cursor: pointer; transition: 0.1s; box-shadow: 0 6px 0 #999; text-transform: lowercase; }
-        .btn-opcao:active { transform: translateY(4px); box-shadow: 0 2px 0 #999; }
-        .manual-area { margin: 15px auto 5px; text-align: center; }
-        .manual-input { font-family: 'Playwrite BR', cursive; font-size: 1.8rem; width: 110px; text-align: center; padding: 5px; border-radius: 40px; border: 3px solid #ffcd7e; background: #fff9e8; color: #2c1a3a; font-weight: bold; text-transform: lowercase; outline: none; }
-        .manual-label { font-size: 0.85rem; color: #ffeaac; display: block; margin-bottom: 5px; }
-        .feedback { font-size: 1.1rem; text-align: center; margin: 15px 0; min-height: 55px; background: rgba(0,0,0,0.6); border-radius: 40px; padding: 12px; color: #ffefb9; }
-        .score-area { display: flex; justify-content: space-around; align-items: center; margin-top: 10px; flex-wrap: wrap; gap: 10px; }
-        .pontos { background: #ffcf8a; padding: 5px 15px; border-radius: 40px; color: #2c1a2e; font-weight: bold; }
-        @media (max-width: 600px) {
-            .palavra-incompleta { font-size: 1.5rem; letter-spacing: 4px; padding: 10px 15px; }
-            .btn-opcao { font-size: 1.5rem; min-width: 60px; height: 50px; }
-            .menu-titulo { font-size: 1.8rem; }
-            .top-bar { justify-content: center; }
+        
+        .btn-geral { 
+            font-family: 'Fredoka', sans-serif; 
+            font-weight: 600; 
+            padding: 10px 18px; 
+            border-radius: 20px; 
+            font-size: 1rem; 
+            cursor: pointer; 
+            transition: 0.2s; 
+            display: inline-flex; 
+            align-items: center; 
+            gap: 8px; 
+            text-decoration: none; 
+            border: 3px solid;
+            color: #333;
         }
-        .acertou-glow { animation: brilho 0.6s ease-out; }
-        @keyframes brilho { 0% { text-shadow: 0 0 0 gold; } 50% { text-shadow: 0 0 20px #ffdd77, 0 0 30px #ffaa33; } 100% { text-shadow: 0 0 0 gold; } }
+        .btn-geral:active { transform: translateY(4px); box-shadow: 0 0px 0 transparent !important; }
+        
+        .btn-voltar { background: #E8F5E9; border-color: #4CAF50; box-shadow: 0 4px 0 #4CAF50; color: #2E7D32; }
+        .btn-link-extra { background: #FCE4EC; border-color: #E91E63; box-shadow: 0 4px 0 #E91E63; color: #C2185B; }
+        .btn-acao-jogo { background: #FFF9C4; border-color: #FBC02D; box-shadow: 0 4px 0 #FBC02D; color: #F57F17; }
+        .btn-fullscreen { background: #E1F5FE; border-color: #03A9F4; box-shadow: 0 4px 0 #03A9F4; color: #0277BD; }
+        .btn-musica { background: #FFF3E0; border-color: #FF9800; box-shadow: 0 4px 0 #FF9800; color: #E65100; }
+        
+        .menu-titulo { 
+            text-align: center; 
+            font-family: 'Fredoka', sans-serif; 
+            color: #2196F3; 
+            font-size: 2.8rem; 
+            margin-bottom: 5px; 
+            font-weight: 700;
+            text-shadow: 3px 3px 0 #B3E5FC, 5px 5px 0px rgba(0,0,0,0.1); 
+        }
+        
+        .menu-subtitulo { 
+            text-align: center; 
+            color: #FF4081; 
+            font-family: 'Comic Neue', cursive; 
+            font-size: 1.6rem; 
+            font-weight: bold;
+            margin-bottom: 30px; 
+        }
+        
+        .menu-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 20px; }
+        
+        /* ESTILOS DOS CARDS INFANTIS COLORIDOS */
+        .card-aventura { 
+            border-radius: 25px; 
+            padding: 25px 20px; 
+            text-align: center; 
+            cursor: pointer; 
+            transition: 0.3s; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 12px; 
+            border: 4px solid transparent;
+            background: white;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .card-aventura:hover { transform: translateY(-8px) scale(1.03); }
+        
+        .card-icone { font-size: 4rem; filter: drop-shadow(0 4px 4px rgba(0,0,0,0.1)); transition: 0.3s; }
+        .card-aventura:hover .card-icone { transform: scale(1.15) rotate(5deg); }
+        
+        .card-titulo { font-weight: 700; font-size: 1.4rem; font-family: 'Fredoka', sans-serif; }
+        .card-desc { font-size: 1rem; font-weight: 600; font-family: 'Nunito', sans-serif; line-height: 1.3; }
+
+        /* Cores individuais para cada Card */
+        .card-1 { background-color: #FFEBEE; border-color: #FF5252; box-shadow: 0 8px 0 #FF5252; }
+        .card-1 .card-titulo { color: #D32F2F; } .card-1 .card-desc { color: #C62828; }
+        
+        .card-2 { background-color: #E3F2FD; border-color: #2196F3; box-shadow: 0 8px 0 #2196F3; }
+        .card-2 .card-titulo { color: #1976D2; } .card-2 .card-desc { color: #1565C0; }
+
+        .card-3 { background-color: #E8F5E9; border-color: #4CAF50; box-shadow: 0 8px 0 #4CAF50; }
+        .card-3 .card-titulo { color: #388E3C; } .card-3 .card-desc { color: #2E7D32; }
+
+        .card-4 { background-color: #FFF3E0; border-color: #FF9800; box-shadow: 0 8px 0 #FF9800; }
+        .card-4 .card-titulo { color: #F57C00; } .card-4 .card-desc { color: #EF6C00; }
+
+        .card-5 { background-color: #F3E5F5; border-color: #9C27B0; border-style: dashed; box-shadow: 0 8px 0 #9C27B0; }
+        .card-5 .card-titulo { color: #7B1FA2; } .card-5 .card-desc { color: #6A1B9A; }
+
+        /* AREA DO JOGO */
+        .header-magico { text-align: center; margin-bottom: 20px; }
+        .titulo { font-family: 'Fredoka', sans-serif; font-size: 2rem; color: #FF5722; display: inline-flex; align-items: center; gap: 12px; font-weight: bold;}
+        
+        /* Quadro Negro Escolar */
+        .question-area { 
+            background: #2A5D44; /* Verde lousa */
+            border-radius: 20px; 
+            padding: 30px 15px; 
+            margin: 15px 0; 
+            border: 10px solid #8D6E63; /* Moldura de madeira */
+            text-align: center; 
+            box-shadow: inset 0 0 20px rgba(0,0,0,0.4), 0 8px 15px rgba(0,0,0,0.1);
+        }
+        
+        .imagem-dica { font-size: 80px; margin-bottom: 15px; filter: drop-shadow(0 8px 10px rgba(0,0,0,0.3)); }
+        
+        .palavra-incompleta { 
+            font-size: 2.8rem; 
+            font-weight: 700; 
+            letter-spacing: 8px; 
+            background: rgba(255, 255, 255, 0.95); 
+            display: inline-block; 
+            padding: 10px 30px; 
+            border-radius: 25px; 
+            color: #333; 
+            font-family: 'Fredoka', sans-serif; 
+            border: 4px solid #FFC107;
+            box-shadow: 0 6px 0 #FFC107; 
+            text-transform: uppercase;
+        }
+        
+        .dica-texto { 
+            margin-top: 25px; 
+            font-size: 1.2rem; 
+            color: #FFF59D; 
+            font-family: 'Comic Neue', cursive;
+            font-weight: bold;
+        }
+        
+        /* Botões Estilo Blocos de Montar */
+        .opcoes { display: flex; flex-wrap: wrap; justify-content: center; gap: 18px; margin: 25px 0 20px; }
+        .btn-opcao { 
+            background: #03A9F4; 
+            border: 4px solid #0277BD; 
+            min-width: 90px; 
+            height: 70px; 
+            padding: 0 25px; 
+            border-radius: 20px; 
+            font-size: 2rem; 
+            font-weight: bold; 
+            font-family: 'Fredoka', sans-serif; 
+            color: white; 
+            cursor: pointer; 
+            transition: 0.1s; 
+            box-shadow: 0 8px 0 #0277BD; 
+            text-transform: uppercase; 
+        }
+        .btn-opcao:active { transform: translateY(8px); box-shadow: 0 0px 0 #0277BD; }
+        
+        .manual-area { margin: 15px auto 10px; text-align: center; }
+        .manual-input { 
+            font-family: 'Comic Neue', cursive; 
+            font-size: 2.2rem; 
+            width: 120px; 
+            text-align: center; 
+            padding: 5px; 
+            border-radius: 25px; 
+            border: 4px solid #9C27B0; 
+            background: #F3E5F5; 
+            color: #4A148C; 
+            font-weight: bold; 
+            text-transform: uppercase; 
+            outline: none; 
+            box-shadow: 0 5px 0 #9C27B0;
+        }
+        .manual-label { font-size: 1rem; font-weight: bold; color: #555; display: block; margin-bottom: 8px; font-family: 'Fredoka', sans-serif;}
+        
+        .feedback { 
+            font-size: 1.3rem; 
+            text-align: center; 
+            margin: 20px 0; 
+            min-height: 60px; 
+            background: #FFEB3B; 
+            border: 4px solid #FBC02D;
+            box-shadow: 0 5px 0 #FBC02D;
+            border-radius: 25px; 
+            padding: 15px; 
+            color: #3E2723; 
+            font-family: 'Fredoka', sans-serif;
+            font-weight: 700;
+        }
+        
+        .score-area { display: flex; justify-content: space-around; align-items: center; margin-top: 15px; flex-wrap: wrap; gap: 10px; }
+        .pontos { 
+            background: #4CAF50; 
+            border: 3px solid #388E3C;
+            padding: 8px 20px; 
+            border-radius: 20px; 
+            color: white; 
+            font-weight: bold; 
+            font-family: 'Fredoka', sans-serif;
+            font-size: 1.1rem;
+            box-shadow: 0 4px 0 #388E3C;
+        }
+        
+        @media (max-width: 600px) {
+            .palavra-incompleta { font-size: 1.8rem; letter-spacing: 4px; padding: 10px 20px; border-width: 3px; }
+            .btn-opcao { font-size: 1.5rem; min-width: 70px; height: 60px; }
+            .menu-titulo { font-size: 2.2rem; }
+            .top-bar { justify-content: center; }
+            .card-icone { font-size: 3.5rem; }
+            .question-area { padding: 20px 10px; border-width: 6px; }
+            .imagem-dica { font-size: 60px; }
+        }
+        
+        .acertou-glow { animation: pularAlegre 0.6s ease-out; background: #69F0AE; border-color: #00E676; box-shadow: 0 6px 0 #00E676;}
+        @keyframes pularAlegre { 
+            0% { transform: scale(1); } 
+            50% { transform: scale(1.1) translateY(-10px); } 
+            100% { transform: scale(1); } 
+        }
+        
         .erro-shake { animation: tremer 0.4s; }
         @keyframes tremer {
             0% { transform: translateX(0); }
-            25% { transform: translateX(-8px); }
-            50% { transform: translateX(8px); }
-            75% { transform: translateX(-8px); }
+            25% { transform: translateX(-10px) rotate(-2deg); }
+            50% { transform: translateX(10px) rotate(2deg); }
+            75% { transform: translateX(-10px) rotate(-2deg); }
             100% { transform: translateX(0); }
         }
     </style>
 </head>
 <body>
-    <div id="bg-emoji-esq" class="bg-emoji">🧚‍♀️</div>
-    <div id="bg-emoji-dir" class="bg-emoji">🧙‍♂️</div>
+    <!-- Emojis escolares no fundo -->
+    <div id="bg-emoji-esq" class="bg-emoji">🎒</div>
+    <div id="bg-emoji-dir" class="bg-emoji">🚌</div>
 
     <div class="container-principal">
         <div class="top-bar">
@@ -93,7 +291,7 @@
                 <button class="btn-geral btn-voltar" onclick="voltarParaVogais()">⬅ Ilha das Vogais</button>
                 <a href="https://formar-palavras.vercel.app/" target="_blank" class="btn-geral btn-link-extra">🧩 Formar Palavras</a>
             </div>
-            <button class="btn-geral btn-acao-jogo" onclick="voltarAoMenu()" id="btnVoltarMenu" style="display: none;">⬅ Trocar Aventura</button>
+            <button class="btn-geral btn-acao-jogo" onclick="voltarAoMenu()" id="btnVoltarMenu" style="display: none;">⬅ Trocar Atividade</button>
             <div class="controles-direita">
                 <button class="btn-geral btn-fullscreen" onclick="toggleFullscreen()">⛶ Tela Cheia</button>
                 <button class="btn-geral btn-musica" onclick="toggleMusica()">🔇 Música OFF</button>
@@ -101,54 +299,58 @@
         </div>
 
         <div id="telaMenu" class="tela ativa">
-            <h1 class="menu-titulo">✨ Reino das Consoantes ✨</h1>
-            <p class="menu-subtitulo">Escolha sua aventura ortográfica</p>
+            <h1 class="menu-titulo">🎒 Escola das Consoantes ✏️</h1>
+            <p class="menu-subtitulo">Escolha sua diversão ortográfica!</p>
 
             <div class="menu-grid">
-                <div class="card-aventura" onclick="iniciarAventura('mn')" onmouseenter="lerTexto('Tesouro do M e N. Uso de M antes de P e B.')" onmouseleave="pararLeitura()">
+                <div class="card-aventura card-1" onclick="iniciarAventura('mn')" onmouseenter="lerTexto('Tesouro do M e N. Uso de M antes de P e B.')" onmouseleave="pararLeitura()">
                     <div class="card-icone">🏴‍☠️</div>
                     <div class="card-titulo">Tesouro do M e N</div>
-                    <div class="card-desc">Uso de M antes de P e B.</div>
+                    <div class="card-desc">Quando uso M ou N?</div>
                 </div>
-                <div class="card-aventura" onclick="iniciarAventura('ssc')" onmouseenter="lerTexto('Espaço Sideral. Descubra quando usar dois S ou C cedilha.')" onmouseleave="pararLeitura()">
+                <div class="card-aventura card-2" onclick="iniciarAventura('ssc')" onmouseenter="lerTexto('Espaço Sideral. Descubra quando usar dois S ou C cedilha.')" onmouseleave="pararLeitura()">
                     <div class="card-icone">🚀</div>
                     <div class="card-titulo">Espaço Sideral</div>
-                    <div class="card-desc">Descubra quando usar SS ou Ç.</div>
+                    <div class="card-desc">Quando usar SS ou Ç?</div>
                 </div>
-                <div class="card-aventura" onclick="iniciarAventura('rrr')" onmouseenter="lerTexto('Safári Animal. Entenda a diferença entre o R fraco e o R R forte.')" onmouseleave="pararLeitura()">
+                <div class="card-aventura card-3" onclick="iniciarAventura('rrr')" onmouseenter="lerTexto('Safári Animal. Entenda a diferença entre o R fraco e o R R forte.')" onmouseleave="pararLeitura()">
                     <div class="card-icone">🦁</div>
                     <div class="card-titulo">Safári Animal</div>
                     <div class="card-desc">O R fraco e o RR forte.</div>
                 </div>
-                <div class="card-aventura" onclick="iniciarAventura('sz')" onmouseenter="lerTexto('Mergulho. Palavras que terminam com a letra S ou a letra Z.')" onmouseleave="pararLeitura()">
+                <div class="card-aventura card-4" onclick="iniciarAventura('sz')" onmouseenter="lerTexto('Mergulho. Palavras que terminam com a letra S ou a letra Z.')" onmouseleave="pararLeitura()">
                     <div class="card-icone">🐋</div>
                     <div class="card-titulo">Mergulho S e Z</div>
-                    <div class="card-desc">Palavras com final em S ou Z.</div>
+                    <div class="card-desc">Termina com S ou Z?</div>
                 </div>
-                <!-- NOVO CARD ADICIONADO AQUI -->
-                <div class="card-aventura" onclick="window.open('https://formar-palavras.vercel.app/', '_blank')" onmouseenter="lerTexto('Formar Palavras. Acesse esta nova aventura educativa.')" onmouseleave="pararLeitura()" style="border: 2px dashed rgba(255, 221, 153, 0.5);">
+                <div class="card-aventura card-5" onclick="window.open('https://formar-palavras.vercel.app/', '_blank')" onmouseenter="lerTexto('Formar Palavras. Acesse esta nova aventura educativa.')" onmouseleave="pararLeitura()">
                     <div class="card-icone">🔠</div>
                     <div class="card-titulo">Formar Palavras</div>
-                    <div class="card-desc">Página educativa extra!</div>
+                    <div class="card-desc">Jogo extra para brincar!</div>
                 </div>
             </div>
         </div>
 
         <div id="telaJogo" class="tela">
             <div class="header-magico">
-                <div class="titulo" id="tituloJogo">🧚‍♀️ Aventura ✨</div>
+                <div class="titulo" id="tituloJogo">🎒 Atividade ✨</div>
             </div>
+            
             <div class="question-area" id="areaPergunta">
                 <div class="imagem-dica" id="imagemDica">🍄</div>
                 <div class="palavra-incompleta" id="palavraDisplay">_ _ _</div>
                 <div class="dica-texto" id="dicaTexto">✨ Qual letra está faltando? ✨</div>
             </div>
+            
             <div class="opcoes" id="opcoesContainer"></div>
+            
             <div class="manual-area">
-                <div class="manual-label">✍️ Ou digite a resposta aqui:</div>
+                <div class="manual-label">✍️ Ou digite a resposta aqui no caderno:</div>
                 <input type="text" class="manual-input" id="manualInput" maxlength="2" placeholder="?" autocomplete="off" spellcheck="false" inputmode="none">
             </div>
+            
             <div class="feedback" id="feedbackMsg">🌟 Escolha uma opção ou digite a resposta!</div>
+            
             <div class="score-area">
                 <div class="pontos">🏆 Pontos: <span id="pontuacao">0</span></div>
                 <div class="pontos">🎯 Palavra: <span id="nivelAtual">1</span> / <span id="totalPerguntas">10</span></div>
@@ -159,12 +361,12 @@
 <script>
     const q = (i, p, l, r, o, d) => ({ imagem: i, palavra_completa: p, lacuna: l, resposta: r, opcoes: o, dica: d });
 
-    // --- BANCO DE DADOS DAS AVENTURAS COMPLETO ---
+    // --- BANCO DE DADOS DAS AVENTURAS COM CORES CLARAS E ALEGRES ---
     const bancoAventuras = {
         mn: {
             titulo: "🏴‍☠️ Tesouro do M e N 🦜",
-            corFundo: "linear-gradient(145deg, #0d2138 0%, #154360 40%, #0a1724 100%)",
-            emojis: ["⚓", "💎", "🏴‍☠️", "🗺️", "🦜", "🪙"],
+            corFundo: "linear-gradient(145deg, #A8E6CF 0%, #DCEDC1 100%)", /* Verde menta claro */
+            emojis: ["🖍️", "🎨", "✏️", "📚", "🦜", "🪙"],
             perguntas: [
                 q("🥁","TAMBOR","TA_BOR","m",["m","n"],"Antes de P e B, usamos a letra..."),
                 q("🪑","BANCO","BA_CO","n",["m","n"],"Antes de C, não usamos o M!"),
@@ -220,7 +422,7 @@
         },
         ssc: {
             titulo: "🚀 Espaço Sideral (SS/Ç) 👽",
-            corFundo: "linear-gradient(145deg, #1b0a2a 0%, #2e0854 40%, #000000 100%)",
+            corFundo: "linear-gradient(145deg, #FFD3B6 0%, #FFAAA5 100%)", /* Pêssego/Salmão alegre */
             emojis: ["⭐", "🚀", "🛸", "🪐", "👽", "☄️"],
             perguntas: [
                 q("🍎","MAÇÃ","MA_Ã","ç",["ss","ç"],"Tem som de S, mas vem antes de A com til."),
@@ -277,8 +479,8 @@
         },
         rrr: {
             titulo: "🦁 Safári Animal (R/RR) 🌿",
-            corFundo: "linear-gradient(145deg, #3d2b1f 0%, #4a5d23 40%, #1c280e 100%)",
-            emojis: ["🦁", "🌿", "🐍", "🦓", "🐒", "🐘"],
+            corFundo: "linear-gradient(145deg, #d4fc79 0%, #96e6a1 100%)", /* Verde grama claro */
+            emojis: ["🦁", "🌿", "🍎", "📏", "🐒", "🐘"],
             perguntas: [
                 q("🚗","CARRO","CA_O","rr",["r","rr"],"Fale alto! Arranha a garganta bem forte!"),
                 q("🕷️","ARANHA","A_ANHA","r",["r","rr"],"Fale alto! A língua tremeu no céu da boca?"),
@@ -334,8 +536,8 @@
         },
         sz: {
             titulo: "🐋 Mergulho (S/Z Final) 🌊",
-            corFundo: "linear-gradient(145deg, #001f3f 0%, #0074D9 40%, #001f3f 100%)",
-            emojis: ["🐟", "🌊", "🦈", "🐙", "🐚", "🦀"],
+            corFundo: "linear-gradient(145deg, #81D4FA 0%, #B3E5FC 100%)", /* Azul céu bem claro e brilhante */
+            emojis: ["🐟", "🌊", "🦈", "🧃", "🍎", "🎒"],
             perguntas: [
                 q("✏️","LÁPIS","LÁPI_","s",["s","z"],"Item de material escolar."),
                 q("😊","FELIZ","FELI_","z",["s","z"],"Quando estamos muito contentes."),
@@ -404,13 +606,19 @@
             musicaFundo.play().catch(e => console.log("Áudio bloqueado pelo navegador até o usuário interagir."));
             document.querySelectorAll('.btn-musica').forEach(b => {
                 b.innerHTML = '🎵 Música ON';
-                b.style.background = "linear-gradient(135deg, #8bc34a, #558b2f)";
+                b.style.background = "#E8F5E9";
+                b.style.borderColor = "#4CAF50";
+                b.style.boxShadow = "0 4px 0 #4CAF50";
+                b.style.color = "#2E7D32";
             });
         } else {
             musicaFundo.pause();
             document.querySelectorAll('.btn-musica').forEach(b => {
                 b.innerHTML = '🔇 Música OFF';
-                b.style.background = "linear-gradient(135deg, #d9b48b, #b87c4a)";
+                b.style.background = "#FFF3E0";
+                b.style.borderColor = "#FF9800";
+                b.style.boxShadow = "0 4px 0 #FF9800";
+                b.style.color = "#E65100";
             });
         }
     }
@@ -427,7 +635,10 @@
         const isFull = !!document.fullscreenElement;
         document.querySelectorAll('.btn-fullscreen').forEach(b => {
             b.innerHTML = isFull ? '✖ Sair Tela' : '⛶ Tela Cheia';
-            b.style.background = isFull ? "linear-gradient(135deg, #e06c6c, #aa2c2c)" : "linear-gradient(135deg, #6ec8e0, #2c8faa)";
+            b.style.background = isFull ? "#FFEBEE" : "#E1F5FE";
+            b.style.borderColor = isFull ? "#F44336" : "#03A9F4";
+            b.style.boxShadow = isFull ? "0 4px 0 #F44336" : "0 4px 0 #03A9F4";
+            b.style.color = isFull ? "#C62828" : "#0277BD";
         });
     });
 
@@ -525,9 +736,10 @@
         
         telaJogo.classList.remove('ativa');
         telaMenu.classList.add('ativa');
-        document.body.style.background = "linear-gradient(145deg, #1a4d2a 0%, #0e3820 40%, #0a2a18 100%)";
-        bgEsq.innerText = "🧚‍♀️";
-        bgDir.innerText = "🧙‍♂️";
+        
+        document.body.style.background = "linear-gradient(145deg, #FFF9C4 0%, #FFCC80 100%)";
+        bgEsq.innerText = "🎒";
+        bgDir.innerText = "🚌";
     }
 
     // --- LÓGICA DO JOGO ---
@@ -536,7 +748,7 @@
             feedbackMsg.innerHTML = "🎉 PARABÉNS! Você completou esta rodada! 🎉";
             palavraDisplay.innerText = "FIM!";
             imagemDica.innerText = "🏆";
-            dicaTexto.innerText = "Volte ao menu para jogar de novo com palavras diferentes!";
+            dicaTexto.innerText = "Volte ao menu para jogar de novo com outras palavras!";
             opcoesContainer.innerHTML = "";
             manualInput.disabled = true;
             confetti({ particleCount: 300, spread: 110, origin: { y: 0.6 } });
@@ -549,11 +761,12 @@
         imagemDica.innerText = q.imagem;
         dicaTexto.innerText = "✨ " + q.dica + " ✨";
         palavraDisplay.innerText = q.lacuna.split('').join(' ');
+        palavraDisplay.classList.remove('acertou-glow');
         
         gerarBotoesOpcoes(q);
         
         nivelSpan.innerText = indiceAtual + 1;
-        feedbackMsg.innerHTML = "🌟 Qual opção completa a palavra corretamente?";
+        feedbackMsg.innerHTML = "🌟 Qual bloquinho completa a palavra corretamente?";
         
         manualInput.disabled = false;
         manualInput.value = "";
@@ -591,7 +804,6 @@
             palavraDisplay.innerText = q.palavra_completa.split('').join(' ');
             feedbackMsg.innerHTML = `✨ Excelente! É escrito com "${q.resposta.toUpperCase()}"! ✨`;
             palavraDisplay.classList.add('acertou-glow');
-            setTimeout(() => palavraDisplay.classList.remove('acertou-glow'), 600);
             confetti({ particleCount: 80, spread: 60, origin: { y: 0.5 } });
             falarPalavra(q.palavra_completa);
 
@@ -602,7 +814,7 @@
 
         } else {
             somErro.currentTime = 0; 
-            somErro.play().catch(() => console.log("Erro ao reproduzir som de erro."));
+            somErro.play().catch(() => console.log("Erro ao reproduzir som."));
             
             areaPergunta.classList.add('erro-shake');
             feedbackMsg.innerHTML = `❌ Ops! Tente de novo!`;
@@ -655,15 +867,14 @@
             const el = document.createElement('div');
             el.className = 'flutuante';
             el.innerText = simbs[Math.floor(Math.random() * simbs.length)];
-            el.style.fontSize = (Math.random() * 25 + 20) + 'px';
-            el.style.left = Math.random() * 100 + '%';
-            el.style.top = '-40px';
+            el.style.fontSize = (Math.random() * 25 + 25) + 'px';
+            el.style.left = Math.random() * 90 + 5 + '%';
+            el.style.top = '110%'; // Começa de baixo e sobe
             el.style.animationDuration = (Math.random() * 8 + 8) + 's';
             document.body.appendChild(el);
             setTimeout(() => el.remove(), 12000);
-        }, 3000);
+        }, 2500);
     }
 </script>
 </body>
 </html>
-<script async data-explicit-opt-in="true" data-cookie-opt-in="true" data-deployment-id="dpl_HERJipbbN31stmsqKy4TrcXSbNTz" src="https://vercel.live/_next-live/feedback/feedback.js"></script>
