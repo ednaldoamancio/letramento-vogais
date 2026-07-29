@@ -179,12 +179,13 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start; /* Ajustado para permitir rolagem se necessário */
             align-items: center;
             padding: 15px;
             position: relative;
             z-index: 10;
-            overflow: hidden;
+            overflow-y: auto; /* Adicionado para telas pequenas com 3 botões */
+            overflow-x: hidden;
         }
 
         .conteudo-central {
@@ -192,6 +193,7 @@
             width: 100%;
             margin: 0 auto;
             text-align: center;
+            padding-bottom: 30px;
         }
 
         .banner-reinos {
@@ -302,6 +304,14 @@
         }
         .card-palavrinhas:hover { box-shadow: 0 12px 0 #8b6914, 0 0 40px rgba(212, 168, 67, 0.5); }
 
+        /* Novo estilo para o botão Alfabeto Divertido */
+        .card-alfabeto {
+            background: linear-gradient(145deg, #6a1b9a, #4a148c);
+            box-shadow: 0 8px 0 #310b61, 0 0 20px rgba(106, 27, 154, 0.3);
+            border: 2px solid rgba(220, 180, 255, 0.3);
+        }
+        .card-alfabeto:hover { box-shadow: 0 12px 0 #310b61, 0 0 40px rgba(106, 27, 154, 0.5); }
+
         .emoji-reino {
             font-size: 42px;
             filter: drop-shadow(0 4px 8px rgba(0,0,0,0.3));
@@ -354,9 +364,7 @@
     </style>
 </head>
 <body>
-
     <div id="coracoes-container"></div>
-
     <header class="header">
         <div class="header-inner">
             <a href="index.html" class="btn-voltar-dourado">← ✨ Voltar aos Reinos ✨</a>
@@ -370,7 +378,7 @@
     <div class="stage">
         <div class="conteudo-central">
             <div class="banner-reinos">
-                <img src="ilha.jpg" alt="Reino das Vogais" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #e91e8c, #9c1460)'; this.parentElement.innerHTML += '<span style=\"font-size:48px;\">👸🤴</span>';">
+                <img src="ilha.jpg" alt="Reino das Vogais" onerror="this.style.display='none'; this.parentElement.style.background='linear-gradient(135deg, #e91e8c, #9c1460)'; this.parentElement.innerHTML += '<span style=\'font-size:48px;\'>👸🤴</span>';">
             </div>
             
             <h1 class="titulo-reinos">🏰 Reino das Vogais</h1>
@@ -389,6 +397,13 @@
                     <span class="emoji-reino">💃🕺</span>
                     <span class="nome-reino">Formando Palavrinhas</span>
                     <span class="desc-reino">AO - EI - UI - Descubra as palavras mágicas!</span>
+                </a>
+
+                <!-- Novo Botão Alfabeto Divertido -->
+                <a href="alfacel.html" class="card-reino card-alfabeto" data-audio="alfabeto_divertido.mp3">
+                    <span class="emoji-reino">🔤✨</span>
+                    <span class="nome-reino">Alfabeto Divertido</span>
+                    <span class="desc-reino">ALFACEL - Alfabetização Acelerada</span>
                 </a>
             </div>
             
@@ -546,3 +561,4 @@
     </script>
 </body>
 </html>
+<script async data-explicit-opt-in="true" data-cookie-opt-in="true" data-deployment-id="dpl_5PsCESdbpp1E5Ei3jFrB8NjNGqhc" src="https://vercel.live/_next-live/feedback/feedback.js"></script>
