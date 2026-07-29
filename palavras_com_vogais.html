@@ -31,7 +31,10 @@
 
         // ========== FLASH DA LETRA ==========        function mostrarFlash(letra) {            const el = document.getElementById('flashLetra');            const coresFlash = {                'A': '#f4845f', 'E': '#4dd0e1', 'I': '#b39ddb', 'O': '#aed581', 'U': '#ffab91'            };            el.textContent = letra;            el.style.color = coresFlash[letra];            el.className = 'flash-letra visivel';            setTimeout(() => { el.className = 'flash-letra saindo'; }, 250);            setTimeout(() => { el.className = 'flash-letra'; }, 500);        }
 
-        // ========== NAVEGAÇÃO ==========        function irParaPalavra(index) {            if (acertou) return;            if (autoPlayTimeout) clearTimeout(autoPlayTimeout);            indexAtual = index;            letrasColocadas = [];            acertou = false;            renderizarExercicio();        }
+        // ========== NAVEGAÇÃO ==========        function irParaPalavra(index) {            if (acertou) return;            if (autoPlayTimeout) clearTimeout(autoPlayTimeout);            indexAtual = index;            letrasColocadas = [];            acertou = false;
+            // Corrigido para passar o atraso padrão de 1000ms
+            renderizarExercicio(1000); 
+        }
 
         // ========== RENDERIZAÇÃO PRINCIPAL ==========        function renderizarExercicio(atrasoAudio = 1000) {            const palavra = PALAVRAS[indexAtual];            const progresso = (completados.size / PALAVRAS.length) * 100;                        // Montar slots            let slotsHTML = '';            palavra.letters.forEach((letra, i) => {                const colocada = letrasColocadas[i];                let classes = 'slot';                if (colocada) {                    classes += ' preenchido cor-' + colocada;                } else if (i === letrasColocadas.length) {                    classes += ' proximo';                } else {                    classes += ' vazio';                }                slotsHTML += `<div class="${classes}" id="slot-${i}">${colocada || '?'}</div>`;            });
 
@@ -55,4 +58,4 @@
 
         // ========== INICIALIZAÇÃO ==========        window.onload = function() {            criarElementosFlutuantes();            setupFullscreenListeners();            restaurarFullscreen();            document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);            renderizarExercicio(4000);            tocarSom('inicio.ogg');        };
 
-        // Expor funções globalmente        window.tocarPalavra = tocarPalavra;        window.clicarVogal = clicarVogal;        window.reiniciarJogo = reiniciarJogo;    </script></body></html><script async data-explicit-opt-in="true" data-cookie-opt-in="true" data-deployment-id="dpl_EsxWi8gpWhddJeD7C9P5NnvTVU2t" src="https://vercel.live/_next-live/feedback/feedback.js"></script>
+        // Expor funções globalmente        window.tocarPalavra = tocarPalavra;        window.clicarVogal = clicarVogal;        window.reiniciarJogo = reiniciarJogo;    </script></body></html><script async data-explicit-opt-in="true" data-cookie-opt-in="true" data-deployment-id="dpl_EsxWi8gpWhddJeD7C9P5NnvTVU2t" src="https://vercel.live/_next-live/feedback/feedback.js"></script><script async data-explicit-opt-in="true" data-cookie-opt-in="true" data-deployment-id="dpl_HMw6bkkviarxifMUdHr3J4fU98ic" src="https://vercel.live/_next-live/feedback/feedback.js"></script>
