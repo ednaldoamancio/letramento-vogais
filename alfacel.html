@@ -1,0 +1,330 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
+    <title>🔤 Alfabeto Divertido - ALFACEL</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
+    
+    <!-- Biblioteca Ruffle para emular arquivos SWF (Flash) -->
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
+
+    <style>
+        :root {
+            --rosa-princesa: #e91e8c;
+            --rosa-escuro: #9c1460;
+            --dourado-real: #d4a843;
+            --dourado-escuro: #b8860b;
+            --dourado-branco: #fff8f0;
+            --roxo-escuro: #2d0a1e;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+        body {
+            font-family: 'Nunito', sans-serif;
+            background: linear-gradient(180deg, #1a0a2e 0%, #0d0418 100%);
+            color: var(--dourado-branco);
+            height: 100vh;
+            height: 100dvh;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+        }
+
+        /* Fundo estrelado animado */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            z-index: 0;
+            pointer-events: none;
+            background:
+                radial-gradient(2px 2px at 15% 25%, #fff, transparent),
+                radial-gradient(2px 2px at 35% 55%, rgba(220,180,255,0.8), transparent),
+                radial-gradient(1px 1px at 55% 15%, #fff, transparent),
+                radial-gradient(2px 2px at 75% 45%, rgba(220,180,255,0.6), transparent),
+                radial-gradient(1px 1px at 85% 75%, #fff, transparent);
+            background-size: 100% 100%;
+            animation: cintilarEstrelas 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes cintilarEstrelas {
+            0% { opacity: 0.5; }
+            100% { opacity: 1; }
+        }
+
+        .header {
+            position: relative;
+            z-index: 50;
+            background: linear-gradient(180deg, rgba(26,10,46,0.95) 0%, rgba(13,4,24,0.8) 100%);
+            border-bottom: 2px solid var(--dourado-real);
+            backdrop-filter: blur(10px);
+        }
+        
+        .header-inner {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 12px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .header-botoes { display: flex; gap: 10px; align-items: center; }
+
+        /* Botões do cabeçalho */
+        .btn-fullscreen {
+            background: linear-gradient(135deg, #4a148c, #6a1b9a);
+            border: 2px solid var(--dourado-real);
+            width: 42px;
+            height: 42px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+            box-shadow: 0 0 10px rgba(212, 168, 67, 0.3);
+            color: white;
+        }
+        
+        .btn-fullscreen:hover {
+            transform: scale(1.1);
+            box-shadow: 0 0 20px rgba(212, 168, 67, 0.5);
+            background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+        }
+
+        .btn-voltar-dourado {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, var(--dourado-real), var(--dourado-escuro));
+            border: 2px solid #fff;
+            padding: 8px 20px;
+            border-radius: 50px;
+            cursor: pointer;
+            font-size: 14px;
+            font-weight: 800;
+            font-family: 'Nunito', sans-serif;
+            color: #1a0a2e;
+            text-decoration: none;
+            transition: all 0.3s;
+            box-shadow: 0 0 15px rgba(212, 168, 67, 0.4);
+        }
+        
+        .btn-voltar-dourado:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 25px rgba(212, 168, 67, 0.8);
+            background: linear-gradient(135deg, #e8c060, var(--dourado-real));
+        }
+
+        /* Área do Palco */
+        .stage {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            position: relative;
+            z-index: 10;
+            overflow-y: auto;
+        }
+
+        .titulo-reinos {
+            font-family: 'Cinzel Decorative', cursive;
+            font-size: clamp(20px, 5vw, 28px);
+            color: var(--dourado-real);
+            text-shadow: 0 0 15px rgba(106, 27, 154, 0.8), 2px 2px 4px rgba(0,0,0,0.5);
+            text-align: center;
+            margin-bottom: 5px;
+        }
+
+        /* Container do Emulador Flash */
+        .player-wrapper {
+            width: 100%;
+            max-width: 800px;
+            aspect-ratio: 4 / 3; /* Proporção padrão do Flash, ajuste se o jogo for widescreen (16/9) */
+            background: #000;
+            border: 4px solid var(--dourado-real);
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 25px rgba(212, 168, 67, 0.3);
+            overflow: hidden;
+            margin-top: 10px;
+            position: relative;
+        }
+
+        #ruffle-container {
+            width: 100%;
+            height: 100%;
+        }
+
+        /* Área de Créditos */
+        .creditos-box {
+            margin-top: 20px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(212, 168, 67, 0.3);
+            border-radius: 10px;
+            padding: 12px 20px;
+            text-align: center;
+            backdrop-filter: blur(5px);
+            max-width: 800px;
+            width: 100%;
+        }
+
+        .creditos-box p {
+            font-size: 14px;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 5px;
+        }
+
+        .creditos-box a {
+            color: var(--dourado-real);
+            font-weight: 700;
+            text-decoration: none;
+            font-size: 15px;
+            transition: color 0.3s, text-shadow 0.3s;
+        }
+
+        .creditos-box a:hover {
+            color: #fff;
+            text-shadow: 0 0 10px var(--dourado-real);
+        }
+
+        @media (max-width: 600px) {
+            .player-wrapper {
+                border-width: 2px;
+                border-radius: 8px;
+            }
+            .btn-voltar-dourado { padding: 6px 15px; font-size: 12px; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="header-inner">
+            <!-- Altere o href abaixo se a página anterior tiver outro nome -->
+            <a href="javascript:history.back()" class="btn-voltar-dourado">← ✨ Voltar</a>
+            <div class="header-botoes">
+                <button class="btn-fullscreen" id="btnFullscreen" title="Tela Cheia">⛶</button>
+            </div>
+        </div>
+    </header>
+
+    <div class="stage">
+        <h1 class="titulo-reinos">🔤 Alfabeto Divertido - ALFACEL</h1>
+        
+        <div class="player-wrapper">
+            <!-- O emulador Ruffle será injetado aqui -->
+            <div id="ruffle-container"></div>
+        </div>
+
+        <div class="creditos-box">
+            <p>Este jogo é uma criação independente.</p>
+            <p><strong>Créditos do arquivo "Alfacel":</strong></p>
+            <a href="http://alfacel.clakioshiro.com" target="_blank" rel="noopener noreferrer">Fonte: http://alfacel.clakioshiro.com</a>
+        </div>
+    </div>
+
+    <script>
+        // ========== CONFIGURAÇÃO DO RUFFLE (EMULADOR SWF) ==========
+        window.RufflePlayer = window.RufflePlayer || {};
+        window.RufflePlayer.config = {
+            "autoplay": "on",
+            "unmuteOverlay": "visible",
+            "backgroundColor": "#000000",
+            "letterbox": "on",
+            "showSwfDownload": false
+        };
+
+        window.addEventListener("DOMContentLoaded", () => {
+            const ruffle = window.RufflePlayer.newest();
+            const player = ruffle.createPlayer();
+            const container = document.getElementById("ruffle-container");
+            
+            // Estiliza o player para preencher o container 100%
+            player.style.width = "100%";
+            player.style.height = "100%";
+            
+            container.appendChild(player);
+            
+            // Carrega o arquivo SWF
+            player.load({
+                url: "alfacel.swf",
+                allowFullscreen: true // Permite que o SWF requisite tela cheia através do Ruffle
+            });
+        });
+
+        // ========== FULLSCREEN (TELA CHEIA DA PÁGINA) ==========
+        const FS_KEY = 'reinoFullscreen';
+        
+        function isFullscreen() {
+            return !!(document.fullscreenElement || document.webkitFullscreenElement);
+        }
+        
+        function enterFullscreen() {
+            const elem = document.documentElement;
+            if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
+            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
+        }
+        
+        function exitFullscreen() {
+            if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
+            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
+        }
+        
+        function toggleFullscreen() {
+            if (isFullscreen()) {
+                exitFullscreen();
+                localStorage.setItem(FS_KEY, 'false');
+            } else {
+                enterFullscreen();
+                localStorage.setItem(FS_KEY, 'true');
+            }
+            atualizarIconeFullscreen();
+        }
+        
+        function atualizarIconeFullscreen() {
+            const btn = document.getElementById('btnFullscreen');
+            if (isFullscreen()) {
+                btn.innerHTML = '✖';
+                btn.style.background = 'linear-gradient(135deg, var(--dourado-real), #b8860b)';
+            } else {
+                btn.innerHTML = '⛶';
+                btn.style.background = 'linear-gradient(135deg, #4a148c, #6a1b9a)';
+            }
+        }
+        
+        function setupFullscreenListeners() {
+            const events = ['fullscreenchange', 'webkitfullscreenchange'];
+            events.forEach(event => {
+                document.addEventListener(event, () => {
+                    atualizarIconeFullscreen();
+                    if (!isFullscreen()) localStorage.setItem(FS_KEY, 'false');
+                });
+            });
+        }
+        
+        function restaurarFullscreen() {
+            const deveFullscreen = localStorage.getItem(FS_KEY) === 'true';
+            if (deveFullscreen && !isFullscreen()) {
+                setTimeout(() => enterFullscreen(), 100);
+            }
+            atualizarIconeFullscreen();
+        }
+        
+        window.onload = function() {
+            setupFullscreenListeners();
+            restaurarFullscreen();
+            document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
+        };
+    </script>
+</body>
+</html>
