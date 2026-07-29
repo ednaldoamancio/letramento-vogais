@@ -25,7 +25,9 @@
             --peach: #ffab91;
             --peach-dark: #e08060;
         }
+
         * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
         body {
             font-family: 'Nunito', sans-serif;
             background: linear-gradient(180deg, #2d0a1e 0%, #1a0a1e 40%, #0d0418 100%);
@@ -37,6 +39,7 @@
             flex-direction: column;
             position: relative;
         }
+
         /* Estrelas cintilantes */
         body::before {
             content: '';
@@ -58,10 +61,12 @@
             background-size: 100% 100%;
             animation: cintilarEstrelas 3s ease-in-out infinite alternate;
         }
+
         @keyframes cintilarEstrelas {
             0% { opacity: 0.5; }
             100% { opacity: 1; }
         }
+
         /* Elementos flutuantes */
         .elemento-flutuante {
             position: fixed;
@@ -70,12 +75,14 @@
             animation: flutuarElemento linear infinite;
             opacity: 0.4;
         }
+        
         @keyframes flutuarElemento {
             0% { transform: translateY(100vh) scale(0.5) rotate(0deg); opacity: 0; }
             15% { opacity: 0.6; }
             85% { opacity: 0.6; }
             100% { transform: translateY(-20vh) scale(1) rotate(360deg); opacity: 0; }
         }
+
         /* Header */
         .header {
             position: relative;
@@ -84,6 +91,7 @@
             border-bottom: 2px solid var(--dourado-real);
             backdrop-filter: blur(10px);
         }
+        
         .header-inner {
             max-width: 800px;
             margin: 0 auto;
@@ -94,7 +102,9 @@
             flex-wrap: wrap;
             gap: 8px;
         }
+
         .header-botoes { display: flex; gap: 10px; align-items: center; }
+
         .btn-fullscreen {
             background: linear-gradient(135deg, #4a148c, #6a1b9a);
             border: 2px solid var(--dourado-real);
@@ -110,15 +120,18 @@
             box-shadow: 0 0 10px rgba(212, 168, 67, 0.3);
             color: white;
         }
+        
         .btn-fullscreen:hover {
             transform: scale(1.1);
             box-shadow: 0 0 20px rgba(212, 168, 67, 0.5);
             background: linear-gradient(135deg, #6a1b9a, #8e24aa);
         }
+        
         .btn-fullscreen.ativo {
             background: linear-gradient(135deg, var(--dourado-real), #b8860b);
             box-shadow: 0 0 20px rgba(212, 168, 67, 0.6);
         }
+
         .btn-voltar-dourado {
             display: flex;
             align-items: center;
@@ -137,15 +150,18 @@
             box-shadow: 0 0 15px rgba(212, 168, 67, 0.4);
             animation: brilhoDourado 1.5s ease-in-out infinite;
         }
+        
         .btn-voltar-dourado:hover {
             transform: scale(1.05);
             box-shadow: 0 0 25px rgba(212, 168, 67, 0.8);
             background: linear-gradient(135deg, #e8c060, var(--dourado-real));
         }
+        
         @keyframes brilhoDourado {
             0%, 100% { box-shadow: 0 0 15px rgba(212, 168, 67, 0.4); border-color: #fff; }
             50% { box-shadow: 0 0 30px rgba(212, 168, 67, 0.8); border-color: #ffe6a3; }
         }
+
         /* Stage */
         .stage {
             flex: 1;
@@ -159,12 +175,14 @@
             overflow-y: auto;
             overflow-x: hidden;
         }
+
         .conteudo-central {
             max-width: 700px;
             width: 100%;
             margin: 0 auto;
             text-align: center;
         }
+
         /* Títulos */
         .titulo-reino {
             font-family: 'Cinzel Decorative', cursive;
@@ -174,6 +192,7 @@
             text-align: center;
             margin-bottom: 5px;
         }
+        
         .subtitulo-real {
             font-family: 'Dancing Script', cursive;
             font-size: clamp(14px, 4vw, 18px);
@@ -181,6 +200,7 @@
             text-align: center;
             margin-bottom: 15px;
         }
+
         /* Barra de progresso */
         .progresso-bar {
             display: flex;
@@ -192,6 +212,7 @@
             border-radius: 50px;
             backdrop-filter: blur(5px);
         }
+        
         .progresso-label {
             font-size: 13px;
             font-weight: 700;
@@ -199,6 +220,7 @@
             color: var(--dourado-real);
             white-space: nowrap;
         }
+        
         .progresso-track {
             flex: 1;
             height: 8px;
@@ -206,12 +228,14 @@
             background: rgba(255,255,255,0.2);
             overflow: hidden;
         }
+        
         .progresso-fill {
             height: 100%;
             border-radius: 50px;
             background: linear-gradient(90deg, var(--lime), #81c784);
             transition: width 0.5s ease;
         }
+        
         .estrelas-badge {
             display: flex;
             align-items: center;
@@ -223,6 +247,7 @@
             font-size: 16px;
             color: #e65100;
         }
+
         /* Card do exercício */
         .card-exercicio {
             background: rgba(255,255,255,0.1);
@@ -232,6 +257,7 @@
             backdrop-filter: blur(5px);
             margin-bottom: 15px;
         }
+        
         .dica-texto {
             font-size: 14px;
             font-weight: 600;
@@ -239,6 +265,7 @@
             margin-bottom: 15px;
             font-family: 'Nunito', sans-serif;
         }
+        
         .img-placeholder {
             width: 200px;
             height: 200px;
@@ -250,13 +277,14 @@
             align-items: center;
             justify-content: center;
             overflow: hidden;
-            font-size: 80px;
         }
+        
         .img-placeholder img {
             width: 100%;
             height: 100%;
             object-fit: cover;
         }
+        
         .btn-ouvir {
             display: flex;
             align-items: center;
@@ -274,10 +302,12 @@
             cursor: pointer;
             transition: all 0.3s;
         }
+        
         .btn-ouvir:hover {
             background: rgba(212, 168, 67, 0.4);
             transform: scale(1.05);
         }
+        
         /* Slots (espaços para as letras) */
         .slots-container {
             display: flex;
@@ -286,6 +316,7 @@
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
+        
         .slot {
             width: 60px;
             height: 70px;
@@ -298,34 +329,41 @@
             position: relative;
             transition: all 0.3s ease;
         }
+        
         .slot.vazio {
             background: rgba(255,255,255,0.1);
             color: rgba(255,255,255,0.3);
             border: 3px dashed rgba(212, 168, 67, 0.3);
         }
+        
         .slot.proximo {
             background: rgba(255,255,255,0.15);
             border: 3px dashed var(--dourado-real);
             animation: pulseSlot 1.5s ease-in-out infinite;
         }
+        
         .slot.preenchido {
             color: #fff;
             border: 3px solid;
             animation: popIn 0.3s ease;
         }
+        
         .slot.cor-A { background: var(--coral); border-color: var(--coral-dark); }
         .slot.cor-E { background: var(--turquoise); border-color: var(--turquoise-dark); }
         .slot.cor-I { background: var(--lavender); border-color: var(--lavender-dark); }
         .slot.cor-O { background: var(--lime); border-color: var(--lime-dark); }
         .slot.cor-U { background: var(--peach); border-color: var(--peach-dark); }
+        
         @keyframes pulseSlot {
             0%, 100% { border-color: var(--dourado-real); box-shadow: 0 0 0 0 rgba(212,168,67,0.4); }
             50% { border-color: #ffe6a3; box-shadow: 0 0 0 10px rgba(212,168,67,0); }
         }
+        
         @keyframes popIn {
             0% { transform: scale(0.8); opacity: 0; }
             100% { transform: scale(1); opacity: 1; }
         }
+        
         /* Blocos de vogais */
         .blocos-container {
             display: flex;
@@ -334,6 +372,7 @@
             flex-wrap: wrap;
             margin-bottom: 10px;
         }
+        
         .bloco-vogal {
             width: 65px;
             height: 65px;
@@ -345,14 +384,17 @@
             cursor: pointer;
             transition: all 0.2s;
         }
+        
         .bloco-A { background: var(--coral); box-shadow: 0 5px var(--coral-dark); }
         .bloco-E { background: var(--turquoise); box-shadow: 0 5px var(--turquoise-dark); }
         .bloco-I { background: var(--lavender); box-shadow: 0 5px var(--lavender-dark); }
         .bloco-O { background: var(--lime); box-shadow: 0 5px var(--lime-dark); }
         .bloco-U { background: var(--peach); box-shadow: 0 5px var(--peach-dark); }
+        
         .bloco-vogal:hover { transform: scale(1.1) translateY(-3px); }
         .bloco-vogal:active { transform: scale(0.95); }
         .bloco-vogal.desabilitado { opacity: 0.4; pointer-events: none; }
+        
         /* Mensagem de acerto */
         .msg-acerto {
             text-align: center;
@@ -361,10 +403,12 @@
             transform: scale(0.8);
             transition: all 0.3s ease;
         }
+        
         .msg-acerto.visivel {
             opacity: 1;
             transform: scale(1);
         }
+        
         .msg-acerto span {
             display: inline-flex;
             align-items: center;
@@ -377,11 +421,13 @@
             background: linear-gradient(135deg, #c8e6c9, #a5d6a7);
             color: #2e7d32;
         }
+        
         .instrucao {
             font-size: 12px;
             opacity: 0.6;
             margin-top: 10px;
         }
+        
         /* Flash da letra */
         .flash-letra {
             position: fixed;
@@ -395,14 +441,17 @@
             opacity: 0;
             transition: transform 0.35s ease, opacity 0.35s ease;
         }
+        
         .flash-letra.visivel {
             transform: translate(-50%, -50%) scale(1);
             opacity: 1;
         }
+        
         .flash-letra.saindo {
             transform: translate(-50%, -50%) scale(2);
             opacity: 0;
         }
+        
         /* Animação de shake */
         @keyframes shake {
             0%, 100% { transform: translateX(0); }
@@ -411,14 +460,18 @@
             60% { transform: translateX(-4px); }
             80% { transform: translateX(4px); }
         }
+        
         .shake { animation: shake 0.4s ease; }
+        
         /* Página de parabéns */
         .parabens {
             text-align: center;
             animation: fadeInUp 0.5s ease;
             padding: 20px;
         }
+        
         .parabens .trofeu { font-size: 80px; margin-bottom: 12px; display: block; animation: wiggle 0.8s ease 0.3s; }
+        
         @keyframes wiggle {
             0%, 100% { transform: rotate(0); }
             20% { transform: rotate(-8deg); }
@@ -426,12 +479,15 @@
             60% { transform: rotate(-4deg); }
             80% { transform: rotate(4deg); }
         }
+        
         @keyframes fadeInUp {
             from { opacity: 0; transform: translateY(30px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        
         .parabens h2 { font-family: 'Cinzel Decorative', cursive; font-size: 28px; color: var(--dourado-real); margin-bottom: 8px; }
         .parabens p { font-size: 16px; margin-bottom: 8px; }
+        
         .btn-replay {
             display: inline-flex;
             align-items: center;
@@ -448,7 +504,9 @@
             transition: transform 0.15s;
             margin-top: 20px;
         }
+        
         .btn-replay:hover { transform: scale(1.05); }
+        
         /* Chuva de palmas */
         .chuva-palmas {
             position: fixed;
@@ -456,10 +514,12 @@
             z-index: 9999;
             animation: cair 2s linear forwards;
         }
+        
         @keyframes cair {
             0% { transform: translateY(-50px) rotate(0deg); opacity: 1; }
             100% { transform: translateY(100vh) rotate(360deg); opacity: 0; }
         }
+        
         .decoracao-castelo {
             margin-top: 15px;
             font-size: 18px;
@@ -467,19 +527,23 @@
             letter-spacing: 8px;
             text-align: center;
         }
+        
         @media (max-width: 550px) {
             .bloco-vogal { width: 55px; height: 55px; font-size: 1.5rem; }
             .slot { width: 50px; height: 60px; font-size: 1.4rem; }
             .img-placeholder { width: 160px; height: 160px; }
             .estrelas-badge { font-size: 14px; padding: 4px 12px; }
         }
+        
         .stage::-webkit-scrollbar {
             width: 4px;
         }
+        
         .stage::-webkit-scrollbar-track {
             background: rgba(255,255,255,0.1);
             border-radius: 10px;
         }
+        
         .stage::-webkit-scrollbar-thumb {
             background: var(--dourado-real);
             border-radius: 10px;
@@ -487,6 +551,7 @@
     </style>
 </head>
 <body>
+
     <div id="elementos-container"></div>
     <div class="flash-letra" id="flashLetra"></div>
 
@@ -506,17 +571,17 @@
     <script>
         // ========== DADOS DAS PALAVRAS ==========
         const PALAVRAS = [
-            { word: "AI", letters: ["A","I"], hint: "Expressão de dor — Ai!", emoji: "😣" },
-            { word: "OU", letters: ["O","U"], hint: "Palavra de escolha — Ou", emoji: "🤔" },
-            { word: "EU", letters: ["E","U"], hint: "Eu mesmo — Eu", emoji: "🙋" },
-            { word: "IA", letters: ["I","A"], hint: "Ia embora — Ia", emoji: "🚶" },
-            { word: "UAI", letters: ["U","A","I"], hint: "Expressão mineira — Uai!", emoji: "😲" },
-            { word: "UAU", letters: ["U","A","U"], hint: "Expressão de surpresa — Uau!", emoji: "😮" },
-            { word: "OI", letters: ["O","I"], hint: "Cumprimento — Oi!", emoji: "👋" },
-            { word: "EI", letters: ["E","I"], hint: "Chamando alguém — Ei!", emoji: "📣" },
-            { word: "AUAU", letters: ["A","U","A","U"], hint: "Som do cachorro — Au au!", emoji: "🐕" },
-            { word: "IAIA", letters: ["I","A","I","A"], hint: "Iaiá — tratamento carinhoso", emoji: "👸" },
-            { word: "IOIO", letters: ["I","O","I","O"], hint: "Brinquedo — Ioiô", emoji: "🪀" }
+            { word: "AI", letters: ["A","I"], hint: "Expressão de dor — Ai!", audioUrl: "palavra_ai.ogg", imagem: "imagem_ai.jpg" },
+            { word: "OU", letters: ["O","U"], hint: "Palavra de escolha — Ou", audioUrl: "palavra_ou.ogg", imagem: "imagem_ou.jpg" },
+            { word: "EU", letters: ["E","U"], hint: "Eu mesmo — Eu", audioUrl: "palavra_eu.ogg", imagem: "imagem_eu.jpg" },
+            { word: "IA", letters: ["I","A"], hint: "Ia embora — Ia", audioUrl: "palavra_ia.ogg", imagem: "imagem_ia.jpg" },
+            { word: "UAI", letters: ["U","A","I"], hint: "Expressão mineira — Uai!", audioUrl: "palavra_uai.ogg", imagem: "imagem_uai.jpg" },
+            { word: "UAU", letters: ["U","A","U"], hint: "Expressão de surpresa — Uau!", audioUrl: "palavra_uau.ogg", imagem: "imagem_uau.jpg" },
+            { word: "OI", letters: ["O","I"], hint: "Cumprimento — Oi!", audioUrl: "palavra_oi.ogg", imagem: "imagem_oi.jpg" },
+            { word: "EI", letters: ["E","I"], hint: "Chamando alguém — Ei!", audioUrl: "palavra_ei.ogg", imagem: "imagem_ei.jpg" },
+            { word: "AUAU", letters: ["A","U","A","U"], hint: "Som do cachorro — Au au!", audioUrl: "palavra_auau.ogg", imagem: "imagem_auau.jpg" },
+            { word: "IAIÁ", letters: ["I","A","I","A"], hint: "Iaiá — tratamento carinhoso", audioUrl: "palavra_iaia.ogg", imagem: "imagem_iaia.jpg" },
+            { word: "IOIÔ", letters: ["I","O","I","O"], hint: "Brinquedo — Ioiô", audioUrl: "palavra_ioio.ogg", imagem: "imagem_ioio.jpg" }
         ];
 
         // ========== VARIÁVEIS GLOBAIS ==========
@@ -527,79 +592,41 @@
         let completados = new Set();
         let estrelas = 0;
         let autoPlayTimeout = null;
-        let audioEnabled = true;
 
-        // ========== FUNÇÕES DE ÁUDIO (COM FALLBACK) ==========
+        // ========== FUNÇÕES DE ÁUDIO ==========
         function tocarSom(arquivo) {
-            if (!audioEnabled || !arquivo) return;
+            if (!arquivo) return;
             try {
                 if (somAtual) {
                     somAtual.pause();
                     somAtual.currentTime = 0;
                 }
-                // Criar URL com caminho relativo ou usar fallback
-                const audioUrl = arquivo;
-                somAtual = new Audio(audioUrl);
-                somAtual.play().catch(e => {
-                    console.log('Áudio não disponível:', arquivo);
-                    // Fallback: tentar tocar usando síntese de voz
-                    if (arquivo.includes('vogal_')) {
-                        const vogal = arquivo.match(/vogal_([aeiou])\.ogg/i);
-                        if (vogal) {
-                            const utterance = new SpeechSynthesisUtterance(vogal[1]);
-                            utterance.lang = 'pt-BR';
-                            speechSynthesis.speak(utterance);
-                        }
-                    } else if (arquivo.includes('palavra_')) {
-                        const palavraMatch = arquivo.match(/palavra_([a-z]+)\.ogg/i);
-                        if (palavraMatch) {
-                            const utterance = new SpeechSynthesisUtterance(palavraMatch[1]);
-                            utterance.lang = 'pt-BR';
-                            speechSynthesis.speak(utterance);
-                        }
-                    }
-                });
-            } catch(e) {
-                console.log('Erro no áudio:', e);
-            }
+                somAtual = new Audio(arquivo);
+                somAtual.play().catch(e => console.log('Áudio:', e));
+            } catch(e) { console.log('Erro no áudio:', e); }
         }
 
         function tocarPalavra() {
             const palavra = PALAVRAS[indexAtual];
-            // Usar síntese de voz como fallback para a palavra
-            try {
-                const utterance = new SpeechSynthesisUtterance(palavra.word);
-                utterance.lang = 'pt-BR';
-                utterance.rate = 0.9;
-                speechSynthesis.speak(utterance);
-            } catch(e) {
-                console.log('Erro na síntese de voz:', e);
-            }
+            tocarSom(palavra.audioUrl);
         }
 
         function tocarVogal(vogal) {
-            try {
-                const utterance = new SpeechSynthesisUtterance(vogal);
-                utterance.lang = 'pt-BR';
-                utterance.rate = 0.9;
-                speechSynthesis.speak(utterance);
-            } catch(e) {
-                console.log('Erro na síntese de voz:', e);
-            }
+            tocarSom(`vogal_${vogal.toLowerCase()}.ogg`);
         }
 
         function tocarAplausos() {
-            // Simular aplausos com emojis
-            for(let i = 0; i < 15; i++) {
+            tocarSom('aplausos.ogg');
+            for(let i = 0; i < 20; i++) {
                 setTimeout(() => {
                     const palma = document.createElement('div');
-                    palma.innerText = ['👏', '🎉', '⭐', '✨'][Math.floor(Math.random() * 4)];
+                    palma.innerText = '👏';
                     palma.className = 'chuva-palmas';
                     palma.style.left = Math.random() * 90 + 'vw';
                     palma.style.fontSize = (Math.random() * 30 + 30) + 'px';
                     document.body.appendChild(palma);
                     setTimeout(() => palma.remove(), 2000);
-                }, i * 100);
+                }, i * 80);
             }
         }
 
@@ -610,7 +637,7 @@
                 'A': '#f4845f', 'E': '#4dd0e1', 'I': '#b39ddb', 'O': '#aed581', 'U': '#ffab91'
             };
             el.textContent = letra;
-            el.style.color = coresFlash[letra] || '#ffffff';
+            el.style.color = coresFlash[letra];
             el.className = 'flash-letra visivel';
             setTimeout(() => { el.className = 'flash-letra saindo'; }, 250);
             setTimeout(() => { el.className = 'flash-letra'; }, 500);
@@ -623,14 +650,27 @@
             indexAtual = index;
             letrasColocadas = [];
             acertou = false;
-            renderizarExercicio(1000);
+            renderizarExercicio();
+        }
+
+        // ========== PRÓXIMA PALAVRA ==========
+        function proximaPalavra() {
+            if (acertou) return;
+            if (indexAtual + 1 < PALAVRAS.length) {
+                indexAtual++;
+                letrasColocadas = [];
+                acertou = false;
+                renderizarExercicio();
+            } else {
+                mostrarParabens();
+            }
         }
 
         // ========== RENDERIZAÇÃO PRINCIPAL ==========
-        function renderizarExercicio(atrasoAudio = 1000) {
+        function renderizarExercicio() {
             const palavra = PALAVRAS[indexAtual];
             const progresso = (completados.size / PALAVRAS.length) * 100;
-
+            
             // Montar slots
             let slotsHTML = '';
             palavra.letters.forEach((letra, i) => {
@@ -666,20 +706,20 @@
                             ⭐ ${estrelas}
                         </div>
                     </div>
-
+                    
                     <div class="card-exercicio">
                         <p class="dica-texto">✨ ${palavra.hint} ✨</p>
-
+                        
                         <div class="img-placeholder">
-                            <span style="font-size: 80px;">${palavra.emoji || '📝'}</span>
+                            <img src="${palavra.imagem}" alt="${palavra.word}" onerror="this.src='imagem_blocosaeiou.png'">
                         </div>
-
+                        
                         <button class="btn-ouvir" onclick="tocarPalavra()">
                             🔊 Ouvir o som da palavra
                         </button>
-
+                        
                         <div class="slots-container" id="slotsContainer">${slotsHTML}</div>
-
+                        
                         <div class="msg-acerto" id="msgAcerto">
                             <span>✨ Muito bem! ✨</span>
                         </div>
@@ -687,76 +727,75 @@
                         <div class="blocos-container" id="blocosContainer">${blocosHTML}</div>
                         <p class="instrucao">Toque nos blocos de vogais para formar a palavra!</p>
                     </div>
-
+                    
                     <div class="decoracao-castelo">👑 💖 🏰 💖 👑</div>
                 </div>
             `;
 
             // Áudio automático
             if (autoPlayTimeout) clearTimeout(autoPlayTimeout);
-            autoPlayTimeout = setTimeout(() => {
-                if (!acertou) tocarPalavra();
-            }, atrasoAudio);
+            autoPlayTimeout = setTimeout(() => tocarPalavra(), 1000);
         }
 
         // ========== CLIQUE NAS VOGAIS ==========
         function clicarVogal(vogal) {
             if (acertou) return;
-
+            
             const palavra = PALAVRAS[indexAtual];
             const esperada = palavra.letters[letrasColocadas.length];
-
+            
             mostrarFlash(vogal);
             tocarVogal(vogal);
-
+            
             if (vogal === esperada) {
                 letrasColocadas.push(vogal);
-
+                
                 // Atualizar slot
                 const slot = document.getElementById('slot-' + (letrasColocadas.length - 1));
                 if (slot) {
                     slot.className = `slot preenchido cor-${vogal}`;
                     slot.textContent = vogal;
                 }
-
+                
                 // Atualizar próximo slot
                 const proxSlot = document.getElementById('slot-' + letrasColocadas.length);
                 if (proxSlot && proxSlot.classList.contains('vazio')) {
                     proxSlot.classList.remove('vazio');
                     proxSlot.classList.add('proximo');
                 }
-
+                
                 // Verificar se completou a palavra
                 if (letrasColocadas.length === palavra.letters.length) {
                     acertou = true;
                     estrelas += 10;
                     completados.add(indexAtual);
-
+                    
                     const msg = document.getElementById('msgAcerto');
                     if (msg) msg.classList.add('visivel');
-
+                    
                     document.querySelectorAll('.bloco-vogal').forEach(b => b.classList.add('desabilitado'));
-
+                    
                     // Tocar comemoração
+                    setTimeout(() => tocarPalavra(), 800);
                     setTimeout(() => {
-                        tocarPalavra();
                         tocarAplausos();
-                    }, 800);
-
+                        tocarSom('acerto.ogg');
+                    }, 2200);
+                    
                     // Ir para próxima palavra
                     setTimeout(() => {
                         if (indexAtual + 1 < PALAVRAS.length) {
                             indexAtual++;
                             letrasColocadas = [];
                             acertou = false;
-                            renderizarExercicio(1000);
+                            renderizarExercicio();
                         } else {
                             mostrarParabens();
                         }
                     }, 5000);
                 }
             } else {
-                // Erro - feedback visual
+                tocarSom('erro.ogg');
                 const slotAtual = document.getElementById('slot-' + letrasColocadas.length);
                 if (slotAtual) {
                     slotAtual.classList.add('shake');
@@ -785,6 +824,7 @@
                 </div>
             `;
             tocarAplausos();
+            setTimeout(() => tocarSom('fim_jogo.ogg'), 500);
         }
 
         // ========== REINICIAR JOGO ==========
@@ -795,27 +835,28 @@
             completados.clear();
             estrelas = 0;
             if (autoPlayTimeout) clearTimeout(autoPlayTimeout);
-            renderizarExercicio(1500);
+            renderizarExercicio();
+            tocarSom('inicio.ogg');
         }
 
         // ========== FULLSCREEN ==========
         const FS_KEY = 'reinoFullscreen';
-
+        
         function isFullscreen() {
             return !!(document.fullscreenElement || document.webkitFullscreenElement);
         }
-
+        
         function enterFullscreen() {
             const elem = document.documentElement;
             if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
             else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
         }
-
+        
         function exitFullscreen() {
             if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
             else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
         }
-
+        
         function toggleFullscreen() {
             if (isFullscreen()) {
                 exitFullscreen();
@@ -826,7 +867,7 @@
             }
             atualizarIconeFullscreen();
         }
-
+        
         function atualizarIconeFullscreen() {
             const btn = document.getElementById('btnFullscreen');
             if (isFullscreen()) {
@@ -837,7 +878,7 @@
                 btn.classList.remove('ativo');
             }
         }
-
+        
         function setupFullscreenListeners() {
             const events = ['fullscreenchange', 'webkitfullscreenchange'];
             events.forEach(event => {
@@ -847,7 +888,7 @@
                 });
             });
         }
-
+        
         function restaurarFullscreen() {
             const deveFullscreen = localStorage.getItem(FS_KEY) === 'true';
             if (deveFullscreen && !isFullscreen()) {
@@ -861,7 +902,7 @@
             const container = document.getElementById('elementos-container');
             const elementos = ['💖', '💕', '💗', '✨', '🌟', '👑', '🌸', '🦋', '💃', '🕺'];
             const cores = ['#e91e8c', '#ff80c0', '#d4a843', '#ff4081'];
-
+            
             function adicionarElemento() {
                 const c = document.createElement('div');
                 c.className = 'elemento-flutuante';
@@ -873,7 +914,7 @@
                 container.appendChild(c);
                 setTimeout(() => c.remove(), 11000);
             }
-
+            
             for (let i = 0; i < 15; i++) {
                 setTimeout(adicionarElemento, i * 400);
             }
@@ -886,9 +927,10 @@
             setupFullscreenListeners();
             restaurarFullscreen();
             document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
-            renderizarExercicio(2000);
+            renderizarExercicio();
+            tocarSom('inicio.ogg');
         };
-
+        
         // Expor funções globalmente
         window.tocarPalavra = tocarPalavra;
         window.clicarVogal = clicarVogal;
