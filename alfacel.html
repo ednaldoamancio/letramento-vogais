@@ -132,7 +132,7 @@
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 20px;
+            padding: 15px;
             position: relative;
             z-index: 10;
             overflow-y: auto;
@@ -147,12 +147,12 @@
             margin-bottom: 5px;
         }
 
-        /* Container do Emulador Flash */
+        /* Container do Emulador Flash - Ajustado para ser maior, fundo branco e proporção nativa do Flash (550x400) */
         .player-wrapper {
-            width: 100%;
-            max-width: 800px;
-            aspect-ratio: 4 / 3; /* Proporção padrão do Flash, ajuste se o jogo for widescreen (16/9) */
-            background: #000;
+            width: 95%;
+            max-width: 900px;
+            aspect-ratio: 550 / 400; /* Proporção nativa e um pouco mais quadrada */
+            background: #ffffff; /* Fundo branco corrigido */
             border: 4px solid var(--dourado-real);
             border-radius: 12px;
             box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 25px rgba(212, 168, 67, 0.3);
@@ -166,30 +166,31 @@
             height: 100%;
         }
 
-        /* Área de Créditos */
+        /* Área de Créditos - Ajustada para linha única */
         .creditos-box {
-            margin-top: 20px;
+            margin-top: 15px;
             background: rgba(255, 255, 255, 0.05);
             border: 1px solid rgba(212, 168, 67, 0.3);
-            border-radius: 10px;
-            padding: 12px 20px;
+            border-radius: 50px; /* Bordas arredondadas parecendo um botão */
+            padding: 8px 25px;
             text-align: center;
             backdrop-filter: blur(5px);
-            max-width: 800px;
-            width: 100%;
+            width: fit-content; /* Ocupa apenas o espaço necessário */
         }
 
         .creditos-box p {
-            font-size: 14px;
+            font-size: 13px;
             color: rgba(255, 255, 255, 0.9);
-            margin-bottom: 5px;
+            margin: 0;
+            display: inline-block; /* Força a ficar na mesma linha */
         }
 
         .creditos-box a {
             color: var(--dourado-real);
             font-weight: 700;
             text-decoration: none;
-            font-size: 15px;
+            font-size: 13px;
+            margin-left: 5px;
             transition: color 0.3s, text-shadow 0.3s;
         }
 
@@ -204,13 +205,14 @@
                 border-radius: 8px;
             }
             .btn-voltar-dourado { padding: 6px 15px; font-size: 12px; }
+            .creditos-box p { font-size: 11px; }
+            .creditos-box a { font-size: 11px; }
         }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="header-inner">
-            <!-- Altere o href abaixo se a página anterior tiver outro nome -->
             <a href="javascript:history.back()" class="btn-voltar-dourado">← ✨ Voltar</a>
             <div class="header-botoes">
                 <button class="btn-fullscreen" id="btnFullscreen" title="Tela Cheia">⛶</button>
@@ -222,14 +224,12 @@
         <h1 class="titulo-reinos">🔤 Alfabeto Divertido - ALFACEL</h1>
         
         <div class="player-wrapper">
-            <!-- O emulador Ruffle será injetado aqui -->
             <div id="ruffle-container"></div>
         </div>
 
+        <!-- Créditos em linha única -->
         <div class="creditos-box">
-            <p>Este jogo é uma criação independente.</p>
-            <p><strong>Créditos do arquivo "Alfacel":</strong></p>
-            <a href="http://alfacel.clakioshiro.com" target="_blank" rel="noopener noreferrer">Fonte: http://alfacel.clakioshiro.com</a>
+            <p><strong>Créditos:</strong> Jogo "Alfacel" original | Fonte: <a href="http://alfacel.clakioshiro.com" target="_blank" rel="noopener noreferrer">http://alfacel.clakioshiro.com</a></p>
         </div>
     </div>
 
@@ -239,7 +239,7 @@
         window.RufflePlayer.config = {
             "autoplay": "on",
             "unmuteOverlay": "visible",
-            "backgroundColor": "#000000",
+            "backgroundColor": "#FFFFFF", /* Alterado para branco para revelar o texto do jogo */
             "letterbox": "on",
             "showSwfDownload": false
         };
@@ -249,16 +249,14 @@
             const player = ruffle.createPlayer();
             const container = document.getElementById("ruffle-container");
             
-            // Estiliza o player para preencher o container 100%
             player.style.width = "100%";
             player.style.height = "100%";
             
             container.appendChild(player);
             
-            // Carrega o arquivo SWF
             player.load({
                 url: "alfacel.swf",
-                allowFullscreen: true // Permite que o SWF requisite tela cheia através do Ruffle
+                allowFullscreen: true 
             });
         });
 
