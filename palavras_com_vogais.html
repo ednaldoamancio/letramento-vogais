@@ -592,6 +592,7 @@
         let completados = new Set();
         let estrelas = 0;
         let autoPlayTimeout = null;
+        let inicializacaoConcluida = false;
 
         // ========== FUNÇÕES DE ÁUDIO ==========
         function tocarSom(arquivo) {
@@ -603,7 +604,11 @@
                 }
                 somAtual = new Audio(arquivo);
                 somAtual.play().catch(e => console.log('Áudio:', e));
-            } catch(e) { console.log('Erro no áudio:', e); }
+                return somAtual;
+            } catch(e) { 
+                console.log('Erro no áudio:', e); 
+                return null;
+            }
         }
 
         function tocarPalavra() {
@@ -732,9 +737,11 @@
                 </div>
             `;
 
-            // Áudio automático
+            // Áudio automático (apenas se a inicialização já foi concluída)
             if (autoPlayTimeout) clearTimeout(autoPlayTimeout);
-            autoPlayTimeout = setTimeout(() => tocarPalavra(), 1000);
+            if (inicializacaoConcluida) {
+                autoPlayTimeout = setTimeout(() => tocarPalavra(), 1000);
+            }
         }
 
         // ========== CLIQUE NAS VOGAIS ==========
@@ -834,9 +841,38 @@
             acertou = false;
             completados.clear();
             estrelas = 0;
+            inicializacaoConcluida = false;
             if (autoPlayTimeout) clearTimeout(autoPlayTimeout);
-            renderizarExercicio();
-            tocarSom('inicio.ogg');
+            
+            // Mostrar um placeholder enquanto o áudio toca
+            const stage = document.getElementById('stage');
+            stage.innerHTML = `
+                <div class="conteudo-central">
+                    <div class="card-exercicio" style="padding: 40px;">
+                        <div style="font-size: 60px; margin-bottom: 20px;">🎵</div>
+                        <h2 style="font-family: 'Cinzel Decorative', cursive; color: var(--dourado-real);">Preparando o Reino...</h2>
+                    </div>
+                </div>
+            `;
+            
+            // Tocar áudio de início e aguardar 3.8 segundos
+            const audio = tocarSom('inicio.ogg');
+            if (audio) {
+                // Configurar um timeout fixo de 3.8 segundos
+                setTimeout(() => {
+                    inicializacaoConcluida = true;
+                    renderizarExercicio();
+                    // Tocar a primeira palavra após 1 segundo
+                    setTimeout(() => tocarPalavra(), 1000);
+                }, 3800);
+            } else {
+                // Fallback caso o áudio não carregue
+                setTimeout(() => {
+                    inicializacaoConcluida = true;
+                    renderizarExercicio();
+                    setTimeout(() => tocarPalavra(), 1000);
+                }, 3800);
+            }
         }
 
         // ========== FULLSCREEN ==========
@@ -927,8 +963,36 @@
             setupFullscreenListeners();
             restaurarFullscreen();
             document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
-            renderizarExercicio();
-            tocarSom('inicio.ogg');
+            
+            // Mostrar tela de carregamento
+            const stage = document.getElementById('stage');
+            stage.innerHTML = `
+                <div class="conteudo-central">
+                    <div class="card-exercicio" style="padding: 40px;">
+                        <div style="font-size: 60px; margin-bottom: 20px;">🎵</div>
+                        <h2 style="font-family: 'Cinzel Decorative', cursive; color: var(--dourado-real);">Preparando o Reino...</h2>
+                    </div>
+                </div>
+            `;
+            
+            // Tocar áudio de início e aguardar 3.8 segundos
+            const audio = tocarSom('inicio.ogg');
+            if (audio) {
+                // Configurar um timeout fixo de 3.8 segundos
+                setTimeout(() => {
+                    inicializacaoConcluida = true;
+                    renderizarExercicio();
+                    // Tocar a primeira palavra após 1 segundo
+                    setTimeout(() => tocarPalavra(), 1000);
+                }, 3800);
+            } else {
+                // Fallback caso o áudio não carregue
+                setTimeout(() => {
+                    inicializacaoConcluida = true;
+                    renderizarExercicio();
+                    setTimeout(() => tocarPalavra(), 1000);
+                }, 3800);
+            }
         };
         
         // Expor funções globalmente
