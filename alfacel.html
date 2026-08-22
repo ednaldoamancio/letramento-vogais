@@ -2,326 +2,1026 @@
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1, user-scalable=no, viewport-fit=cover">
-    <title>🔤 Alfabeto Divertido - ALFACEL</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cinzel+Decorative:wght@400;700;900&family=Nunito:wght@400;600;700;800&family=Dancing+Script:wght@700&display=swap" rel="stylesheet">
-    
-    <!-- Biblioteca Ruffle para emular arquivos SWF (Flash) -->
-    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
-
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jogo de Letramento e Números - Alfacel Interativo</title>
     <style>
         :root {
-            --rosa-princesa: #e91e8c;
-            --rosa-escuro: #9c1460;
-            --dourado-real: #d4a843;
-            --dourado-escuro: #b8860b;
-            --dourado-branco: #fff8f0;
-            --roxo-escuro: #2d0a1e;
+            --swf-blue: #0052cc;
+            --swf-dark-blue: #0033aa;
+            --swf-font: 'Arial Black', 'Trebuchet MS', 'Arial', sans-serif;
+            --primary-blue: #0047AB;
+            --main-font: 'Arial', sans-serif;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            user-select: none;
+        }
 
-        body {
-            font-family: 'Nunito', sans-serif;
-            background: linear-gradient(180deg, #1a0a2e 0%, #0d0418 100%);
-            color: var(--dourado-branco);
+        body, html {
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            background-color: #000;
+            font-family: var(--swf-font);
+        }
+
+        #stage {
+            position: relative;
+            width: 100vw;
             height: 100vh;
-            height: 100dvh;
+            background-color: #ffffff;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
-            position: relative;
-        }
-
-        /* Fundo estrelado animado */
-        body::before {
-            content: '';
-            position: fixed;
-            inset: 0;
-            z-index: 0;
-            pointer-events: none;
-            background:
-                radial-gradient(2px 2px at 15% 25%, #fff, transparent),
-                radial-gradient(2px 2px at 35% 55%, rgba(220,180,255,0.8), transparent),
-                radial-gradient(1px 1px at 55% 15%, #fff, transparent),
-                radial-gradient(2px 2px at 75% 45%, rgba(220,180,255,0.6), transparent),
-                radial-gradient(1px 1px at 85% 75%, #fff, transparent);
-            background-size: 100% 100%;
-            animation: cintilarEstrelas 3s ease-in-out infinite alternate;
-        }
-
-        @keyframes cintilarEstrelas {
-            0% { opacity: 0.5; }
-            100% { opacity: 1; }
-        }
-
-        .header {
-            position: relative;
-            z-index: 50;
-            background: linear-gradient(180deg, rgba(26,10,46,0.95) 0%, rgba(13,4,24,0.8) 100%);
-            border-bottom: 2px solid var(--dourado-real);
-            backdrop-filter: blur(10px);
-        }
-        
-        .header-inner {
-            max-width: 1000px;
-            margin: 0 auto;
-            padding: 12px 16px;
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            flex-wrap: wrap;
-            gap: 8px;
-        }
-
-        .header-botoes { display: flex; gap: 10px; align-items: center; }
-
-        /* Botões do cabeçalho */
-        .btn-fullscreen {
-            background: linear-gradient(135deg, #4a148c, #6a1b9a);
-            border: 2px solid var(--dourado-real);
-            width: 42px;
-            height: 42px;
-            border-radius: 50%;
-            cursor: pointer;
-            font-size: 20px;
-            display: flex;
-            align-items: center;
             justify-content: center;
-            transition: all 0.3s;
-            box-shadow: 0 0 10px rgba(212, 168, 67, 0.3);
-            color: white;
-        }
-        
-        .btn-fullscreen:hover {
-            transform: scale(1.1);
-            box-shadow: 0 0 20px rgba(212, 168, 67, 0.5);
-            background: linear-gradient(135deg, #6a1b9a, #8e24aa);
+            align-items: center;
         }
 
-        .btn-voltar-dourado {
+        /* --- FASE 1: MATRIZ DE LETRAS E NÚMEROS (ABERTURA) --- */
+        #matrix-bg {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #020b14;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            grid-template-rows: repeat(3, 1fr);
+            gap: 12px;
+            padding: 10px;
+            opacity: 0;
+            z-index: 1;
+            transition: opacity 0.5s ease;
+        }
+
+        .matrix-box {
+            background-color: #0088cc;
+            color: #003366;
+            overflow: hidden;
+            font-size: 1.2rem;
+            line-height: 1.2;
+            word-break: break-all;
+            padding: 8px;
+            border-radius: 4px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.4);
+            font-family: monospace;
+            font-weight: bold;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .matrix-box span {
+            display: block;
+            animation: scrollMatrix 3s linear infinite;
+        }
+
+        @keyframes scrollMatrix {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(-50%); }
+        }
+
+        /* --- FASE 2: TELA DE TÍTULO PRINCIPAL "ALFACEL" --- */
+        #title-screen {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-color: #020b14;
+            z-index: 2;
             display: flex;
+            flex-direction: column;
             align-items: center;
-            gap: 8px;
-            background: linear-gradient(135deg, var(--dourado-real), var(--dourado-escuro));
+            justify-content: flex-start;
+            padding-top: 30px;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease;
+        }
+
+        .alfacel-card {
+            position: relative;
+            background: #ffffff;
+            border: 4px solid #333;
+            border-radius: 18px 18px 25px 25px;
+            padding: 15px 50px 10px 50px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.5), inset 0 -5px 0 #ddd;
+            transform: translateY(-150px) scale(0.5);
+            opacity: 0;
+            z-index: 5;
+        }
+
+        .alfacel-title {
+            font-size: 4.2rem;
+            letter-spacing: 12px;
+            color: #0066cc;
+            text-shadow: 
+                3px 3px 0px #002266,
+                -1px -1px 0 #fff,
+                1px -1px 0 #fff,
+                -1px 1px 0 #fff,
+                1px 1px 0 #fff;
+            transform: scaleY(1.1);
+        }
+
+        .alfacel-ribbon {
+            background: linear-gradient(180deg, #ff4d4d 0%, #cc0000 100%);
+            color: #ffffff;
+            font-size: 1rem;
+            padding: 4px 25px;
+            border-radius: 12px;
+            margin-top: -5px;
+            display: inline-block;
             border: 2px solid #fff;
-            padding: 8px 20px;
-            border-radius: 50px;
-            cursor: pointer;
-            font-size: 14px;
-            font-weight: 800;
-            font-family: 'Nunito', sans-serif;
-            color: #1a0a2e;
-            text-decoration: none;
-            transition: all 0.3s;
-            box-shadow: 0 0 15px rgba(212, 168, 67, 0.4);
-        }
-        
-        .btn-voltar-dourado:hover {
-            transform: scale(1.05);
-            box-shadow: 0 0 25px rgba(212, 168, 67, 0.8);
-            background: linear-gradient(135deg, #e8c060, var(--dourado-real));
+            box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+            letter-spacing: 2px;
+            font-weight: 900;
         }
 
-        /* Área do Palco */
-        .stage {
-            flex: 1;
+        .text-stack {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            margin-top: 25px;
+            gap: 10px;
+        }
+
+        .word-aprendendo {
+            font-size: 3.8rem;
+            color: #ffcc00;
+            text-shadow: 
+                4px 4px 0px #b38f00,
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000,
+                2px 2px 0 #000;
+            opacity: 0;
+            transform: scale(0.2);
+            letter-spacing: 3px;
+        }
+
+        .word-tag-letras {
+            background: #ffffff;
+            border: 2px solid #666;
+            font-size: 0.65rem;
+            padding: 2px 10px;
+            border-radius: 4px;
+            color: #333;
+            letter-spacing: 2px;
+            opacity: 0;
+            margin-bottom: -5px;
+        }
+
+        .word-letras {
+            font-size: 4.5rem;
+            color: #00994d;
+            text-shadow: 
+                4px 4px 0px #004d26,
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000,
+                2px 2px 0 #000;
+            opacity: 0;
+            transform: translateX(-200px);
+            letter-spacing: 4px;
+        }
+
+        .word-e {
+            font-size: 2.8rem;
+            color: #00802b;
+            text-shadow: 
+                3px 3px 0px #004d1a,
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000,
+                2px 2px 0 #000;
+            opacity: 0;
+            transform: scale(3);
+        }
+
+        .word-numeros {
+            font-size: 4.8rem;
+            color: #0052cc;
+            text-shadow: 
+                5px 5px 0px #002b80,
+                -2px -2px 0 #000,
+                2px -2px 0 #000,
+                -2px 2px 0 #000,
+                2px 2px 0 #000;
+            opacity: 0;
+            transform: translateY(150px);
+            letter-spacing: 4px;
+        }
+
+        /* --- CORTINAS TEATRAIS DE VETOR --- */
+        .curtain-panel {
+            position: absolute;
+            top: 0;
+            width: 50vw;
+            height: 100vh;
+            background: linear-gradient(90deg, #002266 0%, #004080 30%, #002266 70%, #001133 100%);
+            box-shadow: inset 0 0 50px rgba(0,0,0,0.8);
+            z-index: 80;
+            transition: transform 2.2s cubic-bezier(0.77, 0, 0.175, 1);
+            pointer-events: none;
+        }
+
+        .curtain-panel::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: repeating-linear-gradient(
+                90deg,
+                rgba(255, 255, 255, 0.08) 0px,
+                rgba(0, 0, 0, 0.25) 25px,
+                rgba(255, 255, 255, 0.08) 50px
+            );
+        }
+
+        #curtain-left {
+            left: 0;
+            border-right: 6px solid #ffcc00;
+            transform: translateX(-100%);
+        }
+
+        #curtain-right {
+            right: 0;
+            border-left: 6px solid #ffcc00;
+            transform: translateX(100%);
+        }
+
+        .curtains-closed #curtain-left { transform: translateX(0%); }
+        .curtains-closed #curtain-right { transform: translateX(0%); }
+
+        .curtains-open #curtain-left { transform: translateX(-100%); }
+        .curtains-open #curtain-right { transform: translateX(100%); }
+
+        /* --- TELAS DO JOGO INTERATIVO --- */
+        .screen {
+            width: 100vw;
+            height: 100vh;
+            position: absolute;
+            top: 0;
+            left: 0;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-start;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s ease-in-out, visibility 0.5s;
+            z-index: 10;
+            background-color: #ffffff;
+            font-family: var(--main-font);
+        }
+
+        .active-screen {
+            opacity: 1;
+            visibility: visible;
+            z-index: 20;
+        }
+
+        .app-header {
+            width: 100%;
+            background: linear-gradient(180deg, #0052cc 0%, #0033aa 100%);
+            color: white;
+            text-align: center;
+            padding: 20px 0;
+            font-size: 2.8rem;
+            font-weight: 900;
+            letter-spacing: 1px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+            position: absolute;
+            top: 0;
+            z-index: 25;
+            font-family: var(--swf-font);
+        }
+
+        #menu-content {
             display: flex;
             flex-direction: column;
             justify-content: center;
             align-items: center;
-            padding: 15px;
+            flex-grow: 1;
+            gap: 30px;
+            margin-top: 80px;
+            width: 100%;
+        }
+
+        .menu-btn {
             position: relative;
+            background: none;
+            border: none;
+            font-size: 3.2rem;
+            font-weight: 900;
+            color: #111;
+            cursor: pointer;
             z-index: 10;
+            padding: 10px 40px;
+            transition: color 0.3s, transform 0.2s;
+            font-family: var(--swf-font);
+            outline: none;
+        }
+
+        .menu-btn:hover {
+            color: var(--swf-blue);
+            transform: scale(1.08);
+        }
+
+        .btn-watermark {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 5.8rem;
+            font-weight: 900;
+            color: rgba(0, 0, 0, 0.05);
+            z-index: -1;
+            transition: color 0.3s;
+            white-space: nowrap;
+            pointer-events: none;
+        }
+
+        .btn-vogais:hover .btn-watermark { color: rgba(235, 87, 87, 0.25); }
+        .btn-consoantes:hover .btn-watermark { color: rgba(45, 156, 219, 0.25); }
+        .btn-numeros:hover .btn-watermark { color: rgba(242, 201, 76, 0.25); }
+
+        .grid-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            flex-grow: 1;
+            width: 90%;
+            margin-top: 110px;
+            margin-bottom: 70px;
+            gap: 20px;
             overflow-y: auto;
         }
 
-        .titulo-reinos {
-            font-family: 'Cinzel Decorative', cursive;
-            font-size: clamp(20px, 5vw, 28px);
-            color: var(--dourado-real);
-            text-shadow: 0 0 15px rgba(106, 27, 154, 0.8), 2px 2px 4px rgba(0,0,0,0.5);
+        .item-card {
+            font-size: 5.5rem;
+            font-weight: 900;
+            font-family: var(--swf-font);
+            cursor: pointer;
+            visibility: hidden;
+            transition: transform 0.2s ease, filter 0.2s;
+            padding: 10px 25px;
+            border-radius: 20px;
+            background: white;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+            min-width: 100px;
             text-align: center;
-            margin-bottom: 5px;
         }
 
-        /* Container do Emulador Flash - Ajustado para ser maior, fundo branco e proporção nativa do Flash (550x400) */
-        .player-wrapper {
-            width: 95%;
-            max-width: 900px;
-            aspect-ratio: 550 / 400; /* Proporção nativa e um pouco mais quadrada */
-            background: #ffffff; /* Fundo branco corrigido */
-            border: 4px solid var(--dourado-real);
-            border-radius: 12px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.6), 0 0 25px rgba(212, 168, 67, 0.3);
+        .item-card:hover {
+            transform: scale(1.15);
+            filter: drop-shadow(0px 8px 12px rgba(0,0,0,0.2));
+        }
+
+        #letter-a { color: #00796B; }
+        #letter-e { color: #0277BD; }
+        #letter-i { color: #F57C00; }
+        #letter-o { color: #9E9D24; }
+        #letter-u { color: #7B1FA2; }
+
+        .animation-overlay {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background-color: white;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            display: none;
+            z-index: 90;
             overflow: hidden;
-            margin-top: 10px;
+        }
+
+        .large-text-anim {
+            font-size: 15rem;
+            font-weight: 900;
+            font-family: var(--swf-font);
+            animation: growSlow 3.5s cubic-bezier(0.25, 1, 0.5, 1) forwards;
             position: relative;
         }
 
-        #ruffle-container {
-            width: 100%;
-            height: 100%;
+        .icon-illustration {
+            position: absolute;
+            font-size: 18rem;
+            opacity: 0;
+            animation: fadeInIcon 2s ease-in 1.5s forwards;
         }
 
-        /* Área de Créditos - Ajustada para linha única */
-        .creditos-box {
-            margin-top: 15px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(212, 168, 67, 0.3);
-            border-radius: 50px; /* Bordas arredondadas parecendo um botão */
-            padding: 8px 25px;
-            text-align: center;
+        @keyframes growSlow {
+            0% { transform: scale(0.3); opacity: 0.2; }
+            40% { transform: scale(1.8); opacity: 1; }
+            70% { transform: scale(3.5); opacity: 0.8; }
+            100% { transform: scale(6); opacity: 0; }
+        }
+
+        @keyframes fadeInIcon {
+            0% { opacity: 0; transform: scale(0.5); }
+            50% { opacity: 1; transform: scale(1.2); }
+            100% { opacity: 0.9; transform: scale(1); }
+        }
+
+        .counting-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            gap: 25px;
+            margin-top: 30px;
+            max-width: 80%;
+        }
+
+        .counting-item {
+            font-size: 7rem;
+            animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+
+        .global-nav-btn {
+            position: fixed;
+            bottom: 20px;
+            font-size: 1.1rem;
+            font-weight: 900;
+            font-family: var(--swf-font);
+            padding: 10px 22px;
+            cursor: pointer;
+            z-index: 100;
+            border-radius: 50px;
+            border: 3px solid #333;
+            background-color: white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            transition: all 0.2s;
+        }
+
+        .global-nav-btn:hover {
+            background-color: #333;
+            color: white;
+        }
+
+        #btn-full-screen { right: 20px; }
+        #btn-voltar { left: 20px; display: none; }
+
+        #control-bar {
+            position: fixed;
+            top: 15px;
+            right: 15px;
+            z-index: 100;
+            display: flex;
+            gap: 10px;
+            background: rgba(0,0,0,0.75);
+            padding: 6px 14px;
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,0.2);
             backdrop-filter: blur(5px);
-            width: fit-content; /* Ocupa apenas o espaço necessário */
         }
 
-        .creditos-box p {
-            font-size: 13px;
-            color: rgba(255, 255, 255, 0.9);
-            margin: 0;
-            display: inline-block; /* Força a ficar na mesma linha */
+        .ctrl-btn {
+            background: #0052cc;
+            color: white;
+            border: none;
+            padding: 6px 14px;
+            border-radius: 15px;
+            font-family: sans-serif;
+            font-weight: bold;
+            font-size: 0.8rem;
+            cursor: pointer;
+            transition: background 0.2s, transform 0.1s;
         }
 
-        .creditos-box a {
-            color: var(--dourado-real);
-            font-weight: 700;
-            text-decoration: none;
-            font-size: 13px;
-            margin-left: 5px;
-            transition: color 0.3s, text-shadow 0.3s;
+        .ctrl-btn:hover {
+            background: #0066ff;
+            transform: scale(1.05);
         }
 
-        .creditos-box a:hover {
-            color: #fff;
-            text-shadow: 0 0 10px var(--dourado-real);
-        }
+        .anim-pop-in { animation: popIn 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes popIn { 0% { transform: scale(0.2); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
 
-        @media (max-width: 600px) {
-            .player-wrapper {
-                border-width: 2px;
-                border-radius: 8px;
-            }
-            .btn-voltar-dourado { padding: 6px 15px; font-size: 12px; }
-            .creditos-box p { font-size: 11px; }
-            .creditos-box a { font-size: 11px; }
+        .anim-slide-left { animation: slideLeft 0.5s cubic-bezier(0.25, 1, 0.5, 1) forwards; }
+        @keyframes slideLeft { 0% { transform: translateX(-200px); opacity: 0; } 100% { transform: translateX(0); opacity: 1; } }
+
+        .anim-scale-down { animation: scaleDown 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes scaleDown { 0% { transform: scale(3); opacity: 0; } 100% { transform: scale(1); opacity: 1; } }
+
+        .anim-slide-up { animation: slideUp 0.6s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes slideUp { 0% { transform: translateY(150px); opacity: 0; } 100% { transform: translateY(0); opacity: 1; } }
+
+        .bounce-header { animation: bounceInDown 1.2s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        @keyframes bounceInDown {
+            0% { top: -120px; }
+            60% { top: 0px; }
+            75% { top: -15px; }
+            90% { top: 0px; }
+            95% { top: -5px; }
+            100% { top: 0px; }
         }
     </style>
 </head>
 <body>
-    <header class="header">
-        <div class="header-inner">
-            <a href="javascript:history.back()" class="btn-voltar-dourado">← ✨ Voltar</a>
-            <div class="header-botoes">
-                <button class="btn-fullscreen" id="btnFullscreen" title="Tela Cheia">⛶</button>
+
+    <button id="btn-full-screen" class="global-nav-btn" onclick="toggleFullScreen()">TELA CHEIA</button>
+    <button id="btn-voltar" class="global-nav-btn" onclick="retornarParaMenu()">VOLTAR</button>
+
+    <div id="control-bar">
+        <button class="ctrl-btn" onclick="playIntroSequence()">▶ Replay Abertura</button>
+        <button class="ctrl-btn" onclick="skipToMenu()">⏭ Pular para Menu</button>
+    </div>
+
+    <div id="stage" class="curtains-open">
+        <!-- CORTINAS TEATRAIS -->
+        <div id="curtain-left" class="curtain-panel"></div>
+        <div id="curtain-right" class="curtain-panel"></div>
+
+        <!-- FASE 1: MATRIZ SWF CYAN -->
+        <div id="matrix-bg">
+            <div class="matrix-box"><span id="m1"></span></div>
+            <div class="matrix-box"><span id="m2"></span></div>
+            <div class="matrix-box"><span id="m3"></span></div>
+            <div class="matrix-box"><span id="m4"></span></div>
+            <div class="matrix-box"><span id="m5"></span></div>
+            <div class="matrix-box"><span id="m6"></span></div>
+            <div class="matrix-box"><span id="m7"></span></div>
+            <div class="matrix-box"><span id="m8"></span></div>
+            <div class="matrix-box"><span id="m9"></span></div>
+        </div>
+
+        <!-- FASE 2: CARD E TÍTULOS -->
+        <div id="title-screen">
+            <div id="alfacel-box" class="alfacel-card">
+                <div class="alfacel-title">ALFACEL</div>
+                <div class="alfacel-ribbon">ALFABETIZAÇÃO ACELERADA</div>
+            </div>
+
+            <div class="text-stack">
+                <div id="word-aprendendo" class="word-aprendendo">APRENDENDO</div>
+                <div id="word-tag" class="word-tag-letras">LETRAS</div>
+                <div id="word-letras" class="word-letras">LETRAS</div>
+                <div id="word-e" class="word-e">E</div>
+                <div id="word-numeros" class="word-numeros">NÚMEROS</div>
             </div>
         </div>
-    </header>
 
-    <div class="stage">
-        <h1 class="titulo-reinos">🔤 Alfabeto Divertido - ALFACEL</h1>
-        
-        <div class="player-wrapper">
-            <div id="ruffle-container"></div>
+        <!-- 1. MENU PRINCIPAL DO JOGO -->
+        <div id="menu-principal" class="screen">
+            <div id="menu-header" class="app-header">O QUE VAMOS APRENDER?</div>
+            <div id="menu-content">
+                <button class="menu-btn btn-vogais" onmouseover="speak('Vogais')" onclick="startSection('vogais')">
+                    VOGAIS
+                    <span class="btn-watermark">A E I O U</span>
+                </button>
+                <button class="menu-btn btn-consoantes" onmouseover="speak('Consoantes')" onclick="startSection('consoantes')">
+                    CONSOANTES
+                    <span class="btn-watermark">B C D F G</span>
+                </button>
+                <button class="menu-btn btn-numeros" onmouseover="speak('Números')" onclick="startSection('numeros')">
+                    NÚMEROS
+                    <span class="btn-watermark">1 2 3 4 5</span>
+                </button>
+            </div>
         </div>
 
-        <!-- Créditos em linha única -->
-        <div class="creditos-box">
-            <p><strong>Créditos:</strong> Jogo "Alfacel" original | Fonte: <a href="http://alfacel.clakioshiro.com" target="_blank" rel="noopener noreferrer">http://alfacel.clakioshiro.com</a></p>
+        <!-- 2. SEÇÃO VOGAIS DO JOGO -->
+        <div id="vogais-section" class="screen">
+            <div id="vogais-header" class="app-header">VOGAIS</div>
+            <div id="vogais-content" class="grid-container">
+                <span id="letter-a" class="item-card" onclick="playVowelAnimation('A')" onmouseover="speak('A')">A</span>
+                <span id="letter-e" class="item-card" onclick="playVowelAnimation('E')" onmouseover="speak('Ê')">E</span>
+                <span id="letter-i" class="item-card" onclick="playVowelAnimation('I')" onmouseover="speak('I')">I</span>
+                <span id="letter-o" class="item-card" onclick="playVowelAnimation('O')" onmouseover="speak('Ô')">O</span>
+                <span id="letter-u" class="item-card" onclick="playVowelAnimation('U')" onmouseover="speak('U')">U</span>
+            </div>
+        </div>
+
+        <!-- 3. SEÇÃO CONSOANTES DO JOGO -->
+        <div id="consoantes-section" class="screen">
+            <div id="consoantes-header" class="app-header">CONSOANTES</div>
+            <div id="consoantes-content" class="grid-container"></div>
+        </div>
+
+        <!-- 4. SEÇÃO NÚMEROS DO JOGO -->
+        <div id="numeros-section" class="screen">
+            <div id="numeros-header" class="app-header">NÚMEROS</div>
+            <div id="numeros-content" class="grid-container"></div>
+        </div>
+
+        <!-- OVERLAYS PARA ANIMAÇÕES INTERATIVAS -->
+        <div id="anim-overlay" class="animation-overlay">
+            <div id="anim-text" class="large-text-anim"></div>
+            <div id="anim-icon" class="icon-illustration"></div>
+            <div id="counting-area" class="counting-container"></div>
         </div>
     </div>
 
     <script>
-        // ========== CONFIGURAÇÃO DO RUFFLE (EMULADOR SWF) ==========
-        window.RufflePlayer = window.RufflePlayer || {};
-        window.RufflePlayer.config = {
-            "autoplay": "on",
-            "unmuteOverlay": "visible",
-            "backgroundColor": "#FFFFFF", /* Alterado para branco para revelar o texto do jogo */
-            "letterbox": "on",
-            "showSwfDownload": false
+        const AudioCtx = window.AudioContext || window.webkitAudioContext;
+        let audioCtx = null;
+
+        function initAudio() {
+            if (!audioCtx) audioCtx = new AudioCtx();
+            if (audioCtx.state === 'suspended') audioCtx.resume();
+        }
+
+        function speak(text) {
+            if ('speechSynthesis' in window) {
+                const utterance = new SpeechSynthesisUtterance(text);
+                utterance.lang = 'pt-BR';
+                utterance.rate = 0.9;
+                utterance.pitch = 1.1;
+                window.speechSynthesis.speak(utterance);
+            }
+        }
+
+        function playSoundEffect(type) {
+            initAudio();
+            let now = audioCtx.currentTime;
+            if (type === 'wings') {
+                for (let i = 0; i < 4; i++) {
+                    setTimeout(() => {
+                        let osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+                        osc.type = 'triangle';
+                        osc.frequency.setValueAtTime(120, audioCtx.currentTime);
+                        osc.frequency.exponentialRampToValueAtTime(30, audioCtx.currentTime + 0.25);
+                        gain.gain.setValueAtTime(0.4, audioCtx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.01, audioCtx.currentTime + 0.25);
+                        osc.connect(gain); gain.connect(audioCtx.destination);
+                        osc.start(); osc.stop(audioCtx.currentTime + 0.25);
+                    }, i * 300);
+                }
+            } else if (type === 'bell') {
+                let osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+                osc.type = 'sine'; osc.frequency.setValueAtTime(800, now);
+                gain.gain.setValueAtTime(0.3, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 1.5);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); osc.stop(now + 1.5);
+            } else if (type === 'pop') {
+                let osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+                osc.type = 'sine'; osc.frequency.setValueAtTime(300, now);
+                osc.frequency.exponentialRampToValueAtTime(900, now + 0.1);
+                gain.gain.setValueAtTime(0.5, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); osc.stop(now + 0.1);
+            } else if (type === 'bounce') {
+                let osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+                osc.type = 'sine'; osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(400, now + 0.2);
+                gain.gain.setValueAtTime(0.5, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); osc.stop(now + 0.2);
+            } else if (type === 'swoosh') {
+                let osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+                osc.type = 'sawtooth'; osc.frequency.setValueAtTime(150, now);
+                osc.frequency.exponentialRampToValueAtTime(500, now + 0.3);
+                gain.gain.setValueAtTime(0.2, now); gain.gain.exponentialRampToValueAtTime(0.01, now + 0.3);
+                osc.connect(gain); gain.connect(audioCtx.destination);
+                osc.start(); osc.stop(now + 0.3);
+            } else if (type === 'fanfare') {
+                const notes = [523.25, 659.25, 783.99, 1046.50];
+                notes.forEach((freq, idx) => {
+                    setTimeout(() => {
+                        let osc = audioCtx.createOscillator(), gain = audioCtx.createGain();
+                        osc.type = 'triangle'; osc.frequency.setValueAtTime(freq, audioCtx.currentTime);
+                        gain.gain.setValueAtTime(0.3, audioCtx.currentTime);
+                        gain.gain.exponentialRampToValueAtTime(0.001, audioCtx.currentTime + 0.35);
+                        osc.connect(gain); gain.connect(audioCtx.destination);
+                        osc.start(); osc.stop(audioCtx.currentTime + 0.35);
+                    }, idx * 120);
+                });
+            }
+        }
+
+        const vowelData = {
+            'A': { speech: 'A de Asa', icon: '🪶', sound: 'wings' },
+            'E': { speech: 'Ê de êscola', icon: '🏫', sound: 'bell' },
+            'I': { speech: 'I de Igreja', icon: '⛪', sound: 'bell' },
+            'O': { speech: 'Ô de Osso', icon: '🦴', sound: 'pop' },
+            'U': { speech: 'U de Uva', icon: '🍇', sound: 'pop' }
         };
 
-        window.addEventListener("DOMContentLoaded", () => {
-            const ruffle = window.RufflePlayer.newest();
-            const player = ruffle.createPlayer();
-            const container = document.getElementById("ruffle-container");
-            
-            player.style.width = "100%";
-            player.style.height = "100%";
-            
-            container.appendChild(player);
-            
-            player.load({
-                url: "alfacel.swf",
-                allowFullscreen: true 
-            });
-        });
+        const consonantData = {
+            'B': { speech: 'Bê de Bola', icon: '⚽', sound: 'bounce', color: '#E53935', hover: 'Bê' },
+            'C': { speech: 'Cê de Casa', icon: '🏠', sound: 'bell', color: '#D81B60', hover: 'Cê' },
+            'D': { speech: 'Dê de Dado', icon: '🎲', sound: 'pop', color: '#8E24AA', hover: 'Dê' },
+            'F': { speech: 'F de Foguete', icon: '🚀', sound: 'pop', color: '#5E35B1', hover: 'F' },
+            'G': { speech: 'Gê de Gato', icon: '🐱', sound: 'pop', color: '#3949AB', hover: 'Gê' },
+            'H': { speech: 'Agá de Helicóptero', icon: '🚁', sound: 'wings', color: '#1E88E5', hover: 'Agá' },
+            'J': { speech: 'Jota de Janela', icon: '🪟', sound: 'bell', color: '#039BE5', hover: 'Jota' },
+            'K': { speech: 'Cá de Kiwi', icon: '🥝', sound: 'pop', color: '#00ACC1', hover: 'Cá' },
+            'L': { speech: 'L de Leão', icon: '🦁', sound: 'bounce', color: '#00897B', hover: 'L' },
+            'M': { speech: 'Ême de Macaco', icon: '🐒', sound: 'bounce', color: '#43A047', hover: 'Ême' },
+            'N': { speech: 'N de Nuvem', icon: '☁️', sound: 'wings', color: '#7CB342', hover: 'n' },
+            'P': { speech: 'Pê de Pato', icon: '🦆', sound: 'pop', color: '#C0CA33', hover: 'Pê' },
+            'Q': { speech: 'Q de Queijo', icon: '🧀', sound: 'pop', color: '#FDD835', hover: 'Quê' },
+            'R': { speech: 'erre de Relógio', icon: '⏰', sound: 'bell', color: '#FFB300', hover: 'erre' },
+            'S': { speech: 's de Sol', icon: '☀️', sound: 'bell', color: '#FB8C00', hover: 's' },
+            'T': { speech: 'Tê de Trem', icon: '🚂', sound: 'bounce', color: '#F4511E', hover: 'Tê' },
+            'V': { speech: 'Vê de Vaca', icon: '🐮', sound: 'pop', color: '#6D4C41', hover: 'Vê' },
+            'W': { speech: 'Dáblio de Wafer', icon: '🧇', sound: 'pop', color: '#757575', hover: 'Dáblio' },
+            'X': { speech: 'Xís de Xícara', icon: '☕', sound: 'bell', color: '#546E7A', hover: 'Xís' },
+            'Y': { speech: 'Ipsilon de Iogurte', icon: '🧃', sound: 'pop', color: '#00A0B0', hover: 'Ipsilon' },
+            'Z': { speech: 'z de Zebra', icon: '🦓', sound: 'bounce', color: '#263238', hover: 'Z' }
+        };
 
-        // ========== FULLSCREEN (TELA CHEIA DA PÁGINA) ==========
-        const FS_KEY = 'reinoFullscreen';
-        
-        function isFullscreen() {
-            return !!(document.fullscreenElement || document.webkitFullscreenElement);
-        }
-        
-        function enterFullscreen() {
-            const elem = document.documentElement;
-            if (elem.requestFullscreen) elem.requestFullscreen().catch(() => {});
-            else if (elem.webkitRequestFullscreen) elem.webkitRequestFullscreen();
-        }
-        
-        function exitFullscreen() {
-            if (document.exitFullscreen) document.exitFullscreen().catch(() => {});
-            else if (document.webkitExitFullscreen) document.webkitExitFullscreen();
-        }
-        
-        function toggleFullscreen() {
-            if (isFullscreen()) {
-                exitFullscreen();
-                localStorage.setItem(FS_KEY, 'false');
-            } else {
-                enterFullscreen();
-                localStorage.setItem(FS_KEY, 'true');
-            }
-            atualizarIconeFullscreen();
-        }
-        
-        function atualizarIconeFullscreen() {
-            const btn = document.getElementById('btnFullscreen');
-            if (isFullscreen()) {
-                btn.innerHTML = '✖';
-                btn.style.background = 'linear-gradient(135deg, var(--dourado-real), #b8860b)';
-            } else {
-                btn.innerHTML = '⛶';
-                btn.style.background = 'linear-gradient(135deg, #4a148c, #6a1b9a)';
-            }
-        }
-        
-        function setupFullscreenListeners() {
-            const events = ['fullscreenchange', 'webkitfullscreenchange'];
-            events.forEach(event => {
-                document.addEventListener(event, () => {
-                    atualizarIconeFullscreen();
-                    if (!isFullscreen()) localStorage.setItem(FS_KEY, 'false');
-                });
+        const numberData = {
+            1: { icon: '☀️', phrase: 'Um Sol' },
+            2: { icon: '⭐', phrase: 'Duas Estrelas' },
+            3: { icon: '🍎', phrase: 'Três Maçãs' },
+            4: { icon: '🚗', phrase: 'Quatro Carrinhos' },
+            5: { icon: '🐟', phrase: 'Cinco Peixinhos' },
+            6: { icon: '🦋', phrase: 'Seis Borboletas' },
+            7: { icon: '🌸', phrase: 'Sete Flores' },
+            8: { icon: '🍪', phrase: 'Oito Biscoitos' },
+            9: { icon: '🎈', phrase: 'Nove Balões' },
+            10: { icon: '❤️', phrase: 'Dez Corações' }
+        };
+
+        function initGrids() {
+            const cContent = document.getElementById('consoantes-content');
+            cContent.innerHTML = '';
+            Object.keys(consonantData).forEach(letter => {
+                const item = consonantData[letter];
+                const span = document.createElement('span');
+                span.className = 'item-card';
+                span.style.color = item.color;
+                span.innerText = letter;
+                span.onmouseover = () => speak(item.hover);
+                span.onclick = () => playConsonantAnimation(letter);
+                cContent.appendChild(span);
             });
-        }
-        
-        function restaurarFullscreen() {
-            const deveFullscreen = localStorage.getItem(FS_KEY) === 'true';
-            if (deveFullscreen && !isFullscreen()) {
-                setTimeout(() => enterFullscreen(), 100);
+
+            const nContent = document.getElementById('numeros-content');
+            nContent.innerHTML = '';
+            for (let i = 1; i <= 10; i++) {
+                const span = document.createElement('span');
+                span.className = 'item-card';
+                span.style.color = '#0052cc';
+                span.innerText = i;
+                span.onmouseover = () => speak(i.toString());
+                span.onclick = () => playNumberCounting(i);
+                nContent.appendChild(span);
             }
-            atualizarIconeFullscreen();
         }
-        
-        window.onload = function() {
-            setupFullscreenListeners();
-            restaurarFullscreen();
-            document.getElementById('btnFullscreen').addEventListener('click', toggleFullscreen);
+
+        function generateMatrixText() {
+            const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+            for (let i = 1; i <= 9; i++) {
+                let str = '';
+                for (let j = 0; j < 300; j++) {
+                    str += chars.charAt(Math.floor(Math.random() * chars.length));
+                }
+                document.getElementById('m' + i).innerText = str + str;
+            }
+        }
+
+        let introTimers = [];
+
+        function clearAllTimers() {
+            introTimers.forEach(t => clearTimeout(t));
+            introTimers = [];
+            if ('speechSynthesis' in window) {
+                window.speechSynthesis.cancel();
+            }
+        }
+
+        function playIntroSequence() {
+            clearAllTimers();
+            initAudio();
+
+            const stage = document.getElementById('stage');
+            const matrix = document.getElementById('matrix-bg');
+            const titleScreen = document.getElementById('title-screen');
+            const menuPrincipal = document.getElementById('menu-principal');
+            const alfacelBox = document.getElementById('alfacel-box');
+
+            const wAprendendo = document.getElementById('word-aprendendo');
+            const wTag = document.getElementById('word-tag');
+            const wLetras = document.getElementById('word-letras');
+            const wE = document.getElementById('word-e');
+            const wNumeros = document.getElementById('word-numeros');
+
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
+
+            stage.className = 'curtains-open';
+            document.getElementById('btn-voltar').style.display = 'none';
+
+            wAprendendo.className = 'word-aprendendo';
+            wTag.style.opacity = '0';
+            wLetras.className = 'word-letras';
+            wE.className = 'word-e';
+            wNumeros.className = 'word-numeros';
+
+            titleScreen.style.opacity = '1';
+            titleScreen.style.visibility = 'visible';
+            matrix.style.opacity = '1';
+
+            playSoundEffect('pop');
+
+            introTimers.push(setTimeout(() => {
+                matrix.style.opacity = '0';
+
+                alfacelBox.style.transition = 'transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.5s';
+                alfacelBox.style.transform = 'translateY(0) scale(1)';
+                alfacelBox.style.opacity = '1';
+
+                playSoundEffect('swoosh');
+                speak('Alfacel. Alfabetização Acelerada.');
+            }, 2000));
+
+            introTimers.push(setTimeout(() => {
+                wAprendendo.classList.add('anim-pop-in');
+                playSoundEffect('pop');
+            }, 4500));
+
+            introTimers.push(setTimeout(() => {
+                wTag.style.opacity = '1';
+                wLetras.classList.add('anim-slide-left');
+                playSoundEffect('swoosh');
+            }, 5200));
+
+            introTimers.push(setTimeout(() => {
+                wE.classList.add('anim-scale-down');
+                playSoundEffect('bounce');
+            }, 5800));
+
+            introTimers.push(setTimeout(() => {
+                wNumeros.classList.add('anim-slide-up');
+                playSoundEffect('fanfare');
+                speak('Aprendendo Letras e Números');
+            }, 6400));
+
+            introTimers.push(setTimeout(() => {
+                stage.className = 'curtains-closed';
+                playSoundEffect('swoosh');
+            }, 9800));
+
+            introTimers.push(setTimeout(() => {
+                titleScreen.style.opacity = '0';
+                titleScreen.style.visibility = 'hidden';
+
+                menuPrincipal.classList.add('active-screen');
+                stage.className = 'curtains-open';
+
+                speak('O que vamos aprender?');
+            }, 12000));
+        }
+
+        function skipToMenu() {
+            clearAllTimers();
+            initAudio();
+
+            const stage = document.getElementById('stage');
+            stage.className = 'curtains-open';
+
+            document.getElementById('matrix-bg').style.opacity = '0';
+            document.getElementById('title-screen').style.opacity = '0';
+            document.getElementById('title-screen').style.visibility = 'hidden';
+
+            switchScreen('menu-principal');
+            document.getElementById('btn-voltar').style.display = 'none';
+
+            speak('O que vamos aprender?');
+        }
+
+        function toggleFullScreen() {
+            if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+            else if (document.exitFullscreen) document.exitFullscreen();
+        }
+
+        function switchScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active-screen'));
+            document.getElementById(screenId).classList.add('active-screen');
+        }
+
+        let seqIndex = 0;
+        let seqTimer;
+
+        function startSection(type) {
+            clearAllTimers();
+            initAudio();
+            document.getElementById('btn-voltar').style.display = 'block';
+            const screenId = `${type}-section`;
+            switchScreen(screenId);
+
+            document.getElementById(`${type}-header`).classList.add('bounce-header');
+
+            setTimeout(() => startSequentialPresentation(type), 800);
+        }
+
+        function retornarParaMenu() {
+            clearTimeout(seqTimer);
+            switchScreen('menu-principal');
+            document.getElementById('btn-voltar').style.display = 'none';
+        }
+
+        function startSequentialPresentation(type) {
+            const container = document.getElementById(`${type}-content`);
+            const items = container.querySelectorAll('.item-card');
+            items.forEach(el => el.style.visibility = 'hidden');
+            seqIndex = 0;
+
+            function showNext() {
+                if (seqIndex < items.length) {
+                    if (seqIndex > 0) items[seqIndex - 1].style.visibility = 'hidden';
+                    const current = items[seqIndex];
+                    current.style.visibility = 'visible';
+                    speak(current.innerText);
+                    seqIndex++;
+                    seqTimer = setTimeout(showNext, 1800);
+                } else {
+                    items.forEach(el => el.style.visibility = 'visible');
+                }
+            }
+            showNext();
+        }
+
+        function playVowelAnimation(letter) {
+            const data = vowelData[letter];
+            showOverlayAnimation(letter, document.getElementById(`letter-${letter.toLowerCase()}`).style.color, data.icon, data.speech, data.sound);
+        }
+
+        function playConsonantAnimation(letter) {
+            const data = consonantData[letter];
+            showOverlayAnimation(letter, data.color, data.icon, data.speech, data.sound);
+        }
+
+        function showOverlayAnimation(text, color, icon, speechText, soundEffect) {
+            const overlay = document.getElementById('anim-overlay');
+            const animText = document.getElementById('anim-text');
+            const animIcon = document.getElementById('anim-icon');
+            const countArea = document.getElementById('counting-area');
+
+            countArea.innerHTML = '';
+            animText.style.display = 'block';
+            animIcon.style.display = 'block';
+
+            animText.innerText = text;
+            animText.style.color = color;
+            animIcon.innerText = icon;
+
+            overlay.style.display = 'flex';
+
+            speak(speechText);
+            setTimeout(() => playSoundEffect(soundEffect), 800);
+
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 3800);
+        }
+
+        function playNumberCounting(number) {
+            const overlay = document.getElementById('anim-overlay');
+            const animText = document.getElementById('anim-text');
+            const animIcon = document.getElementById('anim-icon');
+            const countArea = document.getElementById('counting-area');
+
+            animText.style.display = 'none';
+            animIcon.style.display = 'none';
+            countArea.innerHTML = '';
+            overlay.style.display = 'flex';
+
+            const itemData = numberData[number];
+            let currentCount = 1;
+
+            function addNextObject() {
+                if (currentCount <= number) {
+                    const objSpan = document.createElement('span');
+                    objSpan.className = 'counting-item';
+                    objSpan.innerText = itemData.icon;
+                    countArea.appendChild(objSpan);
+
+                    playSoundEffect('pop');
+                    speak(currentCount.toString());
+
+                    currentCount++;
+                    setTimeout(addNextObject, 1200);
+                } else {
+                    setTimeout(() => {
+                        speak(itemData.phrase);
+                    }, 500);
+
+                    setTimeout(() => {
+                        overlay.style.display = 'none';
+                    }, 2500);
+                }
+            }
+
+            addNextObject();
+        }
+
+        window.onload = () => {
+            initGrids();
+            generateMatrixText();
+            setTimeout(playIntroSequence, 300);
         };
     </script>
 </body>
