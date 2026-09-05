@@ -147,6 +147,10 @@
         .card-5 { background-color: #F3E5F5; border-color: #9C27B0; border-style: dashed; box-shadow: 0 8px 0 #9C27B0; }
         .card-5 .card-titulo { color: #7B1FA2; } .card-5 .card-desc { color: #6A1B9A; }
 
+        /* Novo card Alfabeto Mágico - tons de índigo / lavanda */
+        .card-6 { background-color: #E8EAF6; border-color: #5C6BC0; border-style: solid; box-shadow: 0 8px 0 #5C6BC0; }
+        .card-6 .card-titulo { color: #3949AB; } .card-6 .card-desc { color: #303F9F; }
+
         /* AREA DO JOGO */
         .header-magico { text-align: center; margin-bottom: 20px; }
         .titulo { font-family: 'Fredoka', sans-serif; font-size: 2rem; color: #FF5722; display: inline-flex; align-items: center; gap: 12px; font-weight: bold;}
@@ -328,6 +332,12 @@
                     <div class="card-titulo">Formar Palavras</div>
                     <div class="card-desc">Jogo extra para brincar!</div>
                 </div>
+                <!-- Botão Alfabeto Mágico (direciona para URL especificada, mantendo padrão de card) -->
+                <div class="card-aventura card-6" onclick="window.open('https://alfabeto-mu.vercel.app/alfabeto.html', '_blank')" onmouseenter="lerTexto('Alfabeto Mágico. Descubra as letras e sons!')" onmouseleave="pararLeitura()">
+                    <div class="card-icone">✨</div>
+                    <div class="card-titulo">Alfabeto Mágico</div>
+                    <div class="card-desc">Aprenda o ABC brincando!</div>
+                </div>
             </div>
         </div>
 
@@ -361,11 +371,11 @@
 <script>
     const q = (i, p, l, r, o, d) => ({ imagem: i, palavra_completa: p, lacuna: l, resposta: r, opcoes: o, dica: d });
 
-    // --- BANCO DE DADOS DAS AVENTURAS COM CORES CLARAS E ALEGRES ---
+    // --- BANCO DE DADOS DAS AVENTURAS (mantido exatamente como antes) ---
     const bancoAventuras = {
         mn: {
             titulo: "🏴‍☠️ Tesouro do M e N 🦜",
-            corFundo: "linear-gradient(145deg, #A8E6CF 0%, #DCEDC1 100%)", /* Verde menta claro */
+            corFundo: "linear-gradient(145deg, #A8E6CF 0%, #DCEDC1 100%)",
             emojis: ["🖍️", "🎨", "✏️", "📚", "🦜", "🪙"],
             perguntas: [
                 q("🥁","TAMBOR","TA_BOR","m",["m","n"],"Antes de P e B, usamos a letra..."),
@@ -422,7 +432,7 @@
         },
         ssc: {
             titulo: "🚀 Espaço Sideral (SS/Ç) 👽",
-            corFundo: "linear-gradient(145deg, #FFD3B6 0%, #FFAAA5 100%)", /* Pêssego/Salmão alegre */
+            corFundo: "linear-gradient(145deg, #FFD3B6 0%, #FFAAA5 100%)",
             emojis: ["⭐", "🚀", "🛸", "🪐", "👽", "☄️"],
             perguntas: [
                 q("🍎","MAÇÃ","MA_Ã","ç",["ss","ç"],"Tem som de S, mas vem antes de A com til."),
@@ -479,7 +489,7 @@
         },
         rrr: {
             titulo: "🦁 Safári Animal (R/RR) 🌿",
-            corFundo: "linear-gradient(145deg, #d4fc79 0%, #96e6a1 100%)", /* Verde grama claro */
+            corFundo: "linear-gradient(145deg, #d4fc79 0%, #96e6a1 100%)",
             emojis: ["🦁", "🌿", "🍎", "📏", "🐒", "🐘"],
             perguntas: [
                 q("🚗","CARRO","CA_O","rr",["r","rr"],"Fale alto! Arranha a garganta bem forte!"),
@@ -536,7 +546,7 @@
         },
         sz: {
             titulo: "🐋 Mergulho (S/Z Final) 🌊",
-            corFundo: "linear-gradient(145deg, #81D4FA 0%, #B3E5FC 100%)", /* Azul céu bem claro e brilhante */
+            corFundo: "linear-gradient(145deg, #81D4FA 0%, #B3E5FC 100%)",
             emojis: ["🐟", "🌊", "🦈", "🧃", "🍎", "🎒"],
             perguntas: [
                 q("✏️","LÁPIS","LÁPI_","s",["s","z"],"Item de material escolar."),
@@ -869,7 +879,7 @@
             el.innerText = simbs[Math.floor(Math.random() * simbs.length)];
             el.style.fontSize = (Math.random() * 25 + 25) + 'px';
             el.style.left = Math.random() * 90 + 5 + '%';
-            el.style.top = '110%'; // Começa de baixo e sobe
+            el.style.top = '110%';
             el.style.animationDuration = (Math.random() * 8 + 8) + 's';
             document.body.appendChild(el);
             setTimeout(() => el.remove(), 12000);
