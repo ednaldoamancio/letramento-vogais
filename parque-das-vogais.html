@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover">
-    <title>Parque das Vogais - Desafio Cronometrado | EdHumanas</title>
+    <title>Parque das Vogais - Edição Grande Mestre | EdHumanas</title>
 
     <!-- Google Fonts: Playwrite BR para cursiva escolar + Comic Neue para bastão/imprensa -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -56,10 +56,10 @@
 
         .sol {
             position: absolute;
-            top: 90px;
+            top: 98px;
             right: 4%;
-            width: 80px;
-            height: 80px;
+            width: 78px;
+            height: 78px;
             background: radial-gradient(circle, #ffe082 28%, #ffca28 65%, rgba(255, 202, 40, 0) 76%);
             border-radius: 50%;
             will-change: transform;
@@ -78,9 +78,9 @@
             animation: moverNuvem linear infinite;
         }
 
-        .nuvem-1 { width: 155px; top: 16%; animation-duration: 42s; }
-        .nuvem-2 { width: 190px; top: 28%; animation-duration: 58s; animation-delay: -18s; opacity: 0.92; }
-        .nuvem-3 { width: 135px; top: 40%; animation-duration: 48s; animation-delay: -30s; opacity: 0.85; }
+        .nuvem-1 { width: 155px; top: 18%; animation-duration: 42s; }
+        .nuvem-2 { width: 190px; top: 30%; animation-duration: 58s; animation-delay: -18s; opacity: 0.92; }
+        .nuvem-3 { width: 135px; top: 42%; animation-duration: 48s; animation-delay: -30s; opacity: 0.85; }
 
         @keyframes moverNuvem {
             from { transform: translate3d(0, 0, 0); }
@@ -162,17 +162,17 @@
             flex-wrap: wrap;
             justify-content: space-between;
             align-items: center;
-            gap: 8px;
-            padding: 8px 14px;
+            gap: 6px;
+            padding: 6px 12px;
             background: rgba(20, 60, 30, 0.96);
             border-bottom: 3px solid var(--secondary);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.22);
         }
 
         .top-bar {
             display: flex;
             flex-wrap: wrap;
-            gap: 7px;
+            gap: 6px;
             align-items: center;
         }
 
@@ -180,11 +180,11 @@
             background: rgba(255, 255, 255, 0.18);
             border: 2px solid var(--secondary);
             color: white;
-            width: 40px;
-            height: 40px;
+            width: 38px;
+            height: 38px;
             border-radius: 50%;
             cursor: pointer;
-            font-size: 18px;
+            font-size: 17px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -194,17 +194,32 @@
         .icon-btn:hover { background: rgba(255, 255, 255, 0.3); transform: scale(1.06); }
         .icon-btn:active { transform: scale(0.95); }
 
-        @media (min-width: 768px) {
-            .icon-btn { width: 44px; height: 44px; font-size: 20px; }
+        .btn-album {
+            background: linear-gradient(135deg, #7b1fa2, #4a148c);
+            border: 2px solid var(--secondary);
+            color: #fff;
+            font-family: inherit;
+            font-size: 13px;
+            font-weight: 800;
+            padding: 6px 12px;
+            border-radius: 30px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            transition: transform 0.2s;
+            white-space: nowrap;
         }
+
+        .btn-album:hover { transform: scale(1.05); }
 
         /* BOTÃO DOURADO CINTILANTE */
         .btn-dourado {
             font-family: 'Comic Neue', sans-serif;
-            padding: 7px 14px;
+            padding: 6px 13px;
             border-radius: 40px;
             font-weight: 800;
-            font-size: 0.85rem;
+            font-size: 0.82rem;
             background: linear-gradient(135deg, #f5b042, #ffd700, #f5a623);
             border: 2px solid #fff2b5;
             color: #3a2a1a;
@@ -212,7 +227,7 @@
             transition: all 0.3s ease;
             display: flex;
             align-items: center;
-            gap: 5px;
+            gap: 4px;
             box-shadow: 0 0 12px rgba(255, 215, 0, 0.6);
             animation: brilhoDourado 1.5s ease-in-out infinite alternate;
             white-space: nowrap;
@@ -225,12 +240,55 @@
 
         .btn-dourado:hover { transform: scale(1.05); }
 
-        /* SELETOR DIRETO DAS 3 FASES */
+        /* BARRA DOS 5 NÍVEIS DE DIFICULDADE / GRAFIA */
+        .niveis-barra {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 4px;
+            background: rgba(0, 0, 0, 0.38);
+            padding: 4px 7px;
+            border-radius: 30px;
+            border: 1px solid rgba(255, 255, 255, 0.28);
+            justify-content: center;
+        }
+
+        .nivel-tab {
+            background: rgba(255, 255, 255, 0.12);
+            border: 2px solid transparent;
+            color: #e8f5e9;
+            font-family: inherit;
+            font-size: 11.5px;
+            font-weight: 800;
+            padding: 4px 10px;
+            border-radius: 20px;
+            cursor: pointer;
+            transition: all 0.2s;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .nivel-tab:hover { background: rgba(255, 255, 255, 0.24); }
+
+        .nivel-tab.ativa {
+            background: linear-gradient(135deg, #43a047, #1b5e20);
+            border-color: var(--secondary);
+            color: #ffffff;
+            box-shadow: 0 2px 10px rgba(255, 202, 40, 0.5);
+        }
+
+        .nivel-tab[data-nivel="5"].ativa {
+            background: linear-gradient(135deg, #ff8f00, #d84315);
+            border-color: #fff59d;
+        }
+
+        /* SELETOR DAS 3 ETAPAS DE CONTEÚDO */
         .fases-barra {
             display: flex;
-            gap: 5px;
+            gap: 4px;
             background: rgba(0, 0, 0, 0.35);
-            padding: 4px 8px;
+            padding: 4px 7px;
             border-radius: 30px;
             border: 1px solid rgba(255, 255, 255, 0.25);
         }
@@ -240,9 +298,9 @@
             border: 2px solid transparent;
             color: #e8f5e9;
             font-family: inherit;
-            font-size: 12px;
+            font-size: 11.5px;
             font-weight: 800;
-            padding: 5px 11px;
+            padding: 4px 10px;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.2s;
@@ -258,138 +316,19 @@
             box-shadow: 0 2px 10px rgba(255, 143, 0, 0.5);
         }
 
-        @media (min-width: 900px) {
-            .fase-tab { font-size: 13.5px; padding: 6px 14px; }
-        }
-
-        /* BARRA DE SELEÇÃO DE GRAFIA */
-        .modo-barra {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 5px;
-            background: rgba(0, 0, 0, 0.35);
-            padding: 4px 8px;
-            border-radius: 40px;
-            border: 1px solid rgba(255, 255, 255, 0.3);
-            justify-content: center;
-        }
-
-        .modo-btn {
-            background: rgba(255, 255, 255, 0.12);
-            border: 2px solid transparent;
-            border-radius: 14px;
-            padding: 3px 9px;
-            cursor: pointer;
-            color: white;
-            transition: all 0.25s ease;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 1px;
-            min-width: 48px;
-        }
-
-        .modo-btn .label-modo {
-            font-size: 8.5px;
-            font-family: 'Comic Neue', sans-serif;
-            font-weight: 700;
-            text-transform: uppercase;
-            letter-spacing: 0.3px;
-        }
-
-        .modo-btn .exemplo-letra {
-            font-size: 19px;
-            line-height: 1.1;
-        }
-
-        .modo-btn.maiusc-forma .exemplo-letra,
-        .modo-btn.minusc-forma .exemplo-letra { font-family: 'Comic Neue', sans-serif; font-weight: 700; }
-        .modo-btn.maiusc-cursiva .exemplo-letra,
-        .modo-btn.minusc-cursiva .exemplo-letra { font-family: var(--cursive-school); font-weight: 400; }
-
-        .modo-btn:hover { background: rgba(255, 255, 255, 0.25); transform: scale(1.06); }
-
-        .modo-btn.ativo {
-            background: linear-gradient(135deg, #43a047, #1b5e20);
-            border-color: var(--secondary);
-            box-shadow: 0 0 12px rgba(255, 202, 40, 0.6);
-            transform: scale(1.06);
-        }
-
-        @media (min-width: 768px) {
-            .modo-btn { padding: 4px 11px; min-width: 60px; }
-            .modo-btn .exemplo-letra { font-size: 22px; }
-            .modo-btn .label-modo { font-size: 9px; }
-        }
-
-        /* ===== PAINEL DE INSTRUÇÃO, TEMPORIZADOR E PLACAR ===== */
+        /* ===== PAINEL DE INSTRUÇÃO, BOQUINHA SONORA E HUD ===== */
         .game-info-container {
             width: 100%;
-            padding-top: 8px;
+            padding-top: 6px;
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 7px;
+            gap: 6px;
             z-index: 30;
             pointer-events: none;
         }
 
-        .instrucao {
-            font-size: 15px;
-            font-weight: 700;
-            background: rgba(27, 94, 32, 0.96);
-            padding: 6px 18px;
-            border-radius: 50px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            cursor: pointer;
-            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
-            border: 3px solid var(--secondary);
-            pointer-events: auto;
-            transition: transform 0.15s;
-            text-align: center;
-        }
-
-        .instrucao:active { transform: scale(0.97); }
-
-        @media (min-width: 768px) {
-            .instrucao { font-size: 19px; padding: 7px 24px; gap: 12px; }
-        }
-
-        #letraAlvo {
-            color: #d84315;
-            font-size: 24px;
-            font-weight: bold;
-            background: #ffffff;
-            padding: 2px 15px;
-            border-radius: 30px;
-            border: 3px solid var(--secondary);
-            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
-            display: inline-block;
-            min-width: 52px;
-            text-align: center;
-            transition: transform 0.2s ease;
-        }
-
-        #letraAlvo.modo-maiusc-forma,
-        #letraAlvo.modo-minusc-forma { font-family: 'Comic Neue', sans-serif; }
-
-        #letraAlvo.modo-maiusc-cursiva,
-        #letraAlvo.modo-minusc-cursiva {
-            font-family: var(--cursive-school);
-            font-weight: 400;
-            padding: 4px 18px;
-        }
-
-        #letraAlvo.pulsando { transform: scale(1.22); }
-
-        @media (min-width: 768px) {
-            #letraAlvo { font-size: 34px; min-width: 70px; }
-        }
-
-        /* HUD GAMIFICADO: TEMPORIZADOR + PONTUAÇÃO + COMBO + RECORDE */
-        .hud-gamificado {
+        .linha-comando-e-boca {
             display: flex;
             flex-wrap: wrap;
             align-items: center;
@@ -398,30 +337,121 @@
             pointer-events: auto;
         }
 
-        .hud-pill {
+        .instrucao {
+            font-size: 15px;
+            font-weight: 700;
+            background: rgba(27, 94, 32, 0.96);
+            padding: 5px 16px;
+            border-radius: 50px;
+            display: flex;
+            align-items: center;
+            gap: 9px;
+            cursor: pointer;
+            box-shadow: 0 6px 16px rgba(0, 0, 0, 0.22);
+            border: 3px solid var(--secondary);
+            transition: transform 0.15s;
+            text-align: center;
+        }
+
+        .instrucao:active { transform: scale(0.97); }
+
+        @media (min-width: 768px) {
+            .instrucao { font-size: 18.5px; padding: 6px 22px; gap: 11px; }
+        }
+
+        #letraAlvo {
+            color: #d84315;
+            font-size: 23px;
+            font-weight: bold;
+            background: #ffffff;
+            padding: 2px 14px;
+            border-radius: 30px;
+            border: 3px solid var(--secondary);
+            box-shadow: 0 3px 8px rgba(0, 0, 0, 0.2);
+            display: inline-block;
+            min-width: 50px;
+            text-align: center;
+            transition: transform 0.2s ease;
+        }
+
+        #letraAlvo.modo-maiusc-forma,
+        #letraAlvo.modo-minusc-forma,
+        #letraAlvo.modo-mista { font-family: 'Comic Neue', sans-serif; }
+
+        #letraAlvo.modo-maiusc-cursiva,
+        #letraAlvo.modo-minusc-cursiva {
+            font-family: var(--cursive-school);
+            font-weight: 400;
+            padding: 3px 17px;
+        }
+
+        #letraAlvo.pulsando { transform: scale(1.22); }
+
+        @media (min-width: 768px) {
+            #letraAlvo { font-size: 31px; min-width: 66px; }
+        }
+
+        /* DICA DA BOQUINHA SONORA (ARTICULAÇÃO) */
+        .dica-boquinha {
+            background: rgba(255, 255, 255, 0.96);
+            color: #4a148c;
+            border: 2.5px solid #ab47bc;
+            border-radius: 30px;
+            padding: 5px 14px;
+            font-size: 13.5px;
+            font-weight: 800;
             display: flex;
             align-items: center;
             gap: 6px;
+            cursor: pointer;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.14);
+            transition: transform 0.15s;
+        }
+
+        .dica-boquinha:hover { transform: scale(1.04); }
+
+        /* HUD GAMIFICADO: JOGADOR + TEMPORIZADOR + PONTUAÇÃO + COMBO + TOTAL */
+        .hud-gamificado {
+            display: flex;
+            flex-wrap: wrap;
+            align-items: center;
+            justify-content: center;
+            gap: 7px;
+            pointer-events: auto;
+        }
+
+        .hud-pill {
+            display: flex;
+            align-items: center;
+            gap: 5px;
             background: rgba(255, 255, 255, 0.97);
             color: #1b5e20;
-            padding: 5px 14px;
+            padding: 4px 12px;
             border-radius: 30px;
             border: 2.5px solid #2e7d32;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.16);
             font-weight: 800;
-            font-size: 15px;
+            font-size: 14px;
             transition: transform 0.2s ease, border-color 0.2s ease;
         }
 
         @media (min-width: 768px) {
-            .hud-pill { font-size: 17px; padding: 6px 16px; }
+            .hud-pill { font-size: 15.5px; padding: 5px 15px; }
         }
 
-        /* Pill do Temporizador com Barra Visual */
+        .jogador-pill {
+            border-color: #1565c0;
+            color: #0d47a1;
+            max-width: 170px;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
         .timer-pill {
             position: relative;
             overflow: hidden;
-            min-width: 118px;
+            min-width: 105px;
             justify-content: center;
             border-color: #0277bd;
             color: #01579b;
@@ -443,14 +473,8 @@
             transition: width 0.25s linear, background 0.3s ease;
         }
 
-        .timer-pill.aviso-tempo {
-            border-color: #f57c00;
-            color: #e65100;
-        }
-
-        .timer-pill.aviso-tempo .timer-barra-progresso {
-            background: #ff9800;
-        }
+        .timer-pill.aviso-tempo { border-color: #f57c00; color: #e65100; }
+        .timer-pill.aviso-tempo .timer-barra-progresso { background: #ff9800; }
 
         .timer-pill.tempo-critico {
             border-color: #d32f2f;
@@ -458,56 +482,40 @@
             color: #b71c1c;
             animation: pulsarUrgente 0.5s ease-in-out infinite alternate;
         }
-
-        .timer-pill.tempo-critico .timer-barra-progresso {
-            background: #e53935;
-        }
+        .timer-pill.tempo-critico .timer-barra-progresso { background: #e53935; }
 
         @keyframes pulsarUrgente {
             0% { transform: scale(1); }
             100% { transform: scale(1.08); }
         }
 
-        /* Pill de Pontos e Combo */
         .pontos-pill {
             border-color: #f9a825;
             background: linear-gradient(180deg, #ffffff 0%, #fffde7 100%);
             color: #e65100;
         }
 
-        .pontos-pill.bump {
-            transform: scale(1.18);
-        }
+        .pontos-pill.bump { transform: scale(1.18); }
 
         .combo-badge {
             background: linear-gradient(135deg, #ff6f00, #d84315);
             color: #fff;
-            font-size: 12px;
-            padding: 2px 8px;
+            font-size: 11.5px;
+            padding: 2px 7px;
             border-radius: 20px;
             font-weight: 800;
             display: none;
             animation: popBadge 0.25s ease-out;
         }
 
-        .combo-badge.visivel {
-            display: inline-block;
-        }
+        .combo-badge.visivel { display: inline-block; }
 
         @keyframes popBadge {
             0% { transform: scale(0.5); }
             100% { transform: scale(1); }
         }
 
-        .total-pill {
-            border-color: #2e7d32;
-            color: #1b5e20;
-        }
-
-        .recorde-pill {
-            border-color: #8e24aa;
-            color: #6a1b9a;
-        }
+        .total-pill { border-color: #2e7d32; color: #1b5e20; }
 
         /* ===== ÁREA DO CÉU ONDE OS BALÕES SOBEM ===== */
         .ceu-baloes {
@@ -557,6 +565,19 @@
                         inset 10px 10px 18px rgba(255, 255, 255, 0.45),
                         0 8px 16px rgba(0, 0, 0, 0.18);
             transition: transform 0.15s ease;
+        }
+
+        /* Balão Dourado Surpresa */
+        .balao-dourado .balao-corpo {
+            background: radial-gradient(circle at 30% 30%, #fff9c4, #ffd700 55%, #ff8f00) !important;
+            box-shadow: inset -8px -10px 18px rgba(180, 95, 0, 0.35),
+                        inset 10px 10px 18px rgba(255, 255, 255, 0.8),
+                        0 0 22px rgba(255, 215, 0, 0.95);
+        }
+
+        .balao-dourado .quadrado-letra {
+            border-color: #ff6f00;
+            background: linear-gradient(180deg, #fffde7, #fff59d);
         }
 
         .balao-container:hover .balao-corpo { transform: scale(1.06); }
@@ -656,7 +677,7 @@
         }
 
         @media (min-width: 768px) {
-            .balao-corpo { width: 94px; height: 112px; }
+            .balao-corpo { width: 92px; height: 110px; }
             .quadrado-letra { min-width: 72px; min-height: 66px; font-size: 36px; }
             .quadrado-letra.cartao-palavra { font-size: 27px; }
             .icone-palavra { font-size: 32px; }
@@ -701,17 +722,17 @@
         /* FEEDBACK FLUTUANTE E POPUP DE PONTUAÇÃO */
         .feedback-correto {
             position: fixed;
-            bottom: 14%;
+            bottom: 13%;
             left: 50%;
             transform: translateX(-50%);
             padding: 8px 20px;
             border-radius: 40px;
-            font-size: 16px;
+            font-size: 15.5px;
             font-weight: 800;
             color: #fff;
             z-index: 250;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.28);
-            animation: fadeUp 0.95s ease-out forwards;
+            animation: fadeUp 1.05s ease-out forwards;
             pointer-events: none;
             white-space: nowrap;
         }
@@ -725,16 +746,17 @@
 
         .ponto-flutuante {
             position: fixed;
-            font-size: 26px;
+            font-size: 25px;
             font-weight: 900;
             pointer-events: none;
             z-index: 265;
-            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.35);
-            animation: subirPonto 0.85s ease-out forwards;
+            text-shadow: 0 2px 6px rgba(0, 0, 0, 0.4);
+            animation: subirPonto 0.9s ease-out forwards;
             white-space: nowrap;
         }
 
         .ponto-flutuante.positivo { color: #ffeb3b; }
+        .ponto-flutuante.bonus { color: #00e5ff; font-size: 27px; }
         .ponto-flutuante.negativo { color: #ff5252; }
 
         @keyframes subirPonto {
@@ -743,89 +765,115 @@
             100% { transform: scale(1) translateY(-75px); opacity: 0; }
         }
 
-        .dica-som {
-            position: fixed;
-            bottom: 12px;
-            left: 14px;
-            background: rgba(27, 94, 32, 0.92);
-            padding: 5px 12px;
-            border-radius: 20px;
-            font-size: 12px;
-            color: #fff;
-            pointer-events: none;
-            z-index: 100;
-        }
-
-        /* ===== MODAIS (INÍCIO, PLACAR DA RODADA E SELETOR) ===== */
-        #modal-inicio, #modal-rodada, #modal-seletor {
+        /* ===== MODAIS (INÍCIO, PLACAR DA RODADA, ÁLBUM E SELETOR) ===== */
+        #modal-inicio, #modal-rodada, #modal-seletor, #modal-album {
             position: fixed;
             inset: 0;
-            background: rgba(15, 55, 25, 0.96);
+            background: rgba(15, 55, 25, 0.97);
             z-index: 2000;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             text-align: center;
-            padding: 20px;
+            padding: 18px;
             cursor: auto;
             overflow-y: auto;
         }
 
-        #modal-rodada, #modal-seletor {
+        #modal-rodada, #modal-seletor, #modal-album {
             display: none;
         }
 
-        #modal-seletor {
+        #modal-seletor, #modal-album {
             justify-content: flex-start;
-            padding-top: 28px;
+            padding-top: 24px;
         }
 
         .icone-vitoria {
-            font-size: 68px;
-            margin-bottom: 8px;
+            font-size: 62px;
+            margin-bottom: 6px;
             animation: float 2s ease-in-out infinite;
         }
 
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-12px); }
+            50% { transform: translateY(-10px); }
         }
 
         .vitoria-texto {
-            font-size: 26px;
+            font-size: 25px;
             color: var(--secondary);
             font-weight: 800;
-            margin: 6px 0;
+            margin: 4px 0;
         }
 
         @media (min-width: 768px) {
-            .vitoria-texto { font-size: 34px; }
+            .vitoria-texto { font-size: 32px; }
         }
 
-        /* SELETOR DE TEMPO NA TELA INICIAL E NO MENU */
+        /* CAMPO DE NOME DO JOGADOR NA TELA INICIAL */
+        .nome-jogador-box {
+            margin-top: 12px;
+            background: rgba(255, 255, 255, 0.12);
+            border: 2.5px solid var(--secondary);
+            border-radius: 22px;
+            padding: 12px 18px;
+            max-width: 480px;
+            width: 100%;
+        }
+
+        .nome-jogador-label {
+            display: block;
+            font-size: 16px;
+            font-weight: 800;
+            color: #fff59d;
+            margin-bottom: 7px;
+        }
+
+        .nome-jogador-input {
+            width: 100%;
+            padding: 10px 16px;
+            font-family: 'Comic Neue', sans-serif;
+            font-size: 20px;
+            font-weight: 800;
+            text-align: center;
+            color: #1b5e20;
+            background: #ffffff;
+            border: 3px solid #4caf50;
+            border-radius: 16px;
+            outline: none;
+            user-select: text;
+        }
+
+        .nome-jogador-input:focus {
+            border-color: var(--secondary);
+            box-shadow: 0 0 14px rgba(255, 202, 40, 0.75);
+        }
+
+        /* SELETOR DE TEMPO E NÍVEL INICIAL */
         .seletor-tempo-box {
-            margin-top: 16px;
+            margin-top: 12px;
             background: rgba(255, 255, 255, 0.1);
             border: 2px solid rgba(255, 202, 40, 0.55);
-            border-radius: 24px;
-            padding: 12px 18px;
-            max-width: 520px;
+            border-radius: 22px;
+            padding: 10px 16px;
+            max-width: 540px;
             width: 100%;
         }
 
         .seletor-tempo-titulo {
-            font-size: 16px;
+            font-size: 15px;
             font-weight: 800;
             color: #fff59d;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
         }
 
         .tempo-opcoes {
             display: flex;
             justify-content: center;
             flex-wrap: wrap;
-            gap: 8px;
+            gap: 7px;
         }
 
         .tempo-btn {
@@ -833,9 +881,9 @@
             border: 2px solid rgba(255, 255, 255, 0.35);
             color: #ffffff;
             font-family: inherit;
-            font-size: 16px;
+            font-size: 14.5px;
             font-weight: 800;
-            padding: 8px 16px;
+            padding: 6px 13px;
             border-radius: 20px;
             cursor: pointer;
             transition: all 0.2s;
@@ -851,14 +899,14 @@
         }
 
         .btn-comecar {
-            margin-top: 20px;
+            margin-top: 16px;
             background: linear-gradient(135deg, #43a047, #2e7d32);
             border: 4px solid var(--secondary);
             color: #fff;
             font-family: inherit;
-            font-size: 22px;
+            font-size: 21px;
             font-weight: 800;
-            padding: 14px 34px;
+            padding: 13px 34px;
             border-radius: 50px;
             cursor: pointer;
             box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
@@ -872,16 +920,27 @@
             background: rgba(255, 255, 255, 0.12);
             border: 3px solid var(--secondary);
             border-radius: 28px;
-            padding: 20px 24px;
-            max-width: 500px;
+            padding: 18px 22px;
+            max-width: 540px;
             width: 100%;
             box-shadow: 0 12px 32px rgba(0, 0, 0, 0.4);
         }
 
+        .banner-jogador-score {
+            background: linear-gradient(135deg, #1565c0, #0d47a1);
+            border: 2px solid #90caf9;
+            border-radius: 18px;
+            padding: 8px 14px;
+            margin: 6px 0 8px;
+            font-size: 19px;
+            font-weight: 800;
+            color: #ffffff;
+        }
+
         .estrelas-resultado {
-            font-size: 42px;
+            font-size: 38px;
             letter-spacing: 6px;
-            margin: 6px 0 12px;
+            margin: 4px 0 8px;
         }
 
         .badge-recorde {
@@ -889,45 +948,79 @@
             background: linear-gradient(135deg, #ffd700, #ff8f00);
             color: #3e2723;
             font-weight: 900;
-            font-size: 14px;
+            font-size: 13.5px;
             padding: 4px 14px;
             border-radius: 20px;
-            margin-bottom: 10px;
+            margin-bottom: 8px;
             animation: pulsarUrgente 0.6s infinite alternate;
         }
 
         .placar-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-            margin: 12px 0 18px;
+            gap: 8px;
+            margin: 10px 0 14px;
         }
 
         .placar-item {
             background: rgba(0, 0, 0, 0.28);
             border-radius: 16px;
-            padding: 10px;
+            padding: 8px;
             border: 1px solid rgba(255, 255, 255, 0.2);
         }
 
         .placar-item-label {
-            font-size: 13px;
+            font-size: 12.5px;
             color: #c8e6c9;
             font-weight: 700;
         }
 
         .placar-item-valor {
-            font-size: 24px;
+            font-size: 22px;
             font-weight: 900;
             color: #ffeb3b;
             margin-top: 2px;
+        }
+
+        /* TABELA DE RANKING TOP 5 */
+        .ranking-box {
+            background: rgba(0, 0, 0, 0.32);
+            border: 1.5px solid rgba(255, 202, 40, 0.45);
+            border-radius: 18px;
+            padding: 10px 14px;
+            margin-bottom: 14px;
+            text-align: left;
+        }
+
+        .ranking-titulo {
+            font-size: 14px;
+            font-weight: 800;
+            color: #ffca28;
+            text-align: center;
+            margin-bottom: 6px;
+        }
+
+        .ranking-linha {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 13.5px;
+            padding: 4px 8px;
+            border-radius: 10px;
+            color: #e8f5e9;
+        }
+
+        .ranking-linha.destaque-atual {
+            background: rgba(255, 202, 40, 0.25);
+            color: #fff59d;
+            font-weight: 800;
         }
 
         .acoes-rodada {
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 12px;
+            gap: 10px;
         }
 
         .btn-secundario {
@@ -935,9 +1028,9 @@
             border: 3px solid #ffffff;
             color: #fff;
             font-family: inherit;
-            font-size: 18px;
+            font-size: 16.5px;
             font-weight: 800;
-            padding: 12px 22px;
+            padding: 10px 18px;
             border-radius: 40px;
             cursor: pointer;
             transition: transform 0.2s;
@@ -950,9 +1043,9 @@
             border: 3px solid var(--secondary);
             color: #fff;
             font-family: inherit;
-            font-size: 19px;
+            font-size: 17.5px;
             font-weight: 800;
-            padding: 12px 26px;
+            padding: 10px 22px;
             border-radius: 40px;
             cursor: pointer;
             box-shadow: 0 6px 18px rgba(0, 0, 0, 0.3);
@@ -961,10 +1054,64 @@
 
         .btn-proximo:hover { transform: scale(1.06); }
 
+        /* ÁLBUM DE FIGURINHAS DAS 4 GRAFIAS */
+        .album-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(145px, 1fr));
+            gap: 10px;
+            max-width: 820px;
+            width: 100%;
+            margin-top: 12px;
+        }
+
+        .figurinha-card {
+            background: rgba(255, 255, 255, 0.96);
+            color: #1b5e20;
+            border: 3px solid var(--secondary);
+            border-radius: 18px;
+            padding: 10px 8px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 3px;
+            cursor: pointer;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+        }
+
+        .figurinha-card:hover { transform: scale(1.05); }
+
+        .figurinha-card.bloqueada {
+            background: rgba(255, 255, 255, 0.12);
+            border-color: rgba(255, 255, 255, 0.25);
+            color: #b0bec5;
+            cursor: default;
+        }
+
+        .figurinha-card.bloqueada:hover { transform: none; }
+
+        .fig-grafias {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 5px;
+            font-size: 12px;
+            margin-top: 4px;
+            padding-top: 4px;
+            border-top: 1px dashed #c8e6c9;
+            width: 100%;
+        }
+
+        .fig-cursiva {
+            font-family: var(--cursive-school);
+            font-size: 13px;
+            color: #d84315;
+        }
+
         .seletor-secao {
-            font-size: 17px;
+            font-size: 16.5px;
             color: #fff59d;
-            margin: 16px 0 8px;
+            margin: 14px 0 8px;
             font-weight: 800;
         }
 
@@ -972,21 +1119,21 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            gap: 9px;
-            max-width: 740px;
+            gap: 8px;
+            max-width: 760px;
         }
 
         .opcao-btn {
             background: linear-gradient(135deg, #388e3c, #1b5e20);
             border: 3px solid var(--secondary);
             border-radius: 18px;
-            padding: 9px 16px;
+            padding: 8px 15px;
             color: white;
             font-family: inherit;
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 800;
             cursor: pointer;
-            min-width: 70px;
+            min-width: 68px;
             transition: transform 0.2s;
         }
 
@@ -996,13 +1143,13 @@
         }
 
         .fechar-btn {
-            margin: 22px 0 20px;
+            margin: 20px 0 18px;
             background: #455a64;
             border: 2px solid #cfd8dc;
             color: white;
             padding: 10px 28px;
             border-radius: 30px;
-            font-size: 18px;
+            font-size: 17px;
             font-weight: bold;
             cursor: pointer;
             font-family: inherit;
@@ -1012,74 +1159,68 @@
         @media (max-width: 760px) {
             .game-header {
                 gap: 4px;
-                padding: 5px 8px;
+                padding: 4px 6px;
                 border-bottom-width: 2px;
             }
 
             .top-bar { gap: 4px; }
 
             .btn-dourado {
-                padding: 4px 8px;
-                font-size: 0.72rem;
+                padding: 4px 7px;
+                font-size: 0.7rem;
                 border-width: 1.5px;
             }
 
             .icon-btn {
-                width: 30px;
-                height: 30px;
-                font-size: 14px;
+                width: 29px;
+                height: 29px;
+                font-size: 13px;
                 border-width: 1.5px;
             }
 
-            .fases-barra { padding: 2px 4px; gap: 3px; }
-            .fase-tab { font-size: 10px; padding: 4px 7px; }
-
-            .modo-barra {
-                width: 100%;
-                padding: 2px 5px;
-                gap: 4px;
-                border-radius: 20px;
-            }
-
-            .modo-btn {
-                flex: 1;
-                flex-direction: row;
-                justify-content: center;
-                gap: 4px;
-                padding: 3px 4px;
-                min-width: 0;
-                border-radius: 10px;
+            .btn-album {
+                font-size: 11px;
+                padding: 4px 8px;
                 border-width: 1.5px;
             }
 
-            .modo-btn .exemplo-letra { font-size: 14px; }
-            .modo-btn .label-modo { font-size: 7.5px; }
+            .niveis-barra, .fases-barra {
+                padding: 2px 4px;
+                gap: 3px;
+            }
+
+            .nivel-tab, .fase-tab {
+                font-size: 9.5px;
+                padding: 3px 6px;
+            }
 
             .game-info-container { padding-top: 4px; gap: 4px; }
 
             .instrucao {
                 font-size: 12px;
-                padding: 4px 12px;
+                padding: 4px 11px;
                 gap: 6px;
                 border-width: 2px;
-                max-width: 96vw;
-                flex-wrap: wrap;
-                justify-content: center;
             }
 
             #letraAlvo {
                 font-size: 18px;
-                min-width: 36px;
+                min-width: 34px;
                 padding: 1px 9px;
                 border-width: 2px;
             }
 
-            .hud-gamificado { gap: 5px; }
-            .hud-pill { font-size: 12px; padding: 3px 9px; border-width: 2px; }
-            .timer-pill { min-width: 82px; }
+            .dica-boquinha {
+                font-size: 11px;
+                padding: 3px 10px;
+                border-width: 1.5px;
+            }
 
-            .sol { width: 46px; height: 46px; top: 95px; right: 3%; }
-            .dica-som { display: none; }
+            .hud-gamificado { gap: 4px; }
+            .hud-pill { font-size: 11.5px; padding: 3px 8px; border-width: 2px; }
+            .timer-pill { min-width: 76px; }
+
+            .sol { width: 44px; height: 44px; top: 105px; right: 3%; }
         }
     </style>
 </head>
@@ -1123,17 +1264,22 @@
         </svg>
     </div>
 
-    <!-- TELA INICIAL GAMIFICADA -->
+    <!-- TELA INICIAL GAMIFICADA COM CAMPO DE NOME -->
     <div id="modal-inicio">
-        <div class="icone-vitoria">⏱️🎈🏆</div>
-        <div class="vitoria-texto">Parque das Vogais — Desafio do Tempo!</div>
-        <p style="font-size: 18px; max-width: 560px; line-height: 1.45; color: #e8f5e9;">
-            Estoure o máximo de balões certos antes que o tempo acabe!<br>
-            <strong>+10 pts</strong> por acerto &bull; <strong>Combo</strong> por sequência &bull; <strong>-5 pts</strong> se errar.
+        <div class="icone-vitoria">⏱️🎈👑</div>
+        <div class="vitoria-texto">Parque das Vogais</div>
+        <p style="font-size: 16.5px; max-width: 560px; line-height: 1.4; color: #e8f5e9;">
+            Evolua do nível <strong>Muito Fácil</strong> até <strong>Grande Mestre</strong>!<br>
+            Estoure os balões certos antes que o tempo acabe e colecione figurinhas!
         </p>
 
+        <div class="nome-jogador-box">
+            <label for="inputNomeJogador" class="nome-jogador-label">🧑‍🎓 Escreva seu nome para a partida:</label>
+            <input type="text" id="inputNomeJogador" class="nome-jogador-input" placeholder="Digite seu nome aqui..." maxlength="22" autocomplete="off">
+        </div>
+
         <div class="seletor-tempo-box">
-            <div class="seletor-tempo-titulo">⏱️ Escolha o tempo de cada desafio:</div>
+            <div class="seletor-tempo-titulo">⏱️ Tempo por desafio:</div>
             <div class="tempo-opcoes" id="tempoOpcoesInicio">
                 <button class="tempo-btn" data-tempo="20" onclick="definirTempoRodada(20)">20s</button>
                 <button class="tempo-btn ativo" data-tempo="30" onclick="definirTempoRodada(30)">30s (Padrão)</button>
@@ -1142,7 +1288,7 @@
             </div>
         </div>
 
-        <button class="btn-comecar" onclick="comecarJogo()">▶️ Começar Desafio!</button>
+        <button class="btn-comecar" onclick="comecarJogo()">▶️ Começar Partida!</button>
     </div>
 
     <div id="game-wrapper">
@@ -1153,46 +1299,51 @@
                 </button>
                 <button id="btn-audio" class="icon-btn" onclick="toggleAudio()" title="Som">🔊</button>
                 <button class="icon-btn" onclick="toggleFullscreen()" title="Tela Cheia">⛶</button>
-                <button class="icon-btn" onclick="abrirSeletor()" title="Escolher Fase, Atividade ou Tempo">🎯</button>
+                <button class="icon-btn" onclick="abrirSeletor()" title="Escolher Nível, Fase ou Tempo">🎯</button>
+                <button class="btn-album" onclick="abrirAlbum()" title="Álbum de Figurinhas Sonoras">
+                    📒 Álbum (<span id="contadorAlbumTop">0</span>/25)
+                </button>
             </div>
 
-            <!-- ABAS DIRETAS DAS 3 FASES -->
+            <!-- BARRA DOS 5 NÍVEIS DE DIFICULDADE E GRAFIA -->
+            <div class="niveis-barra" id="niveisBarra">
+                <button class="nivel-tab ativa" data-nivel="1" onclick="irParaNivel(1)">🟢 Muito Fácil (A)</button>
+                <button class="nivel-tab" data-nivel="2" onclick="irParaNivel(2)">🔵 Fácil (a)</button>
+                <button class="nivel-tab" data-nivel="3" onclick="irParaNivel(3)">🟠 Difícil (Cursiva A)</button>
+                <button class="nivel-tab" data-nivel="4" onclick="irParaNivel(4)">🔴 Muito Difícil (Cursiva a)</button>
+                <button class="nivel-tab" data-nivel="5" onclick="irParaNivel(5)">👑 Grande Mestre</button>
+            </div>
+
+            <!-- ABAS DIRETAS DAS 3 ETAPAS DE CONTEÚDO -->
             <div class="fases-barra" id="fasesBarra">
                 <button class="fase-tab ativa" data-fase="1" onclick="irParaFase(1)">1️⃣ Vogais</button>
                 <button class="fase-tab" data-fase="2" onclick="irParaFase(2)">2️⃣ Palavrinhas</button>
                 <button class="fase-tab" data-fase="3" onclick="irParaFase(3)">3️⃣ Iniciais</button>
             </div>
-
-            <!-- SELETOR DE GRAFIA -->
-            <div class="modo-barra" id="modoBarra">
-                <button class="modo-btn maiusc-forma ativo" data-modo="maiusc-forma" onclick="selecionarModo('maiusc-forma')">
-                    <span class="exemplo-letra">A</span>
-                    <span class="label-modo">Bastão</span>
-                </button>
-                <button class="modo-btn minusc-forma" data-modo="minusc-forma" onclick="selecionarModo('minusc-forma')">
-                    <span class="exemplo-letra">a</span>
-                    <span class="label-modo">Imprensa</span>
-                </button>
-                <button class="modo-btn maiusc-cursiva" data-modo="maiusc-cursiva" onclick="selecionarModo('maiusc-cursiva')">
-                    <span class="exemplo-letra">A</span>
-                    <span class="label-modo">Cursiva Maiúsc.</span>
-                </button>
-                <button class="modo-btn minusc-cursiva" data-modo="minusc-cursiva" onclick="selecionarModo('minusc-cursiva')">
-                    <span class="exemplo-letra">a</span>
-                    <span class="label-modo">Cursiva Minúsc.</span>
-                </button>
-            </div>
         </div>
 
         <div class="game-info-container">
-            <p class="instrucao" id="btnRepetirComando">
-                <span id="textoComando">🎈 Estoure os balões com a letra</span>
-                <span id="letraAlvo" class="modo-maiusc-forma">A</span>
-                <span>🔊</span>
-            </p>
+            <div class="linha-comando-e-boca">
+                <p class="instrucao" id="btnRepetirComando">
+                    <span id="textoComando">🎈 Estoure a letra</span>
+                    <span id="letraAlvo" class="modo-maiusc-forma">A</span>
+                    <span>🔊</span>
+                </p>
 
-            <!-- HUD GAMIFICADO: TEMPORIZADOR + PONTUAÇÃO + TOTAL + RECORDE -->
+                <!-- GUIA ARTICULATÓRIO ("BOQUINHA SONORA") -->
+                <button class="dica-boquinha" id="btnBoquinha" onclick="falarDicaBoquinha()" title="Toque para ouvir a dica de como pronunciar">
+                    <span id="boquinhaIcone">👄</span>
+                    <span id="boquinhaTexto">Boca bem aberta: "Ááá!"</span>
+                </button>
+            </div>
+
+            <!-- HUD GAMIFICADO -->
             <div class="hud-gamificado">
+                <div class="hud-pill jogador-pill" title="Jogador atual">
+                    <span>🧑‍🎓</span>
+                    <span id="hudNomeJogador">Explorador(a)</span>
+                </div>
+
                 <div class="hud-pill timer-pill" id="timerPill">
                     <span>⏱️</span>
                     <span id="timerTexto">30s</span>
@@ -1211,30 +1362,29 @@
                     <span>🏆 Total:</span>
                     <span id="pontosTotaisTexto">0</span>
                 </div>
-
-                <div class="hud-pill recorde-pill">
-                    <span>👑 Recorde:</span>
-                    <span id="recordeAlvoTexto">0</span>
-                </div>
             </div>
         </div>
 
         <div class="ceu-baloes" id="ceuBaloes"></div>
-
-        <div class="dica-som">💡 Toque na instrução para ouvir novamente &bull; +10 pts por acerto</div>
     </div>
 
     <!-- MODAL DE RESULTADO DA RODADA (FIM DOS 30s) -->
     <div id="modal-rodada">
         <div class="placar-card">
-            <div class="icone-vitoria" id="rodada-icone" style="font-size: 58px;">⏱️🎉</div>
+            <div class="icone-vitoria" id="rodada-icone" style="font-size: 52px;">⏱️🎉</div>
             <div class="vitoria-texto" id="rodada-titulo">Tempo Esgotado!</div>
-            <div id="rodada-subtitulo" style="font-size: 17px; color: #e8f5e9; margin-bottom: 6px;">
-                Desafio: Letra A (30s)
+
+            <div class="banner-jogador-score" id="res-banner-jogador">
+                🧑‍🎓 Jogador(a): 0 pontos
+            </div>
+
+            <div id="rodada-subtitulo" style="font-size: 15.5px; color: #e8f5e9; margin-bottom: 4px;">
+                Nível Muito Fácil • Letra A (30s)
             </div>
 
             <div class="estrelas-resultado" id="rodada-estrelas">⭐⭐⭐</div>
-            <div id="rodada-novo-recorde" class="badge-recorde" style="display: none;">👑 NOVO RECORDE!</div>
+            <div id="rodada-novo-recorde" class="badge-recorde" style="display: none;">👑 NOVO RECORDE PESSOAL!</div>
+            <div id="rodada-figurinha-nova" class="badge-recorde" style="display: none; background: linear-gradient(135deg, #ce93d8, #ab47bc); color: #fff;">📒 NOVA FIGURINHA NO ÁLBUM!</div>
 
             <div class="placar-grid">
                 <div class="placar-item">
@@ -1242,17 +1392,23 @@
                     <div class="placar-item-valor" id="res-pontos">0</div>
                 </div>
                 <div class="placar-item">
-                    <div class="placar-item-label">🎈 Balões Certos</div>
-                    <div class="placar-item-valor" id="res-acertos">0</div>
-                </div>
-                <div class="placar-item">
-                    <div class="placar-item-label">🔥 Maior Sequência</div>
-                    <div class="placar-item-valor" id="res-combo">0x</div>
-                </div>
-                <div class="placar-item">
-                    <div class="placar-item-label">🏆 Total Acumulado</div>
+                    <div class="placar-item-label">🏆 Total na Partida</div>
                     <div class="placar-item-valor" id="res-total">0</div>
                 </div>
+                <div class="placar-item">
+                    <div class="placar-item-label">🎯 Precisão</div>
+                    <div class="placar-item-valor" id="res-precisao">100%</div>
+                </div>
+                <div class="placar-item">
+                    <div class="placar-item-label">🔥 Maior Combo</div>
+                    <div class="placar-item-valor" id="res-combo">0x</div>
+                </div>
+            </div>
+
+            <!-- TOP 5 RANKING DOS JOGADORES -->
+            <div class="ranking-box">
+                <div class="ranking-titulo">🏆 Ranking dos Melhores Jogadores (Partida Total)</div>
+                <div id="listaRankingTop5"></div>
             </div>
 
             <div class="acoes-rodada">
@@ -1262,11 +1418,21 @@
         </div>
     </div>
 
+    <!-- MODAL ÁLBUM DE FIGURINHAS SONORAS (4 GRAFIAS) -->
+    <div id="modal-album">
+        <div class="vitoria-texto" style="font-size: 26px;">📒 Álbum de Figurinhas das Vogais</div>
+        <p style="font-size: 15px; color: #e8f5e9; max-width: 640px;">
+            Toque em qualquer figurinha desbloqueada para ouvir a pronúncia da vogal inicial e ver a palavra nas <strong>4 formas de escrita</strong>!
+        </p>
+        <div class="album-grid" id="albumGrid"></div>
+        <button class="fechar-btn" onclick="fecharAlbum()">❌ Voltar ao Jogo</button>
+    </div>
+
     <!-- MODAL SELETOR RÁPIDO -->
     <div id="modal-seletor">
-        <div class="vitoria-texto" style="font-size: 26px;">🎯 Escolher Atividade e Tempo</div>
+        <div class="vitoria-texto" style="font-size: 25px;">🎯 Escolher Nível, Atividade e Tempo</div>
 
-        <div class="seletor-tempo-box" style="margin-top: 8px;">
+        <div class="seletor-tempo-box" style="margin-top: 6px;">
             <div class="seletor-tempo-titulo">⏱️ Duração de cada rodada:</div>
             <div class="tempo-opcoes" id="tempoOpcoesSeletor">
                 <button class="tempo-btn" data-tempo="20" onclick="definirTempoRodada(20)">20s</button>
@@ -1276,80 +1442,97 @@
             </div>
         </div>
 
-        <div class="seletor-secao">Fase 1 — Vogais Isoladas</div>
+        <div class="seletor-secao">Nível de Grafia / Dificuldade</div>
+        <div class="grid-opcoes" id="gridNiveis"></div>
+
+        <div class="seletor-secao">Etapa 1 — Vogais Isoladas</div>
         <div class="grid-opcoes" id="gridVogais"></div>
 
-        <div class="seletor-secao">Fase 2 — Palavrinhas / Encontros Vocálicos</div>
+        <div class="seletor-secao">Etapa 2 — Palavrinhas / Encontros Vocálicos</div>
         <div class="grid-opcoes" id="gridPalavras"></div>
 
-        <div class="seletor-secao">Fase 3 — Palavras que começam com Vogais</div>
+        <div class="seletor-secao">Etapa 3 — Palavras que começam com Vogais</div>
         <div class="grid-opcoes" id="gridIniciais"></div>
 
         <button class="fechar-btn" onclick="fecharSeletor()">❌ Voltar ao Jogo</button>
     </div>
 
     <script>
-        /* ===== CONTEÚDO PEDAGÓGICO ===== */
+        /* ===== CONTEÚDO PEDAGÓGICO E NÍVEIS ===== */
         const VOGAIS = ["A", "E", "I", "O", "U"];
 
-        const PALAVRINHAS = [
-            { texto: "ai",    fala: "ai",      dica: "ai, como quando damos um topinho no dedo!" },
-            { texto: "aí",    fala: "aí",      dica: "aí, mostrando onde está alguma coisa!" },
-            { texto: "oi",    fala: "ôi",      dica: "oi, quando cumprimentamos um amigo!" },
-            { texto: "ui",    fala: "úi",      dica: "ui, quando levamos um sustinho!" },
-            { texto: "eu",    fala: "êu",      dica: "eu, falando de nós mesmos!" },
-            { texto: "ei",    fala: "êi",      dica: "ei, chamando alguém!" },
-            { texto: "uau",   fala: "uáu",     dica: "uau, quando vemos algo incrível!" },
-            { texto: "uai",   fala: "uái",     dica: "uai, que surpresa!" },
-            { texto: "au-au", fala: "áu, áu",  dica: "au-au, o latido do cachorrinho!" }
+        const NIVEIS_DIFICULDADE = [
+            { id: 1, icone: "🟢", nome: "Muito Fácil",   rotuloCurto: "Muito Fácil (A)",           modo: "maiusc-forma" },
+            { id: 2, icone: "🔵", nome: "Fácil",         rotuloCurto: "Fácil (a)",                 modo: "minusc-forma" },
+            { id: 3, icone: "🟠", nome: "Difícil",       rotuloCurto: "Difícil (Cursiva A)",       modo: "maiusc-cursiva" },
+            { id: 4, icone: "🔴", nome: "Muito Difícil", rotuloCurto: "Muito Difícil (Cursiva a)", modo: "minusc-cursiva" },
+            { id: 5, icone: "👑", nome: "Grande Mestre", rotuloCurto: "Grande Mestre",             modo: "mista" }
         ];
 
+        const MODOS_GRAFIA_LISTA = ["maiusc-forma", "minusc-forma", "maiusc-cursiva", "minusc-cursiva"];
+
+        const DICAS_BOQUINHA = {
+            "A": { icone: "😮", texto: 'Boca bem aberta: "Ááá!"',      fala: "Para falar a letra Á, abra bem a boca: Ááá!" },
+            "E": { icone: "😁", texto: 'Sorriso aberto: "Ééé!"',        fala: "Para falar a letra É, dê um sorriso aberto: Ééé!" },
+            "I": { icone: "😬", texto: 'Sorriso fechadinho: "Ííí!"',    fala: "Para falar a letra Í, faça um sorriso fechadinho: Ííí!" },
+            "O": { icone: "😲", texto: 'Boquinha redonda: "Óóó!"',      fala: "Para falar a letra Ó, deixe a boca redondinha: Óóó!" },
+            "U": { icone: "😗", texto: 'Biquinho para frente: "Úúú!"',  fala: "Para falar a letra Ú, faça um biquinho: Úúú!" }
+        };
+
+        const PALAVRINHAS = [
+            { texto: "ai",    fala: "ai",      vogalRef: "A" },
+            { texto: "aí",    fala: "aí",      vogalRef: "A" },
+            { texto: "oi",    fala: "ôi",      vogalRef: "O" },
+            { texto: "ui",    fala: "úi",      vogalRef: "U" },
+            { texto: "eu",    fala: "êu",      vogalRef: "E" },
+            { texto: "ei",    fala: "êi",      vogalRef: "E" },
+            { texto: "uau",   fala: "uáu",     vogalRef: "U" },
+            { texto: "uai",   fala: "uái",     vogalRef: "U" },
+            { texto: "au-au", fala: "áu, áu",  vogalRef: "A" }
+        ];
+
+        // 25 palavras (5 por vogal) que também compõem o Álbum de Figurinhas Sonoras
         const CONJUNTO_PALAVRAS_VOGAIS = {
             "A": [
                 { palavra: "armário",   icone: "🗄️", falaEnfase: "Ááá... armário!" },
                 { palavra: "arco-íris", icone: "🌈", falaEnfase: "Ááá... arco-íris!" },
                 { palavra: "amigo",     icone: "🤝", falaEnfase: "Ááá... amigo!" },
-                { palavra: "alegria",   icone: "😄", falaEnfase: "Ááá... alegria!" },
                 { palavra: "abelha",    icone: "🐝", falaEnfase: "Ááá... abelha!" },
-                { palavra: "avião",     icone: "✈️", falaEnfase: "Ááá... avião!" },
-                { palavra: "abacaxi",   icone: "🍍", falaEnfase: "Ááá... abacaxi!" }
+                { palavra: "avião",     icone: "✈️", falaEnfase: "Ááá... avião!" }
             ],
             "E": [
                 { palavra: "elefante", icone: "🐘", falaEnfase: "Ééé... elefante!" },
                 { palavra: "escola",   icone: "🏫", falaEnfase: "Ééé... escola!" },
                 { palavra: "escova",   icone: "🪥", falaEnfase: "Ééé... escova!" },
                 { palavra: "escudo",   icone: "🛡️", falaEnfase: "Ééé... escudo!" },
-                { palavra: "estrela",  icone: "⭐", falaEnfase: "Ééé... estrela!" },
-                { palavra: "espelho",  icone: "🪞", falaEnfase: "Ééé... espelho!" },
-                { palavra: "esquilo",  icone: "🐿️", falaEnfase: "Ééé... esquilo!" }
+                { palavra: "estrela",  icone: "⭐", falaEnfase: "Ééé... estrela!" }
             ],
             "I": [
                 { palavra: "igreja", icone: "⛪", falaEnfase: "Ííí... igreja!" },
                 { palavra: "iguana", icone: "🦎", falaEnfase: "Ííí... iguana!" },
                 { palavra: "ioiô",   icone: "🪀", falaEnfase: "Ííí... ioiô!" },
                 { palavra: "irmão",  icone: "👦", falaEnfase: "Ííí... irmão!" },
-                { palavra: "ilha",   icone: "🏝️", falaEnfase: "Ííí... ilha!" },
-                { palavra: "ímã",    icone: "🧲", falaEnfase: "Ííí... ímã!" },
-                { palavra: "iglu",   icone: "🧊", falaEnfase: "Ííí... iglu!" }
+                { palavra: "ilha",   icone: "🏝️", falaEnfase: "Ííí... ilha!" }
             ],
             "O": [
-                { palavra: "ovo",     icone: "🥚", falaEnfase: "Óóó... ovo!" },
-                { palavra: "olho",    icone: "👁️", falaEnfase: "Óóó... olho!" },
-                { palavra: "orelha",  icone: "👂", falaEnfase: "Óóó... orelha!" },
-                { palavra: "ovelha",  icone: "🐑", falaEnfase: "Óóó... ovelha!" },
-                { palavra: "ônibus",  icone: "🚌", falaEnfase: "Óóó... ônibus!" },
-                { palavra: "óculos",  icone: "👓", falaEnfase: "Óóó... óculos!" },
-                { palavra: "osso",    icone: "🦴", falaEnfase: "Óóó... osso!" }
+                { palavra: "ovo",    icone: "🥚", falaEnfase: "Óóó... ovo!" },
+                { palavra: "olho",   icone: "👁️", falaEnfase: "Óóó... olho!" },
+                { palavra: "orelha", icone: "👂", falaEnfase: "Óóó... orelha!" },
+                { palavra: "ovelha", icone: "🐑", falaEnfase: "Óóó... ovelha!" },
+                { palavra: "ônibus", icone: "🚌", falaEnfase: "Óóó... ônibus!" }
             ],
             "U": [
                 { palavra: "uva",       icone: "🍇", falaEnfase: "Úúú... uva!" },
                 { palavra: "urso",      icone: "🐻", falaEnfase: "Úúú... urso!" },
                 { palavra: "unha",      icone: "💅", falaEnfase: "Úúú... unha!" },
                 { palavra: "unicórnio", icone: "🦄", falaEnfase: "Úúú... unicórnio!" },
-                { palavra: "umbigo",    icone: "👕", falaEnfase: "Úúú... umbigo!" },
-                { palavra: "urubu",     icone: "🐦‍⬛", falaEnfase: "Úúú... urubu!" }
+                { palavra: "umbigo",    icone: "👕", falaEnfase: "Úúú... umbigo!" }
             ]
         };
+
+        const TODAS_FIGURINHAS = VOGAIS.flatMap(v =>
+            CONJUNTO_PALAVRAS_VOGAIS[v].map(item => ({ ...item, vogal: v }))
+        );
 
         const CORES_BALAO = [
             "radial-gradient(circle at 30% 30%, #ff8a80, #e53935)",
@@ -1361,67 +1544,140 @@
             "radial-gradient(circle at 30% 30%, #f48fb1, #d81b60)"
         ];
 
-        /* ===== ESTADO DO JOGO GAMIFICADO ===== */
+        /* ===== ESTADO DO JOGO ===== */
+        let nomeJogador = "Explorador(a)";
         let audioEnabled = true;
         let jogoAtivo = false;
         let jogoPausado = false;
-        let faseAtual = 1; // 1 = Vogais | 2 = Palavrinhas | 3 = Palavras Iniciais
-        let indiceAlvo = 0;
-        let modoGrafia = 'maiusc-forma';
 
-        // Variáveis de Tempo e Pontuação
-        let tempoConfigurado = 30; // Padrão: 30 segundos
+        let nivelAtual = 1; // 1: Muito Fácil | 2: Fácil | 3: Difícil | 4: Muito Difícil | 5: Grande Mestre
+        let faseAtual = 1;  // 1: Vogais | 2: Palavrinhas | 3: Palavras Iniciais
+        let indiceAlvo = 0;
+
+        let tempoConfigurado = 30;
         let tempoRestante = 30;
         let pontosRodada = 0;
         let pontosTotais = 0;
         let acertosRodada = 0;
+        let errosRodada = 0;
         let comboAtual = 0;
         let maiorComboRodada = 0;
+        let balaoDouradoJaGeradoNaRodada = false;
 
+        let figurinhasDesbloqueadas = new Set();
         let filaPalavrasRodada = [];
         let intervaloGerador = null;
         let intervaloTimer = null;
         let laneAtual = 0;
-        let speechFallbackTimer = null;
 
         const ceuBaloes = document.getElementById("ceuBaloes");
         const elLetraAlvo = document.getElementById("letraAlvo");
         const elTextoComando = document.getElementById("textoComando");
         const modalRodada = document.getElementById("modal-rodada");
         const modalSeletor = document.getElementById("modal-seletor");
+        const modalAlbum = document.getElementById("modal-album");
 
-        /* ===== PERSISTÊNCIA DE RECORDES (LOCALSTORAGE) ===== */
-        function obterChaveRecorde() {
-            const alvo = obterAlvoTextoPrincipal();
-            return `parque_vogais_rec_f${faseAtual}_${alvo}_${tempoConfigurado}s`;
+        /* ===== PERSISTÊNCIA (NOME, RECORDES, RANKING E ÁLBUM) ===== */
+        function carregarDadosSalvos() {
+            try {
+                const nomeSalvo = localStorage.getItem("parque_vogais_ultimo_nome");
+                if (nomeSalvo) {
+                    document.getElementById("inputNomeJogador").value = nomeSalvo;
+                }
+                const figsSalvas = JSON.parse(localStorage.getItem("parque_vogais_album") || "[]");
+                figurinhasDesbloqueadas = new Set(figsSalvas);
+                atualizarContadorAlbum();
+            } catch (e) {}
         }
 
-        function obterRecordeAtual() {
+        function salvarAlbum() {
             try {
-                return Number(localStorage.getItem(obterChaveRecorde()) || 0);
-            } catch (e) {
-                return 0;
-            }
+                localStorage.setItem("parque_vogais_album", JSON.stringify(Array.from(figurinhasDesbloqueadas)));
+            } catch (e) {}
+            atualizarContadorAlbum();
+        }
+
+        function atualizarContadorAlbum() {
+            document.getElementById("contadorAlbumTop").innerText = figurinhasDesbloqueadas.size;
+        }
+
+        function desbloquearProximaFigurinha(vogalPreferencial) {
+            const candidatasPreferenciais = TODAS_FIGURINHAS.filter(
+                f => f.vogal === vogalPreferencial && !figurinhasDesbloqueadas.has(f.palavra)
+            );
+            const candidatasGerais = TODAS_FIGURINHAS.filter(
+                f => !figurinhasDesbloqueadas.has(f.palavra)
+            );
+            const pool = candidatasPreferenciais.length > 0 ? candidatasPreferenciais : candidatasGerais;
+            if (pool.length === 0) return null;
+
+            const escolhida = pool[Math.floor(Math.random() * pool.length)];
+            figurinhasDesbloqueadas.add(escolhida.palavra);
+            salvarAlbum();
+            return escolhida;
+        }
+
+        function obterChaveRecorde() {
+            const alvo = obterAlvoTextoPrincipal();
+            return `parque_vogais_rec_n${nivelAtual}_f${faseAtual}_${alvo}_${tempoConfigurado}s`;
         }
 
         function salvarRecordeSeMaior(pontuacao) {
-            const atual = obterRecordeAtual();
-            if (pontuacao > atual) {
-                try {
+            try {
+                const atual = Number(localStorage.getItem(obterChaveRecorde()) || 0);
+                if (pontuacao > atual && pontuacao > 0) {
                     localStorage.setItem(obterChaveRecorde(), String(pontuacao));
-                } catch (e) {}
-                return true;
-            }
+                    return true;
+                }
+            } catch (e) {}
             return false;
         }
 
-        /* ===== CONFIGURAÇÃO DO TEMPO ===== */
+        function registrarNoRanking(nome, scoreTotal, nomeNivel) {
+            if (scoreTotal <= 0) return obterRanking();
+            let ranking = obterRanking();
+            const existenteIdx = ranking.findIndex(r => r.nome.toLowerCase() === nome.toLowerCase());
+            if (existenteIdx >= 0) {
+                if (scoreTotal >= ranking[existenteIdx].pontos) {
+                    ranking[existenteIdx] = { nome, pontos: scoreTotal, nivel: nomeNivel };
+                }
+            } else {
+                ranking.push({ nome, pontos: scoreTotal, nivel: nomeNivel });
+            }
+            ranking.sort((a, b) => b.pontos - a.pontos);
+            ranking = ranking.slice(0, 5);
+            try {
+                localStorage.setItem("parque_vogais_ranking_top5", JSON.stringify(ranking));
+            } catch (e) {}
+            return ranking;
+        }
+
+        function obterRanking() {
+            try {
+                return JSON.parse(localStorage.getItem("parque_vogais_ranking_top5") || "[]");
+            } catch (e) {
+                return [];
+            }
+        }
+
+        /* ===== CONFIGURAÇÃO DO TEMPO E NÍVEL ===== */
         function definirTempoRodada(segundos) {
             tempoConfigurado = segundos;
             document.querySelectorAll('.tempo-btn').forEach(btn => {
                 btn.classList.toggle('ativo', Number(btn.dataset.tempo) === segundos);
             });
-            atualizarHUDPlacar();
+        }
+
+        function obterNivelObj() {
+            return NIVEIS_DIFICULDADE.find(n => n.id === nivelAtual) || NIVEIS_DIFICULDADE[0];
+        }
+
+        function obterModoGrafiaAtual() {
+            const nivelObj = obterNivelObj();
+            if (nivelObj.modo === "mista") {
+                return MODOS_GRAFIA_LISTA[Math.floor(Math.random() * MODOS_GRAFIA_LISTA.length)];
+            }
+            return nivelObj.modo;
         }
 
         /* ===== FORMATAÇÃO DAS 4 GRAFIAS ===== */
@@ -1435,32 +1691,16 @@
             return texto;
         }
 
-        function gerarHTMLCartao(textoRaw, icone, isFase3) {
-            const formatado = formatarTextoGrafia(textoRaw, modoGrafia);
-            if (!isFase3) return formatado;
+        function gerarHTMLCartao(textoRaw, icone, isFase3, modoEspecifico, isDourado) {
+            const formatado = formatarTextoGrafia(textoRaw, modoEspecifico);
+            const estrelaPrefix = isDourado ? "🌟 " : "";
+            if (!isFase3) return estrelaPrefix + formatado;
             const primeiraLetra = formatado.charAt(0);
             const restante = formatado.slice(1);
             return `
-                <span class="icone-palavra">${icone}</span>
+                <span class="icone-palavra">${isDourado ? "🎁" : icone}</span>
                 <span><span class="vogal-inicial-destaque">${primeiraLetra}</span>${restante}</span>
             `;
-        }
-
-        function selecionarModo(modo) {
-            modoGrafia = modo;
-            document.querySelectorAll('.modo-btn').forEach(btn => {
-                btn.classList.toggle('ativo', btn.dataset.modo === modo);
-            });
-            elLetraAlvo.className = 'modo-' + modo;
-            atualizarExibicaoAlvo();
-
-            document.querySelectorAll('.quadrado-letra').forEach(quad => {
-                const raw = quad.dataset.raw;
-                const icone = quad.dataset.icone || "";
-                const isFase3 = quad.dataset.fase3 === "true";
-                quad.className = 'quadrado-letra' + (isFase3 ? ' cartao-palavra' : '') + ' modo-' + modo;
-                quad.innerHTML = gerarHTMLCartao(raw, icone, isFase3);
-            });
         }
 
         /* ===== SINTETIZADOR DE EFEITOS SONOROS ===== */
@@ -1473,7 +1713,7 @@
             return audioCtx;
         }
 
-        function tocarSomEstouro(acerto, combo = 1) {
+        function tocarSomEstouro(acerto, combo = 1, isDourado = false) {
             if (!audioEnabled) return;
             try {
                 const ctx = getAudioCtx();
@@ -1502,18 +1742,21 @@
                 noise.start(now);
 
                 if (acerto) {
-                    const multiplicadorTom = Math.min(1 + (combo - 1) * 0.06, 1.45);
-                    [523.25, 659.25, 783.99].forEach((freq, idx) => {
+                    const notas = isDourado
+                        ? [523.25, 659.25, 783.99, 1046.50, 1318.51]
+                        : [523.25, 659.25, 783.99];
+                    const multiplicadorTom = isDourado ? 1 : Math.min(1 + (combo - 1) * 0.06, 1.45);
+                    notas.forEach((freq, idx) => {
                         const osc = ctx.createOscillator();
                         const gain = ctx.createGain();
                         osc.type = 'triangle';
                         osc.frequency.setValueAtTime(freq * multiplicadorTom, now + idx * 0.05);
                         gain.gain.setValueAtTime(0.18, now + idx * 0.05);
-                        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 0.24);
+                        gain.gain.exponentialRampToValueAtTime(0.001, now + idx * 0.05 + 0.26);
                         osc.connect(gain);
                         gain.connect(ctx.destination);
                         osc.start(now + idx * 0.05);
-                        osc.stop(now + idx * 0.05 + 0.26);
+                        osc.stop(now + idx * 0.05 + 0.28);
                     });
                 } else {
                     const osc = ctx.createOscillator();
@@ -1579,11 +1822,10 @@
         function obterPronunciaItem(itemObj) {
             if (faseAtual === 1) return obterPronunciaVogal(itemObj.texto);
             if (faseAtual === 2) return itemObj.fala;
-            return itemObj.texto;
+            return itemObj.falaEnfase || itemObj.texto;
         }
 
         function falar(texto) {
-            clearTimeout(speechFallbackTimer);
             if (!window.speechSynthesis || !audioEnabled) return;
 
             window.speechSynthesis.cancel();
@@ -1602,24 +1844,42 @@
         }
 
         function falarInstrucaoAtual() {
+            const nivelObj = obterNivelObj();
             if (faseAtual === 1) {
                 const vogal = VOGAIS[indiceAlvo];
-                falar(`Valendo! Estoure a letra ${obterPronunciaVogal(vogal)}!`);
+                falar(`Nível ${nivelObj.nome}! Estoure a letra ${obterPronunciaVogal(vogal)}!`);
             } else if (faseAtual === 2) {
                 const obj = PALAVRINHAS[indiceAlvo];
-                falar(`Valendo! Estoure a palavrinha ${obj.fala}!`);
+                falar(`Nível ${nivelObj.nome}! Estoure a palavrinha ${obj.fala}!`);
             } else {
                 const vogal = VOGAIS[indiceAlvo];
-                falar(`Valendo! Estoure palavras que começam com ${obterPronunciaVogal(vogal)}!`);
+                falar(`Nível ${nivelObj.nome}! Estoure palavras que começam com ${obterPronunciaVogal(vogal)}!`);
             }
+        }
+
+        function falarDicaBoquinha() {
+            const vogalRef = obterVogalReferenciaAtual();
+            const dica = DICAS_BOQUINHA[vogalRef];
+            if (dica) falar(dica.fala);
         }
 
         /* ===== CONTROLE DE INÍCIO E NAVEGAÇÃO ===== */
         function comecarJogo() {
+            const inputNome = document.getElementById("inputNomeJogador").value.trim();
+            nomeJogador = inputNome || "Explorador(a)";
+            try {
+                localStorage.setItem("parque_vogais_ultimo_nome", inputNome);
+            } catch (e) {}
+
+            document.getElementById("hudNomeJogador").innerText = nomeJogador;
             document.getElementById("modal-inicio").style.display = "none";
             getAudioCtx();
             iniciarRodada();
         }
+
+        document.getElementById("inputNomeJogador").addEventListener("keydown", (e) => {
+            if (e.key === "Enter") comecarJogo();
+        });
 
         function voltarParaPaginaAnterior() {
             if (typeof confetti !== 'undefined') {
@@ -1648,6 +1908,13 @@
             else if (jogoAtivo) falarInstrucaoAtual();
         }
 
+        function irParaNivel(numNivel) {
+            nivelAtual = numNivel;
+            faseAtual = 1;
+            indiceAlvo = 0;
+            iniciarRodada();
+        }
+
         function irParaFase(numFase) {
             faseAtual = numFase;
             indiceAlvo = 0;
@@ -1661,26 +1928,54 @@
             return VOGAIS[indiceAlvo];
         }
 
+        function obterVogalReferenciaAtual() {
+            if (faseAtual === 1) return VOGAIS[indiceAlvo];
+            if (faseAtual === 2) return PALAVRINHAS[indiceAlvo].vogalRef;
+            return VOGAIS[indiceAlvo];
+        }
+
         function obterNomeDesafioAtual() {
-            const textoFormatado = formatarTextoGrafia(obterAlvoTextoPrincipal(), modoGrafia);
-            if (faseAtual === 1) return `Letra "${textoFormatado}"`;
-            if (faseAtual === 2) return `Palavrinha "${textoFormatado}"`;
-            return `Palavras com "${textoFormatado}"`;
+            const nivelObj = obterNivelObj();
+            const modoRef = nivelObj.modo === "mista" ? "maiusc-forma" : nivelObj.modo;
+            const textoFormatado = formatarTextoGrafia(obterAlvoTextoPrincipal(), modoRef);
+            const etapaNome = faseAtual === 1
+                ? `Letra "${textoFormatado}"`
+                : faseAtual === 2
+                    ? `Palavrinha "${textoFormatado}"`
+                    : `Palavras com "${textoFormatado}"`;
+            return `${nivelObj.icone} ${nivelObj.nome} • ${etapaNome}`;
         }
 
         function atualizarExibicaoAlvo() {
             const raw = obterAlvoTextoPrincipal();
+            const nivelObj = obterNivelObj();
+            const modoExibicaoAlvo = nivelObj.modo === "mista" ? "maiusc-forma" : nivelObj.modo;
+
             if (faseAtual === 1) {
-                elTextoComando.innerText = "🎈 Estoure a letra";
+                elTextoComando.innerText = nivelObj.modo === "mista"
+                    ? "👑 Mistura! Estoure a letra"
+                    : "🎈 Estoure a letra";
             } else if (faseAtual === 2) {
                 elTextoComando.innerText = "💬 Estoure a palavrinha";
             } else {
                 elTextoComando.innerText = "📖 Palavras com";
             }
 
-            elLetraAlvo.innerText = formatarTextoGrafia(raw, modoGrafia);
-            elLetraAlvo.className = 'modo-' + modoGrafia;
+            elLetraAlvo.innerText = nivelObj.modo === "mista"
+                ? `${raw.toUpperCase()} • ${raw.toLowerCase()}`
+                : formatarTextoGrafia(raw, modoExibicaoAlvo);
+            elLetraAlvo.className = 'modo-' + modoExibicaoAlvo;
 
+            // Atualiza dica articulatória ("Boquinha Sonora")
+            const vogalRef = obterVogalReferenciaAtual();
+            const dica = DICAS_BOQUINHA[vogalRef];
+            document.getElementById("boquinhaIcone").innerText = dica.icone;
+            document.getElementById("boquinhaTexto").innerText = dica.texto;
+
+            // Destaca abas ativas
+            document.querySelectorAll('.nivel-tab').forEach(tab => {
+                tab.classList.toggle('ativa', Number(tab.dataset.nivel) === nivelAtual);
+            });
             document.querySelectorAll('.fase-tab').forEach(tab => {
                 tab.classList.toggle('ativa', Number(tab.dataset.fase) === faseAtual);
             });
@@ -1692,7 +1987,7 @@
             const timerBarra = document.getElementById("timerBarra");
 
             timerTexto.innerText = `${tempoRestante}s`;
-            const percentual = Math.max(0, (tempoRestante / tempoConfigurado) * 100);
+            const percentual = Math.min(100, Math.max(0, (tempoRestante / tempoConfigurado) * 100));
             timerBarra.style.width = `${percentual}%`;
 
             timerPill.classList.remove("aviso-tempo", "tempo-critico");
@@ -1709,7 +2004,6 @@
 
             document.getElementById("pontosRodadaTexto").innerText = `${pontosRodada} pts`;
             document.getElementById("pontosTotaisTexto").innerText = pontosTotais;
-            document.getElementById("recordeAlvoTexto").innerText = `${obterRecordeAtual()} pts`;
 
             if (comboAtual >= 2) {
                 comboBadge.innerText = `🔥 ${comboAtual}x`;
@@ -1748,8 +2042,10 @@
 
             pontosRodada = 0;
             acertosRodada = 0;
+            errosRodada = 0;
             comboAtual = 0;
             maiorComboRodada = 0;
+            balaoDouradoJaGeradoNaRodada = false;
             tempoRestante = tempoConfigurado;
             jogoAtivo = true;
             jogoPausado = false;
@@ -1764,7 +2060,6 @@
 
             gerarOndaInicial();
 
-            // Geração contínua e dinâmica de balões durante o desafio cronometrado
             intervaloGerador = setInterval(() => {
                 if (!jogoAtivo || jogoPausado) return;
                 const baloesAtivos = ceuBaloes.querySelectorAll('.balao-container:not(.estourando)').length;
@@ -1773,11 +2068,15 @@
                     const alvosNaTela = Array.from(ceuBaloes.querySelectorAll('.balao-container:not(.estourando)'))
                         .filter(b => b.dataset.isAlvo === "true").length;
                     const forcarAlvo = alvosNaTela < 3 || Math.random() < 0.58;
-                    criarBalao(forcarAlvo);
+
+                    // Gera 1 Balão Dourado Surpresa na metade da rodada
+                    const gerarDourado = forcarAlvo && !balaoDouradoJaGeradoNaRodada && tempoRestante <= Math.floor(tempoConfigurado * 0.65);
+                    if (gerarDourado) balaoDouradoJaGeradoNaRodada = true;
+
+                    criarBalao(forcarAlvo, gerarDourado);
                 }
             }, 850);
 
-            // Cronômetro regressivo de 1 em 1 segundo
             intervaloTimer = setInterval(() => {
                 if (!jogoAtivo || jogoPausado) return;
                 tempoRestante--;
@@ -1802,7 +2101,7 @@
 
             lista.forEach((isAlvo, idx) => {
                 setTimeout(() => {
-                    if (jogoAtivo) criarBalao(isAlvo);
+                    if (jogoAtivo) criarBalao(isAlvo, false);
                 }, idx * 280);
             });
         }
@@ -1824,7 +2123,6 @@
                 return { texto: sorteada.texto, fala: sorteada.fala };
             }
 
-            // Fase 3: Palavras iniciadas por vogais
             const vogalCerta = VOGAIS[indiceAlvo];
             if (isAlvo) {
                 const item = obterProximaPalavraAlvoFase3(vogalCerta);
@@ -1848,12 +2146,13 @@
             }
         }
 
-        function criarBalao(isAlvo) {
+        function criarBalao(isAlvo, isDourado = false) {
             const itemObj = sortearItemBalao(isAlvo);
             const isFase3 = faseAtual === 3;
+            const modoDoBalao = obterModoGrafiaAtual();
 
             const container = document.createElement("div");
-            container.className = "balao-container";
+            container.className = "balao-container" + (isDourado ? " balao-dourado" : "");
             container.dataset.isAlvo = isAlvo ? "true" : "false";
 
             const numFaixas = window.innerWidth < 768 ? 4 : 6;
@@ -1862,22 +2161,18 @@
             const posLeft = 6 + (laneAtual * larguraFaixa) + (Math.random() * (larguraFaixa * 0.45));
             container.style.left = Math.min(Math.max(posLeft, 5), 84) + "%";
 
-            // Velocidade dinâmica ideal para desafio de 30s
             const duracao = (Math.random() * 3.5) + 8.8;
             container.style.animationDuration = duracao + "s";
 
             const cor = CORES_BALAO[Math.floor(Math.random() * CORES_BALAO.length)];
-            const conteudoCartao = gerarHTMLCartao(itemObj.texto, itemObj.icone || "", isFase3);
+            const conteudoCartao = gerarHTMLCartao(itemObj.texto, itemObj.icone || "", isFase3, modoDoBalao, isDourado);
 
             container.innerHTML = `
                 <div class="balao-balanco">
                     <div class="balao-corpo" style="background: ${cor};"></div>
                     <div class="balao-no" style="background: ${cor};"></div>
                     <div class="balao-barbante"></div>
-                    <div class="quadrado-letra ${isFase3 ? 'cartao-palavra' : ''} modo-${modoGrafia}"
-                         data-raw="${itemObj.texto}"
-                         data-icone="${itemObj.icone || ''}"
-                         data-fase3="${isFase3}">
+                    <div class="quadrado-letra ${isFase3 ? 'cartao-palavra' : ''} modo-${modoDoBalao}">
                         ${conteudoCartao}
                     </div>
                 </div>
@@ -1892,9 +2187,9 @@
                 const clientY = e.touches ? e.touches[0].clientY : e.clientY;
 
                 if (isAlvo) {
-                    tratarAcerto(container, itemObj, clientX, clientY);
+                    tratarAcerto(container, itemObj, clientX, clientY, isDourado);
                 } else {
-                    tratarErro(container, itemObj, clientX, clientY);
+                    tratarErro(container, itemObj, clientX, clientY, modoDoBalao);
                 }
             };
 
@@ -1905,19 +2200,36 @@
             ceuBaloes.appendChild(container);
         }
 
-        function tratarAcerto(balaoEl, itemObj, x, y) {
+        function tratarAcerto(balaoEl, itemObj, x, y, isDourado) {
             acertosRodada++;
             comboAtual++;
             if (comboAtual > maiorComboRodada) maiorComboRodada = comboAtual;
 
-            // Pontuação: 10 base + bônus de combo (+2 por sequência, até 20 pts/balão)
-            const bonusCombo = Math.min((comboAtual - 1) * 2, 10);
-            const pontosGanhos = 10 + bonusCombo;
+            // Desbloqueia figurinha no álbum se acertar palavra na Etapa 3
+            if (faseAtual === 3 && itemObj.texto) {
+                if (!figurinhasDesbloqueadas.has(itemObj.texto)) {
+                    figurinhasDesbloqueadas.add(itemObj.texto);
+                    salvarAlbum();
+                }
+            }
+
+            let pontosGanhos = 10 + Math.min((comboAtual - 1) * 2, 10);
+            if (isDourado) {
+                pontosGanhos += 15; // Total +25 pts no balão dourado!
+                tempoRestante = Math.min(tempoConfigurado + 15, tempoRestante + 5);
+                atualizarHUDTimer();
+                const novaFig = desbloquearProximaFigurinha(obterVogalReferenciaAtual());
+                if (novaFig) {
+                    mostrarFeedback(`🎁 Balão Dourado! +5s e Figurinha "${novaFig.palavra}"!`, true);
+                } else {
+                    mostrarFeedback(`🎁 Balão Dourado! +${pontosGanhos} pts e +5 segundos!`, true);
+                }
+            }
 
             pontosRodada += pontosGanhos;
             pontosTotais += pontosGanhos;
 
-            tocarSomEstouro(true, comboAtual);
+            tocarSomEstouro(true, comboAtual, isDourado);
             atualizarHUDPlacar(true);
 
             const rect = balaoEl.getBoundingClientRect();
@@ -1931,13 +2243,15 @@
             balaoEl.classList.add("estourando");
             setTimeout(() => balaoEl.remove(), 520);
 
-            const textoPopup = comboAtual >= 2 ? `+${pontosGanhos} 🔥` : `+${pontosGanhos}`;
-            mostrarPontoFlutuante(posX, posY, textoPopup, true);
+            const textoPopup = isDourado
+                ? `+${pontosGanhos} 🌟 +5s`
+                : comboAtual >= 2 ? `+${pontosGanhos} 🔥` : `+${pontosGanhos}`;
+            mostrarPontoFlutuante(posX, posY, textoPopup, isDourado ? "bonus" : "positivo");
 
             if (typeof confetti !== 'undefined') {
                 confetti({
-                    particleCount: 18,
-                    spread: 50,
+                    particleCount: isDourado ? 45 : 18,
+                    spread: isDourado ? 75 : 50,
                     origin: {
                         x: posX / window.innerWidth,
                         y: posY / window.innerHeight
@@ -1948,7 +2262,8 @@
             falar(obterPronunciaItem(itemObj));
         }
 
-        function tratarErro(balaoEl, itemErradoObj, x, y) {
+        function tratarErro(balaoEl, itemErradoObj, x, y, modoDoBalao) {
+            errosRodada++;
             comboAtual = 0;
             const penalidade = Math.min(5, pontosRodada);
             pontosRodada = Math.max(0, pontosRodada - 5);
@@ -1958,61 +2273,112 @@
             atualizarHUDPlacar(false);
 
             const rect = balaoEl.getBoundingClientRect();
-            mostrarPontoFlutuante(x || rect.left + 40, y || rect.top + 40, "-5", false);
+            mostrarPontoFlutuante(x || rect.left + 40, y || rect.top + 40, "-5", "negativo");
 
             balaoEl.classList.add("erro-anim");
             setTimeout(() => balaoEl.classList.remove("erro-anim"), 420);
 
-            const textoErrado = formatarTextoGrafia(itemErradoObj.texto, modoGrafia);
-            const alvoTexto = formatarTextoGrafia(obterAlvoTextoPrincipal(), modoGrafia);
+            const textoErrado = formatarTextoGrafia(itemErradoObj.texto, modoDoBalao);
+            const modoRef = obterNivelObj().modo === "mista" ? "maiusc-forma" : obterNivelObj().modo;
+            const alvoTexto = formatarTextoGrafia(obterAlvoTextoPrincipal(), modoRef);
 
             if (faseAtual === 3) {
-                mostrarFeedback(`Ops! "${textoErrado}" começa com "${formatarTextoGrafia(itemErradoObj.vogalInicial, modoGrafia)}" (-5 pts)`, false);
+                mostrarFeedback(`Ops! "${textoErrado}" começa com "${formatarTextoGrafia(itemErradoObj.vogalInicial, modoDoBalao)}" (-5 pts)`, false);
             } else {
                 mostrarFeedback(`Ops! Esse é "${textoErrado}". Procure "${alvoTexto}" (-5 pts)`, false);
             }
         }
 
-        /* ===== ENCERRAMENTO DA RODADA E PLACAR FINAL ===== */
+        /* ===== ENCERRAMENTO DA RODADA E PLACAR FINAL COM NOME E RANKING ===== */
         function encerrarRodadaPorTempo() {
             jogoAtivo = false;
             clearInterval(intervaloGerador);
             clearInterval(intervaloTimer);
             tocarFanfarra();
 
+            const nivelObj = obterNivelObj();
             const bateuRecorde = salvarRecordeSeMaior(pontosRodada);
-            atualizarHUDPlacar(false);
+            const rankingAtualizado = registrarNoRanking(nomeJogador, pontosTotais, nivelObj.nome);
 
-            // Cálculo de estrelas proporcional ao tempo escolhido
+            // Desbloqueia 1 figurinha de recompensa se pontuou bem
+            let novaFigurinhaConquistada = null;
+            if (pontosRodada >= 30) {
+                novaFigurinhaConquistada = desbloquearProximaFigurinha(obterVogalReferenciaAtual());
+            }
+
             const fatorTempo = tempoConfigurado / 30;
             let estrelas = "⭐";
             if (pontosRodada >= Math.round(110 * fatorTempo)) estrelas = "⭐⭐⭐";
             else if (pontosRodada >= Math.round(55 * fatorTempo)) estrelas = "⭐⭐";
 
-            const isUltimoDesafioGeral = (faseAtual === 3 && indiceAlvo >= VOGAIS.length - 1);
+            const totalTentativas = acertosRodada + errosRodada;
+            const precisao = totalTentativas > 0 ? Math.round((acertosRodada / totalTentativas) * 100) : 100;
 
-            document.getElementById("rodada-icone").innerText = isUltimoDesafioGeral ? "👑🏆🎉" : "⏱️🎉";
-            document.getElementById("rodada-titulo").innerText = isUltimoDesafioGeral
-                ? "Você Completou Todas as Fases!"
-                : "Tempo Esgotado!";
-            document.getElementById("rodada-subtitulo").innerText = `${obterNomeDesafioAtual()} • ${tempoConfigurado} segundos`;
+            const isFimNivelAtual = (faseAtual === 3 && indiceAlvo >= VOGAIS.length - 1);
+            const isFimJogoCompleto = (nivelAtual === 5 && isFimNivelAtual);
+
+            document.getElementById("rodada-icone").innerText = isFimJogoCompleto ? "👑🏆🎉" : isFimNivelAtual ? "🎖️🚀" : "⏱️🎉";
+            document.getElementById("rodada-titulo").innerText = isFimJogoCompleto
+                ? "Você é Grande Mestre!"
+                : isFimNivelAtual
+                    ? `Nível ${nivelObj.nome} Concluído!`
+                    : "Tempo Esgotado!";
+
+            document.getElementById("res-banner-jogador").innerText =
+                `🧑‍🎓 ${nomeJogador} • ${pontosRodada} pts na rodada (Total: ${pontosTotais} pts)`;
+
+            document.getElementById("rodada-subtitulo").innerText = `${obterNomeDesafioAtual()} • ${tempoConfigurado}s`;
             document.getElementById("rodada-estrelas").innerText = estrelas;
-            document.getElementById("rodada-novo-recorde").style.display = bateuRecorde && pontosRodada > 0 ? "inline-block" : "none";
+            document.getElementById("rodada-novo-recorde").style.display = bateuRecorde ? "inline-block" : "none";
+
+            const badgeFig = document.getElementById("rodada-figurinha-nova");
+            if (novaFigurinhaConquistada) {
+                badgeFig.innerText = `📒 NOVA FIGURINHA: ${novaFigurinhaConquistada.icone} ${novaFigurinhaConquistada.palavra.toUpperCase()}!`;
+                badgeFig.style.display = "inline-block";
+            } else {
+                badgeFig.style.display = "none";
+            }
 
             document.getElementById("res-pontos").innerText = `${pontosRodada} pts`;
-            document.getElementById("res-acertos").innerText = `${acertosRodada}`;
-            document.getElementById("res-combo").innerText = `${maiorComboRodada}x`;
             document.getElementById("res-total").innerText = `${pontosTotais} pts`;
+            document.getElementById("res-precisao").innerText = `${precisao}%`;
+            document.getElementById("res-combo").innerText = `${maiorComboRodada}x`;
+
+            // Renderiza Top 5 Ranking
+            const listaRanking = document.getElementById("listaRankingTop5");
+            listaRanking.innerHTML = "";
+            const medalhas = ["🥇", "🥈", "🥉", "4º", "5º"];
+            if (rankingAtualizado.length === 0) {
+                listaRanking.innerHTML = `<div class="ranking-linha">Faça pontos para entrar no pódio!</div>`;
+            } else {
+                rankingAtualizado.forEach((item, idx) => {
+                    const row = document.createElement("div");
+                    const isAtual = item.nome.toLowerCase() === nomeJogador.toLowerCase();
+                    row.className = "ranking-linha" + (isAtual ? " destaque-atual" : "");
+                    row.innerHTML = `
+                        <span>${medalhas[idx] || "•"} <strong>${item.nome}</strong> <small>(${item.nivel})</small></span>
+                        <span><strong>${item.pontos} pts</strong></span>
+                    `;
+                    listaRanking.appendChild(row);
+                });
+            }
 
             const btnProximo = document.getElementById("btnProximoDesafio");
-            btnProximo.innerText = isUltimoDesafioGeral ? "🔄 Reiniciar do Início" : "➡️ Próximo Desafio";
+            if (isFimJogoCompleto) {
+                btnProximo.innerText = "🔄 Jogar Novamente do Nível 1";
+            } else if (isFimNivelAtual) {
+                const proxNivel = NIVEIS_DIFICULDADE[nivelAtual];
+                btnProximo.innerText = `🚀 Ir para ${proxNivel.icone} ${proxNivel.nome}`;
+            } else {
+                btnProximo.innerText = "➡️ Próximo Desafio";
+            }
 
             if (typeof confetti !== 'undefined' && pontosRodada > 0) {
-                confetti({ particleCount: 110, spread: 85, origin: { y: 0.45 } });
+                confetti({ particleCount: isFimNivelAtual ? 160 : 100, spread: 90, origin: { y: 0.45 } });
             }
 
             modalRodada.style.display = "flex";
-            falar(`Tempo esgotado! Você fez ${pontosRodada} pontos!`);
+            falar(`Parabéns, ${nomeJogador}! Você fez ${pontosRodada} pontos!`);
         }
 
         function repetirRodadaAtual() {
@@ -2022,18 +2388,23 @@
         function avancarProximoDesafio() {
             indiceAlvo++;
 
-            // Fim da Fase 1 (Vogais) -> Fase 2 (Palavrinhas)
+            // Fim da Etapa 1 (Vogais) -> Etapa 2 (Palavrinhas)
             if (faseAtual === 1 && indiceAlvo >= VOGAIS.length) {
                 faseAtual = 2;
                 indiceAlvo = 0;
             }
-            // Fim da Fase 2 (Palavrinhas) -> Fase 3 (Palavras iniciadas com vogais)
+            // Fim da Etapa 2 (Palavrinhas) -> Etapa 3 (Palavras Iniciais)
             else if (faseAtual === 2 && indiceAlvo >= PALAVRINHAS.length) {
                 faseAtual = 3;
                 indiceAlvo = 0;
             }
-            // Fim da Fase 3 -> Volta para Fase 1
+            // Fim da Etapa 3 -> Avança para o próximo Nível de Dificuldade/Grafia!
             else if (faseAtual === 3 && indiceAlvo >= VOGAIS.length) {
+                if (nivelAtual < NIVEIS_DIFICULDADE.length) {
+                    nivelAtual++;
+                } else {
+                    nivelAtual = 1; // Reinicia ciclo após vencer Grande Mestre
+                }
                 faseAtual = 1;
                 indiceAlvo = 0;
             }
@@ -2041,42 +2412,104 @@
             iniciarRodada();
         }
 
+        /* ===== ÁLBUM DE FIGURINHAS SONORAS (4 GRAFIAS) ===== */
+        function abrirAlbum() {
+            jogoPausado = true;
+            const grid = document.getElementById("albumGrid");
+            grid.innerHTML = "";
+
+            TODAS_FIGURINHAS.forEach(item => {
+                const desbloqueada = figurinhasDesbloqueadas.has(item.palavra);
+                const card = document.createElement("div");
+                card.className = "figurinha-card" + (desbloqueada ? "" : " bloqueada");
+
+                if (desbloqueada) {
+                    const bastao = formatarTextoGrafia(item.palavra, "maiusc-forma");
+                    const imprensa = formatarTextoGrafia(item.palavra, "minusc-forma");
+                    const cursivaMai = formatarTextoGrafia(item.palavra, "maiusc-cursiva");
+                    const cursivaMin = formatarTextoGrafia(item.palavra, "minusc-cursiva");
+
+                    card.innerHTML = `
+                        <div style="font-size: 36px;">${item.icone}</div>
+                        <div style="font-size: 16px; font-weight: 800;">${bastao} 🔊</div>
+                        <div class="fig-grafias">
+                            <span>${imprensa}</span> •
+                            <span class="fig-cursiva">${cursivaMai}</span> •
+                            <span class="fig-cursiva">${cursivaMin}</span>
+                        </div>
+                    `;
+                    card.onclick = () => falar(item.falaEnfase);
+                } else {
+                    card.innerHTML = `
+                        <div style="font-size: 32px; opacity: 0.45;">❓</div>
+                        <div style="font-size: 13px; font-weight: 700;">Vogal ${item.vogal}</div>
+                        <div style="font-size: 11px;">Jogue para desbloquear</div>
+                    `;
+                }
+                grid.appendChild(card);
+            });
+
+            modalAlbum.style.display = "flex";
+        }
+
+        function fecharAlbum() {
+            modalAlbum.style.display = "none";
+            jogoPausado = false;
+        }
+
         /* ===== FEEDBACK VISUAL ===== */
-        function mostrarPontoFlutuante(x, y, texto, positivo) {
+        function mostrarPontoFlutuante(x, y, texto, tipo) {
             const el = document.createElement("div");
-            el.className = `ponto-flutuante ${positivo ? 'positivo' : 'negativo'}`;
+            el.className = `ponto-flutuante ${tipo}`;
             el.innerText = texto;
-            el.style.left = (x - 24) + "px";
+            el.style.left = (x - 28) + "px";
             el.style.top = (y - 24) + "px";
             document.body.appendChild(el);
-            setTimeout(() => el.remove(), 860);
+            setTimeout(() => el.remove(), 900);
         }
 
         function mostrarFeedback(texto, isAcerto) {
             document.querySelectorAll('.feedback-correto').forEach(el => el.remove());
             const div = document.createElement("div");
             div.className = "feedback-correto";
-            div.style.background = isAcerto ? "rgba(46, 125, 50, 0.94)" : "rgba(211, 47, 47, 0.94)";
+            div.style.background = isAcerto ? "rgba(46, 125, 50, 0.95)" : "rgba(211, 47, 47, 0.95)";
             div.innerText = texto;
             document.body.appendChild(div);
-            setTimeout(() => div.remove(), 1000);
+            setTimeout(() => div.remove(), 1100);
         }
 
-        /* ===== MODAL SELETOR RÁPIDO (COM PAUSA AUTOMÁTICA) ===== */
+        /* ===== MODAL SELETOR RÁPIDO ===== */
         function abrirSeletor() {
             jogoPausado = true;
 
+            const gridNiveis = document.getElementById("gridNiveis");
             const gridVogais = document.getElementById("gridVogais");
             const gridPalavras = document.getElementById("gridPalavras");
             const gridIniciais = document.getElementById("gridIniciais");
+            gridNiveis.innerHTML = "";
             gridVogais.innerHTML = "";
             gridPalavras.innerHTML = "";
             gridIniciais.innerHTML = "";
 
+            NIVEIS_DIFICULDADE.forEach(niv => {
+                const btn = document.createElement("button");
+                btn.className = "opcao-btn";
+                btn.style.fontSize = "15px";
+                btn.innerText = `${niv.icone} ${niv.rotuloCurto}`;
+                btn.onclick = () => {
+                    nivelAtual = niv.id;
+                    modalSeletor.style.display = "none";
+                    iniciarRodada();
+                };
+                gridNiveis.appendChild(btn);
+            });
+
+            const modoRef = obterNivelObj().modo === "mista" ? "maiusc-forma" : obterNivelObj().modo;
+
             VOGAIS.forEach((v, idx) => {
                 const btn = document.createElement("button");
                 btn.className = "opcao-btn";
-                btn.innerText = formatarTextoGrafia(v, modoGrafia);
+                btn.innerText = formatarTextoGrafia(v, modoRef);
                 btn.onclick = () => {
                     faseAtual = 1;
                     indiceAlvo = idx;
@@ -2089,8 +2522,8 @@
             PALAVRINHAS.forEach((p, idx) => {
                 const btn = document.createElement("button");
                 btn.className = "opcao-btn";
-                btn.style.fontSize = "19px";
-                btn.innerText = formatarTextoGrafia(p.texto, modoGrafia);
+                btn.style.fontSize = "18px";
+                btn.innerText = formatarTextoGrafia(p.texto, modoRef);
                 btn.onclick = () => {
                     faseAtual = 2;
                     indiceAlvo = idx;
@@ -2103,9 +2536,9 @@
             VOGAIS.forEach((v, idx) => {
                 const btn = document.createElement("button");
                 btn.className = "opcao-btn";
-                btn.style.fontSize = "19px";
+                btn.style.fontSize = "18px";
                 const exemplo = CONJUNTO_PALAVRAS_VOGAIS[v][0];
-                btn.innerText = `${exemplo.icone} ${formatarTextoGrafia(v, modoGrafia)}`;
+                btn.innerText = `${exemplo.icone} ${formatarTextoGrafia(v, modoRef)}`;
                 btn.onclick = () => {
                     faseAtual = 3;
                     indiceAlvo = idx;
@@ -2170,6 +2603,7 @@
 
         window.onload = () => {
             if (window.speechSynthesis) window.speechSynthesis.getVoices();
+            carregarDadosSalvos();
         };
     </script>
 </body>
