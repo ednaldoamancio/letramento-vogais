@@ -179,17 +179,17 @@
             flex: 1;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start; /* Ajustado para permitir rolagem se necessário */
+            justify-content: flex-start;
             align-items: center;
             padding: 15px;
             position: relative;
             z-index: 10;
-            overflow-y: auto; /* Adicionado para telas pequenas com 3 botões */
+            overflow-y: auto;
             overflow-x: hidden;
         }
 
         .conteudo-central {
-            max-width: 700px;
+            max-width: 720px;
             width: 100%;
             margin: 0 auto;
             text-align: center;
@@ -238,7 +238,7 @@
             font-size: clamp(14px, 4vw, 18px);
             color: rgba(255, 255, 255, 0.8);
             text-align: center;
-            margin-bottom: 25px;
+            margin-bottom: 22px;
         }
 
         .menu-container {
@@ -246,10 +246,19 @@
             flex-direction: column;
             align-items: center;
             justify-content: center;
-            gap: 20px;
+            gap: 18px;
             width: 100%;
             max-width: 380px;
             margin: 0 auto;
+        }
+
+        @media (min-width: 680px) {
+            .menu-container {
+                display: grid;
+                grid-template-columns: repeat(2, 1fr);
+                max-width: 680px;
+                gap: 20px;
+            }
         }
 
         .card-reino {
@@ -304,13 +313,20 @@
         }
         .card-palavrinhas:hover { box-shadow: 0 12px 0 #8b6914, 0 0 40px rgba(212, 168, 67, 0.5); }
 
-        /* Novo estilo para o botão Alfabeto Divertido */
         .card-alfabeto {
             background: linear-gradient(145deg, #6a1b9a, #4a148c);
             box-shadow: 0 8px 0 #310b61, 0 0 20px rgba(106, 27, 154, 0.3);
             border: 2px solid rgba(220, 180, 255, 0.3);
         }
         .card-alfabeto:hover { box-shadow: 0 12px 0 #310b61, 0 0 40px rgba(106, 27, 154, 0.5); }
+
+        /* Novo estilo para o botão Parque das Vogais */
+        .card-parque {
+            background: linear-gradient(145deg, #2e7d32, #1b5e20);
+            box-shadow: 0 8px 0 #103d14, 0 0 20px rgba(46, 125, 50, 0.35);
+            border: 2px solid rgba(180, 255, 190, 0.35);
+        }
+        .card-parque:hover { box-shadow: 0 12px 0 #103d14, 0 0 40px rgba(76, 175, 80, 0.55); }
 
         .emoji-reino {
             font-size: 42px;
@@ -399,7 +415,14 @@
                     <span class="desc-reino">AO - EI - UI - Descubra as palavras mágicas!</span>
                 </a>
 
-                <!-- Novo Botão Alfabeto Divertido -->
+                <!-- Botão Parque das Vogais -->
+                <a href="parque-das-vogais.html" class="card-reino card-parque" data-audio="parque_das_vogais.mp3">
+                    <span class="emoji-reino">🎈🌳</span>
+                    <span class="nome-reino">Parque das Vogais</span>
+                    <span class="desc-reino">Estoure os balões das vogais e palavrinhas!</span>
+                </a>
+
+                <!-- Botão Alfabeto Divertido -->
                 <a href="alfacel.html" class="card-reino card-alfabeto" data-audio="alfabeto_divertido.mp3">
                     <span class="emoji-reino">🔤✨</span>
                     <span class="nome-reino">Alfabeto Divertido</span>
